@@ -1052,7 +1052,7 @@ static void CG_DrawStatusBar( void )
 		vec4_t	radColor;
 
 		CG_DrawPic(40, 100, 100, 100, cgs.media.radarShader);
-		int32_t i;
+		int i;
 		for (i = 0; i < cg.snap->numEntities; i++) // Go through all entities in VIS range
 		{
 			if ( cg.snap->entities[i].eType == ET_PLAYER ) // If the Entity is a Player
@@ -1062,16 +1062,16 @@ static void CG_DrawStatusBar( void )
 					continue;
 				}*/
 				// Calculate How Far Away They Are
-				int32_t x = (cg.snap->entities[i].pos.trBase[0] - cg.predictedPlayerState.origin[0]);
+				int x = (cg.snap->entities[i].pos.trBase[0] - cg.predictedPlayerState.origin[0]);
 				y = (cg.snap->entities[i].pos.trBase[1] - cg.predictedPlayerState.origin[1]);
-				int32_t z = (cg.snap->entities[i].pos.trBase[2] - cg.predictedPlayerState.origin[2]);
+				int z = (cg.snap->entities[i].pos.trBase[2] - cg.predictedPlayerState.origin[2]);
 				tmpVec[0] = x;
 				tmpVec[1] = y;
 				tmpVec[2] = 0.0;
 
 				// Convert Vector to Angle
 				vectoangles(tmpVec, eAngle);
-				int32_t h = sqrt((x*x) + (y*y)); // Get Range
+				int h = sqrt((x*x) + (y*y)); // Get Range
 
 				// We only Want "YAW" value
 				dAngle[0] = 0.0;

@@ -226,6 +226,50 @@ qboolean PM_PlayerCrouchWalking( int anim )
 	return qfalse;
 }
 
+void PM_GetCrouchAnim(playerState_t *ps, int weapon, qboolean injured, qboolean upper) {
+	//2 handed weapon - "heavy"
+	switch (weapon) {
+	case WP_7:			
+	case WP_8:
+	case WP_9:
+		if (ps->pm_flags & ANIM_ALERT2 && upper)
+			return TORSO_WEAPONREADY2;
+		else if (upper)
+			return BOTH_STAND2;
+		else
+			return LEGS_KNEEL1;
+		break;
+		//2 handed weapon - "light"
+	case WP_6:
+		if (ps->pm_flags & ANIM_ALERT && upper)
+			return BOTH_STAND2;
+		else if (upper)
+			return TORSO_WEAPONREADY2;
+		else
+			return LEGS_KNEEL1;
+		break;
+		//1 handed weapon - "phaser"
+	case WP_5:
+	case WP_10:
+		if (upper) {
+			return TORSO_WEAPONPOSE1;
+		} else {
+			return BOTH_CROUCH1IDLE;
+		} break;
+	case WP_4:
+		if (upper) {
+			return TORSO_COFFEE;
+		} else {
+            return BOTH_CROUCH2IDLE;
+		} 
+		break;
+	
+    default:
+		return BOTH_CROUCH2IDLE;
+		break;
+	}
+}
+
 /**
 *	TiM: An index is defined, and depending
 *	on which weapon is active, a specific
@@ -238,49 +282,11 @@ qboolean PM_PlayerCrouchWalking( int anim )
 int PM_GetAnim ( int anim, int weapon, qboolean injured, qboolean upper )
 {
 	playerState_t *ps = pm->ps;
-	// Called when player is in idle crouching
 	switch ( anim ) {
+		// Called when player is in idle crouching
 		case ANIM_CROUCH:
-			//2 handed weapon - "heavy"
-			switch (weapon) {
-				case WP_7:
-				case WP_8:
-				case WP_9:
-					if ( ps->pm_flags & ANIM_ALERT2 && upper )
-						return TORSO_WEAPONREADY2;
-					else if (upper)
-						return BOTH_STAND2;
-					else
-						return LEGS_KNEEL1;
-					break;
-				//2 handed weapon - "light"
-				case WP_6:
-					if ( ps->pm_flags & ANIM_ALERT && upper )
-						return BOTH_STAND2;
-					else if (upper)
-						return TORSO_WEAPONREADY2;
-					else
-						return LEGS_KNEEL1;
-					break;
-				//1 handed weapon - "phaser"
-				case WP_5:
-				case WP_10:
-					if ( upper )
-						return TORSO_WEAPONPOSE1;
-					else 
-						return BOTH_CROUCH1IDLE;
-					break;
-				case WP_4:
-					if (upper)
-						return TORSO_COFFEE;
-					//break;
-				//Generic tools - "everything else"
-				default:
-					return BOTH_CROUCH2IDLE;
-					break;
-			}
+			PM_GetCrouchAnim(ps, weapon, injured, upper);
 			break;
-
 		//Called when player is in idle standing
 		case ANIM_IDLE:
 			//2 handed weapon - "heavy"

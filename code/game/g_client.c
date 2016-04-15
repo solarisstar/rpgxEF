@@ -2,6 +2,7 @@
 //
 #include "g_local.h"
 #include "g_groups.h"
+#include "q_shared.h"
 
 reconData_t	g_reconData[MAX_RECON_NAMES]; //!< recon data for a limited ammount of clients
 int			g_reconNum;
@@ -2271,10 +2272,10 @@ call trap_DropClient(), which will call this and do
 server system housekeeping.
 ============
 */
-void G_Client_Disconnect( int32_t clientNum ) {
+void G_Client_Disconnect( int clientNum ) {
 	gentity_t*	ent = NULL;
 	gentity_t*	tent = NULL;
-	int32_t		i = 0;
+	int		i = 0;
 
 	ent = &g_entities[clientNum];
 	if ( (ent == NULL) || (ent->client == NULL) ) {
@@ -2297,7 +2298,7 @@ void G_Client_Disconnect( int32_t clientNum ) {
 
 	//TiM: Log the player's IP and name.  If they reconnect again, it'll announce their deceipt >:)
 	if ( (rpg_renamedPlayers.integer != 0) && ((ent->r.svFlags & SVF_BOT) == 0) ) {
-		int32_t		l = 0;
+		int		l = 0;
 		qboolean	foundName = qfalse;
 
 		//Do a chek to see if this player has disconnected b4.  else we'll be wasting a slot.
