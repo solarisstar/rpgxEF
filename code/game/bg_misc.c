@@ -105,7 +105,7 @@ gitem_t	bg_itemlist[] =
 		" ",								/* pickup */
 		AMMO_IMOD_CLIP,
 		IT_WEAPON,
-		WP_1,
+		WP_NULL_HAND,
 		"",									/* precache */
 		""									/* sounds */
 	},
@@ -122,7 +122,7 @@ gitem_t	bg_itemlist[] =
 		"Tricorder",								 /* pickup */
 		AMMO_PHASER_CLIP,
 		IT_WEAPON,
-		WP_2,
+		WP_TRICORDER,
 		"",											 /* precache */
 		""											 /* sounds   */
 	},
@@ -138,7 +138,7 @@ gitem_t	bg_itemlist[] =
 		"Padd",								/* pickup */
 		AMMO_PHASER_CLIP,
 		IT_WEAPON,
-		WP_3,
+		WP_PADD,
 		"",									/* precache */
 		"",									/* sounds    */
 	},
@@ -154,7 +154,7 @@ gitem_t	bg_itemlist[] =
 		"Coffee, Black",							  /* pickup */
 		AMMO_SCAVENGER_CLIP,
 		IT_WEAPON,
-		WP_4,
+		WP_COFFEE,
 		"",											  /* precache */
 		""											  /* sounds   */
 	},
@@ -170,7 +170,7 @@ gitem_t	bg_itemlist[] =
 		"Phaser",								/* pickup */
 		AMMO_PHASER_CLIP,
 		IT_WEAPON,
-		WP_5,
+		WP_PHASER,
 		"",										/* precache */
 		""										/* sounds   */
 	},
@@ -186,7 +186,7 @@ gitem_t	bg_itemlist[] =
 		"Phaser Compression Rifle",				/* pickup */
 		AMMO_COMPRESSION_CLIP,
 		IT_WEAPON,
-		WP_6,
+		WP_COMPRESSION_RIFLE,
 		"",										/* precache */ 
 		""										/* sounds */
 	},
@@ -202,7 +202,7 @@ gitem_t	bg_itemlist[] =
 		"TR-116",								/* pickup */
 		AMMO_TETRION_CLIP,
 		IT_WEAPON,
-		WP_7,
+		WP_TR116,
 		"",										/* precache */
 		""										/* sounds */
 	},
@@ -218,7 +218,7 @@ gitem_t	bg_itemlist[] =
 		"Compound Grenade Launcher",				/* pickup */
 		AMMO_GRENADE_CLIP,
 		IT_WEAPON,
-		WP_8,
+		WP_GRENADE_LAUNCHER,
 		"",																			/* precache */
 		"sound/weapons/glauncher/bounce1.wav sound/weapons/glauncher/bounce2.wav"	/* sounds */
 	},
@@ -234,7 +234,7 @@ gitem_t	bg_itemlist[] =
 		"Photon Burst",								/* pickup */
 		AMMO_QUANTUM_CLIP,
 		IT_WEAPON,
-		WP_9,
+		WP_QUANTUM_BURST,
 		"",											/* precache */
 		""											/* sounds */
 	},
@@ -250,7 +250,7 @@ gitem_t	bg_itemlist[] =
 		"Disruptor",										/* pickup */
 		AMMO_STASIS_CLIP,
 		IT_WEAPON,
-		WP_10,
+		WP_DISRUPTOR,
 		"",													/* precache */
 		""													/* sounds */
 	},
@@ -266,7 +266,7 @@ gitem_t	bg_itemlist[] =
 		"Medkit",								/* pickup */
 		AMMO_PHASER_CLIP,
 		IT_WEAPON,
-		WP_11,
+		WP_MEDKIT,
 		"",										/* precache */
 		""										/* sounds */
 	},
@@ -282,7 +282,7 @@ gitem_t	bg_itemlist[] =
 		"Hypo",											/* pickup */
 		AMMO_PHASER_CLIP,
 		IT_WEAPON,
-		WP_12,
+		WP_VOYAGER_HYPO,
 		"",												/* precache */
 		""												/* sounds */
 	},  
@@ -298,7 +298,7 @@ gitem_t	bg_itemlist[] =
 		"Dermal Regenerator",
 		AMMO_DREADNOUGHT_CLIP,
 		IT_WEAPON,
-		WP_13,
+		WP_DERMAL_REGEN,
 		"",		/* precache */
 		""		/* sounds */
 	},
@@ -314,7 +314,7 @@ gitem_t	bg_itemlist[] =
 		"Toolkit",									/* pickup */
 		AMMO_PHASER_CLIP,
 		IT_WEAPON,
-		WP_14,
+		WP_TOOLKIT,
 		"",											/* precache */
 		""											/* sounds */
 	},
@@ -330,7 +330,7 @@ gitem_t	bg_itemlist[] =
 		"Hyperspanner",										/* pickup */
 		AMMO_PHASER_CLIP,
 		IT_WEAPON,
-		WP_15,
+		WP_HYPERSPANNER,
 		"",													/* precache */
 		""													/* sounds */
 	},
@@ -351,7 +351,7 @@ gitem_t	bg_itemlist[] =
 		"Phaser Compression Rifle Ammo",			/* pickup */
 		AMMO_COMPRESSION_CLIP,
 		IT_AMMO,
-		WP_6,
+		WP_COMPRESSION_RIFLE,
 		"",											/* precache */
 		""											/* sounds */
 	},
@@ -368,7 +368,7 @@ gitem_t	bg_itemlist[] =
 		"I-MOD Ammo",							/* pickup */
 		AMMO_IMOD_CLIP,
 		IT_AMMO,
-		WP_1,
+		WP_NULL_HAND,
 		"",										/* precache */
 		""										/* sounds */
 	},
@@ -385,7 +385,7 @@ gitem_t	bg_itemlist[] =
 		"Scavenger Weapon Ammo",					/* pickup */
 		AMMO_SCAVENGER_CLIP,
 		IT_AMMO,
-		WP_4,
+		WP_COFFEE,
 		"",											/* precache */
 		""											/* sounds */
 	},
@@ -402,7 +402,7 @@ gitem_t	bg_itemlist[] =
 		"Stasis Weapon Ammo",					/* pickup */
 		AMMO_STASIS_CLIP,
 		IT_AMMO,
-		WP_10,
+		WP_DISRUPTOR,
 		"",										/* precache */
 		""										/* sounds */
 	},
@@ -419,7 +419,7 @@ gitem_t	bg_itemlist[] =
 		"Compound Grenade Launcher Ammo",			/* pickup */
 		AMMO_GRENADE_CLIP,
 		IT_AMMO,
-		WP_8,
+		WP_GRENADE_LAUNCHER,
 		"",											/* precache */
 		""											/* sounds */
 	},
@@ -436,7 +436,7 @@ gitem_t	bg_itemlist[] =
 		"Tetryon Pulse Disruptor Ammo",				/* pickup */
 		AMMO_TETRION_CLIP,
 		IT_AMMO,
-		WP_7,
+		WP_TR116,
 		"",											/* precache */
 		""											/* sounds */
 	},
@@ -453,7 +453,7 @@ gitem_t	bg_itemlist[] =
 		"Photon Burst Ammo",				/* pickup */
 		AMMO_QUANTUM_CLIP,
 		IT_AMMO,
-		WP_9,
+		WP_QUANTUM_BURST,
 		"",									/* precache */
 		""									/* sounds */
 	},
@@ -470,7 +470,7 @@ gitem_t	bg_itemlist[] =
 		"Dermal Regenerator Ammo",				/* pickup */
 		AMMO_DREADNOUGHT_CLIP,
 		IT_AMMO,
-		WP_13,
+		WP_DERMAL_REGEN,
 		"",										/* precache */
 		""										/* sounds */
 	},
@@ -939,21 +939,21 @@ giveItem_t	bg_giveItem[] = {
 	{ "ammo",				TYPE_AMMO,				0						},
 	{ "transporter",		TYPE_HOLDABLE,			HI_TRANSPORTER			},
 	{ "forcefield",			TYPE_HOLDABLE,			HI_SHIELD				},
-	{ "phaser",				TYPE_WEAPON,			WP_5					},
-	{ "phaser_rifle",		TYPE_WEAPON,			WP_6					},
-	{ "coffee",				TYPE_WEAPON,			WP_4					},
-	{ "disruptor",			TYPE_WEAPON,			WP_10					},
-	{ "coffee",				TYPE_WEAPON,			WP_4					},
-	{ "admin_gun",			TYPE_WEAPON,			WP_8					},
-	{ "tr-116",				TYPE_WEAPON,			WP_7					},
-	{ "photon_burst",		TYPE_WEAPON,			WP_9					},
-	{ "dermal_regen",		TYPE_WEAPON,			WP_13					},
-	{ "hypospray",			TYPE_WEAPON,			WP_12					},
-	{ "toolkit",			TYPE_WEAPON,			WP_14					},
-	{ "medkit",				TYPE_WEAPON,			WP_11					},
-	{ "tricorder",			TYPE_WEAPON,			WP_2					},
-	{ "padd",				TYPE_WEAPON,			WP_3					},
-	{ "hyperspanner",		TYPE_WEAPON,			WP_15					},
+	{ "phaser",				TYPE_WEAPON,			WP_PHASER					},
+	{ "phaser_rifle",		TYPE_WEAPON,			WP_COMPRESSION_RIFLE					},
+	{ "coffee",				TYPE_WEAPON,			WP_COFFEE					},
+	{ "disruptor",			TYPE_WEAPON,			WP_DISRUPTOR					},
+	{ "coffee",				TYPE_WEAPON,			WP_COFFEE					},
+	{ "admin_gun",			TYPE_WEAPON,			WP_GRENADE_LAUNCHER					},
+	{ "tr-116",				TYPE_WEAPON,			WP_TR116					},
+	{ "photon_burst",		TYPE_WEAPON,			WP_QUANTUM_BURST					},
+	{ "dermal_regen",		TYPE_WEAPON,			WP_DERMAL_REGEN					},
+	{ "hypospray",			TYPE_WEAPON,			WP_VOYAGER_HYPO					},
+	{ "toolkit",			TYPE_WEAPON,			WP_TOOLKIT					},
+	{ "medkit",				TYPE_WEAPON,			WP_MEDKIT					},
+	{ "tricorder",			TYPE_WEAPON,			WP_TRICORDER					},
+	{ "padd",				TYPE_WEAPON,			WP_PADD					},
+	{ "hyperspanner",		TYPE_WEAPON,			WP_HYPERSPANNER					},
 	{ "cloak",				TYPE_POWERUP,			0						},
 	{ "flight",				TYPE_POWERUP,			0						},
 	{ "god",				TYPE_POWERUP,			0						}

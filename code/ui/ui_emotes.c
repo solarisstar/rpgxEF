@@ -188,7 +188,7 @@ static void PlayerEmotes_InitModel( void )
 							BOTH_STAND1, 
 							s_playerEmotes.viewAngles,
 							s_playerEmotes.moveAngles,
-							WP_0,
+							WP_NULL,
 							trap_Cvar_VariableValue( "height" ), 
 							trap_Cvar_VariableValue( "weight" ), 
 							qfalse );
@@ -217,7 +217,7 @@ static void PlayerEmotes_DrawPlayer( void ) //*self )
 
 		s_playerEmotes.viewAngles[YAW] = uis.lastYaw; //yaw
 
-		UI_PlayerInfo_SetInfo( &s_playerEmotes.playerInfo, BOTH_STAND1, BOTH_STAND1, s_playerEmotes.viewAngles, vec3_origin, WP_0, trap_Cvar_VariableValue( "height" ), trap_Cvar_VariableValue( "weight" ), qfalse );		
+		UI_PlayerInfo_SetInfo( &s_playerEmotes.playerInfo, BOTH_STAND1, BOTH_STAND1, s_playerEmotes.viewAngles, vec3_origin, WP_NULL, trap_Cvar_VariableValue( "height" ), trap_Cvar_VariableValue( "weight" ), qfalse );		
 	
 		//reload the menu just in case
 		PlayerEmotes_FillEmotesArray( s_playerEmotes.currentMenu );
@@ -282,7 +282,7 @@ static void Player_DoEmote( int emoteNum ) {
 	s_playerEmotes.playerInfo.torsoAnimationTimer = torsoTimer;
 
 	s_playerEmotes.viewAngles[YAW] = uis.lastYaw;
-	UI_PlayerInfo_SetInfo( &s_playerEmotes.playerInfo, legsAnim, torsoAnim, s_playerEmotes.viewAngles, vec3_origin, WP_0, trap_Cvar_VariableValue( "height" ), trap_Cvar_VariableValue( "weight" ), qfalse );
+	UI_PlayerInfo_SetInfo( &s_playerEmotes.playerInfo, legsAnim, torsoAnim, s_playerEmotes.viewAngles, vec3_origin, WP_NULL, trap_Cvar_VariableValue( "height" ), trap_Cvar_VariableValue( "weight" ), qfalse );
 }
 
 /*

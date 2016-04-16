@@ -369,8 +369,8 @@ static void CG_ItemPickup( int itemNum ) {
 		case 1:
 			// safe switching
 			if (	(nNewWpn > nCurWpn) &&
-					!(nNewWpn == WP_8) &&
-					!(nNewWpn == WP_9) )
+					!(nNewWpn == WP_GRENADE_LAUNCHER) &&
+					!(nNewWpn == WP_QUANTUM_BURST) )
 			{
 				// switch to new wpn
 				cg.weaponSelectTime = cg.time;
@@ -1059,7 +1059,7 @@ case EV_SHAKE_SOUND:
 
 	case EV_GRENADE_EXPLODE:
 		DEBUGNAME("EV_GRENADE_EXPLODE");
-		CG_MissileHitWall( cent, WP_8, position, normal );
+		CG_MissileHitWall( cent, WP_GRENADE_LAUNCHER, position, normal );
 		break;
 
 	case EV_GRENADE_SHRAPNEL_EXPLODE:

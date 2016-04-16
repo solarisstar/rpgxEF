@@ -70,7 +70,7 @@ void breakable_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, 
 		te = G_TempEntity( org, EV_MISSILE_MISS );
 		VectorSet( dir, 0, 0, 1 );
 		te->s.eventParm = DirToByte( dir );
-		te->s.weapon = WP_8;
+		te->s.weapon = WP_GRENADE_LAUNCHER;
 	}
 
 	if ( eShared->bmodel )

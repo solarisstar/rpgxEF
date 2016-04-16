@@ -574,26 +574,26 @@ void BotUpdateInventory(bot_state_t *bs) {
 	bs->inventory[INVENTORY_ARMOR] = bs->cur_ps.stats[STAT_ARMOR];
 
 	//weapons
-	bs->inventory[INVENTORY_GRENADELAUNCHER] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_8)) != 0;
-	bs->inventory[INVENTORY_STASIS] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_10)) != 0;
-	bs->inventory[INVENTORY_PHASER] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_5)) != 0;
-	bs->inventory[INVENTORY_DREADNOUGHT] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_13)) != 0;
-	bs->inventory[INVENTORY_IMOD] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_1)) != 0;
-	bs->inventory[INVENTORY_COMPRESSION] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_6)) != 0;
-	bs->inventory[INVENTORY_TETRION] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_7)) != 0;
-	bs->inventory[INVENTORY_SCAVENGER] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_4)) != 0;
-	bs->inventory[INVENTORY_QUANTUM] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_9)) != 0;
+	bs->inventory[INVENTORY_GRENADELAUNCHER] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_GRENADE_LAUNCHER)) != 0;
+	bs->inventory[INVENTORY_STASIS] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_DISRUPTOR)) != 0;
+	bs->inventory[INVENTORY_PHASER] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_PHASER)) != 0;
+	bs->inventory[INVENTORY_DREADNOUGHT] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_DERMAL_REGEN)) != 0;
+	bs->inventory[INVENTORY_IMOD] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_NULL_HAND)) != 0;
+	bs->inventory[INVENTORY_COMPRESSION] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_COMPRESSION_RIFLE)) != 0;
+	bs->inventory[INVENTORY_TETRION] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_TR116)) != 0;
+	bs->inventory[INVENTORY_SCAVENGER] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_COFFEE)) != 0;
+	bs->inventory[INVENTORY_QUANTUM] = (bs->cur_ps.stats[STAT_WEAPONS] & (1 << WP_QUANTUM_BURST)) != 0;
 
 	//ammo
-	bs->inventory[INVENTORY_GRENADES] = bs->cur_ps.ammo[WP_8];
-	bs->inventory[INVENTORY_STASISAMMO] = bs->cur_ps.ammo[WP_10];
-	bs->inventory[INVENTORY_PHASERAMMO] = bs->cur_ps.ammo[WP_5];
-	bs->inventory[INVENTORY_DREADNOUGHTAMMO] = bs->cur_ps.ammo[WP_13];
-	bs->inventory[INVENTORY_IMODAMMO] = bs->cur_ps.ammo[WP_1];
-	bs->inventory[INVENTORY_COMPRESSIONAMMO] = bs->cur_ps.ammo[WP_6];
-	bs->inventory[INVENTORY_TETRIONAMMO] = bs->cur_ps.ammo[WP_7];
-	bs->inventory[INVENTORY_SCAVENGERAMMO] = bs->cur_ps.ammo[WP_4];
-	bs->inventory[INVENTORY_QUANTUMAMMO] = bs->cur_ps.ammo[WP_9];
+	bs->inventory[INVENTORY_GRENADES] = bs->cur_ps.ammo[WP_GRENADE_LAUNCHER];
+	bs->inventory[INVENTORY_STASISAMMO] = bs->cur_ps.ammo[WP_DISRUPTOR];
+	bs->inventory[INVENTORY_PHASERAMMO] = bs->cur_ps.ammo[WP_PHASER];
+	bs->inventory[INVENTORY_DREADNOUGHTAMMO] = bs->cur_ps.ammo[WP_DERMAL_REGEN];
+	bs->inventory[INVENTORY_IMODAMMO] = bs->cur_ps.ammo[WP_NULL_HAND];
+	bs->inventory[INVENTORY_COMPRESSIONAMMO] = bs->cur_ps.ammo[WP_COMPRESSION_RIFLE];
+	bs->inventory[INVENTORY_TETRIONAMMO] = bs->cur_ps.ammo[WP_TR116];
+	bs->inventory[INVENTORY_SCAVENGERAMMO] = bs->cur_ps.ammo[WP_COFFEE];
+	bs->inventory[INVENTORY_QUANTUMAMMO] = bs->cur_ps.ammo[WP_QUANTUM_BURST];
 
 	//powerups
 	bs->inventory[INVENTORY_HEALTH] = bs->cur_ps.stats[STAT_HEALTH];
@@ -1244,7 +1244,7 @@ bot_moveresult_t BotAttackMove(bot_state_t *bs, int tfl) {
 	}
 
 	//if using assimilator or alt-fire hypo...
-	if ( bs->weaponnum == WP_14 || bs->weaponnum == (WP_12+WP_NUM_WEAPONS) )
+	if ( bs->weaponnum == WP_TOOLKIT || bs->weaponnum == (WP_VOYAGER_HYPO+WP_NUM_WEAPONS) )
 	{//get real close
 		attack_dist = 16;
 		attack_range = 16;
@@ -1643,34 +1643,34 @@ void BotAimAtEnemy(bot_state_t *bs) {
 	trap_BotGetWeaponInfo(bs->ws, bs->weaponnum, &wi);
 	//get the weapon specific aim accuracy and or aim skill
 
-	if (wi.number == WP_8) {
+	if (wi.number == WP_GRENADE_LAUNCHER) {
 		aim_accuracy = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_AIM_ACCURACY_GRENADELAUNCHER, 0, 1);
 		aim_skill = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_AIM_SKILL_GRENADELAUNCHER, 0, 1);
 	}
-	if (wi.number == WP_10) {
+	if (wi.number == WP_DISRUPTOR) {
 		aim_accuracy = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_AIM_ACCURACY_STASIS, 0, 1);
 		aim_skill = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_AIM_SKILL_STASIS, 0, 1);
 	}
-	if (wi.number == WP_5) {
+	if (wi.number == WP_PHASER) {
 		aim_accuracy = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_AIM_ACCURACY_PHASER, 0, 1);
 	}
-	if (wi.number == WP_1) {
+	if (wi.number == WP_NULL_HAND) {
 		aim_accuracy = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_AIM_ACCURACY_IMOD, 0, 1);
 	}
-	if (wi.number == WP_6) {
+	if (wi.number == WP_COMPRESSION_RIFLE) {
 		aim_accuracy = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_AIM_ACCURACY_COMPRESSION, 0, 1);
 	}
-	if (wi.number == WP_7) {
+	if (wi.number == WP_TR116) {
 		aim_accuracy = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_AIM_ACCURACY_TETRION, 0, 1);
 	}
-	if (wi.number == WP_13) {
+	if (wi.number == WP_DERMAL_REGEN) {
 		aim_accuracy = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_AIM_ACCURACY_DREADNOUGHT, 0, 1);
 	}
-	if (wi.number == WP_9) {
+	if (wi.number == WP_QUANTUM_BURST) {
 		aim_accuracy = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_AIM_ACCURACY_QUANTUM, 0, 1);
 		aim_skill = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_AIM_SKILL_QUANTUM, 0, 1);
 	}
-	if (wi.number == WP_4) {
+	if (wi.number == WP_COFFEE) {
 		aim_accuracy = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_AIM_ACCURACY_SCAVENGER, 0, 1);
 	}
 
@@ -1818,8 +1818,8 @@ void BotAimAtEnemy(bot_state_t *bs) {
 		//if the bot is skilled anough
 		if (aim_skill > 0.5) {
 			//do prediction shots around corners
-			if (wi.number == WP_10 ||
-				wi.number == WP_8)
+			if (wi.number == WP_DISRUPTOR ||
+				wi.number == WP_GRENADE_LAUNCHER)
 			{
 				//create the chase goal
 				goal.entitynum = bs->client;
@@ -1850,8 +1850,8 @@ void BotAimAtEnemy(bot_state_t *bs) {
 	//get aim direction
 	VectorSubtract(bestorigin, bs->eye, dir);
 	// kef -- fixme. i'm guessing this is listing all of the instant-hit weapons?
-	if (wi.number == WP_5 ||
-		wi.number == WP_1) {
+	if (wi.number == WP_PHASER ||
+		wi.number == WP_NULL_HAND) {
 		//distance towards the enemy
 		dist = VectorLength(dir);
 		if (dist > 150) dist = 150;
