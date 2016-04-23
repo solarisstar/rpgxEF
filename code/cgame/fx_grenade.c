@@ -195,7 +195,7 @@ void FX_GrenadeShrapnelExplode( vec3_t origin, vec3_t norm )
 
 qboolean GrenadeBeep(localEntity_t *le)
 {
-	weaponInfo_t	*weaponInfo = &cg_weapons[WP_8];
+	weaponInfo_t	*weaponInfo = &cg_weapons[WP_GRENADE_LAUNCHER];
 
 	trap_S_StartSound(le->refEntity.origin, ENTITYNUM_WORLD, CHAN_AUTO, weaponInfo->altHitSound);
 	return qtrue;

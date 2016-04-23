@@ -387,7 +387,7 @@ void G_Client_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, i
 
 		self->takedamage = qfalse;
 
-		ps->weapon = WP_0;
+		ps->weapon = WP_NULL;
 		ps->weaponstate = WEAPON_READY;
 		self->r.contents = CONTENTS_CORPSE;
 
@@ -650,7 +650,7 @@ void G_Client_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, i
 
 		self->takedamage = qtrue;	// can still be gibbed
 
-		self->s.weapon = WP_0;
+		self->s.weapon = WP_NULL;
 		self->s.powerups = 0;
 		self->r.contents = CONTENTS_CORPSE;
 
@@ -825,47 +825,47 @@ static qboolean G_CheckBorgAdaptation( gentity_t *targ, int mod )
 	// Trek weapons
 	case MOD_PHASER:
 	case MOD_PHASER_ALT:
-		weapon = WP_5;
+		weapon = WP_PHASER;
 		break;
 	case MOD_CRIFLE:
 	case MOD_CRIFLE_SPLASH:
 	case MOD_CRIFLE_ALT:
 	case MOD_CRIFLE_ALT_SPLASH:
-		weapon = WP_6;
+		weapon = WP_COMPRESSION_RIFLE;
 		break;
 	case MOD_SCAVENGER:
 	case MOD_SCAVENGER_ALT:
 	case MOD_SCAVENGER_ALT_SPLASH:
 	case MOD_SEEKER:
-		weapon = WP_4;
+		weapon = WP_COFFEE;
 		break;
 	case MOD_STASIS:
 	case MOD_STASIS_ALT:
-		weapon = WP_10;
+		weapon = WP_DISRUPTOR;
 		break;
 	case MOD_GRENADE:
 	case MOD_GRENADE_ALT:
 	case MOD_GRENADE_SPLASH:
 	case MOD_GRENADE_ALT_SPLASH:
-		weapon = WP_8;
+		weapon = WP_GRENADE_LAUNCHER;
 		break;
 	case MOD_TETRION:
 	case MOD_TETRION_ALT:
-		weapon = WP_7;
+		weapon = WP_TR116;
 		break;
 	case MOD_DREADNOUGHT:
 	case MOD_DREADNOUGHT_ALT:
-		weapon = WP_13;
+		weapon = WP_DERMAL_REGEN;
 		break;
 	case MOD_QUANTUM:
 	case MOD_QUANTUM_SPLASH:
 	case MOD_QUANTUM_ALT:
 	case MOD_QUANTUM_ALT_SPLASH:
-		weapon = WP_9;
+		weapon = WP_QUANTUM_BURST;
 		break;
 	case MOD_IMOD:
 	case MOD_IMOD_ALT:
-		weapon = WP_3;
+		weapon = WP_PADD;
 		break;
 	case MOD_ASSIMILATE:
 	case MOD_BORG:
@@ -876,28 +876,28 @@ static qboolean G_CheckBorgAdaptation( gentity_t *targ, int mod )
 
 	level.borgAdaptHits[weapon]++;
 	switch(weapon) {
-	case WP_5:
-		if(level.borgAdaptHits[WP_5] > rpg_adaptPhaserHits.integer)
+	case WP_PHASER:
+		if(level.borgAdaptHits[WP_PHASER] > rpg_adaptPhaserHits.integer)
 			return qtrue;
 		break;
-	case WP_6:
-		if(level.borgAdaptHits[WP_6] > rpg_adaptCrifleHits.integer)
+	case WP_COMPRESSION_RIFLE:
+		if(level.borgAdaptHits[WP_COMPRESSION_RIFLE] > rpg_adaptCrifleHits.integer)
 			return qtrue;
 		break;
-	case WP_10:
-		if(level.borgAdaptHits[WP_10] > rpg_adaptDisruptorHits.integer)
+	case WP_DISRUPTOR:
+		if(level.borgAdaptHits[WP_DISRUPTOR] > rpg_adaptDisruptorHits.integer)
 			return qtrue;
 		break;
-	case WP_8:
-		if(level.borgAdaptHits[WP_8] > rpg_adaptGrenadeLauncherHits.integer)
+	case WP_GRENADE_LAUNCHER:
+		if(level.borgAdaptHits[WP_GRENADE_LAUNCHER] > rpg_adaptGrenadeLauncherHits.integer)
 			return qtrue;
 		break;
-	case WP_7:
-		if(level.borgAdaptHits[WP_7] > rpg_adaptTR116Hits.integer)
+	case WP_TR116:
+		if(level.borgAdaptHits[WP_TR116] > rpg_adaptTR116Hits.integer)
 			return qtrue;
 		break;
-	case WP_9:
-		if(level.borgAdaptHits[WP_9] > rpg_adaptPhotonHits.integer)
+	case WP_QUANTUM_BURST:
+		if(level.borgAdaptHits[WP_QUANTUM_BURST] > rpg_adaptPhotonHits.integer)
 			return qtrue;
 		break;
 	default:
@@ -1291,7 +1291,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		//RPG-X: RedTechie - Custum medicrevive code
 		if(rpg_medicsrevive.integer == 1 && targ->s.eType == ET_PLAYER ){
 			if(targ->health == 1 ){ //TiM : Added Client to try and fix this stupid crashy bug
-				client->ps.stats[STAT_WEAPONS] = ( 1 << WP_0 ); //?!!!!!
+				client->ps.stats[STAT_WEAPONS] = ( 1 << WP_NULL ); //?!!!!!
 				client->ps.stats[STAT_HOLDABLE_ITEM] = HI_NONE;
 				targ->health = 1;
 				G_Client_Die( targ, inflictor, attacker, take, mod );

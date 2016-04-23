@@ -230,7 +230,7 @@ static void WP_FirePhaser( gentity_t *ent, qboolean alt_fire )
 		trEnts[0] = tr.entityNum;
 		trEntFraction[0] = tr.fraction;
 	}
-	if ( alt_fire && ent->client->ps.ammo[WP_5])
+	if ( alt_fire && ent->client->ps.ammo[WP_PHASER])
 	{	/* 
 		 * Use the ending point of the thin trace to do two more traces, 
 		 * one on either side, for actual damaging effect.
@@ -279,7 +279,7 @@ static void WP_FirePhaser( gentity_t *ent, qboolean alt_fire )
 				damage -= (int)(trEntFraction[i]*5.0);
 			}
 
-			if (!ent->client->ps.ammo[WP_5])
+			if (!ent->client->ps.ammo[WP_PHASER])
 			{
 				damage *= .35; /* weak out-of-ammo phaser */
 			}
@@ -332,7 +332,7 @@ static void FirePrifleBullet( gentity_t *ent, vec3_t start, vec3_t dir )
 	bolt->think = G_FreeEntity;
 	bolt->s.eType = ET_MISSILE;
 	bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
-	bolt->s.weapon = WP_6;
+	bolt->s.weapon = WP_COMPRESSION_RIFLE;
 	bolt->r.ownerNum = ent->s.number;
 	bolt->parent = ent;
 
@@ -393,7 +393,7 @@ static void WP_FireCompressionRifle ( gentity_t *ent, qboolean alt_fire )
 		VectorMA( temp_org, 0, up, temp_org );
 		FirePrifleBullet( ent, temp_org, dir ); /* temp_org */
 
-		G_LogWeaponFire(ent->s.number, WP_6);
+		G_LogWeaponFire(ent->s.number, WP_COMPRESSION_RIFLE);
 	}
 	else
 	{
@@ -482,7 +482,7 @@ static void FireDisruptorMissile( gentity_t *ent, vec3_t origin, vec3_t dir, int
 
 	bolt->s.eType = ET_MISSILE;
 	bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
-	bolt->s.weapon = WP_10;
+	bolt->s.weapon = WP_DISRUPTOR;
 	bolt->r.ownerNum = ent->s.number;
 	bolt->parent = ent;
 	if ( rpg_dmgFlags.integer & 32 )
@@ -582,7 +582,7 @@ static void WP_FireDisruptor( gentity_t *ent, qboolean alt_fire )
 		FireDisruptorMissile(ent, muzzle, forward, STASIS_MAIN_MISSILE_BIG);
 	}
 
-	G_LogWeaponFire(ent->s.number, WP_10);
+	G_LogWeaponFire(ent->s.number, WP_DISRUPTOR);
 }
 
 /*
@@ -777,7 +777,7 @@ static void WP_FireGrenade( gentity_t *ent, qboolean alt_fire )
 
 			/* RPG-X: RedTechie - Moved here to stop entities from being sucked up */
 			grenade->r.svFlags = SVF_USE_CURRENT_ORIGIN;
-			grenade->s.weapon = WP_8;
+			grenade->s.weapon = WP_GRENADE_LAUNCHER;
 			grenade->r.ownerNum = ent->s.number;
 			grenade->parent = ent;
 
@@ -941,7 +941,7 @@ static void WP_FireGrenade( gentity_t *ent, qboolean alt_fire )
 
 				/* RPG-X: RedTechie - Moved here to stop entities from being sucked up */
 				grenade->r.svFlags = SVF_USE_CURRENT_ORIGIN;
-				grenade->s.weapon = WP_8;
+				grenade->s.weapon = WP_GRENADE_LAUNCHER;
 				grenade->r.ownerNum = ent->s.number;
 				grenade->parent = ent;
 
@@ -961,7 +961,7 @@ static void WP_FireGrenade( gentity_t *ent, qboolean alt_fire )
 			}
 		}
 
-		G_LogWeaponFire(ent->s.number, WP_8);
+		G_LogWeaponFire(ent->s.number, WP_GRENADE_LAUNCHER);
 	}else{
 		G_LogPrintf("RPG-X WARNING: Max entities about to be hit! Restart the server ASAP or suffer a server crash!\n");
 		trap_SendServerCommand( -1, va("print \"^1RPG-X WARNING: Max entities about to be hit! Restart the server ASAP or suffer a server crash!\n\""));
@@ -1031,7 +1031,7 @@ static void WP_FireTR116( gentity_t *ent, qboolean alt_fire )
 
 	WP_FireTR116Bullet( ent, start, dir );
 
-	G_LogWeaponFire(ent->s.number, WP_7);
+	G_LogWeaponFire(ent->s.number, WP_TR116);
 }
 
 
@@ -1067,7 +1067,7 @@ static void FireQuantumBurst( gentity_t *ent, vec3_t start, vec3_t dir )
 
 	bolt->s.eType = ET_MISSILE;
 	bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
-	bolt->s.weapon = WP_9;
+	bolt->s.weapon = WP_QUANTUM_BURST;
 	bolt->r.ownerNum = ent->s.number;
 	bolt->parent = ent;
 
@@ -1258,7 +1258,7 @@ static void FireQuantumBurstAlt( gentity_t *ent, vec3_t start, vec3_t dir )
 
 	bolt->s.eType = ET_ALT_MISSILE;
 	bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
-	bolt->s.weapon = WP_9;
+	bolt->s.weapon = WP_QUANTUM_BURST;
 	bolt->r.ownerNum = ent->s.number;
 	bolt->parent = ent;
 	bolt->s.eFlags |= EF_ALT_FIRING;
@@ -1316,7 +1316,7 @@ static void WP_FireQuantumBurst( gentity_t *ent, qboolean alt_fire )
 		FireQuantumBurst( ent, start, dir );
 	}
 
-	G_LogWeaponFire(ent->s.number, WP_9);
+	G_LogWeaponFire(ent->s.number, WP_QUANTUM_BURST);
 }
 
 qboolean G_Weapon_LogAccuracyHit( gentity_t *target, gentity_t *attacker ) {
@@ -1488,7 +1488,7 @@ void G_Weapon_CalcMuzzlePoint ( gentity_t *ent, vec3_t fwd, vec3_t rt, vec3_t vu
 	VectorCopy( ent->s.pos.trBase, muzzlePoint );
 
 #if 1
-	if (weapontype > WP_0 && weapontype < WP_NUM_WEAPONS)
+	if (weapontype > WP_NULL && weapontype < WP_NUM_WEAPONS)
 	{	/* Use the table to generate the muzzlepoint; */
 		{	/* Crouching.  Use the add-to-Z method to adjust vertically. */
 			VectorMA(muzzlePoint, WP_MuzzlePoint[weapontype][0], fwd, muzzlePoint);
@@ -1639,7 +1639,7 @@ static void WP_SprayVoyagerHypo( gentity_t *ent, qboolean alt_fire )
 
 	trap_Trace ( &tr, muzzle, mins, maxs, end, ent->s.number, MASK_OPAQUE|CONTENTS_BODY|CONTENTS_ITEM|CONTENTS_CORPSE ); /*MASK_SHOT*/
 	
-	if(rpg_effectsgun.integer == 1 && IsAdmin(ent) && alt_fire == qtrue && ent->s.weapon == WP_12){
+	if(rpg_effectsgun.integer == 1 && IsAdmin(ent) && alt_fire == qtrue && ent->s.weapon == WP_VOYAGER_HYPO){
 		if(RPGEntityCount != ENTITYNUM_MAX_NORMAL-20){
 			t_ent = G_TempEntity( muzzle, EV_HYPO_PUFF );
 			t_ent->s.eventParm = qfalse; /* TiM: Event parm is holding a qboolean value for color of spray */
@@ -1680,7 +1680,7 @@ static void WP_SprayVoyagerHypo( gentity_t *ent, qboolean alt_fire )
 		if(alt_fire && rpg_hypoMelee.integer) { /* alt fire and hypo melee enabled */
 			tr_ent->health = 0;
 			G_Client_Die( tr_ent, ent, ent, 100, MOD_KNOCKOUT );
-			G_LogWeaponFire( ent->s.number, WP_12 );
+			G_LogWeaponFire( ent->s.number, WP_VOYAGER_HYPO );
 		} else { /* else just heal */
 			if ( tr_ent->health < tr_entPs->stats[STAT_MAX_HEALTH] )
 			{
@@ -1727,47 +1727,47 @@ void FireWeapon( gentity_t *ent, qboolean alt_fire )
 	switch( ent->s.weapon )
 	{
 	/* Player weapons */
-	case WP_5:
+	case WP_PHASER:
 		WP_FirePhaser( ent, alt_fire );
 		break;
-	case WP_6:
+	case WP_COMPRESSION_RIFLE:
 		WP_FireCompressionRifle( ent, alt_fire );
 		break;
-	case WP_1:
+	case WP_NULL_HAND:
 		if ( IsAdmin( ent ) && alt_fire )
 			WP_FireGrenade( ent, qfalse );
 		break;
-	case WP_4:
+	case WP_COFFEE:
 		break;
-	case WP_10:
+	case WP_DISRUPTOR:
 		WP_FireDisruptor( ent, alt_fire );
 		break;
-	case WP_8:
+	case WP_GRENADE_LAUNCHER:
 		WP_FireGrenade( ent, alt_fire );
 		break;
-	case WP_7:
+	case WP_TR116:
 		WP_FireTR116( ent, alt_fire );
 		break;
-	case WP_13:
+	case WP_DERMAL_REGEN:
 		WP_SprayVoyagerHypo( ent, alt_fire );
 		break;
-	case WP_9:
+	case WP_QUANTUM_BURST:
 		WP_FireQuantumBurst( ent, alt_fire );
 		break;
-	case WP_2:
+	case WP_TRICORDER:
 		WP_TricorderScan( ent, alt_fire );
 		break;
-	case WP_3:
+	case WP_PADD:
 		break;
-	case WP_15:
+	case WP_HYPERSPANNER:
 		WP_FireHyperspanner(ent, alt_fire);
 		break;
-	case WP_12:
+	case WP_VOYAGER_HYPO:
 		WP_SprayVoyagerHypo( ent, alt_fire );
 		break;
-	case WP_14:
+	case WP_TOOLKIT:
 		break;
-	case WP_11:
+	case WP_MEDKIT:
 		break;
 	default:
 		break;
