@@ -579,19 +579,19 @@ void Use_Shooter( gentity_t *ent, gentity_t *other, gentity_t *activator ) {
 	VectorNormalize( dir );
 
 	switch ( ent->s.weapon ) {
-	case WP_8:
+	case WP_GRENADE_LAUNCHER:
 		fire_grenade( ent, ent->s.origin, dir );
 		break;
-	case WP_10:
+	case WP_DISRUPTOR:
 		fire_rocket( ent, ent->s.origin, dir );
 		break;
-	case WP_4:
+	case WP_COFFEE:
 		fire_plasma( ent, ent->s.origin, dir );
 		break;
-	case WP_9:
+	case WP_QUANTUM_BURST:
 		fire_quantum( ent, ent->s.origin, dir );
 		break;
-	case WP_6:
+	case WP_COMPRESSION_RIFLE:
 		fire_comprifle( ent, ent->s.origin, dir );
 		break;
 	}
@@ -636,7 +636,7 @@ none
 "random" - the number of degrees of deviance from the taget. (1.0 default)
 */
 void SP_shooter_rocket( gentity_t *ent ) {
-	InitShooter( ent, WP_10 );
+	InitShooter( ent, WP_DISRUPTOR );
 }
 
 /*QUAKED shooter_plasma (1 0 0) (-16 -16 -16) (16 16 16)
@@ -651,7 +651,7 @@ none
 "random" - the number of degrees of deviance from the taget. (1.0 default)
 */
 void SP_shooter_plasma( gentity_t *ent ) {
-	InitShooter( ent, WP_6 ); //TiM : WP_4
+	InitShooter( ent, WP_COMPRESSION_RIFLE ); //TiM : WP_4
 }
 
 /*QUAKED shooter_grenade (1 0 0) (-16 -16 -16) (16 16 16)
@@ -666,7 +666,7 @@ none
 "random" - the number of degrees of deviance from the taget. (1.0 default)
 */
 void SP_shooter_grenade( gentity_t *ent ) {
-	InitShooter( ent, WP_8);
+	InitShooter( ent, WP_GRENADE_LAUNCHER);
 }
 
 /*QUAKED shooter_torpedo (1 0 0) (-16 -16 -16) (16 16 16)
@@ -681,5 +681,5 @@ none
 "random" - the number of degrees of deviance from the taget. (1.0 default)
 */
 void SP_shooter_torpedo( gentity_t *ent ) {
-	InitShooter( ent, WP_9 );
+	InitShooter( ent, WP_QUANTUM_BURST );
 }

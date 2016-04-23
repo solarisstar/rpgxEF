@@ -69,7 +69,7 @@ void turret_die ( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, in
 		te = G_TempEntity( self->r.currentOrigin, EV_MISSILE_MISS );
 		VectorSet( dir, 0, 0, 1 );
 		te->s.eventParm = DirToByte( dir );
-		te->s.weapon = WP_8;
+		te->s.weapon = WP_GRENADE_LAUNCHER;
 
 		/* G_Sound(activator, G_SoundIndex("sound/weapons/explosions/explode11.wav")); */
 	}
@@ -105,7 +105,7 @@ void turret_fire ( gentity_t *ent, vec3_t start, vec3_t dir )
 
 	bolt->s.eType = ET_MISSILE;
 	bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
-	bolt->s.weapon = WP_10;
+	bolt->s.weapon = WP_DISRUPTOR;
 	bolt->r.ownerNum = ent->s.number;
 	bolt->parent = ent;
 	bolt->damage = ent->damage;
@@ -156,7 +156,7 @@ void fturret_fire ( gentity_t *ent, vec3_t start, vec3_t dir )
 	bolt->nextthink = level.time + 10000;
 	bolt->think = G_FreeEntity;
 	bolt->s.eType = ET_MISSILE;
-	bolt->s.weapon = WP_4;
+	bolt->s.weapon = WP_COFFEE;
 	bolt->r.ownerNum = ent->s.number;
 	bolt->damage = ent->damage;
 	bolt->methodOfDeath = MOD_SCAVENGER;	/* ? */
@@ -898,17 +898,17 @@ void SP_misc_turret (gentity_t *base)
 		if ( atoi( base->team ) == TEAM_BLUE )
 		{
 			/* temp gfx and sounds */
-			RegisterItem( BG_FindItemForWeapon( WP_10 ) );	/* precache the weapon */
+			RegisterItem( BG_FindItemForWeapon( WP_DISRUPTOR ) );	/* precache the weapon */
 		}
 		else
 		{
 			/* temp gfx and sounds */
-			RegisterItem( BG_FindItemForWeapon( WP_4 ) );	/* precache the weapon */
+			RegisterItem( BG_FindItemForWeapon( WP_COFFEE ) );	/* precache the weapon */
 		}
 	}
 	else
 	{
-		RegisterItem( BG_FindItemForWeapon( WP_4 ) );	/* precache the weapon */
+		RegisterItem( BG_FindItemForWeapon( WP_COFFEE ) );	/* precache the weapon */
 	}
 }
 

@@ -1147,11 +1147,11 @@ void CG_InitModRules( void )
 {
 	if ( cgs.pModDisintegration )
 	{//don't use up ammo in disintegration mode
-		altAmmoUsage[WP_6] = 0;
+		altAmmoUsage[WP_COMPRESSION_RIFLE] = 0;
 	}
 	if ( cgs.pModSpecialties )
 	{//tripwires use more ammo
-		altAmmoUsage[WP_8] = 3;
+		altAmmoUsage[WP_GRENADE_LAUNCHER] = 3;
 	}
 }
 
@@ -1225,7 +1225,7 @@ void CG_Init( int serverMessageNum, int serverCommandSequence ) {
 
 	BG_LoadItemNames();
 
-	cg.weaponSelect = WP_1;
+	cg.weaponSelect = WP_NULL_HAND;
 
 	cgs.redflag = cgs.blueflag = -1; // For compatibily, default to unset for
 	// old servers

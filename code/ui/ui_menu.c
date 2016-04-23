@@ -1758,7 +1758,7 @@ static void Player_DrawPlayer( void ) //*self )
 		viewangles[PITCH] = 0;
 		viewangles[ROLL]  = 0;
 
-		UI_PlayerInfo_SetInfo( &s_main.playerinfo, BOTH_STAND1, BOTH_STAND1, viewangles, vec3_origin, WP_1, trap_Cvar_VariableValue( "height" ), trap_Cvar_VariableValue( "weight" ), qfalse );
+		UI_PlayerInfo_SetInfo( &s_main.playerinfo, BOTH_STAND1, BOTH_STAND1, viewangles, vec3_origin, WP_NULL_HAND, trap_Cvar_VariableValue( "height" ), trap_Cvar_VariableValue( "weight" ), qfalse );
 
 		//Player_UpdateModel( ANIM_IDLE ); //ADDDED 
 		//UI_PlayerInfo_SetInfo( &s_main.playerinfo, LEGS_IDLE, TORSO_STAND2, viewangles, vec3_origin, s_main.playerWeapon, qfalse );
@@ -1811,7 +1811,7 @@ static void Player_InitModel( void )
 	s_main.playerViewangles[ROLL] = 0;
 	s_main.playerMoveangles[YAW] = 0; //s_main.playerViewangles[YAW];
 	s_main.playerLegs		     = BOTH_STAND1;
-	s_main.playerWeapon			 = WP_0;
+	s_main.playerWeapon			 = WP_NULL;
 	s_main.playerTorso			 = BOTH_STAND1; //TORSO_STAND2
 
 	s_main.playerinfo.randomEmote = qtrue;	//play some random anims hehe
