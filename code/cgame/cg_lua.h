@@ -31,12 +31,12 @@
 #define Lua_RegConstString(L, n) (lua_pushstring(L, #n), lua_pushstring(L, n), lua_settable(L, -3))
 
 typedef struct {
-	int				id;
-	char			filename[MAX_QPATH];
-	char			*code;
-	int				code_size;
-	int				error;
-	lua_State		*L;
+    int				id;
+    char			filename[MAX_QPATH];
+    char			*code;
+    int				code_size;
+    int				error;
+    lua_State		*L;
 } lvm_t;
 
 extern lvm_t *lVM[NUM_VMS];
@@ -69,19 +69,19 @@ vec3_t		*Lua_GetVectorMisc(lua_State *L, int *index);
 
 // lua_cfx.c
 typedef struct {
-	char luaFunc[MAX_QPATH];
+    char luaFunc[MAX_QPATH];
 } cfx_t;
 
 typedef struct {
-	cfx_t **cfx;
-	int	    cnt;
+    cfx_t **cfx;
+    int	    cnt;
 } cfxList_t;
 
 void		Lua_CFX_LoadMapFxFile(void);
 
 // lua_cent.c
 typedef struct {
-	centity_t *e;
+    centity_t *e;
 } cent_t;
 
 int			Luaopen_Cent(lua_State *L);
@@ -89,7 +89,7 @@ void		Lua_PushCent(lua_State *L, centity_t *ent);
 cent_t		*Lua_GetCent(lua_State *L, int argNum);
 // lua_refent.c
 typedef struct {
-	refEntity_t *r;
+    refEntity_t *r;
 } rent_t;
 
 int			Luaopen_Rent(lua_State *L);

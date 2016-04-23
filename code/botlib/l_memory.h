@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *****************************************************************************/
 
-//#define MEMDEBUG
+ //#define MEMDEBUG
 
 #ifdef MEMDEBUG
 #define GetMemory(size)				GetMemoryDebug(size, #size, __FILE__, __LINE__);

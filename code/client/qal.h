@@ -21,7 +21,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
 
-
 #ifndef __QAL_H__
 #define __QAL_H__
 
@@ -38,12 +37,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "../AL/alc.h"
 #else
 #ifdef _MSC_VER
-  // MSVC users must install the OpenAL SDK which doesn't use the AL/*.h scheme.
-  #include <al.h>
-  #include <alc.h>
+// MSVC users must install the OpenAL SDK which doesn't use the AL/*.h scheme.
+#include <al.h>
+#include <alc.h>
 #else
-  #include <AL/al.h>
-  #include <AL/alc.h>
+#include <AL/al.h>
+#include <AL/alc.h>
 #endif
 #endif
 
@@ -247,6 +246,6 @@ extern LPALCCAPTURESAMPLES qalcCaptureSamples;
 #endif
 
 qboolean QAL_Init(const char *libname);
-void QAL_Shutdown( void );
+void QAL_Shutdown(void);
 
 #endif	// __QAL_H__

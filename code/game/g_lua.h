@@ -31,12 +31,12 @@
 #define Lua_RegConstString(L, n) (lua_pushstring(L, #n), lua_pushstring(L, n), lua_settable(L, -3))
 
 typedef struct {
-	int				id;
-	char			filename[MAX_QPATH];
-	char			*code;
-	int				code_size;
-	int				error;
-	lua_State		*L;
+    int				id;
+    char			filename[MAX_QPATH];
+    char			*code;
+    int				code_size;
+    int				error;
+    lua_State		*L;
 } lvm_t;
 
 extern lvm_t *lVM[NUM_VMS];
@@ -56,7 +56,7 @@ lvm_t				*G_LuaGetVM(lua_State *L);
 
 // lua_entity.c
 typedef struct {
-	gentity_t *e;
+    gentity_t *e;
 } lent_t;
 
 int			Luaopen_Entity(lua_State *L);
@@ -68,7 +68,7 @@ int			Luaopen_Weapons(lua_State *L);
 
 // lua_trace.c
 typedef struct {
-	trace_t *tr;
+    trace_t *tr;
 } ltrace_t;
 
 void Lua_PushTrace(lua_State * L, trace_t * tr);

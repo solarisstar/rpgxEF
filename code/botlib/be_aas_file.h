@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *****************************************************************************/
 
 #ifdef AASINTERN
-//loads the AAS file with the given name
+ //loads the AAS file with the given name
 int AAS_LoadAASFile(char *filename);
 //writes an AAS file with the given name
 qboolean AAS_WriteAASFile(char *filename);
@@ -39,4 +39,3 @@ void AAS_DumpAASData(void);
 //print AAS file information
 void AAS_FileInfo(void);
 #endif //AASINTERN
-

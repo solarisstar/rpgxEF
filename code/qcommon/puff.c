@@ -4,87 +4,87 @@
  *  2006 - Joerg Dietrich <dietrich_joerg@gmx.de>
  */
 
-/*
- * puff.c
- * Copyright (C) 2002-2004 Mark Adler
- * For conditions of distribution and use, see copyright notice in puff.h
- * version 1.8, 9 Jan 2004
- *
- * puff.c is a simple inflate written to be an unambiguous way to specify the
- * deflate format.  It is not written for speed but rather simplicity.  As a
- * side benefit, this code might actually be useful when small code is more
- * important than speed, such as bootstrap applications.  For typical deflate
- * data, zlib's inflate() is about four times as fast as puff().  zlib's
- * inflate compiles to around 20K on my machine, whereas puff.c compiles to
- * around 4K on my machine (a PowerPC using GNU cc).  If the faster decode()
- * function here is used, then puff() is only twice as slow as zlib's
- * inflate().
- *
- * All dynamically allocated memory comes from the stack.  The stack required
- * is less than 2K bytes.  This code is compatible with 16-bit int's and
- * assumes that long's are at least 32 bits.  puff.c uses the short data type,
- * assumed to be 16 bits, for arrays in order to to conserve memory.  The code
- * works whether integers are stored big endian or little endian.
- *
- * In the comments below are "Format notes" that describe the inflate process
- * and document some of the less obvious aspects of the format.  This source
- * code is meant to supplement RFC 1951, which formally describes the deflate
- * format:
- *
- *    http://www.zlib.org/rfc-deflate.html
- */
+ /*
+  * puff.c
+  * Copyright (C) 2002-2004 Mark Adler
+  * For conditions of distribution and use, see copyright notice in puff.h
+  * version 1.8, 9 Jan 2004
+  *
+  * puff.c is a simple inflate written to be an unambiguous way to specify the
+  * deflate format.  It is not written for speed but rather simplicity.  As a
+  * side benefit, this code might actually be useful when small code is more
+  * important than speed, such as bootstrap applications.  For typical deflate
+  * data, zlib's inflate() is about four times as fast as puff().  zlib's
+  * inflate compiles to around 20K on my machine, whereas puff.c compiles to
+  * around 4K on my machine (a PowerPC using GNU cc).  If the faster decode()
+  * function here is used, then puff() is only twice as slow as zlib's
+  * inflate().
+  *
+  * All dynamically allocated memory comes from the stack.  The stack required
+  * is less than 2K bytes.  This code is compatible with 16-bit int's and
+  * assumes that long's are at least 32 bits.  puff.c uses the short data type,
+  * assumed to be 16 bits, for arrays in order to to conserve memory.  The code
+  * works whether integers are stored big endian or little endian.
+  *
+  * In the comments below are "Format notes" that describe the inflate process
+  * and document some of the less obvious aspects of the format.  This source
+  * code is meant to supplement RFC 1951, which formally describes the deflate
+  * format:
+  *
+  *    http://www.zlib.org/rfc-deflate.html
+  */
 
-/*
- * Change history:
- *
- * 1.0  10 Feb 2002     - First version
- * 1.1  17 Feb 2002     - Clarifications of some comments and notes
- *                      - Update puff() dest and source pointers on negative
- *                        errors to facilitate debugging deflators
- *                      - Remove longest from struct huffman -- not needed
- *                      - Simplify offs[] index in construct()
- *                      - Add input size and checking, using longjmp() to
- *                        maintain easy readability
- *                      - Use short data type for large arrays
- *                      - Use pointers instead of long to specify source and
- *                        destination sizes to avoid arbitrary 4 GB limits
- * 1.2  17 Mar 2002     - Add faster version of decode(), doubles speed (!),
- *                        but leave simple version for readabilty
- *                      - Make sure invalid distances detected if pointers
- *                        are 16 bits
- *                      - Fix fixed codes table error
- *                      - Provide a scanning mode for determining size of
- *                        uncompressed data
- * 1.3  20 Mar 2002     - Go back to lengths for puff() parameters [Jean-loup]
- *                      - Add a puff.h file for the interface
- *                      - Add braces in puff() for else do [Jean-loup]
- *                      - Use indexes instead of pointers for readability
- * 1.4  31 Mar 2002     - Simplify construct() code set check
- *                      - Fix some comments
- *                      - Add FIXLCODES #define
- * 1.5   6 Apr 2002     - Minor comment fixes
- * 1.6   7 Aug 2002     - Minor format changes
- * 1.7   3 Mar 2003     - Added test code for distribution
- *                      - Added zlib-like license
- * 1.8   9 Jan 2004     - Added some comments on no distance codes case
- */
+  /*
+   * Change history:
+   *
+   * 1.0  10 Feb 2002     - First version
+   * 1.1  17 Feb 2002     - Clarifications of some comments and notes
+   *                      - Update puff() dest and source pointers on negative
+   *                        errors to facilitate debugging deflators
+   *                      - Remove longest from struct huffman -- not needed
+   *                      - Simplify offs[] index in construct()
+   *                      - Add input size and checking, using longjmp() to
+   *                        maintain easy readability
+   *                      - Use short data type for large arrays
+   *                      - Use pointers instead of long to specify source and
+   *                        destination sizes to avoid arbitrary 4 GB limits
+   * 1.2  17 Mar 2002     - Add faster version of decode(), doubles speed (!),
+   *                        but leave simple version for readabilty
+   *                      - Make sure invalid distances detected if pointers
+   *                        are 16 bits
+   *                      - Fix fixed codes table error
+   *                      - Provide a scanning mode for determining size of
+   *                        uncompressed data
+   * 1.3  20 Mar 2002     - Go back to lengths for puff() parameters [Jean-loup]
+   *                      - Add a puff.h file for the interface
+   *                      - Add braces in puff() for else do [Jean-loup]
+   *                      - Use indexes instead of pointers for readability
+   * 1.4  31 Mar 2002     - Simplify construct() code set check
+   *                      - Fix some comments
+   *                      - Add FIXLCODES #define
+   * 1.5   6 Apr 2002     - Minor comment fixes
+   * 1.6   7 Aug 2002     - Minor format changes
+   * 1.7   3 Mar 2003     - Added test code for distribution
+   *                      - Added zlib-like license
+   * 1.8   9 Jan 2004     - Added some comments on no distance codes case
+   */
 
 #include <setjmp.h>             /* for setjmp(), longjmp(), and jmp_buf */
 #include "puff.h"		/* prototype for puff() */
 
 #define local static            /* for local function definitions */
 
-/*
- * Maximums for allocations and loops.  It is not useful to change these --
- * they are fixed by the deflate format.
- */
+   /*
+    * Maximums for allocations and loops.  It is not useful to change these --
+    * they are fixed by the deflate format.
+    */
 #define MAXBITS 15              /* maximum bits in a code */
 #define MAXLCODES 286           /* maximum number of literal/length codes */
 #define MAXDCODES 30            /* maximum number of distance codes */
 #define MAXCODES (MAXLCODES+MAXDCODES)  /* maximum codes lengths to read */
 #define FIXLCODES 288           /* number of fixed literal/length codes */
 
-/* input and output state */
+    /* input and output state */
 struct state {
     /* output state */
     uint8_t *out;         /* output buffer */
@@ -173,8 +173,7 @@ local int32_t stored(struct state *s)
             return 1;                           /* not enough output space */
         while (len--)
             s->out[s->outcnt++] = s->in[s->incnt++];
-    }
-    else {                                      /* just scanning */
+    } else {                                      /* just scanning */
         s->outcnt += len;
         s->incnt += len;
     }
@@ -250,7 +249,7 @@ local int32_t decode(struct state *s, struct huffman *h)
             code <<= 1;
             len++;
         }
-        left = (MAXBITS+1) - len;
+        left = (MAXBITS + 1) - len;
         if (left == 0) break;
         if (s->incnt == s->inlen) longjmp(s->env, 1);   /* out of input */
         bitbuf = s->in[s->incnt++];
@@ -296,7 +295,7 @@ local int32_t construct(struct huffman *h, int16_t *length, int32_t n)
     int32_t symbol;         /* current symbol when stepping through length[] */
     int32_t len;            /* current length when stepping through h->count[] */
     int32_t left;           /* number of possible codes left of current length */
-    int16_t offs[MAXBITS+1];      /* offsets in symbol table for each length */
+    int16_t offs[MAXBITS + 1];      /* offsets in symbol table for each length */
 
     /* count number of codes of each length */
     for (len = 0; len <= MAXBITS; len++)
@@ -387,26 +386,26 @@ local int32_t construct(struct huffman *h, int16_t *length, int32_t n)
  *   defined to do the wrong thing in this case.
  */
 local int32_t codes(struct state *s,
-                struct huffman *lencode,
-                struct huffman *distcode)
+    struct huffman *lencode,
+    struct huffman *distcode)
 {
     int32_t symbol;         /* decoded symbol */
     int32_t len;            /* length for copy */
     uint32_t dist;          /* distance for copy */
     static const int16_t lens[29] = { /* Size base for length codes 257..285 */
         3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31,
-        35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258};
+        35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258 };
     static const int16_t lext[29] = { /* Extra bits for length codes 257..285 */
         0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2,
-        3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0};
+        3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0 };
     static const int16_t dists[30] = { /* Offset base for distance codes 0..29 */
         1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193,
         257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145,
-        8193, 12289, 16385, 24577};
+        8193, 12289, 16385, 24577 };
     static const int16_t dext[30] = { /* Extra bits for distance codes 0..29 */
         0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6,
         7, 7, 8, 8, 9, 9, 10, 10, 11, 11,
-        12, 12, 13, 13};
+        12, 12, 13, 13 };
 
     /* decode literals and length/distance pairs */
     do {
@@ -419,8 +418,7 @@ local int32_t codes(struct state *s,
                 s->out[s->outcnt] = symbol;
             }
             s->outcnt++;
-        }
-        else if (symbol > 256) {        /* length */
+        } else if (symbol > 256) {        /* length */
             /* get and compute length */
             symbol -= 257;
             if (symbol >= 29) return -9;        /* invalid fixed code */
@@ -440,8 +438,7 @@ local int32_t codes(struct state *s,
                     s->out[s->outcnt] = s->out[s->outcnt - dist];
                     s->outcnt++;
                 }
-            }
-            else
+            } else
                 s->outcnt += len;
         }
     } while (symbol != 256);            /* end of block symbol */
@@ -477,10 +474,10 @@ local int32_t codes(struct state *s,
 local int32_t fixed(struct state *s)
 {
     static int32_t virgin = 1;
-    static int16_t lencnt[MAXBITS+1], lensym[FIXLCODES];
-    static int16_t distcnt[MAXBITS+1], distsym[MAXDCODES];
-    static struct huffman lencode = {lencnt, lensym};
-    static struct huffman distcode = {distcnt, distsym};
+    static int16_t lencnt[MAXBITS + 1], lensym[FIXLCODES];
+    static int16_t distcnt[MAXBITS + 1], distsym[MAXDCODES];
+    static struct huffman lencode = { lencnt, lensym };
+    static struct huffman distcode = { distcnt, distsym };
 
     /* build fixed huffman tables if first call (may not be thread safe) */
     if (virgin) {
@@ -604,12 +601,12 @@ local int32_t dynamic(struct state *s)
     int32_t index;                          /* index of lengths[] */
     int32_t err;                            /* construct() return value */
     int16_t lengths[MAXCODES];            /* descriptor code lengths */
-    int16_t lencnt[MAXBITS+1], lensym[MAXLCODES];         /* lencode memory */
-    int16_t distcnt[MAXBITS+1], distsym[MAXDCODES];       /* distcode memory */
-    struct huffman lencode = {lencnt, lensym};          /* length code */
-    struct huffman distcode = {distcnt, distsym};       /* distance code */
+    int16_t lencnt[MAXBITS + 1], lensym[MAXLCODES];         /* lencode memory */
+    int16_t distcnt[MAXBITS + 1], distsym[MAXDCODES];       /* distcode memory */
+    struct huffman lencode = { lencnt, lensym };          /* length code */
+    struct huffman distcode = { distcnt, distsym };       /* distance code */
     static const int16_t order[19] =      /* permutation of code length codes */
-        {16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
+    { 16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15 };
 
     /* get number of lengths in each table, check lengths */
     nlen = bits(s, 5) + 257;
@@ -643,8 +640,7 @@ local int32_t dynamic(struct state *s)
                 if (index == 0) return -5;      /* no last length! */
                 len = lengths[index - 1];       /* last length */
                 symbol = 3 + bits(s, 2);
-            }
-            else if (symbol == 17)      /* repeat zero 3..10 times */
+            } else if (symbol == 17)      /* repeat zero 3..10 times */
                 symbol = 3 + bits(s, 3);
             else                        /* == 18, repeat zero 11..138 times */
                 symbol = 11 + bits(s, 7);
@@ -713,9 +709,9 @@ local int32_t dynamic(struct state *s)
  *   expected values to check.
  */
 int32_t puff(uint8_t  *dest,           /* pointer to destination pointer */
-             uint32_t *destlen,        /* amount of output space */
-             uint8_t  *source,         /* pointer to source data pointer */
-             uint32_t *sourcelen)      /* amount of input available */
+    uint32_t *destlen,        /* amount of output space */
+    uint8_t  *source,         /* pointer to source data pointer */
+    uint32_t *sourcelen)      /* amount of input available */
 {
     struct state s;             /* input/output state */
     int32_t last, type;             /* block information */
@@ -742,8 +738,8 @@ int32_t puff(uint8_t  *dest,           /* pointer to destination pointer */
             last = bits(&s, 1);         /* one if last block */
             type = bits(&s, 2);         /* block type 0..3 */
             err = type == 0 ? stored(&s) :
-                  (type == 1 ? fixed(&s) :
-                   (type == 2 ? dynamic(&s) :
+                (type == 1 ? fixed(&s) :
+                (type == 2 ? dynamic(&s) :
                     -1));               /* type == 3, invalid */
             if (err != 0) break;        /* return with error */
         } while (!last);
