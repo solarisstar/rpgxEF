@@ -49,7 +49,7 @@ tryagain:
 	pi->barrelModel = 0;
 	pi->flashModel = 0;
 
-	if ( weaponNum == WP_0 ) {
+	if ( weaponNum == WP_NULL ) {
 		return;
 	}
 
@@ -68,13 +68,13 @@ tryagain:
 
 	if( pi->weaponModel == 0 )
 	{
-		if( weaponNum == WP_5 )
+		if( weaponNum == WP_PHASER )
 		{
 
-			weaponNum = WP_0;
+			weaponNum = WP_NULL;
 			goto tryagain;
 		}
-		weaponNum = WP_5;
+		weaponNum = WP_PHASER;
 		goto tryagain;
 	}
 
@@ -84,39 +84,39 @@ tryagain:
 	pi->flashModel = trap_R_RegisterModel( path );
 
 	switch( weaponNum ) {
-	case WP_8:
+	case WP_GRENADE_LAUNCHER:
 		MAKERGB( pi->flashDlightColor, 0.6, 0.6, 1 );
 		break;
 
-	case WP_10:
+	case WP_DISRUPTOR:
 		MAKERGB( pi->flashDlightColor, 0.6, 0.6, 1 );
 		break;
 
-	case WP_5:
+	case WP_PHASER:
 		MAKERGB( pi->flashDlightColor, 0, 0, 0 );
 		break;
 
-	case WP_13:
+	case WP_DERMAL_REGEN:
 		MAKERGB( pi->flashDlightColor, 0.6, 0.6, 1 );
 		break;
 
-	case WP_1:
+	case WP_NULL_HAND:
 		//MAKERGB( pi->flashDlightColor, 0.6, 0.6, 1 );
 		break;
 
-	case WP_6:
+	case WP_COMPRESSION_RIFLE:
 		MAKERGB( pi->flashDlightColor, 0.16, 0.16, 1 );
 		break;
 
-	case WP_7:
+	case WP_TR116:
 		MAKERGB( pi->flashDlightColor, 0.6, 0.6, 1 );
 		break;
 
-	case WP_4:
+	case WP_COFFEE:
 		MAKERGB( pi->flashDlightColor, 1, 0.6, 0.6 );
 		break;
 
-	case WP_9:
+	case WP_QUANTUM_BURST:
 		MAKERGB( pi->flashDlightColor, 0.6, 0.6, 1 );
 		break;
 
@@ -216,10 +216,10 @@ static void UI_TorsoSequencing( playerInfo_t *pi ) {
 
 	if( currentAnim == UI_GetAnim( ANIM_ATTACK, pi->currentWeapon, qtrue ) ) {  //BOTH_ATTACK1 22 = ANIM_ATTACK
 		//if ( pi->currentWeapon == WP_0 || pi->currentWeapon == WP_5  ) 
-		if ( pi->currentWeapon != WP_6 
-			&& pi->currentWeapon != WP_7
-			&& pi->currentWeapon != WP_8
-			&& pi->currentWeapon != WP_9 )
+		if ( pi->currentWeapon != WP_COMPRESSION_RIFLE 
+			&& pi->currentWeapon != WP_TR116
+			&& pi->currentWeapon != WP_GRENADE_LAUNCHER
+			&& pi->currentWeapon != WP_QUANTUM_BURST )
 		{
 			UI_SetTorsoAnim( pi, BOTH_STAND1 ); //TORSO_STAND
 		}
@@ -905,7 +905,7 @@ void UI_DrawPlayer( float x, float y, float w, float h, vec3_t pOrigin, playerIn
 	//
 	// add the gun
 	//
-	if ( pi->currentWeapon != WP_0 ) {
+	if ( pi->currentWeapon != WP_NULL ) {
 		memset( &gun, 0, sizeof(gun) );
 		gun.hModel = pi->weaponModel;
 		VectorCopy( origin, gun.lightingOrigin );
@@ -1856,7 +1856,7 @@ void UI_PlayerInfo_SetModel( playerInfo_t *pi, const char *model ) {
 	memset( pi, 0, sizeof(*pi) );
 	UI_RegisterClientModelname( pi, model );
 	Q_strncpyz( pi->modelName, model, sizeof( pi->modelName ) );
-	pi->weapon = WP_0;
+	pi->weapon = WP_NULL;
 	pi->currentWeapon = pi->weapon;
 	pi->lastWeapon = pi->weapon;
 	pi->pendingWeapon = -1;
@@ -1927,7 +1927,7 @@ void UI_PlayerInfo_SetInfo( playerInfo_t *pi, int legsAnim, int torsoAnim, vec3_
 		pi->pendingWeapon = -1;
 		pi->weaponTimer = 0;
 	}
-	else if ( weaponNumber != WP_0 ) {
+	else if ( weaponNumber != WP_NULL ) {
 		pi->pendingWeapon = weaponNumber;
 		pi->weaponTimer = dp_realtime + UI_TIMER_WEAPON_DELAY;
 	}
@@ -1936,7 +1936,7 @@ void UI_PlayerInfo_SetInfo( playerInfo_t *pi, int legsAnim, int torsoAnim, vec3_
 
 	if ( torsoAnim == BOTH_DEATH1 || legsAnim == BOTH_DEATH1 ) {
 		torsoAnim = legsAnim = BOTH_DEATH1;
-		pi->weapon = pi->currentWeapon = WP_0;
+		pi->weapon = pi->currentWeapon = WP_NULL;
 		UI_PlayerInfo_SetWeapon( pi, pi->weapon );
 
 		jumpHeight = 0;
