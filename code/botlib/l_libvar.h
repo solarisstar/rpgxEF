@@ -29,15 +29,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *****************************************************************************/
 
-//library variable
+ //library variable
 typedef struct libvar_s
 {
-	char		*name;
-	char		*string;
-	int		flags;
-	qboolean	modified;	// set each time the cvar is changed
-	float		value;
-	struct	libvar_s *next;
+    char		*name;
+    char		*string;
+    int		flags;
+    qboolean	modified;	// set each time the cvar is changed
+    float		value;
+    struct	libvar_s *next;
 } libvar_t;
 
 //removes all library variables
@@ -60,4 +60,3 @@ void LibVarSet(char *var_name, char *value);
 qboolean LibVarChanged(char *var_name);
 //sets the library variable to unmodified
 void LibVarSetNotModified(char *var_name);
-

@@ -7,14 +7,14 @@
  * desc:		Quake3 bot AI
  *
  * $Archive: /StarTrek/Code-DM/game/ai_dmq3.h $
- * $Author: Dkramer $ 
+ * $Author: Dkramer $
  * $Revision: 2 $
  * $Modtime: 6/21/00 4:35p $
  * $Date: 6/27/00 10:06a $
  *
  *****************************************************************************/
 
-//!setup the deathmatch AI
+ //!setup the deathmatch AI
 void BotSetupDeathmatchAI(void);
 //!shutdown the deathmatch AI
 void BotShutdownDeathmatchAI(void);
@@ -131,4 +131,3 @@ extern vmCvar_t bot_challenge;
 
 extern bot_goal_t ctf_redflag;
 extern bot_goal_t ctf_blueflag;
-

@@ -1,8 +1,8 @@
 #include "g_local.h"
 
-extern void InitMover( gentity_t *ent );
-extern gentity_t *G_TestEntityPosition( gentity_t *ent );
-void func_usable_use (gentity_t *self, gentity_t *other, gentity_t *activator);
+extern void InitMover(gentity_t *ent);
+extern gentity_t *G_TestEntityPosition(gentity_t *ent);
+void func_usable_use(gentity_t *self, gentity_t *other, gentity_t *activator);
 
 /**
  * \brief Try to get solid again.
@@ -12,37 +12,36 @@ void func_usable_use (gentity_t *self, gentity_t *other, gentity_t *activator);
  *
  * @param self the entity itself
  */
-void func_wait_return_solid( gentity_t *self )
+void func_wait_return_solid(gentity_t *self)
 {
-	/* once a frame, see if it's clear. */
-	self->clipmask = CONTENTS_BODY;
-	if ( !(self->spawnflags&16) || G_TestEntityPosition( self ) == NULL )
-	{
-		trap_SetBrushModel( self, self->model );
-		InitMover( self );
-		VectorCopy( self->s.origin, self->s.pos.trBase );
-		VectorCopy( self->s.origin, self->r.currentOrigin );
-		self->r.svFlags &= ~SVF_NOCLIENT;
-		self->s.eFlags &= ~EF_NODRAW;
-		self->use = func_usable_use;
-		self->clipmask = 0;
-		/*
-		if ( self->s.eFlags & EF_ANIM_ONCE )
-		{//Start our anim
-			self->s.frame = 0;
-		}
-		*/
-		if ( !(self->spawnflags&1) && !(self->spawnflags & 1024) )
-		{/* START_OFF doesn't effect area portals */
-			trap_AdjustAreaPortalState( self, qfalse );
-		}
-	}
-	else
-	{
-		self->clipmask = 0;
-		self->think = func_wait_return_solid;
-		self->nextthink = level.time + FRAMETIME;
-	}
+    /* once a frame, see if it's clear. */
+    self->clipmask = CONTENTS_BODY;
+    if (!(self->spawnflags & 16) || G_TestEntityPosition(self) == NULL)
+    {
+        trap_SetBrushModel(self, self->model);
+        InitMover(self);
+        VectorCopy(self->s.origin, self->s.pos.trBase);
+        VectorCopy(self->s.origin, self->r.currentOrigin);
+        self->r.svFlags &= ~SVF_NOCLIENT;
+        self->s.eFlags &= ~EF_NODRAW;
+        self->use = func_usable_use;
+        self->clipmask = 0;
+        /*
+        if ( self->s.eFlags & EF_ANIM_ONCE )
+        {//Start our anim
+            self->s.frame = 0;
+        }
+        */
+        if (!(self->spawnflags & 1) && !(self->spawnflags & 1024))
+        {/* START_OFF doesn't effect area portals */
+            trap_AdjustAreaPortalState(self, qfalse);
+        }
+    } else
+    {
+        self->clipmask = 0;
+        self->think = func_wait_return_solid;
+        self->nextthink = level.time + FRAMETIME;
+    }
 }
 
 /**
@@ -52,15 +51,15 @@ void func_wait_return_solid( gentity_t *self )
  *
  * @param self the entity itself
  */
-void func_usable_think( gentity_t *self )
+void func_usable_think(gentity_t *self)
 {
-	if ( self->spawnflags & 8 )
-	{
-		/*self->r.svFlags |= SVF_PLAYER_USABLE;*/ /* Replace the usable flag */
-		self->use = func_usable_use;
-		self->think = 0; /*NULL*/
-		self->nextthink = -1;
-	}
+    if (self->spawnflags & 8)
+    {
+        /*self->r.svFlags |= SVF_PLAYER_USABLE;*/ /* Replace the usable flag */
+        self->use = func_usable_use;
+        self->think = 0; /*NULL*/
+        self->nextthink = -1;
+    }
 }
 
 /**
@@ -72,76 +71,73 @@ void func_usable_think( gentity_t *self )
  * @param another entity
  * @param activator the activating entity
  */
-void func_usable_use (gentity_t *self, gentity_t *other, gentity_t *activator)
+void func_usable_use(gentity_t *self, gentity_t *other, gentity_t *activator)
 {/* Toggle on and off */
-	/* Remap shader */
-	if(self->targetShaderName && self->targetShaderNewName) {
-		float f = level.time * 0.001;
-		AddRemap(self->targetShaderName, self->targetShaderNewName, f);
-		trap_SetConfigstring(CS_SHADERSTATE, BuildShaderStateConfig());
-	}
+    /* Remap shader */
+    if (self->targetShaderName && self->targetShaderNewName) {
+        float f = level.time * 0.001;
+        AddRemap(self->targetShaderName, self->targetShaderNewName, f);
+        trap_SetConfigstring(CS_SHADERSTATE, BuildShaderStateConfig());
+    }
 
+    /* RPG-X | GSIO01 | 09/05/2009: */
+    if (self->spawnflags & 256) { /* ADMINS_ONLY */
+        if (!IsAdmin(activator))
+            return;
+    }
 
-	/* RPG-X | GSIO01 | 09/05/2009: */
-	if(self->spawnflags & 256) { /* ADMINS_ONLY */
-		if(!IsAdmin(activator))
-			return;
-	}
+    if (self->flags & FL_LOCKED) /*  Deactivated */
+        return;
 
-	if(self->flags & FL_LOCKED) /*  Deactivated */
-		return;
+    if (self->spawnflags & 8)		/* fixme: uurrgh!!!!  that's disgusting */
+    {/* ALWAYS_ON */
+        /* Remove the ability to use the entity directly */
+        /*self->r.svFlags &= ~SVF_PLAYER_USABLE;*/
+        /*also remove ability to call any use func at all!*/
+        self->use = 0; /*NULL*/
 
-	if ( self->spawnflags & 8 )		/* fixme: uurrgh!!!!  that's disgusting */
-	{/* ALWAYS_ON */
-		/* Remove the ability to use the entity directly */
-		/*self->r.svFlags &= ~SVF_PLAYER_USABLE;*/
-		/*also remove ability to call any use func at all!*/
-		self->use = 0; /*NULL*/
-		
-		if(self->target && self->target[0])
-		{
-			if(self->spawnflags & 512)
-				G_UseTargets(self, self);
-			else
-				G_UseTargets(self, activator);
-		}
-		
-		if ( self->wait )
-		{
-			self->think = func_usable_think;
-			self->nextthink = level.time + ( self->wait * 1000 );
-		}
+        if (self->target && self->target[0])
+        {
+            if (self->spawnflags & 512)
+                G_UseTargets(self, self);
+            else
+                G_UseTargets(self, activator);
+        }
 
-		return;
-	}
-	else if ( !self->count )
-	{/*become solid again*/
-		self->count = 1;
-		func_wait_return_solid( self );
-	}
-	else
-	{
-		self->s.solid = 0;
-		self->r.contents = 0;
-		self->clipmask = 0;
-		self->r.svFlags |= SVF_NOCLIENT;
-		self->s.eFlags |= EF_NODRAW;
-		self->count = 0;
+        if (self->wait)
+        {
+            self->think = func_usable_think;
+            self->nextthink = level.time + (self->wait * 1000);
+        }
 
-		if(self->target && self->target[0])
-		{
-			if(self->spawnflags & 512)
-				G_UseTargets(self, self);
-			else
-				G_UseTargets(self, activator);
-		}
-		self->think = 0; /*NULL*/
-		self->nextthink = -1;
-		if ( !(self->spawnflags&1) && !(self->spawnflags & 1024))
-		{/* START_OFF doesn't effect area portals */
-			trap_AdjustAreaPortalState( self, qtrue );
-		}
-	}
+        return;
+    } else if (!self->count)
+    {/*become solid again*/
+        self->count = 1;
+        func_wait_return_solid(self);
+    } else
+    {
+        self->s.solid = 0;
+        self->r.contents = 0;
+        self->clipmask = 0;
+        self->r.svFlags |= SVF_NOCLIENT;
+        self->s.eFlags |= EF_NODRAW;
+        self->count = 0;
+
+        if (self->target && self->target[0])
+        {
+            if (self->spawnflags & 512)
+                G_UseTargets(self, self);
+            else
+                G_UseTargets(self, activator);
+        }
+        self->think = 0; /*NULL*/
+        self->nextthink = -1;
+        if (!(self->spawnflags & 1) && !(self->spawnflags & 1024))
+        {/* START_OFF doesn't effect area portals */
+            trap_AdjustAreaPortalState(self, qtrue);
+        }
+    }
 }
 
 /**
@@ -155,7 +151,7 @@ void func_usable_use (gentity_t *self, gentity_t *other, gentity_t *activator)
  */
 void func_usable_pain(gentity_t *self, gentity_t *attacker, int damage)
 {
-	self->use( self, attacker, attacker );
+    self->use(self, attacker, attacker);
 }
 
 /**
@@ -171,8 +167,8 @@ void func_usable_pain(gentity_t *self, gentity_t *attacker, int damage)
  */
 void func_usable_die(gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int mod)
 {
-	self->takedamage = qfalse;
-	self->use( self, inflictor, attacker );
+    self->takedamage = qfalse;
+    self->use(self, inflictor, attacker);
 }
 
 /*QUAKED func_usable (0 .5 .8) ? STARTOFF AUTOANIM x ALWAYS_ON NOBLOCKCHECK x x x ADMIN_ONLY NO_ACTIVATOR NO_AREAPORTAL DEACTIVATED
@@ -237,26 +233,26 @@ For VFX-usables these keys might be interesting:
 Sounds for consoles:
 One of the advantages with luaUse-functions is that you can play sounds on the usable you're using this comes in very handy if you'd like to for example play a sound on the turbolift-usable:
 
-	function turbocontrol(ent, other, activator) --set luaUse to turbocontrol for this to trigger
-		if ent.GetCount(entity.Find("info_turbolift")) == 1 then --for a trubolift in particular you need an external information provider as lua can't deal with bit-flags. In this case turbolift would be offline.
-		    sound.PlaySound(ent, "sound/movers/switches/voyneg.mp3", 0);
-		    game.MessagePrint(ent.GetNumber(activator), "=C= Unable to comply: The Turbolift is offline.");
-		else
-			sound.PlaySound(ent, "sound/voice/computer/tour/trblftmenu.mp3", 0);
-		end
-	end
+    function turbocontrol(ent, other, activator) --set luaUse to turbocontrol for this to trigger
+        if ent.GetCount(entity.Find("info_turbolift")) == 1 then --for a trubolift in particular you need an external information provider as lua can't deal with bit-flags. In this case turbolift would be offline.
+            sound.PlaySound(ent, "sound/movers/switches/voyneg.mp3", 0);
+            game.MessagePrint(ent.GetNumber(activator), "=C= Unable to comply: The Turbolift is offline.");
+        else
+            sound.PlaySound(ent, "sound/voice/computer/tour/trblftmenu.mp3", 0);
+        end
+    end
 
 Also if you have a (morer or less) generic console that you want to fire generic console sounds off of you can extend this script for any number of sounds of which one will be picked randomly:
 
-	function consolesounds(ent, other, activator)
-		i = qmath.irandom(1, <insert number of sounds here>);
-		if i == 1 then
-			sound.PlaySound(ent, <insert soundpath here>, 0);
-		end
-		if i == n then
-			sound.PlaySound(ent, <insert soundpath here>, 0);
-		end
-	end
+    function consolesounds(ent, other, activator)
+        i = qmath.irandom(1, <insert number of sounds here>);
+        if i == 1 then
+            sound.PlaySound(ent, <insert soundpath here>, 0);
+        end
+        if i == n then
+            sound.PlaySound(ent, <insert soundpath here>, 0);
+        end
+    end
 */
 
 /**
@@ -266,152 +262,151 @@ Also if you have a (morer or less) generic console that you want to fire generic
  *
  * @param self the entity itself
  */
-void SP_func_usable( gentity_t *self ) 
+void SP_func_usable(gentity_t *self)
 {
-	trap_SetBrushModel( self, self->model );
-	InitMover( self );
-	VectorCopy( self->s.origin, self->s.pos.trBase );
-	VectorCopy( self->s.origin, self->r.currentOrigin );
+    trap_SetBrushModel(self, self->model);
+    InitMover(self);
+    VectorCopy(self->s.origin, self->s.pos.trBase);
+    VectorCopy(self->s.origin, self->r.currentOrigin);
 
-	/*Com_Printf( "PointOrigin: { %f, %f, %f }\n", self->s.origin[0], self->s.origin[1], self->s.origin[2] );*/
+    /*Com_Printf( "PointOrigin: { %f, %f, %f }\n", self->s.origin[0], self->s.origin[1], self->s.origin[2] );*/
 
-	self->count = 1;
-	if (self->spawnflags & 1)
-	{
-		self->s.solid = 0;
-		self->r.contents = 0;
-		self->clipmask = 0;
-		self->r.svFlags |= SVF_NOCLIENT;
-		self->s.eFlags |= EF_NODRAW;
-		self->count = 0;
-	}
+    self->count = 1;
+    if (self->spawnflags & 1)
+    {
+        self->s.solid = 0;
+        self->r.contents = 0;
+        self->clipmask = 0;
+        self->r.svFlags |= SVF_NOCLIENT;
+        self->s.eFlags |= EF_NODRAW;
+        self->count = 0;
+    }
 
-	if (self->spawnflags & 2)
-	{
-		self->s.eFlags |= EF_ANIM_ALLFAST;
-	}
+    if (self->spawnflags & 2)
+    {
+        self->s.eFlags |= EF_ANIM_ALLFAST;
+    }
 
-	/*
-	if (self->spawnflags & 4)
-	{//FIXME: need to be able to do change to something when it's done?  Or not be usable until it's done?
-		self->s.eFlags |= EF_ANIM_ONCE;
-	}
-	*/
+    /*
+    if (self->spawnflags & 4)
+    {//FIXME: need to be able to do change to something when it's done?  Or not be usable until it's done?
+        self->s.eFlags |= EF_ANIM_ONCE;
+    }
+    */
 
-	self->use = func_usable_use;
+    self->use = func_usable_use;
 
-	if ( self->health )
-	{
-		self->takedamage = qtrue;
-		self->die = func_usable_die;
-		self->pain = func_usable_pain;
-	}
-	
-	/*if the map has a usables file, get the data of of that*/
-	if ( rpg_scannablePanels.integer )
-	{
-		if ( level.hasScannableFile )
-		{
-			int i = 0;
-			int j = 0;
-			int	messageNum=0;
-			int entityNum = self - g_entities;
+    if (self->health)
+    {
+        self->takedamage = qtrue;
+        self->die = func_usable_die;
+        self->pain = func_usable_pain;
+    }
 
-			self->s.weapon = 0;
+    /*if the map has a usables file, get the data of of that*/
+    if (rpg_scannablePanels.integer)
+    {
+        if (level.hasScannableFile)
+        {
+            int i = 0;
+            int j = 0;
+            int	messageNum = 0;
+            int entityNum = self - g_entities;
 
-			/*TiM - check for a message integer*/
-			G_SpawnInt( "messageNum", "0", &messageNum );
+            self->s.weapon = 0;
 
-			if(self->luaEntity)
-				messageNum = self->damage;
+            /*TiM - check for a message integer*/
+            G_SpawnInt("messageNum", "0", &messageNum);
 
-			if ( messageNum > 0 )
-			{
-				while( i < MAX_SCANNABLES )
-				{
-					if ( level.g_scannables[i] == 0 )
-						break;
+            if (self->luaEntity)
+                messageNum = self->damage;
 
-					if ( level.g_scannables[i] == messageNum )
-					{
-						self->s.weapon = i+1; /*+1 offset so 0 becomes the default error*/
-						break;
-					}
+            if (messageNum > 0)
+            {
+                while (i < MAX_SCANNABLES)
+                {
+                    if (level.g_scannables[i] == 0)
+                        break;
 
-					i++;
-				}
-			}
+                    if (level.g_scannables[i] == messageNum)
+                    {
+                        self->s.weapon = i + 1; /*+1 offset so 0 becomes the default error*/
+                        break;
+                    }
 
-			/*if no match was found, try the entities list if possible*/
-			if ( self->s.weapon == 0 && level.hasEntScannableFile )
-			{
-				i=0;
-				while( i < MAX_ENTSCANNABLES )
-				{
-					if ( !level.g_entScannables[i][0] && !level.g_entScannables[i][1] )
-						break; 
+                    i++;
+                }
+            }
 
-					if( level.g_entScannables[i][0] == entityNum )
-					{
-						j=0;
-						while ( j < MAX_SCANNABLES )
-						{
-							if ( level.g_scannables[j] == 0 )
-								break;
+            /*if no match was found, try the entities list if possible*/
+            if (self->s.weapon == 0 && level.hasEntScannableFile)
+            {
+                i = 0;
+                while (i < MAX_ENTSCANNABLES)
+                {
+                    if (!level.g_entScannables[i][0] && !level.g_entScannables[i][1])
+                        break;
 
-							if ( level.g_scannables[j] == level.g_entScannables[i][1] )
-							{
-								self->s.weapon = j+1;
-								i = MAX_ENTSCANNABLES+1; /*break the outer loop hehe*/
-								break;
-							}
+                    if (level.g_entScannables[i][0] == entityNum)
+                    {
+                        j = 0;
+                        while (j < MAX_SCANNABLES)
+                        {
+                            if (level.g_scannables[j] == 0)
+                                break;
 
-							j++;
-						}
-					}
-					
-					i++;
-				}
-			}
+                            if (level.g_scannables[j] == level.g_entScannables[i][1])
+                            {
+                                self->s.weapon = j + 1;
+                                i = MAX_ENTSCANNABLES + 1; /*break the outer loop hehe*/
+                                break;
+                            }
 
-			if ( self->s.weapon > 0 )
-			{
-				self->s.eType = ET_TRIC_STRING;
-				
-				/*DEBUG*/
-				/*G_Printf( S_COLOR_RED "Entry found for entity: %i!\n", self-g_entities );*/
+                            j++;
+                        }
+                    }
 
-				/*Set bounding box for maxs/mins on tricorder rendering*/
-				VectorCopy( self->r.mins, self->s.origin2 ); /*mins dimension*/
-				VectorCopy( self->r.maxs, self->s.angles2 ); /*maxs*/
-			}
-		}
-		else
-		{
-			/*
- 			 * TiM: Humm... hopefully in my infinite hackiness, this won't screw anything up lol.
-			 * Apparently this is the cause of Atlantis dying. The amount of scannable ents is making too
-			 * much data for Q3 to handle.
-			 * I've CVAR'd it off for now. Hopefully if/when the map gets fixed, it can be put back online.
-			 */
-			if ( self->message ) { /* If there is a message here, we gotz to get it over to CG */
-				self->s.eType = ET_TRIC_STRING; /* Set a special type we can use to identify this over on CG */
+                    i++;
+                }
+            }
 
-				/*Com_Printf( S_COLOR_RED "USABLE MESSAGE: %s\n", self->message );*/
-				self->s.time2 = G_TricStringIndex( self->message ); /* encode the message into an info string */
-				/* Set bounding box for maxs/mins on tricorder rendering */
-				VectorCopy( self->r.mins, self->s.origin2 ); /* mins dimension */
-				VectorCopy( self->r.maxs, self->s.angles2 ); /* maxs */
-			}
-		}
-	}
+            if (self->s.weapon > 0)
+            {
+                self->s.eType = ET_TRIC_STRING;
 
-	if(self->spawnflags & 2048)
-		self->flags ^= FL_LOCKED;
+                /*DEBUG*/
+                /*G_Printf( S_COLOR_RED "Entry found for entity: %i!\n", self-g_entities );*/
 
-	trap_LinkEntity (self);
+                /*Set bounding box for maxs/mins on tricorder rendering*/
+                VectorCopy(self->r.mins, self->s.origin2); /*mins dimension*/
+                VectorCopy(self->r.maxs, self->s.angles2); /*maxs*/
+            }
+        } else
+        {
+            /*
+             * TiM: Humm... hopefully in my infinite hackiness, this won't screw anything up lol.
+             * Apparently this is the cause of Atlantis dying. The amount of scannable ents is making too
+             * much data for Q3 to handle.
+             * I've CVAR'd it off for now. Hopefully if/when the map gets fixed, it can be put back online.
+             */
+            if (self->message) { /* If there is a message here, we gotz to get it over to CG */
+                self->s.eType = ET_TRIC_STRING; /* Set a special type we can use to identify this over on CG */
 
-	level.numBrushEnts++;
+                /*Com_Printf( S_COLOR_RED "USABLE MESSAGE: %s\n", self->message );*/
+                self->s.time2 = G_TricStringIndex(self->message); /* encode the message into an info string */
+                /* Set bounding box for maxs/mins on tricorder rendering */
+                VectorCopy(self->r.mins, self->s.origin2); /* mins dimension */
+                VectorCopy(self->r.maxs, self->s.angles2); /* maxs */
+            }
+        }
+    }
+
+    if (self->spawnflags & 2048)
+        self->flags ^= FL_LOCKED;
+
+    trap_LinkEntity(self);
+
+    level.numBrushEnts++;
 }
 
 /**
@@ -421,149 +416,147 @@ void SP_func_usable( gentity_t *self )
 *	\return sucessfully loaded?
 *	\author Ubergames - TiM
 */
-qboolean G_SetupUsablesStrings( void )
+qboolean G_SetupUsablesStrings(void)
 {
-	char			*serverInfo;
-	char			fileRoute[MAX_QPATH];
-	char			*buffer;
-	int				file_len;
-	char			*textPtr, *token;
-	fileHandle_t	f;
-	int				i, j;
+    char			*serverInfo;
+    char			fileRoute[MAX_QPATH];
+    char			*buffer;
+    int				file_len;
+    char			*textPtr, *token;
+    fileHandle_t	f;
+    int				i, j;
 
-	level.hasScannableFile = qfalse;
-	level.hasEntScannableFile = qfalse;
+    level.hasScannableFile = qfalse;
+    level.hasEntScannableFile = qfalse;
 
-	serverInfo = (char *)malloc(MAX_TOKEN_CHARS * sizeof(char));
-	if(!serverInfo) {
-		return qfalse;
-	}	
+    serverInfo = (char *)malloc(MAX_TOKEN_CHARS * sizeof(char));
+    if (!serverInfo) {
+        return qfalse;
+    }
 
-	/* get the map name out of the server data */
-	trap_GetServerinfo( serverInfo, MAX_TOKEN_CHARS * sizeof(char) );
+    /* get the map name out of the server data */
+    trap_GetServerinfo(serverInfo, MAX_TOKEN_CHARS * sizeof(char));
 
-	/* setup the file route */
-	Com_sprintf( fileRoute, sizeof( fileRoute ), "maps/%s.usables", Info_ValueForKey( serverInfo, "mapname" ) );
+    /* setup the file route */
+    Com_sprintf(fileRoute, sizeof(fileRoute), "maps/%s.usables", Info_ValueForKey(serverInfo, "mapname"));
 
-	file_len = trap_FS_FOpenFile( fileRoute, &f, FS_READ );
+    file_len = trap_FS_FOpenFile(fileRoute, &f, FS_READ);
 
-	free(serverInfo);
+    free(serverInfo);
 
-	/* It's assumed most maps won't have this feature, so just exit 'gracefully' */
-	if ( file_len<=1 )
-	{
-		trap_FS_FCloseFile( f );
-		/* G_Printf( S_COLOR_YELLOW "WARNING: No file named %s was found.\n", fileRoute ); */
-		return qfalse;
-	}
+    /* It's assumed most maps won't have this feature, so just exit 'gracefully' */
+    if (file_len <= 1)
+    {
+        trap_FS_FCloseFile(f);
+        /* G_Printf( S_COLOR_YELLOW "WARNING: No file named %s was found.\n", fileRoute ); */
+        return qfalse;
+    }
 
-	buffer = (char *)malloc(32000 * sizeof(char));
-	if(!buffer) {
-		trap_FS_FCloseFile(f);
-		return qfalse;
-	}
+    buffer = (char *)malloc(32000 * sizeof(char));
+    if (!buffer) {
+        trap_FS_FCloseFile(f);
+        return qfalse;
+    }
 
-	/* fill the buffer with the file data */
-	trap_FS_Read( buffer, file_len, f );
-	buffer[file_len] = '0';
+    /* fill the buffer with the file data */
+    trap_FS_Read(buffer, file_len, f);
+    buffer[file_len] = '0';
 
-	trap_FS_FCloseFile( f );
-	
-	if ( !buffer[0] )
-	{
-		G_Printf( S_COLOR_RED "ERROR: Attempted to load %s, but no data was inside!\n", fileRoute );
-		free(buffer);
-		return qfalse;
-	}
+    trap_FS_FCloseFile(f);
 
-	G_Printf( "Usables file %s located. Proceeding to load scan data.\n", fileRoute );
+    if (!buffer[0])
+    {
+        G_Printf(S_COLOR_RED "ERROR: Attempted to load %s, but no data was inside!\n", fileRoute);
+        free(buffer);
+        return qfalse;
+    }
 
-	COM_BeginParseSession();
-	textPtr = buffer;
+    G_Printf("Usables file %s located. Proceeding to load scan data.\n", fileRoute);
 
-	i = 0;	/* used for the main arrays indices */
+    COM_BeginParseSession();
+    textPtr = buffer;
 
-	while( 1 )
-	{
-		token = COM_Parse( &textPtr );
-		if ( !token[0] )
-			break;
+    i = 0;	/* used for the main arrays indices */
 
-		if ( !Q_strncmp( token, "UsableDescriptions", 18 ) )
-		{
-			token = COM_Parse( &textPtr );
-			if ( Q_strncmp( token, "{", 1 ) != 0 )
-			{
-				G_Printf( S_COLOR_RED "ERROR: UsableDescriptions had no opening brace ( { )!\n" );
-				continue;
-			}
+    while (1)
+    {
+        token = COM_Parse(&textPtr);
+        if (!token[0])
+            break;
 
-			level.hasScannableFile = qtrue;
+        if (!Q_strncmp(token, "UsableDescriptions", 18))
+        {
+            token = COM_Parse(&textPtr);
+            if (Q_strncmp(token, "{", 1) != 0)
+            {
+                G_Printf(S_COLOR_RED "ERROR: UsableDescriptions had no opening brace ( { )!\n");
+                continue;
+            }
 
-			token = COM_Parse( &textPtr );
+            level.hasScannableFile = qtrue;
 
-			/* expected format is 'id' <space> 'string' */
-			while ( Q_strncmp( token, "}", 1 ) )
-			{
-				if ( !token[0] )
-					break;
+            token = COM_Parse(&textPtr);
 
-				if ( !Q_strncmp( token, "UsableEntities", 14 ) )
-				{
-					token = COM_Parse( &textPtr );
-					if ( Q_strncmp( token, "{", 1 ) )
-					{
-						G_Printf( S_COLOR_RED "ERROR: UsableEntities had no opening brace ( { )!\n" );
-						continue;
-					}
+            /* expected format is 'id' <space> 'string' */
+            while (Q_strncmp(token, "}", 1))
+            {
+                if (!token[0])
+                    break;
 
-					level.hasEntScannableFile = qtrue;
+                if (!Q_strncmp(token, "UsableEntities", 14))
+                {
+                    token = COM_Parse(&textPtr);
+                    if (Q_strncmp(token, "{", 1))
+                    {
+                        G_Printf(S_COLOR_RED "ERROR: UsableEntities had no opening brace ( { )!\n");
+                        continue;
+                    }
 
-					token = COM_Parse( &textPtr );
+                    level.hasEntScannableFile = qtrue;
 
-					j = 0;
-					while( Q_strncmp( token, "}", 1 ) )
-					{
-						if ( !token[0] )
-							break;
+                    token = COM_Parse(&textPtr);
 
-						if ( token[0] != 'e' )
-						{
-							SkipRestOfLine( &textPtr );
-							continue;
-						}
+                    j = 0;
+                    while (Q_strncmp(token, "}", 1))
+                    {
+                        if (!token[0])
+                            break;
 
-						token++; /* skip the 'e' */
+                        if (token[0] != 'e')
+                        {
+                            SkipRestOfLine(&textPtr);
+                            continue;
+                        }
 
-						level.g_entScannables[j][0] = atoi( token );
-						token = COM_ParseExt( &textPtr, qfalse );
-						level.g_entScannables[j][1] = atoi( token );
+                        token++; /* skip the 'e' */
 
-						/* there's no way clients are scannable in here, so just validate the entry b4 proceeding */
-						if ( level.g_entScannables[j][0] > MAX_CLIENTS-1 && level.g_entScannables[j][1] > 0 )
-							j++;
+                        level.g_entScannables[j][0] = atoi(token);
+                        token = COM_ParseExt(&textPtr, qfalse);
+                        level.g_entScannables[j][1] = atoi(token);
 
-						token = COM_Parse( &textPtr );
-					}
-				}
-				else
-				{
-					level.g_scannables[i] = atoi( token );
+                        /* there's no way clients are scannable in here, so just validate the entry b4 proceeding */
+                        if (level.g_entScannables[j][0] > MAX_CLIENTS - 1 && level.g_entScannables[j][1] > 0)
+                            j++;
 
-					/* ensure a valid number was passed, else ignore it */
-					if ( level.g_scannables[i] > 0 )
-						i++;
+                        token = COM_Parse(&textPtr);
+                    }
+                } else
+                {
+                    level.g_scannables[i] = atoi(token);
 
-					/* we don't need the text on the server side */
-					SkipRestOfLine( &textPtr );
+                    /* ensure a valid number was passed, else ignore it */
+                    if (level.g_scannables[i] > 0)
+                        i++;
 
-					token = COM_Parse( &textPtr );
-				}
-			}
-		}
-	}
+                    /* we don't need the text on the server side */
+                    SkipRestOfLine(&textPtr);
 
-	free(buffer);
-	return qtrue;
+                    token = COM_Parse(&textPtr);
+                }
+            }
+        }
+    }
+
+    free(buffer);
+    return qtrue;
 }
-
