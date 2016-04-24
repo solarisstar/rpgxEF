@@ -15,7 +15,7 @@ none
 
 -----KEYS-----
 "items" - separated by ' | ', specify the items
-EG "WP_5 | WP_14" etc
+EG "WP_PHASER | WP_TOOLKIT" etc
 (Don't forget the spaces!)
 */
 void Use_Target_Give(gentity_t *ent, gentity_t *other, gentity_t *activator) {
