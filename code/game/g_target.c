@@ -26,20 +26,20 @@ void Use_Target_Give(gentity_t *ent, gentity_t *other, gentity_t *activator) {
         return;
     }
 
-    for (i = 0; i < MAX_WEAPONS; i++)
-    {
-        if ((unsigned int)(ent->s.time) & (1 << i))
-        {
+    for (i = 0; i < MAX_WEAPONS; i++) {
+        if ((unsigned int)(ent->s.time) & (1 << i)) {
             ps->stats[STAT_WEAPONS] ^= (1 << i);
 
-            if (ps->stats[STAT_WEAPONS] & (1 << i))
+            //If the player has the weapon, give it to them, else take it away
+            if (ps->stats[STAT_WEAPONS] & (1 << i)) {
                 ps->ammo[i] = 1;
-            else
+            } else {
                 ps->ammo[i] = 0;
-            continue;
+            }
         }
     }
 }
+
 //FIXME: Make the text parsed on load time. saves on resources!!
 void SP_target_give(gentity_t *ent)
 {
