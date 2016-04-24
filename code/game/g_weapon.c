@@ -168,11 +168,9 @@ static void WP_FireHyperspanner(gentity_t *ent, qboolean alt_fire) {
     }
 
     /* call G_Repair */
-    if (alt_fire) {
-        G_Repair(ent, nearest, HYPERSPANNER_ALT_RATE * modifier);
-    } else {
-        G_Repair(ent, nearest, HYPERSPANNER_RATE * modifier);
-    }
+    int repairRate = (alt_fire ? HYPERSPANNER_ALT_RATE : HYPERSPANNER_RATE) * modifier;
+    G_Repair(ent, nearest, HYPERSPANNER_ALT_RATE);
+
 
     validEnts.clear(&validEnts);
 }
