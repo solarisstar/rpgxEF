@@ -3288,7 +3288,9 @@ static void Cmd_n00b_f(gentity_t *ent)
             char conName[15];
             trap_Cvar_VariableStringBuffer(va("rpg_%sPass", g_classData[i].consoleName), conName, 15);
 
-            Q_strncpyz(target->client->origClass, ClassNameForValue(target->client->sess.sessionClass), sizeof(target->client->origClass));
+            char* classBuffer = malloc(MAX_QPATH * sizeof(char));
+            ClassNameForValue(target->client->sess.sessionClass, classBuffer);
+            Q_strncpyz(target->client->origClass, classBuffer, sizeof(target->client->origClass));
             target->client->n00bTime = level.time + (1000 * timeToBe);
             SetClass(target, conName, NULL, qfalse);
             break;
