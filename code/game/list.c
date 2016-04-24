@@ -53,6 +53,50 @@ static list_iter_p list_iterator(list_p list, char init) {
     return iter;
 }
 
+static int list_add_impl(list_p list, void* data, dataType_t type, size_t size, char end, int isPtr) {
+    lnode_p node = (lnode_p)malloc(sizeof(struct linked_node));
+
+    node->cont = (container_p)malloc(sizeof(container));
+    if (node->cont == NULL) {
+        return 0;
+    }
+
+    node->cont->type = type;
+    node->cont->pointer = isPtr;
+    if (isPtr) {
+        node->cont->data = malloc(size);
+        if (node->cont->data == NULL) {
+            return 0;
+        }
+        memcpy(node->cont->data, data, size);
+        node->cont->size = size;
+    } else {
+        node->cont->data = data;
+        node->cont->size = 0;   //Size of allocated memory
+    }
+
+    if (list->first == NULL) {
+        node->prev = NULL;
+        node->next = NULL;
+        list->first = node;
+        list->last = node;
+    } else if (end == LIST_FRONT) {
+        list->first->prev = node;
+        node->next = list->first;
+        node->prev = NULL;
+        list->first = node;
+    } else { // LIST_BACK and default 
+        list->last->next = node;
+        node->prev = list->last;
+        node->next = NULL;
+        list->last = node;
+    }
+    list->length++;
+
+    return list->length;
+}
+
+
 /**
  * Add an item with the given value, type, and size to the list.
  * The data is copied by value, so the original pointer must be freed if it
