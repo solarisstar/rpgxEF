@@ -1828,7 +1828,7 @@ void G_RestoreClientInitialStatus(gentity_t *ent)
 
     trap_GetUserinfo(ent->s.number, userinfo, sizeof(userinfo));
 
-    char* classNameBuffer = Z_Malloc(MAX_QPATH * sizeof(char));
+    char* classNameBuffer = malloc(MAX_QPATH * sizeof(char));
     ClassNameForValue(clientInitialStatus[ent->s.number].pClass, classNameBuffer);
 
     if (clientInitialStatus[ent->s.number].team != sess->sessionTeam &&
@@ -1852,7 +1852,7 @@ void G_RestoreClientInitialStatus(gentity_t *ent)
     }
 
     //free the buffer
-    Z_Free(classNameBuffer);
+    free(classNameBuffer);
 
 }
 
