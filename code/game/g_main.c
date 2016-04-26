@@ -1816,60 +1816,94 @@ void G_InitGame(int levelTime, int randomSeed, int restart) {
 
     G_InitWorldSession();
 
+    G_Printf("------- A -------\n");
+
+
     // initialize all entities for this game
     memset(g_entities, 0, MAX_GENTITIES * sizeof(g_entities[0]));
     level.gentities = g_entities;
+
+    G_Printf("------- B -------\n");
 
     // initialize all clients for this game
     level.maxclients = g_maxclients.integer;
     memset(g_clients, 0, MAX_CLIENTS * sizeof(g_clients[0]));
     level.clients = g_clients;
 
+    G_Printf("------- C -------\n");
+
     // set client fields on player ents
     for (i = 0; i < level.maxclients; i++) {
         g_entities[i].client = level.clients + i;
     }
+
+    G_Printf("------- D -------\n");
 
     // always leave room for the max number of clients,
     // even if they aren't all used, so numbers inside that
     // range are NEVER anything but clients
     level.num_entities = MAX_CLIENTS;
 
+    G_Printf("------- E -------\n");
+
     // let the server system know where the entites are
     trap_LocateGameData(level.gentities, level.num_entities, sizeof(gentity_t),
         &level.clients[0].ps, sizeof(level.clients[0]));
 
+    G_Printf("------- F -------\n");
+
     // reserve some spots for dead player bodies
     G_Client_InitBodyQue();
 
+    G_Printf("------- G -------\n");
+
     ClearRegisteredItems();
+
+    G_Printf("------- H -------\n");
 
     // parse the map usables file
     G_SetupUsablesStrings();
 
+    G_Printf("------- I -------\n");
+
     // parse the key/value pairs and spawn gentities
     G_SpawnEntitiesFromString();
+
+    G_Printf("------- J -------\n");
 
     //TiM: load a locations file, whereever possible
     G_LoadLocationsFile();
 
+    G_Printf("------- K -------\n");
+
     //GSIO: load server change file if avaible
     G_LoadServerChangeFile();
+
+    G_Printf("------- L -------\n");
 
     //GSIO: load map change file if avaible
     G_LoadMapChangeFile();
 
+    G_Printf("------- M -------\n");
+
     //GSIO: load holodeck file if avaible
     G_LoadHolodeckFile();
+
+    G_Printf("------- N -------\n");
 
     //GSIO: load timed message
     G_LoadTimedMessages();
 
+    G_Printf("------- O -------\n");
+
     // general initialization
     G_FindTeams();
 
+    G_Printf("------- P -------\n");
+
     SaveRegisteredItems();
 
+    G_Printf("------- Q -------\n");
     G_Printf("-----------------------------------\n");
 
     if (g_gametype.integer == GT_SINGLE_PLAYER || trap_Cvar_VariableIntegerValue("com_buildScript")) {
