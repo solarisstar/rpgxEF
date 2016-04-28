@@ -796,8 +796,6 @@ void SP_misc_turret(gentity_t *base)
         arm->team = teamStr;
     }
 
-
-
     head->s.eType = ET_GENERAL;
     VectorSet(head->r.mins, -8, -8, -16);
     VectorSet(head->r.maxs, 8, 8, 16);

@@ -628,7 +628,6 @@ void G_SpawnGEntityFromSpawnVars(void)
     static char *gametypeNames[] = { "ffa", "tournament", "single", "team", "ctf" };
 
     // get the next free entity
-
     ent = G_Spawn();
 
     for (i = 0; i < level.numSpawnVars; i++) {
@@ -674,7 +673,6 @@ void G_SpawnGEntityFromSpawnVars(void)
             }
         }
     }
-
 
     // move editor origin to pos
     VectorCopy(ent->s.origin, ent->s.pos.trBase);
