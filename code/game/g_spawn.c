@@ -438,7 +438,6 @@ spawn_t	spawns[] = {
 
 int     numSpawns = sizeof spawns / sizeof spawns[0] - 1;
 
-
 /*
 ===============
 G_CallSpawn
@@ -477,7 +476,6 @@ qboolean G_CallSpawn(gentity_t *ent) {
             G_SpawnItem(ent, item);
 
 #ifdef G_LUA
-
             if (ent->luaSpawn)
             {
                 LuaHook_G_EntitySpawn(ent->luaSpawn, ent->s.number);
@@ -488,12 +486,10 @@ qboolean G_CallSpawn(gentity_t *ent) {
         }
     }
 
-
     // check normal spawn functions
     for (int j = 0; j < numSpawns; j++)
     // for (s = spawns; s->name; s++)
     {
-
         spawn_t* s = &spawns[j];
         if (!s || !s->name){
             break;
@@ -888,7 +884,6 @@ void G_SpawnEntitiesFromString(void) {
     while (G_ParseSpawnVars()) {
         G_SpawnGEntityFromSpawnVars();
     }
-
 
     level.spawning = qfalse;			// any future calls to G_Spawn*() will be errors
 }
