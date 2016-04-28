@@ -436,6 +436,9 @@ spawn_t	spawns[] = {
         {0, 0}
 };
 
+int     numSpawns = sizeof spawns / sizeof spawns[0] - 1;
+
+
 /*
 ===============
 G_CallSpawn
@@ -445,7 +448,6 @@ returning qfalse if not found
 ===============
 */
 qboolean G_CallSpawn(gentity_t *ent) {
-    spawn_t	*s;
     gitem_t	*item;
 
     if (!ent->classname)
@@ -455,10 +457,19 @@ qboolean G_CallSpawn(gentity_t *ent) {
     }
 
     // check item spawn functions
-    for (item = bg_itemlist + 1; item->classname; item++)
+    for(int i = 1 ;i < bg_numItems; i++)
+    // for (item = bg_itemlist + 1; item->classname; item++)
     {
+        item = &(bg_itemlist[i]);
+
+        if (!item || !item->classname){
+            // Hit the end of usable values in the array
+            break;
+        }
+
         if (!strcmp(item->classname, ent->classname))
-        {	// found it
+        {	
+            // found it
             if (item->giType == IT_TEAM && g_gametype.integer != GT_CTF)
             {
                 return qfalse;
@@ -466,6 +477,7 @@ qboolean G_CallSpawn(gentity_t *ent) {
             G_SpawnItem(ent, item);
 
 #ifdef G_LUA
+
             if (ent->luaSpawn)
             {
                 LuaHook_G_EntitySpawn(ent->luaSpawn, ent->s.number);
@@ -476,14 +488,20 @@ qboolean G_CallSpawn(gentity_t *ent) {
         }
     }
 
+
     // check normal spawn functions
-    for (s = spawns; s->name; s++)
+    for (int j = 0; j < numSpawns; j++)
+    // for (s = spawns; s->name; s++)
     {
+
+        spawn_t* s = &spawns[j];
+        if (!s || !s->name){
+            break;
+        }
+
         if (!strcmp(s->name, ent->classname))
         {
-            // found it
             s->spawn(ent);
-
             return qtrue;
         }
     }
@@ -614,6 +632,7 @@ void G_SpawnGEntityFromSpawnVars(void)
     static char *gametypeNames[] = { "ffa", "tournament", "single", "team", "ctf" };
 
     // get the next free entity
+
     ent = G_Spawn();
 
     for (i = 0; i < level.numSpawnVars; i++) {
@@ -659,6 +678,7 @@ void G_SpawnGEntityFromSpawnVars(void)
             }
         }
     }
+
 
     // move editor origin to pos
     VectorCopy(ent->s.origin, ent->s.pos.trBase);
@@ -861,12 +881,14 @@ void G_SpawnEntitiesFromString(void) {
     if (!G_ParseSpawnVars()) {
         G_Error("SpawnEntities: no entities");
     }
+
     SP_worldspawn();
 
     // parse ents
     while (G_ParseSpawnVars()) {
         G_SpawnGEntityFromSpawnVars();
     }
+
 
     level.spawning = qfalse;			// any future calls to G_Spawn*() will be errors
 }

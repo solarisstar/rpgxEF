@@ -721,7 +721,10 @@ void SP_misc_turret(gentity_t *base)
     VectorMA(base->s.origin, -8, fwd, base->s.origin);
     G_SetOrigin(base, base->s.origin);
     trap_LinkEntity(base);
-    if (atoi(base->team) == TEAM_RED)
+
+    int team = base->team ? atoi(base->team) : TEAM_BLUE;
+
+    if (team == TEAM_RED)
     {/* red model */
         base->s.modelindex = G_ModelIndex("models/mapobjects/forge/turret.md3");
         base->s.modelindex2 = G_ModelIndex("models/mapobjects/forge/turret_d1.md3");
@@ -729,6 +732,7 @@ void SP_misc_turret(gentity_t *base)
     {/* blue model */
         base->s.modelindex = G_ModelIndex("models/mapobjects/dn/gunturret_base.md3");
     }
+
     base->s.eType = ET_GENERAL;
     /* anglespeed - how fast it can track the player, entered in degrees per second, so we divide by FRAMETIME/1000 */
     if (!base->speed)
@@ -749,7 +753,7 @@ void SP_misc_turret(gentity_t *base)
 
     /* Arm */
     /* Does nothing, not solid, gets removed when head explodes */
-    if (atoi(base->team) == TEAM_RED)
+    if (team == TEAM_RED)
     {
         bolt_arm_to_base(base, arm, FARM_FOFS, FARM_ROFS, FARM_UOFS);
         bolt_head_to_arm(arm, head, FTURR_FOFS, FTURR_ROFS, FTURR_UOFS);
@@ -761,25 +765,39 @@ void SP_misc_turret(gentity_t *base)
         /*VectorCopy( base->r.currentAngles, arm->s.apos.trBase );*/
         bolt_head_to_arm(arm, head, TURR_FOFS, TURR_ROFS, TURR_UOFS);
     }
-    if (atoi(base->team) == TEAM_RED)
+
+    if (team == TEAM_RED)
     {
         arm->s.modelindex = G_ModelIndex("models/mapobjects/forge/turret_neck.md3");
     } else
     {
         arm->s.modelindex = G_ModelIndex("models/mapobjects/dn/gunturret_arm.md3");
     }
+
+    if (base->team){
+        arm->team = base->team;
+    } else {
+        //Ugh this feels so hacky
+        char* teamStr = malloc(1+1 * sizeof(*teamStr));
+        Com_Printf("Before hacky bullshit \n");
+        memcpy(teamStr, "2\0", 2);
+        Com_Printf("After hacky bullshit \n");
+
     arm->team = base->team;
+    arm->team = base->team ? base->team : 
+                team == TEAM_RED ? "1" : "2";
 
     /* Head */
     /* Fires when enemy detected, animates, can be blown up */
     VectorCopy(base->r.currentAngles, head->s.apos.trBase);
-    if (atoi(base->team) == TEAM_RED)
+    if (team == TEAM_RED)
     {
         head->s.modelindex = G_ModelIndex("models/mapobjects/forge/turret_head.md3");
     } else
     {
         head->s.modelindex = G_ModelIndex("models/mapobjects/dn/gunturret_head.md3");
     }
+
     head->team = base->team;
     head->s.eType = ET_GENERAL;
     VectorSet(head->r.mins, -8, -8, -16);
@@ -841,7 +859,7 @@ void SP_misc_turret(gentity_t *base)
     G_SoundIndex("sound/enemies/turret/move.wav");
     G_SoundIndex("sound/enemies/turret/stop.wav");
     G_SoundIndex("sound/enemies/turret/ping.wav");
-    if (atoi(base->team) == TEAM_RED)
+    if (team == TEAM_RED)
     {
         G_SoundIndex("sound/enemies/turret/ffire.wav");
     } else
@@ -867,20 +885,14 @@ void SP_misc_turret(gentity_t *base)
     arm->activator = head->activator = base;
 
     /* FIXME: register the weapons whose effects are being used */
-    if (base->team)
+    if (team == TEAM_RED)
     {
-        if (atoi(base->team) == TEAM_BLUE)
-        {
-            /* temp gfx and sounds */
-            RegisterItem(BG_FindItemForWeapon(WP_10));	/* precache the weapon */
-        } else
-        {
-            /* temp gfx and sounds */
-            RegisterItem(BG_FindItemForWeapon(WP_4));	/* precache the weapon */
-        }
+        /* temp gfx and sounds */
+        RegisterItem(BG_FindItemForWeapon(WP_4));   /* precache the weapon */
     } else
     {
-        RegisterItem(BG_FindItemForWeapon(WP_4));	/* precache the weapon */
+        /* temp gfx and sounds */
+        RegisterItem(BG_FindItemForWeapon(WP_10));  /* precache the weapon */
     }
 }
 
