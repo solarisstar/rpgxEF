@@ -782,6 +782,7 @@ void SP_misc_turret(gentity_t *base)
         Com_Printf("Before hacky bullshit \n");
         memcpy(teamStr, "2\0", 2);
         Com_Printf("After hacky bullshit \n");
+    }
 
     arm->team = base->team;
     arm->team = base->team ? base->team : 
