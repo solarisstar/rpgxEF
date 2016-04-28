@@ -227,16 +227,7 @@ void turret_head_think(gentity_t *self)
         }
 
         VectorMA(self->r.currentOrigin, rOfs, right, muzzleSpot);
-
-        if (atoi(self->team) == TEAM_RED)
-        {
-            /*G_Sound(self, G_SoundIndex("sound/enemies/turret/ffire.wav"));*/
-            fturret_fire(self, muzzleSpot, forward);
-        } else
-        {
-            /*G_Sound(self, G_SoundIndex("sound/enemies/turret/fire.wav"));*/
-            turret_fire(self, muzzleSpot, forward);
-        }
+        turret_fire(self, muzzleSpot, forward);
     }
 
     /*next think*/
@@ -550,6 +541,8 @@ void turret_base_think(gentity_t *self)
         }
         ignore.clear(&ignore);
 
+        int team = self->team ? atoi(self->team) : TEAM_BLUE;
+
         iter = entity_list.iterator(&entity_list, LIST_FRONT);
         for (c = entity_list.next(iter); c != NULL; c = entity_list.next(iter)) {
             target = c->data;
@@ -565,11 +558,11 @@ void turret_base_think(gentity_t *self)
 
             if (target->takedamage && target->health > 0 && !(target->flags & FL_NOTARGET))
             {
-                if (!target->client && target->team && atoi(target->team) == atoi(self->team))
+                if (!target->client && target->team && atoi(target->team) == team)
                 {/* Something of ours we don't want to destroy */
                     continue;
                 }
-                if (target->client && target->client->sess.sessionTeam == atoi(self->team))
+                if (target->client && target->client->sess.sessionTeam == team)
                 {/* A bot we don't want to shoot */
                     continue;
                 }
@@ -779,14 +772,9 @@ void SP_misc_turret(gentity_t *base)
     } else {
         //Ugh this feels so hacky
         char* teamStr = malloc(1+1 * sizeof(*teamStr));
-        Com_Printf("Before hacky bullshit \n");
         memcpy(teamStr, "2\0", 2);
-        Com_Printf("After hacky bullshit \n");
+        arm->team = teamStr;
     }
-
-    arm->team = base->team;
-    arm->team = base->team ? base->team : 
-                team == TEAM_RED ? "1" : "2";
 
     /* Head */
     /* Fires when enemy detected, animates, can be blown up */
@@ -799,7 +787,17 @@ void SP_misc_turret(gentity_t *base)
         head->s.modelindex = G_ModelIndex("models/mapobjects/dn/gunturret_head.md3");
     }
 
-    head->team = base->team;
+    if (base->team){
+        head->team = base->team;
+    } else {
+        //Ugh this feels so hacky
+        char* teamStr = malloc(1+1 * sizeof(*teamStr));
+        memcpy(teamStr, "2\0", 2);
+        arm->team = teamStr;
+    }
+
+
+
     head->s.eType = ET_GENERAL;
     VectorSet(head->r.mins, -8, -8, -16);
     VectorSet(head->r.maxs, 8, 8, 16);
