@@ -292,10 +292,15 @@ static int PlayerModel_LoadAvailableModels(void) {
     */
     j = 0;
     for (i = 0; j < MAX_PLAYERMODELS && i < numFiles; i++, filePtr += fileLen + 1) {
-        fileLen = strlen(filePtr);
 
-        if (!fileLen || !filePtr)
+        if (!filePtr){
             break;
+        }
+
+        fileLen = strlen(filePtr);
+        if (fileLen <= 0){
+            break;
+        }
 
         //TiM - this shouldn't be possible
         if (strchr(filePtr, '/') || strchr(filePtr, '\\'))
@@ -1142,11 +1147,11 @@ static void PlayerModel_BuildList(void)
 
     for (i = 0; i < numdirs && s_playermodel.numChars < MAX_PLAYERCHARS; i++, dirptr += dirlen + 1)
     {
-        dirlen = strlen(dirptr);
-
         if (!dirptr) {
             break;
         }
+
+        dirlen = strlen(dirptr);
 
         if (dirlen && dirptr[dirlen - 1] == '/')
             dirptr[dirlen - 1] = '\0';
@@ -1376,7 +1381,7 @@ static void PlayerModel_SetMenuItems(void)
         //*temp++;
         temp++;
         if ((tempSkin = strchr(temp, '/')) == NULL) {
-            if (!temp || !temp[1])
+            if (!temp[1])
                 Q_strncpyz(model, DEFAULT_MODEL, 32);
             else
                 Q_strncpyz(model, temp, 32);
