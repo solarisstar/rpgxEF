@@ -538,7 +538,7 @@ static container_p list_at(list_p list, int idx) {
     container_p c = NULL;
     int i;
 
-    if (idx < 0 || idx >= list->length || list == NULL) {
+    if (idx < 0 || list == NULL || idx >= list->length) {
         return NULL;
     }
 

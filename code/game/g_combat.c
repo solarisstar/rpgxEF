@@ -1199,7 +1199,7 @@ void G_Damage(gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
         targ->client->lasthurt_mod = mod;
 
         // Modify the damage for location damage
-        if (point && targ && targ->health > 1 && attacker && take)
+        if (point && targ->health > 1 && attacker && take)
             take = G_LocationDamage(point, targ, attacker, take);
         else
             targ->client->lasthurt_location = LOCATION_NONE;

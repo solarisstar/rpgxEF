@@ -2932,12 +2932,12 @@ static void Cmd_ForceRank_f(gentity_t *ent)
 
     other = &g_entities[targetNum];
 
-    //Lets get old score first just incase
-    OldScore = other->client->ps.persistant[PERS_SCORE]; //ent
-
     if (!other || !other->inuse || !other->client) {
         return;
     }
+
+    //Lets get old score first just incase
+    OldScore = other->client->ps.persistant[PERS_SCORE]; //ent
 
     //Get the raw rank value
     trap_Argv(2, ArgStr, sizeof(ArgStr));
@@ -5082,15 +5082,15 @@ static void Cmd_MeActionLocal_f(gentity_t* ent)
     {
         OtherPlayer = &g_entities[i];			//Point OtherPlayer to next player
 
+        //Check is OtherPlayer is valid
+        if (!OtherPlayer || !OtherPlayer->inuse || !OtherPlayer->client) {
+            continue;
+        }
+
         //Send message to admins warning about command being used.
         //TiM - since double spamming is annoying, ensure that the target admin wants this alert
-        if (!OtherPlayer->client->noAdminChat && IsAdmin(OtherPlayer))
+        if (!OtherPlayer->client->noAdminChat && IsAdmin(OtherPlayer)){
             trap_SendServerCommand(-1, va("print \"%s" S_COLOR_CYAN" (locally) " S_COLOR_WHITE "%s\n\"", ent->client->pers.netname, message));
-
-        //Check is OtherPlayer is valid
-        if (!OtherPlayer || !OtherPlayer->inuse || !OtherPlayer->client)
-        {
-            continue;
         }
 
         if (trap_InPVS(ent->client->ps.origin, OtherPlayer->client->ps.origin))
@@ -5125,18 +5125,24 @@ static void Cmd_MapsList_f(gentity_t *ent)
 
     for (i = 0; i < numFiles; i++, filePtr += (len + 1))
     {
+
+        if (!fileptr){
+            return;
+        }
+
         len = strlen(filePtr);
 
-        if (len <= 0 || !filePtr)
+        if (len <= 0){
             return;
+        }
 
-        if (strchr(filePtr, '/') || strchr(filePtr, '\\'))
-        {
+        if (strchr(filePtr, '/') || strchr(filePtr, '\\')) {
             continue;
         }
 
-        if (strlen(mapList) + len + 20 >= sizeof(mapList))
+        if (strlen(mapList) + len + 20 >= sizeof(mapList)){
             break;
+        }
 
         Q_strcat(mapList, sizeof(mapList), filePtr);
         Q_strcat(mapList, sizeof(mapList), "\n");
