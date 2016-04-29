@@ -356,8 +356,8 @@ void Use_target_push(gentity_t *self, gentity_t *other, gentity_t *activator) {
         return;
     }
 
-    /* RPG-X: J2J noclip use */
-    if ((activator->client->ps.pm_type != PM_NORMAL) || (activator->client->ps.pm_type != PM_NOCLIP)) {
+    //Only do this if the player isn't spectating, noclipping etc.
+    if (activator->client->ps.pm_type != PM_NORMAL) {
         return;
     }
 
