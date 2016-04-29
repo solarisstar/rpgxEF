@@ -1863,24 +1863,29 @@ void CG_NewClientInfo(int clientNum) {
             model = "main";
             skin = "default";
         } else {
-            *model = 0; //*model++ = 0;
-            len = strlen(model);
+
+            // At least one character after the slash
+            // but it could be null terminator
+
+            model++; // Move past the slash
+            modelLen = strlen(model);
 
             //if there was a slash, but no model afterwards
-            if (!model || !model[1]) {
+            if (modelLen == 0) {
                 model = "main";
             }
 
             if ((skin = strchr(model, '/')) == NULL) {
                 skin = "default";
             } else {
-                *skin = 0; //*skin++ = 0;
+                skin++;
+                skinLen = strlen(skin);
 
-                if (!skin || !skin[1]) {
+                if (skinLen == 0) {
                     skin = "default";
                 }
 
-                Com_sprintf(model, len - strlen(skin), "%s", model);
+                Com_sprintf(model, modelLen, "%s", model);
             }
         }
 
