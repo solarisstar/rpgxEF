@@ -2516,9 +2516,9 @@ static void CheckTournement(void) {
     }
 
     if (g_gametype.integer == GT_TOURNAMENT) {
-        if (level.warmupTime == 0 || level.warmupTime != 0) {//RPG-X: RedTechie - No warmup Fail safe
+        // if (level.warmupTime == 0 || level.warmupTime != 0) {//RPG-X: RedTechie - No warmup Fail safe
             return;
-        }
+        // }
     } else if (g_gametype.integer != GT_SINGLE_PLAYER) {
         if (level.warmupTime == 0) {
             return;
