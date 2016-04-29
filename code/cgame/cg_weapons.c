@@ -459,7 +459,7 @@ void CG_RegisterItemVisuals(int itemNum) {
 
     item = &bg_itemlist[itemNum];
 
-    memset(itemInfo, 0, sizeof(&itemInfo));
+    memset(itemInfo, 0, sizeof *itemInfo);
     itemInfo->registered = qtrue;
 
     itemInfo->model = trap_R_RegisterModel(item->world_model);
@@ -2233,12 +2233,9 @@ CG_MissileHitPlayer
 */
 void CG_MissileHitPlayer(centity_t *cent, int weapon, vec3_t origin, vec3_t dir)
 {
-    if (cent)
-    {	// Showing blood is a no-no.
-//		CG_Bleed( origin, cent->currentState.otherEntityNum );
+    if (cent) {	
+        CG_MissileHitWall(cent, weapon, origin, dir);
     }
-
-    CG_MissileHitWall(cent, weapon, origin, dir);
 }
 
 /*
