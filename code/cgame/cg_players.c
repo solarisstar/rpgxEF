@@ -996,7 +996,7 @@ static qboolean CG_ParseModelDataFile(clientInfo_t *ci, const char *charName,
     while (1) {
         token = COM_Parse(&textPtr);
 
-        if (!token[0] || !token) { //we've hit the end of the file. w00t! exit!
+        if (!token || !token[0]) { //we've hit the end of the file. w00t! exit!
             break;
         }
 
