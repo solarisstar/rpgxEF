@@ -150,12 +150,14 @@ asm_instruction( powerpc_iname_t sname, const int argc, const long int *argv )
 	int argi, argj;
 
 	opcode = &powerpc_opcodes[ sname ];
-	name = opcode->name;
 
 	if ( ! opcode ) {
 		printf( "Can't find opcode %d\n", sname );
 		return ASM_ERROR_OPC;
 	}
+
+  name = opcode->name;
+
 	if ( ( opcode->flags & PPC_DEST_ARCH ) != PPC_DEST_ARCH ) {
 		printf( "opcode %s not defined for this arch\n", name );
 		return ASM_ERROR_OPC;
