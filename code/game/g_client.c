@@ -485,7 +485,7 @@ void G_Client_SetViewAngle(gentity_t *ent, vec3_t angle) {
 G_Client_Respawn
 ================
 */
-extern char *ClassNameForValue(pclass_t pClass);
+extern void ClassNameForValue(pclass_t pClass, char* buffer);
 void G_Client_Respawn(gentity_t *ent) {
     qboolean	borg = qfalse;
     gentity_t	*tent;
@@ -1828,26 +1828,32 @@ void G_RestoreClientInitialStatus(gentity_t *ent)
 
     trap_GetUserinfo(ent->s.number, userinfo, sizeof(userinfo));
 
+    char* classNameBuffer = malloc(MAX_QPATH * sizeof(char));
+    ClassNameForValue(clientInitialStatus[ent->s.number].pClass, classNameBuffer);
+
     if (clientInitialStatus[ent->s.number].team != sess->sessionTeam &&
-        clientInitialStatus[ent->s.number].pClass != sess->sessionClass)
-    {
-        SetClass(ent, ClassNameForValue(clientInitialStatus[ent->s.number].pClass), (char *)TeamName(clientInitialStatus[ent->s.number].team), qtrue);
-    } else
-    {
-        if (clientInitialStatus[ent->s.number].pClass != sess->sessionClass)
-        {
-            SetClass(ent, ClassNameForValue(clientInitialStatus[ent->s.number].pClass), NULL, qtrue);
+        clientInitialStatus[ent->s.number].pClass != sess->sessionClass){
+       
+        SetClass(ent, classNameBuffer, (char *)TeamName(clientInitialStatus[ent->s.number].team), qtrue);
+   
+    } else {
+        if (clientInitialStatus[ent->s.number].pClass != sess->sessionClass){
+            SetClass(ent, classNameBuffer, NULL, qtrue);
         }
-        if (clientInitialStatus[ent->s.number].team != sess->sessionTeam)
-        {
+        if (clientInitialStatus[ent->s.number].team != sess->sessionTeam){
             SetTeam(ent, (char *)TeamName(clientInitialStatus[ent->s.number].team));
         }
     }
+
     if (Q_stricmp(clientInitialStatus[ent->s.number].model, Info_ValueForKey(userinfo, "model")) != 0)
     {//restore the model
         Info_SetValueForKey(userinfo, "model", clientInitialStatus[ent->s.number].model);
         trap_SetUserinfo(ent->s.number, userinfo);
     }
+
+    //free the buffer
+    free(classNameBuffer);
+
 }
 
 /*
@@ -2330,7 +2336,7 @@ void G_Client_Disconnect(int32_t clientNum) {
     }
 
     trap_UnlinkEntity(ent);
-    memset(ent, 0, sizeof(ent));
+    memset(ent, 0, sizeof(*ent));
     ent->s.modelindex = 0;
     ent->inuse = qfalse;
     ent->classname = "disconnected";

@@ -416,8 +416,7 @@ with the same body models using the same animation data, the anim data will ony 
 A lot more efficient considering how many freakin more animations we introduced with this model system lol.
 ======================
 */
-//
-//static qboolean	CG_ParseAnimationFile( const char *filename, clientInfo_t *ci ) {
+
 static int	CG_ParseAnimationFile(const char* filename/*, clientInfo_t *ci*/) {
     char		*text_p, *prev;
     int			len;
@@ -451,7 +450,7 @@ static int	CG_ParseAnimationFile(const char* filename/*, clientInfo_t *ci*/) {
         return -1; //qfalse
     }
     trap_FS_Read(text, len, f);
-    text[len] = 0;
+    text[len] = '\0';
     trap_FS_FCloseFile(f);
 
     //animations = ci->animations;
@@ -463,18 +462,11 @@ static int	CG_ParseAnimationFile(const char* filename/*, clientInfo_t *ci*/) {
     Q_strncpyz(cg_animsList[cg_numAnims].animFileRoute, filename, MAX_QPATH);
 
     //flush the anims
-    memset(animations, 0, sizeof(animations));
+    memset(animations, 0, sizeof(*animations));
 
     // parse the text
     text_p = text;
     skip = 0;	// quite the compiler warning
-
-    /*
-    ci->footsteps = FOOTSTEP_NORMAL;
-    VectorClear( ci->headOffset );
-    ci->gender = GENDER_MALE;
-
-    Q_strncpyz(ci->soundPath, ci->modelName, sizeof(ci->soundPath));*/
 
     // read optional parameters
     while (1) {

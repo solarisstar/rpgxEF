@@ -754,16 +754,9 @@ qboolean SetTeam(gentity_t *ent, char *s) {
     return qtrue;
 }
 
-char *ClassNameForValue(pclass_t pClass)
+void ClassNameForValue(pclass_t pClass, char* buffer)
 {
-    char buffer[MAX_QPATH];
-    char *ptr;
-
     trap_Cvar_VariableStringBuffer(va("rpg_%sPass", g_classData[pClass].consoleName), buffer, sizeof(buffer));
-
-    ptr = buffer;
-
-    return ptr;
 }
 
 /*
@@ -3295,7 +3288,9 @@ static void Cmd_n00b_f(gentity_t *ent)
             char conName[15];
             trap_Cvar_VariableStringBuffer(va("rpg_%sPass", g_classData[i].consoleName), conName, 15);
 
-            Q_strncpyz(target->client->origClass, ClassNameForValue(target->client->sess.sessionClass), sizeof(target->client->origClass));
+            char* classBuffer = malloc(MAX_QPATH * sizeof(char));
+            ClassNameForValue(target->client->sess.sessionClass, classBuffer);
+            Q_strncpyz(target->client->origClass, classBuffer, sizeof(target->client->origClass));
             target->client->n00bTime = level.time + (1000 * timeToBe);
             SetClass(target, conName, NULL, qfalse);
             break;
@@ -4428,15 +4423,14 @@ static void Cmd_fxGun_f(gentity_t *ent) {
     Q_strncpyz(fxName, arg, sizeof(fxName));
 
     fxGunData = &ent->client->fxGunData;
+    memset(fxGunData, 0, sizeof(*fxGunData));
 
-    if (!Q_stricmp(arg, "default")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
-    } else if (!Q_stricmp(arg, "detpack")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    if (!Q_stricmp(fxName, "default")) {
+        //pass
+    } else if (!Q_stricmp(fxName, "detpack")) {
         fxGunData->eventNum = EV_DETPACK;
-    } else if (!Q_stricmp(arg, "chunks")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
-        //radius
+    } else if (!Q_stricmp(fxName, "chunks")) {
+        //type
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
             trap_SendServerCommand(ent - g_entities, "print \"Syntax: /fxGun chunks <radius> <chunk type: 1-5>\n\" ");
@@ -4450,13 +4444,12 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         trap_Argv(3, arg, sizeof(arg));
         if (!arg[0]) {
             trap_SendServerCommand(ent - g_entities, "print \"Syntax: /fxGun chunks <radius> <chunk type: 1-5>\n\" ");
-            memset(fxGunData, 0, sizeof(fxGunData));
             return;
         }
 
         fxGunData->arg_int2 = atoi(arg);
-    } else if (!Q_stricmp(arg, "sparks")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "sparks")) {
+  
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
             trap_SendServerCommand(ent - g_entities, "print \"Syntax: /fxGun sparks <spark time interval> <time length of effect> | in milliseconds\n\" ");
@@ -4473,8 +4466,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         } else {
             fxGunData->arg_int2 = FX_DEFAULT_TIME;
         }
-    } else if (!Q_stricmp(arg, "steam")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "steam")) {
         fxGunData->eventNum = EV_FX_STEAM;
 
         //optional arg for timelength
@@ -4484,8 +4476,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         } else {
             fxGunData->arg_int2 = FX_DEFAULT_TIME;
         }
-    } else if (!Q_stricmp(arg, "drips")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "drips")) {
         //type of drips
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
@@ -4514,8 +4505,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         } else {
             fxGunData->arg_int2 = FX_DEFAULT_TIME;
         }
-    } else if (!Q_stricmp(arg, "smoke")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "smoke")) {
         //smoke radius
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
@@ -4533,8 +4523,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         } else {
             fxGunData->arg_int2 = FX_DEFAULT_TIME;
         }
-    } else if (!Q_stricmp(arg, "surf_explosion")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "surf_explosion")) {
         //explosion radius
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
@@ -4556,8 +4545,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         }
 
         fxGunData->arg_float2 = atof(arg);
-    } else if (!Q_stricmp(arg, "elec_explosion")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "elec_explosion")) {
         //explosion radius
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
@@ -4567,8 +4555,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
 
         fxGunData->eventNum = EV_FX_ELECTRICAL_EXPLOSION;
         fxGunData->arg_float1 = atof(arg);
-    } else if (!Q_stricmp(arg, "fire")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "fire")) {
         //time
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
@@ -4586,8 +4573,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         } else {
             fxGunData->arg_int2 = FX_DEFAULT_TIME;
         }
-    } else if (!Q_stricmp(arg, "shake")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "shake")) {
         //time
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
@@ -4608,7 +4594,6 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         fxGunData->arg_int2 = atoi(arg);
     } else {
         trap_SendServerCommand(ent - g_entities, "print \"Syntax: /fxGun <FX_Name>\nValid Effects:\n  default\n  chunks\n  detpack\n  sparks\n  steam\n  drips\n  smoke\n  surf_explosion\n  elec_explosion \n\" ");
-        memset(fxGunData, 0, sizeof(fxGunData));
         return;
     }
 

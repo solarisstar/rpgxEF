@@ -1242,9 +1242,10 @@ static int Entity_SetParm(lua_State *L) {
 
     if (s) {
         // check if the new string fits into the existing one
-        if (strlen(s) > (strlen(parms) + 1)) {
+        int sLen = strlen(s);
+        if (sLen > (strlen(parms) + 1)) {
             // it fits so copy it
-            strncpy(s, parms, sizeof(s));
+            strncpy(s, parms, sLen);
         } else {
             // it does not fit in so alloc a new string
             s = G_NewString(parms);

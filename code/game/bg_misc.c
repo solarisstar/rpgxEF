@@ -1095,17 +1095,11 @@ qboolean	BG_PlayerTouchesItem(playerState_t *ps, entityState_t *item, int atTime
 
     BG_EvaluateTrajectory(&item->pos, atTime, origin);
 
-    /* we are ignoring ducked differences here */
-    if (ps->origin[0] - origin[0] > 44
-        || ps->origin[0] - origin[0] < -50
-        || ps->origin[1] - origin[1] > 36
-        || ps->origin[1] - origin[1] < -36
-        || ps->origin[2] - origin[2] > 36
-        || ps->origin[2] - origin[2] < -36) {
-        return qfalse;
-    }
+    int xDist = abs(ps->origin[0] - origin[0]);
+    int yDist = abs(ps->origin[1] - origin[1]);
+    int zDist = abs(ps->origin[2] - origin[2]);
 
-    return qtrue;
+    return (xDist < 50 && yDist < 36 && zDist < 36);
 }
 
 /**
@@ -1176,6 +1170,7 @@ void BG_EvaluateTrajectory(const trajectory_t *tr, int atTime, vec3_t result) {
         break;
     default:
         Com_Error(ERR_DROP, "BG_EvaluateTrajectory: unknown trType: %i", tr->trTime);
+        result[0] = result[1] = result[2] = 0;
         break;
     }
 }
@@ -1699,7 +1694,9 @@ qboolean BG_ParseRankNames(char* fileName, rankNames_t rankNames[]) {
     }
 
     memset(&charText, 0, sizeof(charText));
-    memset(rankNames, 0, sizeof(rankNames));
+    // Perhaps change this function to take size as a param, but for now
+    // the size is always MAX_RANKS.
+    memset(rankNames, 0, MAX_RANKS);
 
     trap_FS_Read(charText, file_len, f);
 
