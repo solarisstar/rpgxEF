@@ -200,8 +200,8 @@ static gentity_t *SpawnModelOnVictoryPad(gentity_t *pad, vec3_t offset, gentity_
     eState->torsoAnim = BOTH_STAND1;
 
     // fix up some weapon holding / shooting issues
-    if (eState->weapon == WP_5 || eState->weapon == WP_13 || eState->weapon == WP_0)
-        eState->weapon = WP_6;
+    if (eState->weapon == WP_PHASER || eState->weapon == WP_DERMAL_REGEN || eState->weapon == WP_NULL)
+        eState->weapon = WP_COMPRESSION_RIFLE;
 
     eState->event = 0;
     eShared->svFlags = ent->r.svFlags;

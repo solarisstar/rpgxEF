@@ -1065,7 +1065,7 @@ void ShieldTouch(gentity_t *self, gentity_t *other, trace_t *trace)
                 //RPG-X: RedTechie - Fixed free ent if medic revive on
                 if (rpg_medicsrevive.integer == 1) {
                     if (other->health <= 1) {
-                        other->client->ps.stats[STAT_WEAPONS] = (1 << WP_0);
+                        other->client->ps.stats[STAT_WEAPONS] = (1 << WP_NULL);
                         other->client->ps.stats[STAT_HOLDABLE_ITEM] = HI_NONE;
                         other->client->ps.stats[STAT_HEALTH] = other->health = 1;
                         G_Client_Die(other, other, other, 1, MOD_FORCEFIELD);
@@ -1762,7 +1762,7 @@ void ThrowWeapon(gentity_t *ent, char *txt)
         return;
     }
 
-    if (ps->weapon == WP_0 || ps->weapon == WP_1 || (ucmd->buttons & BUTTON_ATTACK)) {
+    if (ps->weapon == WP_NULL || ps->weapon == WP_NULL_HAND || (ucmd->buttons & BUTTON_ATTACK)) {
         return;
     }
 
@@ -1775,7 +1775,7 @@ void ThrowWeapon(gentity_t *ent, char *txt)
         ps->ammo[ps->weapon] -= 1;
         if (ps->ammo[ps->weapon] <= 0) {
             ps->stats[STAT_WEAPONS] &= ~(1 << ps->weapon);
-            ps->weapon = WP_1;
+            ps->weapon = WP_NULL_HAND;
             for (i = WP_NUM_WEAPONS - 1; i > 0; i--) {
                 if (ps->stats[STAT_WEAPONS] & (1 << i)) {
                     ps->weapon = i;

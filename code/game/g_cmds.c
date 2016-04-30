@@ -323,7 +323,7 @@ static void Cmd_Give_f(gentity_t *ent) {
     case TYPE_ALL:
         targEnt->health = ps->stats[STAT_MAX_HEALTH];
 
-        ps->stats[STAT_WEAPONS] = (1 << WP_NUM_WEAPONS) - 1 - (1 << WP_0);
+        ps->stats[STAT_WEAPONS] = (1 << WP_NUM_WEAPONS) - 1 - (1 << WP_NULL);
 
         //RPG-X: J2J - Added so you dont just get empty weapons
         for (i = MAX_WEAPONS - 1; i > -1; i--) { /* RPG-X | Marcin | 30/12/2008 */ // GSIO: Changed from i++ to i--
@@ -337,7 +337,7 @@ static void Cmd_Give_f(gentity_t *ent) {
         targEnt->health = ps->stats[STAT_MAX_HEALTH];
         break;
     case TYPE_WEAPONS:
-        ps->stats[STAT_WEAPONS] = (1 << WP_NUM_WEAPONS) - 1 - (1 << WP_0);
+        ps->stats[STAT_WEAPONS] = (1 << WP_NUM_WEAPONS) - 1 - (1 << WP_NULL);
 
         //RPG-X: J2J - Added so you dont just get empty weapons
         for (i = MAX_WEAPONS - 1; i > -1; i--) { // GSIO: changed from i++ to i--
@@ -579,7 +579,7 @@ static void Cmd_Kill_f(gentity_t *ent)
 
     //RPG-X: Medics revive Support for suiciding
     if (rpg_medicsrevive.integer != 0) {
-        ps->stats[STAT_WEAPONS] = (1 << WP_0);
+        ps->stats[STAT_WEAPONS] = (1 << WP_NULL);
         ps->stats[STAT_HOLDABLE_ITEM] = HI_NONE;
         ps->stats[STAT_HEALTH] = ent->health = 1;
         G_Client_Die(ent, ent, ent, 1, meansOfDeath); //MOD_SUICIDE
@@ -754,16 +754,9 @@ qboolean SetTeam(gentity_t *ent, char *s) {
     return qtrue;
 }
 
-char *ClassNameForValue(pclass_t pClass)
+void ClassNameForValue(pclass_t pClass, char* buffer)
 {
-    char buffer[MAX_QPATH];
-    char *ptr;
-
     trap_Cvar_VariableStringBuffer(va("rpg_%sPass", g_classData[pClass].consoleName), buffer, sizeof(buffer));
-
-    ptr = buffer;
-
-    return ptr;
 }
 
 /*
@@ -892,7 +885,7 @@ qboolean SetClass(gentity_t *ent, char *s, char *teamName, qboolean SaveToCvar) 
             //RPG-X: RedTechie - No respawn for n00bs set all info and frap that a n00b needs HERE this eliminates respawns for n00bs
             if (g_classData[pclass].isn00b/*pclass == PC_N00B*/) {
                 G_Client_Spawn(ent, 1, qfalse);
-                ps->stats[STAT_WEAPONS] = (1 << WP_0);
+                ps->stats[STAT_WEAPONS] = (1 << WP_NULL);
                 ps->stats[STAT_HOLDABLE_ITEM] = HI_NONE;
 
                 //Take some admin powerups away and give some n00b powerps ;)
@@ -2178,7 +2171,7 @@ static void Cmd_ForceKill_f(gentity_t *ent) {
 
             //RPG-X: Medics revive Support for suiciding
             if (rpg_medicsrevive.integer == 1) {
-                ps->stats[STAT_WEAPONS] = (1 << WP_0);
+                ps->stats[STAT_WEAPONS] = (1 << WP_NULL);
                 ps->stats[STAT_HOLDABLE_ITEM] = HI_NONE;
                 ps->stats[STAT_HEALTH] = target->health = 1;
                 G_Client_Die(target, target, target, 100000, MOD_FORCEDSUICIDE);
@@ -2219,7 +2212,7 @@ static void Cmd_ForceKill_f(gentity_t *ent) {
 
         //RPG-X: Medics revive Support for suiciding
         if (rpg_medicsrevive.integer == 1) {
-            ps->stats[STAT_WEAPONS] = (1 << WP_0);
+            ps->stats[STAT_WEAPONS] = (1 << WP_NULL);
             ps->stats[STAT_HOLDABLE_ITEM] = HI_NONE;
             ps->stats[STAT_HEALTH] = target->health = 1;
             G_Client_Die(target, target, target, 100000, MOD_FORCEDSUICIDE);
@@ -2351,7 +2344,7 @@ static void Cmd_ForceKillRadius_f(gentity_t *ent)
             OtherPlayer->flags &= ~FL_GODMODE;							//Bypass godmode (?)
             //RPG-X: Medics revive Support for suiciding
             if (rpg_medicsrevive.integer == 1) {
-                oPs->stats[STAT_WEAPONS] = (1 << WP_0);
+                oPs->stats[STAT_WEAPONS] = (1 << WP_NULL);
                 oPs->stats[STAT_HOLDABLE_ITEM] = HI_NONE;
                 oPs->stats[STAT_HEALTH] = OtherPlayer->health = 1;
                 G_Client_Die(OtherPlayer, OtherPlayer, OtherPlayer, 100000, MOD_FORCEDSUICIDE);
@@ -2371,7 +2364,7 @@ static void Cmd_ForceKillRadius_f(gentity_t *ent)
         ent->flags &= ~FL_GODMODE;							//Bypass godmode (?)
         //RPG-X: Medics revive Support for suiciding
         if (rpg_medicsrevive.integer == 1) {
-            ePs->stats[STAT_WEAPONS] = (1 << WP_0);
+            ePs->stats[STAT_WEAPONS] = (1 << WP_NULL);
             ePs->stats[STAT_HOLDABLE_ITEM] = HI_NONE;
             ePs->stats[STAT_HEALTH] = ent->health = 1;
             G_Client_Die(ent, ent, ent, 100000, MOD_FORCEDSUICIDE);
@@ -3295,7 +3288,9 @@ static void Cmd_n00b_f(gentity_t *ent)
             char conName[15];
             trap_Cvar_VariableStringBuffer(va("rpg_%sPass", g_classData[i].consoleName), conName, 15);
 
-            Q_strncpyz(target->client->origClass, ClassNameForValue(target->client->sess.sessionClass), sizeof(target->client->origClass));
+            char* classBuffer = malloc(MAX_QPATH * sizeof(char));
+            ClassNameForValue(target->client->sess.sessionClass, classBuffer);
+            Q_strncpyz(target->client->origClass, classBuffer, sizeof(target->client->origClass));
             target->client->n00bTime = level.time + (1000 * timeToBe);
             SetClass(target, conName, NULL, qfalse);
             break;
@@ -4428,15 +4423,14 @@ static void Cmd_fxGun_f(gentity_t *ent) {
     Q_strncpyz(fxName, arg, sizeof(fxName));
 
     fxGunData = &ent->client->fxGunData;
+    memset(fxGunData, 0, sizeof(*fxGunData));
 
-    if (!Q_stricmp(arg, "default")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
-    } else if (!Q_stricmp(arg, "detpack")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    if (!Q_stricmp(fxName, "default")) {
+        //pass
+    } else if (!Q_stricmp(fxName, "detpack")) {
         fxGunData->eventNum = EV_DETPACK;
-    } else if (!Q_stricmp(arg, "chunks")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
-        //radius
+    } else if (!Q_stricmp(fxName, "chunks")) {
+        //type
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
             trap_SendServerCommand(ent - g_entities, "print \"Syntax: /fxGun chunks <radius> <chunk type: 1-5>\n\" ");
@@ -4450,13 +4444,12 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         trap_Argv(3, arg, sizeof(arg));
         if (!arg[0]) {
             trap_SendServerCommand(ent - g_entities, "print \"Syntax: /fxGun chunks <radius> <chunk type: 1-5>\n\" ");
-            memset(fxGunData, 0, sizeof(fxGunData));
             return;
         }
 
         fxGunData->arg_int2 = atoi(arg);
-    } else if (!Q_stricmp(arg, "sparks")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "sparks")) {
+  
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
             trap_SendServerCommand(ent - g_entities, "print \"Syntax: /fxGun sparks <spark time interval> <time length of effect> | in milliseconds\n\" ");
@@ -4473,8 +4466,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         } else {
             fxGunData->arg_int2 = FX_DEFAULT_TIME;
         }
-    } else if (!Q_stricmp(arg, "steam")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "steam")) {
         fxGunData->eventNum = EV_FX_STEAM;
 
         //optional arg for timelength
@@ -4484,8 +4476,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         } else {
             fxGunData->arg_int2 = FX_DEFAULT_TIME;
         }
-    } else if (!Q_stricmp(arg, "drips")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "drips")) {
         //type of drips
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
@@ -4514,8 +4505,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         } else {
             fxGunData->arg_int2 = FX_DEFAULT_TIME;
         }
-    } else if (!Q_stricmp(arg, "smoke")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "smoke")) {
         //smoke radius
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
@@ -4533,8 +4523,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         } else {
             fxGunData->arg_int2 = FX_DEFAULT_TIME;
         }
-    } else if (!Q_stricmp(arg, "surf_explosion")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "surf_explosion")) {
         //explosion radius
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
@@ -4556,8 +4545,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         }
 
         fxGunData->arg_float2 = atof(arg);
-    } else if (!Q_stricmp(arg, "elec_explosion")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "elec_explosion")) {
         //explosion radius
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
@@ -4567,8 +4555,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
 
         fxGunData->eventNum = EV_FX_ELECTRICAL_EXPLOSION;
         fxGunData->arg_float1 = atof(arg);
-    } else if (!Q_stricmp(arg, "fire")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "fire")) {
         //time
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
@@ -4586,8 +4573,7 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         } else {
             fxGunData->arg_int2 = FX_DEFAULT_TIME;
         }
-    } else if (!Q_stricmp(arg, "shake")) {
-        memset(fxGunData, 0, sizeof(fxGunData));
+    } else if (!Q_stricmp(fxName, "shake")) {
         //time
         trap_Argv(2, arg, sizeof(arg));
         if (!arg[0]) {
@@ -4608,7 +4594,6 @@ static void Cmd_fxGun_f(gentity_t *ent) {
         fxGunData->arg_int2 = atoi(arg);
     } else {
         trap_SendServerCommand(ent - g_entities, "print \"Syntax: /fxGun <FX_Name>\nValid Effects:\n  default\n  chunks\n  detpack\n  sparks\n  steam\n  drips\n  smoke\n  surf_explosion\n  elec_explosion \n\" ");
-        memset(fxGunData, 0, sizeof(fxGunData));
         return;
     }
 
@@ -5323,15 +5308,15 @@ static void Cmd_remodulate_f(gentity_t *ent) {
 
     switch (i) {
     case 1:
-        level.borgAdaptHits[WP_5] = 0;
+        level.borgAdaptHits[WP_PHASER] = 0;
         trap_SendServerCommand(-1, va("print \"Phasers have been remodulated.\n\""));
         break;
     case 2:
-        level.borgAdaptHits[WP_6] = 0;
+        level.borgAdaptHits[WP_COMPRESSION_RIFLE] = 0;
         trap_SendServerCommand(-1, va("print \"Compression Rifles have been remodulated.\n\""));
         break;
     case 3:
-        level.borgAdaptHits[WP_10] = 0;
+        level.borgAdaptHits[WP_DISRUPTOR] = 0;
         trap_SendServerCommand(-1, va("print \"Disruptors have been remodulated.\n\""));
         break;
     default:
@@ -6798,7 +6783,7 @@ static void Cmd_spawnTentity_f(gentity_t *ent) {
             if (numArgs < 3) {
                 G_FreeEntity(newEnt);
                 trap_SendServerCommand(clientNum, "print \"Insufficent number of arguments for target_give!\n\"");
-                trap_SendServerCommand(clientNum, "print \"Usage: spawnTEnt target_give targetname items (example for items: WP_5 | WP_14)\n\"");
+                trap_SendServerCommand(clientNum, "print \"Usage: spawnTEnt target_give targetname items (example for items: WP_PHASER | WP_TOOLKIT)\n\"");
                 return;
             }
             trap_Argv(2, arg, sizeof(arg));

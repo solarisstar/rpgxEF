@@ -318,13 +318,14 @@ static int Game_AlertAddShader(lua_State *L) {
     }
 
     if (luaAlertState->shaders[cond] == NULL) {
-        luaAlertState->shaders[cond] = (char *)malloc(sizeof(char) * (strlen(shader) + 1));
+        int bufferSize = sizeof(char) * strlen(shader) + 1;
+        luaAlertState->shaders[cond] = malloc(bufferSize);
         if (luaAlertState->shaders[cond] == NULL) {
             LUA_DEBUG("ERROR - game.AlertAddShader - alloc failed");
             lua_pushboolean(L, 0);
             return 1;
         }
-        strncpy(luaAlertState->shaders[cond], shader, sizeof(luaAlertState->shaders[cond]));
+        strncpy(luaAlertState->shaders[cond], shader, bufferSize);
     } else {
         void *tmp = realloc(luaAlertState->shaders[cond], sizeof(char) * (strlen(luaAlertState->shaders[cond]) +
             strlen(shader) + 1));

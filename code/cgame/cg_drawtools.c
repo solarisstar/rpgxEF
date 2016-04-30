@@ -1665,7 +1665,7 @@ qboolean CG_LoadCrosshairs(void) {
     file_len = trap_FS_FOpenFile(fileName, &f, FS_READ);
 
     memset(&charText, 0, sizeof(charText));
-    memset(&cgs.crosshairsData, 0, sizeof(&cgs.crosshairsData));
+    memset(&cgs.crosshairsData, 0, sizeof(cgs.crosshairsData));
 
     //check to see if we got anything
     if (file_len <= 0) {

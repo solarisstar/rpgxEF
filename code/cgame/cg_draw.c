@@ -951,7 +951,6 @@ static void CG_DrawStatusBar(void)
     vec3_t		angles;
     int y = 0;
     vec4_t	whiteA;
-    int		x, z, i, h, yZ;
     vec3_t	tmpVec, eAngle, forward, dAngle;
     int healthBarWidth;
 
@@ -1002,7 +1001,7 @@ static void CG_DrawStatusBar(void)
     //
     if (cg.predictedPlayerState.powerups[PW_EVOSUIT] || cg.predictedPlayerState.powerups[PW_FLIGHT] || cg.predictedPlayerState.powerups[PW_INVIS]) {
         //RPG-X | Phenix | 08/06/2005
-        yZ = 478 - SMALLCHAR_HEIGHT;
+        int yZ = 478 - SMALLCHAR_HEIGHT;
         // UI_BIGFONT
         //DEBUG
         if (cg.predictedPlayerState.powerups[PW_EVOSUIT]) {

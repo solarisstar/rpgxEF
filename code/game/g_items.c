@@ -357,7 +357,7 @@ int Pickup_Weapon(gentity_t *ent, gentity_t *other) {
 
     // RPG-X: Marcin: print PADD message - 06/12/2008
 
-    if (ent->item->giTag == WP_3) {
+    if (ent->item->giTag == WP_PADD) {
         msg = Padd_Get(ent, other);
         if (msg) {
             trap_SendServerCommand(other - g_entities, va("print \"" S_COLOR_CYAN "(padd)" S_COLOR_WHITE " %s\n\"", msg));
@@ -552,7 +552,7 @@ void Touch_Item(gentity_t *ent, gentity_t *other, trace_t *trace) {
         return;
     }
 
-    if (ent->item->giTag == WP_3) {
+    if (ent->item->giTag == WP_PADD) {
         Padd_Remove(ent);
     }
 
@@ -651,7 +651,7 @@ gentity_t *LaunchItem(gitem_t *item, gentity_t *who, vec3_t origin, vec3_t veloc
                                     // if the item has been droped, and if so, make it pick-up-able
                                     // cdr
 
-    if (item->giTag == WP_3) {
+    if (item->giTag == WP_PADD) {
         Padd_Add(dropped, who, txt);
     }
 
@@ -892,20 +892,20 @@ qboolean	itemRegistered[MAX_ITEMS];
 void ClearRegisteredItems(void) {
     memset(itemRegistered, 0, sizeof(itemRegistered));
     // players always start with the base weapon
-    RegisterItem(BG_FindItemForWeapon(WP_5));
-    RegisterItem(BG_FindItemForWeapon(WP_6));	//this is for the podium at the end, make sure we have the model
+    RegisterItem(BG_FindItemForWeapon(WP_PHASER));
+    RegisterItem(BG_FindItemForWeapon(WP_COMPRESSION_RIFLE));	//this is for the podium at the end, make sure we have the model
 
-    RegisterItem(BG_FindItemForWeapon(WP_1));
-    RegisterItem(BG_FindItemForWeapon(WP_10));
-    RegisterItem(BG_FindItemForWeapon(WP_13));
-    RegisterItem(BG_FindItemForWeapon(WP_12));
-    RegisterItem(BG_FindItemForWeapon(WP_14));
-    RegisterItem(BG_FindItemForWeapon(WP_11));
-    RegisterItem(BG_FindItemForWeapon(WP_2));
+    RegisterItem(BG_FindItemForWeapon(WP_NULL_HAND));
+    RegisterItem(BG_FindItemForWeapon(WP_DISRUPTOR));
+    RegisterItem(BG_FindItemForWeapon(WP_DERMAL_REGEN));
+    RegisterItem(BG_FindItemForWeapon(WP_VOYAGER_HYPO));
+    RegisterItem(BG_FindItemForWeapon(WP_TOOLKIT));
+    RegisterItem(BG_FindItemForWeapon(WP_MEDKIT));
+    RegisterItem(BG_FindItemForWeapon(WP_TRICORDER));
 
-    RegisterItem(BG_FindItemForWeapon(WP_3));
-    RegisterItem(BG_FindItemForWeapon(WP_15));
-    RegisterItem(BG_FindItemForWeapon(WP_7));
+    RegisterItem(BG_FindItemForWeapon(WP_PADD));
+    RegisterItem(BG_FindItemForWeapon(WP_HYPERSPANNER));
+    RegisterItem(BG_FindItemForWeapon(WP_TR116));
 }
 
 void RegisterItem(gitem_t *item) {
