@@ -1901,8 +1901,9 @@ extern void UI_CDKeyMenu2(void);
 //
 extern void UI_PlayerModelMenu(int menuFrom);
 extern void PlayerModel_Cache(void);
-
+extern void PlayerModel_DataInit(void);
 //
+
 // ui_playersettings.c
 //
 extern void UI_PlayerSettingsMenu(int menuFrom);

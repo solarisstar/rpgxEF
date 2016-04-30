@@ -1681,33 +1681,31 @@ static void PlayerModel_MenuDraw(void)
 
     Menu_Draw(&s_playermodel.menu);
 }
+
 /*
 =================
-PlayerModel_MenuInit
+PlayerModel_DataInit
 =================
+
 */
-static void PlayerModel_MenuInit(int menuFrom)
-{
-    int			i;
-    //int			j;
-    //int			k;
-    int			x;
-    int			y;
-    static char	playername[32];
-    //static char	modelname[32];
-    //static char	skinname[32];
-    //static char	skinnameviewed[32];
-    qboolean	races = qfalse;
-    qboolean	genders = qfalse;
 
-    static qboolean not_setup = qtrue;
+void PlayerModel_DataInit(void){
 
-    // zero set all our globals
-    if (not_setup) {
-        memset(&s_playermodel, 0, sizeof(playermodel_t));
+    int         i;
+    int         x;
+    int         y;
+    static char playername[32];
+    qboolean    races = qfalse;
+    qboolean    genders = qfalse;
+
+    static qboolean setup = qfalse;
+
+    if (setup) {
+        return;
     }
 
-    s_playermodel.prevMenu = menuFrom;
+    // zero set all our globals
+    memset(&s_playermodel, 0, sizeof(playermodel_t));
 
     //TiM : Model Spin view
     uis.spinView = qfalse;
@@ -1723,15 +1721,12 @@ static void PlayerModel_MenuInit(int menuFrom)
     Q_strncpyz(s_playermodel.genderList[0].filterName, "All", 32);
     Q_strncpyz(s_playermodel.raceList[0].filterName, "All", 32);
 
-    // set initial states
-    if (not_setup) {
-        PlayerModel_BuildList();
+    PlayerModel_BuildList();
 
-        //sort the race list alphabetically
-        //+1 for number to account for the 'All' value
-        qsort((void *)s_playermodel.raceList, s_playermodel.numRaces + 1, sizeof(filterData_t), FilterList_Compare);
-        qsort((void *)s_playermodel.genderList, s_playermodel.numGenders + 1, sizeof(filterData_t), FilterList_Compare);
-    }
+    //sort the race list alphabetically
+    //+1 for number to account for the 'All' value
+    qsort((void *)s_playermodel.raceList, s_playermodel.numRaces + 1, sizeof(filterData_t), FilterList_Compare);
+    qsort((void *)s_playermodel.genderList, s_playermodel.numGenders + 1, sizeof(filterData_t), FilterList_Compare);
 
     //Populate the spin control pointers
     for (i = 0; i < 128; i++) {
@@ -1836,7 +1831,7 @@ static void PlayerModel_MenuInit(int menuFrom)
     s_playermodel.model.textcolor = CT_BLACK;
     s_playermodel.model.textcolor2 = CT_WHITE;
 
-    //y =	88;
+    //y =   88;
     x = 107;
     y = 85;
 
@@ -1869,21 +1864,21 @@ static void PlayerModel_MenuInit(int menuFrom)
     s_playermodel.playername.style = UI_SMALLFONT;
     s_playermodel.playername.color = colorTable[CT_BLACK];
 
-    /*s_playermodel.modelname.generic.type			= MTYPE_PTEXT;
-    s_playermodel.modelname.generic.flags			= QMF_INACTIVE;
-    s_playermodel.modelname.generic.x				= 121;
-    s_playermodel.modelname.generic.y				= 338;
-    s_playermodel.modelname.string					= modelname;
-    s_playermodel.modelname.style					= UI_LEFT;
-    s_playermodel.modelname.color					= colorTable[CT_LTBLUE1];*/
+    /*s_playermodel.modelname.generic.type          = MTYPE_PTEXT;
+    s_playermodel.modelname.generic.flags           = QMF_INACTIVE;
+    s_playermodel.modelname.generic.x               = 121;
+    s_playermodel.modelname.generic.y               = 338;
+    s_playermodel.modelname.string                  = modelname;
+    s_playermodel.modelname.style                   = UI_LEFT;
+    s_playermodel.modelname.color                   = colorTable[CT_LTBLUE1];*/
 
-    /*s_playermodel.skinname.generic.type				= MTYPE_PTEXT;
-    s_playermodel.skinname.generic.flags			= QMF_INACTIVE;
-    s_playermodel.skinname.generic.x				= 323;
-    s_playermodel.skinname.generic.y				= 338;
-    s_playermodel.skinname.string					= skinname;
-    s_playermodel.skinname.style					= UI_RIGHT;
-    s_playermodel.skinname.color					= colorTable[CT_LTBLUE1];*/
+    /*s_playermodel.skinname.generic.type               = MTYPE_PTEXT;
+    s_playermodel.skinname.generic.flags            = QMF_INACTIVE;
+    s_playermodel.skinname.generic.x                = 323;
+    s_playermodel.skinname.generic.y                = 338;
+    s_playermodel.skinname.string                   = skinname;
+    s_playermodel.skinname.style                    = UI_RIGHT;
+    s_playermodel.skinname.color                    = colorTable[CT_LTBLUE1];*/
 
     s_playermodel.player.generic.type = MTYPE_BITMAP;
     s_playermodel.player.generic.flags = QMF_SILENT;
@@ -1907,7 +1902,7 @@ static void PlayerModel_MenuInit(int menuFrom)
     s_playermodel.upArrow.color2 = CT_LTPURPLE1;
     s_playermodel.upArrow.textX = MENU_BUTTON_TEXT_X;
     s_playermodel.upArrow.textY = MENU_BUTTON_TEXT_Y;
-    //s_playermodel.upArrow.textEnum					= MBT_PREVPAGE;
+    //s_playermodel.upArrow.textEnum                    = MBT_PREVPAGE;
     s_playermodel.upArrow.textcolor = CT_BLACK;
     s_playermodel.upArrow.textcolor2 = CT_WHITE;
 
@@ -1924,7 +1919,7 @@ static void PlayerModel_MenuInit(int menuFrom)
     s_playermodel.dnArrow.color2 = CT_LTPURPLE1;
     s_playermodel.dnArrow.textX = MENU_BUTTON_TEXT_X;
     s_playermodel.dnArrow.textY = MENU_BUTTON_TEXT_Y;
-    //s_playermodel.dnArrow.textEnum					= MBT_NEXTPAGE;
+    //s_playermodel.dnArrow.textEnum                    = MBT_NEXTPAGE;
     s_playermodel.dnArrow.textcolor = CT_BLACK;
     s_playermodel.dnArrow.textcolor2 = CT_WHITE;
 
@@ -2040,45 +2035,51 @@ static void PlayerModel_MenuInit(int menuFrom)
     s_playermodel.scrollBar.color = CT_DKPURPLE1;
     s_playermodel.scrollBar.color2 = CT_LTPURPLE1;
 
-    if(not_setup) {
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.model);
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.data);
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.player);
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.playername);
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.model);
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.data);
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.player);
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.playername);
 
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.upArrow);
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.scrollBar);
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.dnArrow);
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.charModel);
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.charSkin);
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.apply);
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.upArrow);
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.scrollBar);
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.dnArrow);
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.charModel);
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.charSkin);
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.apply);
 
-        for (i = 0; i < MAX_MENULISTITEMS; i++) {
-            Menu_AddItem(&s_playermodel.menu, &s_playermodel.charMenu[i]);
-        }
-
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.raceFilter);
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.genderFilter);
-
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.back);
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.mainmenu);
-
-        if (s_playermodel.numChars >= MAX_MENULISTITEMS) {
-            s_playermodel.upArrow.generic.flags = QMF_HIGHLIGHT_IF_FOCUS;
-            s_playermodel.dnArrow.generic.flags = QMF_HIGHLIGHT_IF_FOCUS;
-        }
-        not_setup = qfalse;
+    for (i = 0; i < MAX_MENULISTITEMS; i++) {
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.charMenu[i]);
     }
 
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.raceFilter);
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.genderFilter);
 
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.back);
+    Menu_AddItem(&s_playermodel.menu, &s_playermodel.mainmenu);
+
+    if (s_playermodel.numChars >= MAX_MENULISTITEMS) {
+        s_playermodel.upArrow.generic.flags = QMF_HIGHLIGHT_IF_FOCUS;
+        s_playermodel.dnArrow.generic.flags = QMF_HIGHLIGHT_IF_FOCUS;
+    }
+
+    setup = qtrue;
+}
+
+/*
+=================
+PlayerModel_MenuInit
+=================
+*/
+static void PlayerModel_MenuInit(int menuFrom)
+{
+    s_playermodel.prevMenu = menuFrom;
+    
+    PlayerModel_DataInit();
+    PlayerModel_Cache();
     PlayerModel_SetMenuItems();
-
     PlayerModel_OffsetCharList(&s_playermodel.scrollOffset);
-
     PlayerModel_SetupScrollBar(&s_playermodel.scrollBar);
     PlayerModel_UpdateScrollBar(&s_playermodel.scrollBar);
-
-
     // update user interface
     PlayerModel_UpdateModel();
 }
