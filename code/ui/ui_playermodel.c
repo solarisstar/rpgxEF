@@ -10,6 +10,7 @@
 //
 //=================================================
 #include "ui_local.h"
+#include <pthread.h>
 
 #define START_PROFILING()     clock_t start = clock(); \
                               Com_Printf("Begin profiling %s line %d \n", __func__, __LINE__)
