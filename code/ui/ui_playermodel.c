@@ -11,6 +11,13 @@
 //=================================================
 #include "ui_local.h"
 
+#define START_PROFILING()     clock_t start = clock(); \
+                              Com_Printf("Begin profiling %s line %d \n", __func__, __LINE__)
+
+#define STOP_PROFILING()      clock_t end = clock(); \
+                              double elapsed_time = (end-start)/(double)CLOCKS_PER_SEC; \
+                              Com_Printf("Elapsed time in at %s, %d: %f\n", __func__, __LINE__, elapsed_time)
+
 #define	PIC_ARROW_UP		"menu/common/arrow_up_16.tga"
 #define	PIC_ARROW_DOWN		"menu/common/arrow_dn_16.tga"
 
@@ -1131,6 +1138,11 @@ static void PlayerModel_BuildList(void)
     //int			offset;
     int			temp;
 
+    static qboolean setup_complete = qfalse;
+    if (setup_complete){
+        return;
+    }
+
     s_playermodel.selectedChar = -1;
     s_playermodel.numChars = 0;
 
@@ -1295,6 +1307,8 @@ static void PlayerModel_BuildList(void)
     //copy to the upper case list for rendering to the menu
     for (i = 0; i < s_playermodel.numChars; i++)
         Q_strncpyz(s_playermodel.charNamesUpr[i], s_playermodel.charNames[i].charName, sizeof(s_playermodel.charNamesUpr[i]));
+
+    setup_complete = qtrue;
 }
 
 /*
@@ -1686,8 +1700,12 @@ static void PlayerModel_MenuInit(int menuFrom)
     qboolean	races = qfalse;
     qboolean	genders = qfalse;
 
+    static qboolean not_setup = qtrue;
+
     // zero set all our globals
-    memset(&s_playermodel, 0, sizeof(playermodel_t));
+    if (not_setup) {
+        memset(&s_playermodel, 0, sizeof(playermodel_t));
+    }
 
     s_playermodel.prevMenu = menuFrom;
 
@@ -1706,12 +1724,14 @@ static void PlayerModel_MenuInit(int menuFrom)
     Q_strncpyz(s_playermodel.raceList[0].filterName, "All", 32);
 
     // set initial states
-    PlayerModel_BuildList();
+    if (not_setup) {
+        PlayerModel_BuildList();
 
-    //sort the race list alphabetically
-    //+1 for number to account for the 'All' value
-    qsort((void *)s_playermodel.raceList, s_playermodel.numRaces + 1, sizeof(filterData_t), FilterList_Compare);
-    qsort((void *)s_playermodel.genderList, s_playermodel.numGenders + 1, sizeof(filterData_t), FilterList_Compare);
+        //sort the race list alphabetically
+        //+1 for number to account for the 'All' value
+        qsort((void *)s_playermodel.raceList, s_playermodel.numRaces + 1, sizeof(filterData_t), FilterList_Compare);
+        qsort((void *)s_playermodel.genderList, s_playermodel.numGenders + 1, sizeof(filterData_t), FilterList_Compare);
+    }
 
     //Populate the spin control pointers
     for (i = 0; i < 128; i++) {
@@ -2020,32 +2040,36 @@ static void PlayerModel_MenuInit(int menuFrom)
     s_playermodel.scrollBar.color = CT_DKPURPLE1;
     s_playermodel.scrollBar.color2 = CT_LTPURPLE1;
 
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.model);
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.data);
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.player);
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.playername);
+    if(not_setup) {
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.model);
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.data);
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.player);
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.playername);
 
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.upArrow);
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.scrollBar);
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.dnArrow);
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.charModel);
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.charSkin);
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.apply);
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.upArrow);
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.scrollBar);
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.dnArrow);
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.charModel);
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.charSkin);
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.apply);
 
-    for (i = 0; i < MAX_MENULISTITEMS; i++) {
-        Menu_AddItem(&s_playermodel.menu, &s_playermodel.charMenu[i]);
+        for (i = 0; i < MAX_MENULISTITEMS; i++) {
+            Menu_AddItem(&s_playermodel.menu, &s_playermodel.charMenu[i]);
+        }
+
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.raceFilter);
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.genderFilter);
+
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.back);
+        Menu_AddItem(&s_playermodel.menu, &s_playermodel.mainmenu);
+
+        if (s_playermodel.numChars >= MAX_MENULISTITEMS) {
+            s_playermodel.upArrow.generic.flags = QMF_HIGHLIGHT_IF_FOCUS;
+            s_playermodel.dnArrow.generic.flags = QMF_HIGHLIGHT_IF_FOCUS;
+        }
+        not_setup = qfalse;
     }
 
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.raceFilter);
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.genderFilter);
-
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.back);
-    Menu_AddItem(&s_playermodel.menu, &s_playermodel.mainmenu);
-
-    if (s_playermodel.numChars >= MAX_MENULISTITEMS) {
-        s_playermodel.upArrow.generic.flags = QMF_HIGHLIGHT_IF_FOCUS;
-        s_playermodel.dnArrow.generic.flags = QMF_HIGHLIGHT_IF_FOCUS;
-    }
 
     PlayerModel_SetMenuItems();
 
@@ -2053,6 +2077,7 @@ static void PlayerModel_MenuInit(int menuFrom)
 
     PlayerModel_SetupScrollBar(&s_playermodel.scrollBar);
     PlayerModel_UpdateScrollBar(&s_playermodel.scrollBar);
+
 
     // update user interface
     PlayerModel_UpdateModel();
