@@ -39,13 +39,13 @@ M_GridFont_Graphics
 */
 void M_GridFont_Graphics(void)
 {
-    int x, y, color;
+    int x, y /*, color*/;
     int i, i2, xInc;
     char	character[2];
 
     character[1] = 0;
     y = 190;
-    color = CT_LTORANGE;
+    //color = CT_LTORANGE;
     for (i = 32; i < 256;)
     {
         x = 100;

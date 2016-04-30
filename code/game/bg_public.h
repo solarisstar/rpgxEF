@@ -544,29 +544,22 @@ typedef enum {
 //TiM: GAH! I've had it!  I've gone through and renamed the weapons to what they're
 //called in RPG-X.  Having to remember which is what is starting to wear out my sanity lol. :P
 typedef enum {
-	WP_0, // WP_NULL				//	1
-
-	WP_1, // WP_NULL_HAND			//	2	// 3/10/00 kef -- used to be WP_RAILGUN						// 1/1/06 TiM: used to be WP_1 
-
-	WP_2, // WP_TRICORDER			//	4
-	WP_3, // WP_PADD 				//	8
-	WP_4, // WP_COFFEE			//	16	// 3/13/00 kef -- used to be WP_PLASMAGUN					// 1/1/06 TiM: used to be WP_4 
-
-	WP_5, // WP_PHASER				//	32	// 3/13/00 kef -- used to be WP_LIGHTNING
-	WP_6, // WP_COMPRESSION_RIFLE	//	64	// 3/13/00 kef -- added
-	WP_7, // WP_TR116				//	128	// 3/13/00 kef -- added										// 1/1/06 TiM: used to be WP_7
-
-	WP_8, // WP_GRENADE_LAUNCHER	//	256	// 3/10/00 kef -- used to be...heh...WP_8	// TiM: Hahaha I get it! hehe ;P
-	WP_9, // WP_QUANTUM_BURST		//	512	// 3/13/00 kef -- added
-	WP_10, // WP_DISRUPTOR			//	1024	// 3/13/00 kef -- used to be WP_ROCKET_LAUNCHER			// 1/1/06 TiM: used to be WP_10 
-
-	WP_11, // WP_MEDKIT				//	2048	// 10/12/00 jtd -- added for MP patch/gold - merges single player projectile and taser		// 1/1/06 TiM: used to be WP_11
-	WP_12, // WP_VOYAGER_HYPO		//	4096	// 10/6/00 mcg -- added for MP patch/gold
-	WP_13, // WP_DERMAL_REGEN		//	8192	// 3/13/00 kef -- added									// 1/1/06 TiM: used to be WP_13
-	
-	WP_14, // WP_TOOLKIT				//	16384	// 10/12/00 jtd -- added for MP patch/gold					// 1/1/06 TiM: used to be WP_14
-	WP_15, // WP_HYPERSPANNER				//	32768														// 1/1/06 TiM: used to be WP_NEUTRINO_PROBE
-
+	WP_NULL,
+	WP_NULL_HAND,
+	WP_TRICORDER,
+	WP_PADD,
+	WP_COFFEE,
+	WP_PHASER,
+	WP_COMPRESSION_RIFLE,
+	WP_TR116,
+	WP_GRENADE_LAUNCHER,
+	WP_QUANTUM_BURST,
+	WP_DISRUPTOR,
+	WP_MEDKIT,
+	WP_VOYAGER_HYPO,
+	WP_DERMAL_REGEN,
+	WP_TOOLKIT,
+	WP_HYPERSPANNER,
 	WP_NUM_WEAPONS
 } weapon_t;
 
