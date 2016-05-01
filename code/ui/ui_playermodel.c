@@ -11,13 +11,6 @@
 //=================================================
 #include "ui_local.h"
 
-#define START_PROFILING()     clock_t start = clock(); \
-                              Com_Printf("Begin profiling %s line %d \n", __func__, __LINE__)
-
-#define STOP_PROFILING()      clock_t end = clock(); \
-                              double elapsed_time = (end-start)/(double)CLOCKS_PER_SEC; \
-                              Com_Printf("Elapsed time in at %s, %d: %f\n", __func__, __LINE__, elapsed_time)
-
 #define	PIC_ARROW_UP		"menu/common/arrow_up_16.tga"
 #define	PIC_ARROW_DOWN		"menu/common/arrow_dn_16.tga"
 
