@@ -37,6 +37,13 @@ and then copying the following files from your VM onto your computer:
   * Copy build/release-mingw32-x64/rpgxEF.x64.exe and build/release-mingw32-x64/renderer_opengl1_x64.dll to the base install directory of RPG-X (where the current .exe is located, overwrite if asked) 
   * Copy build/release-mingw32-x64/rpgxEF/uix64.dll, build/release-mingw32-x64/rpgxEF/qagamex64.dll, build/release-mingw32-x64/rpgxEF/cgamex64.dll to the RPG-X2 directory located in your RPG-X install directory
 
+* Be sure to run the game with the following cvars: +set vm_game 0 +set vm_ui 0 +set vm_cgame 0 +set fs_game RPG-X2
+  In order to do this, make a shortcut on your desktop to the rpgxEF.x64.exe, right click it, selecte properties, and in the "Target:" window, it should read something like this: 
+  "C:\Program Files\The Last Outpost RPG-X Standard Edition\rpgxEF.x64.exe"
+  Append the cvars, so it now reads something like:
+  "C:\Program Files\The Last Outpost RPG-X Standard Edition\rpgxEF.x64.exe" +set vm_game 0 +set vm_ui 0 +set vm_cgame 0 +set fs_game RPG-X2
+  Then press Apply and OK and start the game via the shortcut
+
 ## For Advanced Users
 * Git Pull this repository onto a Ubuntu flavoured Linux machine or VM
 * Terminal to the repository directory and run: ./install_deps.sh. This will install all development dependencies for running make
@@ -53,7 +60,9 @@ and then copying the following files from your VM onto your computer:
   * Copy the following files to the RPG-X2 directory located in your RPG-X install directory:
     * build/release-<platform>-<arch>/rpgxEF/ui<arch>, 
     * build/release-<platform>-<arch>/rpgxEF/qagame<arch>
-    * build/release-<platform>-<arch>/rpgxEF/cgame<arch> 
+    * build/release-<platform>-<arch>/rpgxEF/cgame<arch>
+
+* Be sure to run the game with the following cvars: +set vm_game 0 +set vm_ui 0 +set vm_cgame 0 +set fs_game RPG-X2
 
 #Contact Information
 Contact Telex Ferra or Martin Thompson on www.last-outpost.net/forum for more information about this repository.
