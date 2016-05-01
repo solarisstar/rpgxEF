@@ -8,50 +8,53 @@ build with Visual Studio 2015 and be able to maintain it more easily in the futu
 #Installing Instructions
 
 ## For Beginners
--Make sure you are running on a computer or Virtual Machine (VM) with Linux Ubuntu 64-bits (or variants such as Xubuntu).
+- Make sure you are running on a computer or Virtual Machine (VM) with Linux Ubuntu 64-bits (or variants such as Xubuntu).
 For more information on how to run a VM under Windows, follow any of these guides (or just google "setting up a virtual machine"): 
---http://www.wikihow.com/Install-Ubuntu-on-VirtualBox
---http://www.psychocats.net/ubuntu/virtualbox
+-- http://www.wikihow.com/Install-Ubuntu-on-VirtualBox
+-- http://www.psychocats.net/ubuntu/virtualbox
 
 We are running a Xubuntu 64-bits install because it is more lightweight so more suitable for running as a VM. You can download a Xubuntu iso image here:
 http://cdimages.ubuntu.com/xubuntu/releases/16.04/release/
 
 Then chose the xubuntu-xx.yy-desktop-amd64.iso image (where xx.yy is 16.04 at the time of writing)
 
--Run your VM
--Download the install_full.sh file or copy its contents into a new .sh file somewhere on your VM
--Open a terminal window in the location where you downloaded the install_full.sh file (For Xubuntu, go to the directory using the File Manager, then right click and select "Open Terminal Here").
--Type: sudo ./install_full.sh
--When prompted for a "root password",. insert the password you chose for your user account while installing Linux on your VM
--The script automatcially downloads the RPG-X EF Repository from GitHub and puts it in /home/<yourusername>/Projects/rpgxef (obviously, <yourusername> is the username of your Linux user account)
--It also automatically downloads all development dependencies needed for building the source code
--In the terminal, navigate tot he rpgxef repository directory which was just created: cd /home/<yourusername>/Projects/rpgxef
--In the terminal, type: make
--The source code will now be build for Linux 64-bits and the output files will be present in the build/release-linux-x86_64 directory.
+- Run your VM
+- Download the install_full.sh file or copy its contents into a new .sh file somewhere on your VM
+- Open a terminal window in the location where you downloaded the install_full.sh file (For Xubuntu, go to the directory using the File Manager, then right click and select "Open Terminal Here").
+- Type: sudo ./install_full.sh
+- When prompted for a "root password",. insert the password you chose for your user account while installing Linux on your VM
+- The script automatcially downloads the RPG-X EF Repository from GitHub and puts it in /home/<yourusername>/Projects/rpgxef (obviously, <yourusername> is the username of your Linux user account)
+- It also automatically downloads all development dependencies needed for building the source code
+- In the terminal, navigate tot he rpgxef repository directory which was just created: cd /home/<yourusername>/Projects/rpgxef
 
--To build for windows, run: ./cross-make-mingw.sh (for 32 bits) or ./cross-make-mingw64.sh (for 64-bits) this will produce the required .dll files and .exe files
--Put the .dll and .exe files from the build/ directory into your RPG-X EF install. The easyest way to test this is to get the RPG-X Standard Edition from TLO: http://www.last-outpost.net/rpgx/
+### Building for Linux
+- In the terminal, type: make
+- The source code will now be build for Linux 64-bits and the output files will be present in the build/release-linux-x86_64 directory.
+
+### Building for Windows
+- To build for windows, run: ./cross-make-mingw.sh (for 32 bits) or ./cross-make-mingw64.sh (for 64-bits) this will produce the required .dll files and .exe files
+- Put the .dll and .exe files from the build/ directory into your RPG-X EF install. The easyest way to test this is to get the RPG-X Standard Edition from TLO: http://www.last-outpost.net/rpgx/
 and then copying the following files from your VM onto your computer:
---Copy build/release-mingw32-x64/rpgxEF.x64.exe and build/release-mingw32-x64/renderer_opengl1_x64.dll to the base install directory of RPG-X (where the current .exe is located, overwrite if asked) 
---Copy build/release-mingw32-x64/rpgxEF/uix64.dll, build/release-mingw32-x64/rpgxEF/qagamex64.dll, build/release-mingw32-x64/rpgxEF/cgamex64.dll to the RPG-X2 directory located in your RPG-X install directory
+-- Copy build/release-mingw32-x64/rpgxEF.x64.exe and build/release-mingw32-x64/renderer_opengl1_x64.dll to the base install directory of RPG-X (where the current .exe is located, overwrite if asked) 
+-- Copy build/release-mingw32-x64/rpgxEF/uix64.dll, build/release-mingw32-x64/rpgxEF/qagamex64.dll, build/release-mingw32-x64/rpgxEF/cgamex64.dll to the RPG-X2 directory located in your RPG-X install directory
 
 ## For Advanced Users
--Git Pull this repository onto a Ubuntu flavoured Linux machine or VM
--Terminal to the repository directory and run: ./install_deps.sh. This will install all development dependencies for running make
--Run make to build for Linux 64 bits, find the output files in the build directory
---Run ./make-i368.sh for building the Linux 32 bits variant
---Run ./cross-make-mingw.sh for building the Windows 32 bits variant
---Run ./cross-make-mingw64.sh for building the Windows 64 bits variant
--Install a fresh copy of the RPG-X Standard Edition from TLO: http://www.last-outpost.net/rpgx/ and put the build files in the correct directory, then run executable file to launch RPG-X EF
+- Git Pull this repository onto a Ubuntu flavoured Linux machine or VM
+- Terminal to the repository directory and run: ./install_deps.sh. This will install all development dependencies for running make
+- Run make to build for Linux 64 bits, find the output files in the build directory
+-- Run ./make-i368.sh for building the Linux 32 bits variant
+-- Run ./cross-make-mingw.sh for building the Windows 32 bits variant
+-- Run ./cross-make-mingw64.sh for building the Windows 64 bits variant
+- Install a fresh copy of the RPG-X Standard Edition from TLO: http://www.last-outpost.net/rpgx/ and put the build files in the correct directory, then run executable file to launch RPG-X EF
 
---Copy the following files to the base install directory of RPG-X (where the current .exe is located, overwrite if asked): 
----build/release-<platform>-<arch>/rpgxEF.<arch> 
----build/release-<platform>-<arch>/renderer_opengl1_<arch> 
+-- Copy the following files to the base install directory of RPG-X (where the current .exe is located, overwrite if asked): 
+--- build/release-<platform>-<arch>/rpgxEF.<arch> 
+--- build/release-<platform>-<arch>/renderer_opengl1_<arch> 
 
---Copy the following files to the RPG-X2 directory located in your RPG-X install directory:
----build/release-<platform>-<arch>/rpgxEF/ui<arch>, 
----build/release-<platform>-<arch>/rpgxEF/qagame<arch>
----build/release-<platform>-<arch>/rpgxEF/cgame<arch> 
+-- Copy the following files to the RPG-X2 directory located in your RPG-X install directory:
+--- build/release-<platform>-<arch>/rpgxEF/ui<arch>, 
+--- build/release-<platform>-<arch>/rpgxEF/qagame<arch>
+--- build/release-<platform>-<arch>/rpgxEF/cgame<arch> 
 
 #Contact Information
 Contact Telex Ferra or Martin Thompson on www.last-outpost.net/forum for more information about this repository.
