@@ -95,7 +95,7 @@ void FX_DisruptorWeaponHitWall(vec3_t origin, vec3_t dir, int size)
 {
     vec3_t			vel, /*accel,*/ hitpos, direction, org;
     //int				i, t;
-    weaponInfo_t	*weaponInfo = &cg_weapons[WP_10];
+    weaponInfo_t	*weaponInfo = &cg_weapons[WP_DISRUPTOR];
 
     CG_InitLensFlare(origin,
         375, 375,

@@ -1719,7 +1719,7 @@ static void Player_DrawPlayer(void) //*self )
         viewangles[PITCH] = 0;
         viewangles[ROLL] = 0;
 
-        UI_PlayerInfo_SetInfo(&s_main.playerinfo, BOTH_STAND1, BOTH_STAND1, viewangles, vec3_origin, WP_1, trap_Cvar_VariableValue("height"), trap_Cvar_VariableValue("weight"), qfalse);
+        UI_PlayerInfo_SetInfo(&s_main.playerinfo, BOTH_STAND1, BOTH_STAND1, viewangles, vec3_origin, WP_NULL_HAND, trap_Cvar_VariableValue("height"), trap_Cvar_VariableValue("weight"), qfalse);
 
         //Player_UpdateModel( ANIM_IDLE ); //ADDDED
         //UI_PlayerInfo_SetInfo( &s_main.playerinfo, LEGS_IDLE, TORSO_STAND2, viewangles, vec3_origin, s_main.playerWeapon, qfalse );
@@ -1771,7 +1771,7 @@ static void Player_InitModel(void)
     s_main.playerViewangles[ROLL] = 0;
     s_main.playerMoveangles[YAW] = 0; //s_main.playerViewangles[YAW];
     s_main.playerLegs = BOTH_STAND1;
-    s_main.playerWeapon = WP_0;
+    s_main.playerWeapon = WP_NULL;
     s_main.playerTorso = BOTH_STAND1; //TORSO_STAND2
 
     s_main.playerinfo.randomEmote = qtrue;	//play some random anims hehe
@@ -1795,12 +1795,12 @@ END MOFICIATION
 
 static weapongraphics_s weapon_graphics[UI_NUM_WEAPONS] =	//was WP_NUM_WEAPONS, but we added some more for vv
 {
-    { 0, -15, -25 },		// WP_5
-    { 0,  7,  -20 },		// WP_6
-    { 0,  15, -10 },		// WP_1
-    { 0,   8, -15 },		// WP_4
-    { 0,  25,   0 },		// WP_10
-    { 0,  18, -17 },		// WP_8
+    { 0, -15, -25 },		// WP_PHASER
+    { 0,  7,  -20 },		// WP_COMPRESSION_RIFLE
+    { 0,  15, -10 },		// WP_NULL_HAND
+    { 0,   8, -15 },		// WP_COFFEE
+    { 0,  25,   0 },		// WP_DISRUPTOR
+    { 0,  18, -17 },		// WP_GRENADE_LAUNCHER
     { 0,   5, -25 },		// WP_TETRYON_DISRUPTOR
     { 0,  20, -10 },		// WP_PHOTON_BURST
     { 0,   5, -19 }			// WP_ARCWELDER

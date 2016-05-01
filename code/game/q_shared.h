@@ -1164,7 +1164,7 @@ typedef struct entityState_s {
 
 	// for players
 	int		 powerups;		// bit flags
-	weapon_t weapon;			// determines weapon and flash model, etc
+	int      weapon;			// determines weapon and flash model, etc
 	int		 legsAnim;		// mask off ANIM_TOGGLEBIT
 	int		 torsoAnim;		// mask off ANIM_TOGGLEBIT
 

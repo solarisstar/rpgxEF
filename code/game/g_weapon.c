@@ -1407,7 +1407,7 @@ static vec3_t WP_MuzzlePoint[WP_NUM_WEAPONS] =
  */
 static float WP_ShotSize[WP_NUM_WEAPONS] =
 {
-    0,				                /* WP_0, */
+    0,				                /* WP_NULL, */
     0,				                /* WP_PHASER, */
     0,				                /* WP_COMPRESSION_RIFLE, */
     0,				                /* WP_NULL_HAND, */
@@ -1433,7 +1433,7 @@ static float WP_ShotSize[WP_NUM_WEAPONS] =
  */
 static float WP_ShotAltSize[WP_NUM_WEAPONS] =
 {
-    0,				/* WP_0, */
+    0,				/* WP_NULL, */
     PHASER_ALT_RADIUS,		/* WP_PHASER, */
     0,				/* WP_COMPRESSION_RIFLE, */
     0,				/* WP_NULL_HAND, */
@@ -1640,7 +1640,7 @@ static void WP_SprayVoyagerHypo(gentity_t *ent, qboolean alt_fire)
             tr_entPs->torsoTimer = 0;
             tr_entPs->legsTimer = 0;
 
-            /*tr_entPs->stats[STAT_WEAPONS] = ( 1 << WP_0 );*/
+            /*tr_entPs->stats[STAT_WEAPONS] = ( 1 << WP_NULL );*/
             /*tr_entPs->stats[STAT_HOLDABLE_ITEM] = HI_NONE;*/
         }
         /* RPG-X: RedTechie - Regular functions still work */

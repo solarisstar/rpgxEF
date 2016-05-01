@@ -150,7 +150,7 @@ static void IngamePlayer_DrawPlayer(void *self)
 
         s_ingame.playerinfo.randomEmote = qtrue;
 
-        UI_PlayerInfo_SetInfo(&s_ingame.playerinfo, BOTH_STAND1, BOTH_STAND1, viewangles, origin, WP_0, trap_Cvar_VariableValue("height"), trap_Cvar_VariableValue("weight"), qfalse);
+        UI_PlayerInfo_SetInfo(&s_ingame.playerinfo, BOTH_STAND1, BOTH_STAND1, viewangles, origin, WP_NULL, trap_Cvar_VariableValue("height"), trap_Cvar_VariableValue("weight"), qfalse);
     }
 
     b = &s_ingame.playermdl;

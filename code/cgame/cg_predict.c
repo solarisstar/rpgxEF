@@ -326,7 +326,7 @@ static void CG_TouchItem(centity_t *cent) {
     // We don't predict touching our own flag
     if (item->giType == IT_TEAM)
     {	// NOTE:  This code used to JUST check giTag.  The problem is that the giTag for PW_REDFLAG
-        // is the same as WP_9.  The giTag should be a SUBCHECK after giType.
+        // is the same as WP_QUANTUM_BURST.  The giTag should be a SUBCHECK after giType.
         /*if (cg.predictedPlayerState.persistant[PERS_TEAM] == TEAM_RED &&
             item->giTag == PW_REDFLAG)
             return;*/
