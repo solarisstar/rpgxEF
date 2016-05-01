@@ -10,7 +10,6 @@
 //
 //=================================================
 #include "ui_local.h"
-#include <pthread.h>
 
 #define START_PROFILING()     clock_t start = clock(); \
                               Com_Printf("Begin profiling %s line %d \n", __func__, __LINE__)
@@ -190,6 +189,41 @@ static playermodel_t s_playermodel;
 static int QDECL FilterList_Compare(const void *ptr1, const void *ptr2);
 static int QDECL CharMediaList_Compare(const void *ptr1, const void *ptr2);
 static void PlayerModel_DrawLoading(void);
+
+/*
+================
+Hashing 
+================
+*/
+
+#define NUM_HT_BUCKETS 64
+
+typedef struct {
+    char* charName;
+    void* next;
+} ht_element_t;
+
+unsigned long ht_hash(unsigned char *str) {
+    unsigned long hash = 5381;
+    int c;
+
+    while (c = *str++)
+        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+
+    return hash;
+}
+
+qboolean ht_contains_name(ht_element_t* ht[], char* str){
+    long hash = ht_hash((unsigned char*)str) % NUM_HT_BUCKETS;
+    ht_element_t* curr = ht[hash];
+    while(curr){
+        if (!strcmp(str, curr->charName)){
+            return qtrue;
+        }
+        curr = curr->next;
+    }
+    return qfalse;
+}
 
 /*
 =================
@@ -1136,8 +1170,6 @@ static void PlayerModel_BuildList(void)
     int			i, j;
     int			dirlen;
     charData_t	*tempBuff;
-    //int			offset;
-    int			temp;
 
     static qboolean setup_complete = qfalse;
     if (setup_complete){
@@ -1153,8 +1185,13 @@ static void PlayerModel_BuildList(void)
 
     ///Com_Printf("%i folders found\n", numdirs );
 
+    int pool_idx = 0;
+    ht_element_t  ele_pool[MAX_PLAYERCHARS];
+    ht_element_t* ht[NUM_HT_BUCKETS];
+
     for (i = 0; i < numdirs && s_playermodel.numChars < MAX_PLAYERCHARS; i++, dirptr += dirlen + 1)
     {
+
         dirlen = strlen(dirptr);
 
         if (!dirptr) {
@@ -1165,137 +1202,85 @@ static void PlayerModel_BuildList(void)
             dirptr[dirlen - 1] = '\0';
 
         //I'm guessing this is for non-PK3'd files
-        if (!strcmp(dirptr, ".") || !strcmp(dirptr, ".."))
+        if (!strcmp(dirptr, ".") || !strcmp(dirptr, "..")){
             continue;
+        }
+
+        if (ht_contains_name(ht, dirptr)){
+            continue;
+        }
 
         // TiM : Check for .model files.  That's all we need
-        numfiles = 0; //Just to be sure
-        numfiles = trap_FS_GetFileList(va("models/players_rpgx/%s", dirptr), ".model", filelist, 128);
 
-        temp = qfalse;
-        if (numfiles > 0 && dirptr[0])
-        {
-            //TiM - Don't do duplicate chars (Since it caches PK3 and non PK3 ones as separate instances )
-            for (j = 0; j < s_playermodel.numChars; j++)
-            {
-                tempBuff = &s_playermodel.charNames[j];
+        char* path = va("models/players_rpgx/%s", dirptr);
+        numfiles = trap_FS_GetFileList(path, ".model", filelist, 128);
 
-                if (!Q_stricmp(tempBuff->charName, dirptr)) {
-                    temp = qtrue;
-                    break;
-                }
-            }
-
-            if (temp)
-                continue;
+        if (numfiles > 0) {
 
             tempBuff = &s_playermodel.charNames[s_playermodel.numChars];
             Q_strncpyz(tempBuff->charName, dirptr, sizeof(tempBuff[s_playermodel.numChars].charName));
             tempBuff->index = -1;
 
             //TiM - Load data on the races if at all possible
-            if (trap_FS_GetFileList(va("models/players_rpgx/%s", dirptr), "race.cfg", filelist, 128) > 0)
-            {
-                fileHandle_t	f;
-                char			buffer[1024];
-                char*			filePtr;
-                int				fileLength;
-                char*			token;
-                char			filePath[MAX_QPATH];
+            fileHandle_t	f;
+            char			buffer[1024];
+            char*			filePtr;
+            int				fileLength;
+            char*			token;
+            char			filePath[MAX_QPATH];
 
-                Com_sprintf(filePath, sizeof(filePath), "models/players_rpgx/%s/race.cfg", dirptr);
-                fileLength = trap_FS_FOpenFile(filePath, &f, FS_READ);
 
-                //Com_Printf( S_COLOR_RED "File %s loaded.\n", dirptr );
+            Com_sprintf(filePath, sizeof(filePath), "models/players_rpgx/%s/race.cfg", dirptr);
+            fileLength = trap_FS_FOpenFile(filePath, &f, FS_READ);
 
-                if (!fileLength) {
-                    continue;
-                }
-                //Com_Printf( S_COLOR_RED "We have length.\n" );
-
-                if (fileLength > sizeof(buffer) - 1) {
-                    continue;
-                }
-                //Com_Printf( S_COLOR_RED "Good size.\n" );
-
-                memset(&buffer, 0, sizeof(buffer));
-                trap_FS_Read(buffer, fileLength, f);
-                //Com_Printf( S_COLOR_RED "Loaded data...\n" );
-
-                trap_FS_FCloseFile(f);
-
-                if (!buffer[0]) {
-                    continue;
-                }
-
-                //Format is 'Race Gender'. Race must precede Gender
-                filePtr = buffer;
-
-                COM_BeginParseSession();
-
-                token = COM_Parse(&filePtr);
-                if (!token)
-                    continue;
-
-                //Com_Printf( S_COLOR_RED "Race %s Loaded\n", token );
-
-                //tempBuff->race = PlayerModel_CheckInArray( token, s_playermodel.raceNames, MAX_RACES );
-
-                //big dirty hack
-                /*for( k=0; k < MAX_RACES; k++ )
-                {
-                    if ( !s_playermodel.raceNames[k].raceName[0] )
-                    {
-                        Q_strncpyz( s_playermodel.raceNames[k].raceName, token, sizeof( s_playermodel.raceNames[k].raceName ) );
-                        tempBuff->race = s_playermodel.raceNames[k].raceIndex = k;
-                        s_playermodel.numRaces++;
-
-                        break;
-                    }
-
-                    if ( !Q_stricmp( s_playermodel.raceNames[k].raceName, token ) )
-                    {
-                        tempBuff->race = s_playermodel.raceNames[k].raceIndex = k;
-                        break;
-                    }
-                }*/
-
-                tempBuff->race = PlayerModel_CheckInFilter(token, s_playermodel.raceList, MAX_RACES, &s_playermodel.numRaces);
-                //Com_Printf( S_COLOR_RED "Number of races now: %i\n",  s_playermodel.numRaces );
-
-                token = COM_Parse(&filePtr);
-                if (!token)
-                    continue;
-                //Com_Printf( S_COLOR_RED "Gender %s loaded\n", token );
-
-                //tempBuff->gender = PlayerModel_CheckInArray( token, s_playermodel.genderNames, MAX_GENDERS );
-                tempBuff->gender = PlayerModel_CheckInFilter(token, s_playermodel.genderList, MAX_GENDERS, &s_playermodel.numGenders);
-
-                //Com_Printf( S_COLOR_RED "%i\n", tempBuff[i].gender );
+            if (fileLength <= 0) {
+                continue;
             }
+
+            if (fileLength > sizeof(buffer) - 1) {
+                continue;
+            }
+
+            // Only need to zero out one past the file length
+            memset(&buffer, 0, fileLength + 1);
+            trap_FS_Read(buffer, fileLength, f);
+
+            trap_FS_FCloseFile(f);
+
+            if (!buffer[0]) {
+                continue;
+            }
+
+            //Format is 'Race Gender'. Race must precede Gender
+            filePtr = buffer;
+
+            COM_BeginParseSession();
+
+            token = COM_Parse(&filePtr);
+            if (!token)
+                continue;
+
+            tempBuff->race = PlayerModel_CheckInFilter(token, s_playermodel.raceList, MAX_RACES, &s_playermodel.numRaces);
+
+            token = COM_Parse(&filePtr);
+            if (!token)
+                continue;
+
+            tempBuff->gender = PlayerModel_CheckInFilter(token, s_playermodel.genderList, MAX_GENDERS, &s_playermodel.numGenders);
 
             s_playermodel.numChars++;
             tempBuff = &s_playermodel.charNames[s_playermodel.numChars];
+
+            // Add data to hashtable, for O(1) access in the loop
+            // that checks for duplicates. This is a little hard
+            // to read, but this code needed optimization.
+            long hash = ht_hash((unsigned char*)dirptr) % NUM_HT_BUCKETS;
+            ele_pool[pool_idx].charName = dirptr;
+            ele_pool[pool_idx].next = ht[hash];
+            ht[hash] = &ele_pool[pool_idx];
+            pool_idx++;
         }
     }
-
-    //TiM - Flip the array so it's the right order
-    /*
-    * RPG-X | Phenix | 27/03/2007
-    * Removed code for Task#39 (List was fliped to be Z-A!!!!)*/
-    //for ( i = 0; i < s_playermodel.numChars; i++ ) {
-    //	offset = ( ( s_playermodel.numChars - i ) - 1);
-
-    //	Q_strncpyz( s_playermodel.charNames[i].charName,
-    //				tempBuff[offset].charName,
-    //				sizeof( s_playermodel.charNames[i].charName ) );
-
-    //	s_playermodel.charNames[i].race = tempBuff[offset].race;
-    //	s_playermodel.charNames[i].gender = tempBuff[offset].gender;
-    //	s_playermodel.charNames[i].index = tempBuff[offset].index;
-
-    //	Q_strncpyz( s_playermodel.charNamesUpr[i], s_playermodel.charNames[i].charName, sizeof( s_playermodel.charNamesUpr[i] ) );
-    //}
 
     //RPG-X | TiM | 30-4-2007
     //This loop obviously isn't working well enough.
