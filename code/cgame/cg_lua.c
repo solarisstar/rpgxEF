@@ -2,8 +2,6 @@
 
 #include "cg_lua.h"
 
-#ifdef CG_LUA
-
 lvm_t       *lVM[NUM_VMS];
 fileHandle_t lualog;
 
@@ -357,5 +355,3 @@ lvm_t *CG_LuaGetVM(lua_State * L)
             return lVM[i];
     return NULL;
 }
-
-#endif

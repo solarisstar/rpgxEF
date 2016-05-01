@@ -2,10 +2,6 @@
 //
 // bg_public.h -- definitions shared by both the server game and client game modules
 
-// meh somehow preprocessor G_LUA won't work for me
-#define G_LUA 1
-#define CG_LUA 1
-
 // because games can change separately from the main system version, we need a
 // second version that must match between game and cgame
 #define RPGX_VERSION		"RPG-X V 2.3.4b"

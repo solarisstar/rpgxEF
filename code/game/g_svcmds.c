@@ -774,20 +774,19 @@ void	Svcmd_ForceTeam_f(void) {
 Svcmd_LuaRestart_f
 =================
 */
-#ifdef G_LUA
+
 static void Svcmd_LuaRestart_f(void)
 {
     G_LuaShutdown();
     G_LuaInit();
 }
-#endif
 
-qboolean	ConsoleCommand(void) { //void
+qboolean ConsoleCommand(void) 
+{
     char	cmd[MAX_TOKEN_CHARS];
 
     trap_Argv(0, cmd, sizeof(cmd));
 
-#ifdef G_LUA
     if (Q_stricmp(cmd, "lua_status") == 0)
     {
         G_LuaStatus(NULL);
@@ -799,7 +798,6 @@ qboolean	ConsoleCommand(void) { //void
         Svcmd_LuaRestart_f();
         return qtrue;
     }
-#endif
 
     if (Q_stricmp(cmd, "entitylist") == 0) {
         Svcmd_EntityList_f();

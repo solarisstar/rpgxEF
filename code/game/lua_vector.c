@@ -2,8 +2,6 @@
 
 #include "g_lua.h"
 
-#if(defined(CG_LUA) || defined(G_LUA))
-
 #include "lua.h"
 #include "lauxlib.h"
 #include "lualib.h"
@@ -447,5 +445,3 @@ int Lua_IsVector(lua_State * L, int idx)
     }
     return 0;
 }
-
-#endif

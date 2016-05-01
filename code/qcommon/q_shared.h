@@ -129,10 +129,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
  **********************************************************************/
 
- // meh somehow preprocessor G_LUA won't work for me
-#define G_LUA 1
-#define CG_LUA 1
-
 #ifdef Q3_VM
 #error "Q3_VM is defined - QVMs are no longer supported by RPG-X2"
 

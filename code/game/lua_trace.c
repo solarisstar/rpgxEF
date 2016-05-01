@@ -2,8 +2,6 @@
 
 #include "g_lua.h"
 
-#ifdef G_LUA
-
 /***
 A module allowing to do traces. Documentation under work.
 @module trace
@@ -256,4 +254,3 @@ ltrace_t *Lua_GetTrace(lua_State * L, int argNum)
     luaL_argcheck(L, ud != NULL, argNum, "\'trace\' expected");
     return (ltrace_t *)ud;
 }
-#endif

@@ -1,9 +1,5 @@
 #include "cg_lua.h"
 
-#ifdef CG_LUA
-#include "cg_lua.h"
-
-#ifdef CG_LUA
 static int Refent_GC(lua_State * L)
 {
     return 0;
@@ -468,6 +464,3 @@ rent_t *Lua_GetRent(lua_State * L, int argNum)
     luaL_argcheck(L, ud != NULL, argNum, "\'refentity\' expected");
     return (rent_t *)ud;
 }
-#endif
-
-#endif

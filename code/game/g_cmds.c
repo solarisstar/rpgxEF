@@ -7441,13 +7441,11 @@ void G_Client_Command(int clientNum)
         return;
     }
 
-#ifdef G_LUA
     if (Q_stricmp(cmd, "lua_status") == 0)
     {
         G_LuaStatus(ent);
         return;
     }
-#endif
 
     // ignore all other commands when at intermission
     if (level.intermissiontime)

@@ -271,27 +271,32 @@ void G_UseTargets2(gentity_t *ent, gentity_t *activator, char *target) {
     }
 
     t = NULL;
-    while ((t = G_Find(t, FOFS(targetname), target)) != NULL) {
-        if (t == ent) {
+    while ((t = G_Find(t, FOFS(targetname), target)) != NULL) 
+    {
+        if (t == ent) 
+        {
             G_Printf("WARNING: Entity %i used itself.\n", t->s.number); /* RPG-X | GSIO01 | 22.10.09: a little bit more information for the mapper */
-        } else {
-            if (t->use) {
+        } 
+        else 
+        {
+            if (t->use) 
+            {
                 t->use(t, ent, activator);
-#ifdef G_LUA
                 if (t->luaUse)
                 {
                     if (activator)
                     {
                         LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, activator->s.number);
-                    } else
+                    } 
+                    else
                     {
                         LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, ENTITYNUM_WORLD);
                     }
                 }
-#endif
             }
         }
-        if (!ent->inuse) {
+        if (!ent->inuse) 
+        {
             G_Printf("Entity %i was removed while using targets\n", t->s.number); /* RPG-X | GSIO01 | 22.10.09: a little bit more information for the mapper */
             return;
         }
@@ -303,81 +308,93 @@ void G_UseTargets2(gentity_t *ent, gentity_t *activator, char *target) {
     13/06/2004
     ================*/
     t = NULL;
-    while ((t = G_Find(t, FOFS(swapname), target)) != NULL) {
-        if (t == ent) {
+    while ((t = G_Find(t, FOFS(swapname), target)) != NULL) 
+    {
+        if (t == ent) 
+        {
             G_Printf("WARNING: Entity %i used itself.\n", t->s.number); /* RPG-X | GSIO01 | 22.10.09: a little bit more information for the mapper */
-        } else {
-            if (t->use) {
+        } 
+        else 
+        {
+            if (t->use) 
+            {
                 t->use(t, ent, activator);
-#ifdef G_LUA
                 if (t->luaUse)
                 {
                     if (activator)
                     {
                         LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, activator->s.number);
-                    } else
+                    } 
+                    else
                     {
                         LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, ENTITYNUM_WORLD);
                     }
                 }
-#endif
             }
         }
-        if (!ent->inuse) {
+        if (!ent->inuse)
+        {
             G_Printf("Entity %i was removed while using targets\n", t->s.number); /* RPG-X | GSIO01 | 22.10.09: a little bit more information for the mapper */
             return;
         }
     }
 
     t = NULL;
-    while ((t = G_Find(t, FOFS(truename), target)) != NULL) {
-        if (t == ent) {
+    while ((t = G_Find(t, FOFS(truename), target)) != NULL) 
+    {
+        if (t == ent) 
+        {
             G_Printf("WARNING: Entity %i used itself.\n", t->s.number); /* RPG-X | GSIO01 | 22.10.09: a little bit more information for the mapper */
-        } else {
-            if (t->use) {
-                t->use(t, ent, activator);
-#ifdef G_LUA
-                if (t->luaUse)
+        } 
+        else if (t->use) 
+        {
+            t->use(t, ent, activator);
+            if (t->luaUse)
+            {
+                if (activator)
                 {
-                    if (activator)
-                    {
-                        LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, activator->s.number);
-                    } else
-                    {
-                        LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, ENTITYNUM_WORLD);
-                    }
+                    LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, activator->s.number);
+                } 
+                else
+                {
+                    LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, ENTITYNUM_WORLD);
                 }
-#endif
             }
         }
-        if (!ent->inuse) {
+        
+        
+        if (!ent->inuse) 
+        {
             G_Printf("Entity %i was removed while using targets\n", t->s.number); /* RPG-X | GSIO01 | 22.10.09: a little bit more information for the mapper */
             return;
         }
     }
 
     t = NULL;
-    while ((t = G_Find(t, FOFS(falsename), target)) != NULL) {
-        if (t == ent) {
+    while ((t = G_Find(t, FOFS(falsename), target)) != NULL) 
+    {
+        if (t == ent) 
+        {
             G_Printf("WARNING: Entity %i used itself.\n", t->s.number); /* RPG-X | GSIO01 | 22.10.09: a little bit more information for the mapper */
-        } else {
-            if (t->use) {
-                t->use(t, ent, activator);
-#ifdef G_LUA
-                if (t->luaUse)
+        } 
+        else if (t->use) 
+        {
+            t->use(t, ent, activator);
+            if (t->luaUse)
+            {
+                if (activator)
                 {
-                    if (activator)
-                    {
-                        LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, activator->s.number);
-                    } else
-                    {
-                        LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, ENTITYNUM_WORLD);
-                    }
+                    LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, activator->s.number);
+                } 
+                else
+                {
+                    LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, ENTITYNUM_WORLD);
                 }
-#endif
             }
         }
-        if (!ent->inuse) {
+    
+        if (!ent->inuse) 
+        {
             G_Printf("Entity %i was removed while using targets\n", t->s.number); /* RPG-X | GSIO01 | 22.10.09: a little bit more information for the mapper */
             return;
         }
@@ -391,27 +408,30 @@ void G_UseTargets2(gentity_t *ent, gentity_t *activator, char *target) {
      * target_alert
      */
     t = NULL;
-    while ((t = G_Find(t, FOFS(bluename), target)) != NULL) {
-        if (t == ent) {
+    while ((t = G_Find(t, FOFS(bluename), target)) != NULL) 
+    {
+        if (t == ent) 
+        {
             G_Printf("WARNING: Entity %i used itself.\n", t->s.number); /* RPG-X | GSIO01 | 22.10.09: a little bit more information for the mapper */
-        } else {
-            if (t->use) {
-                t->use(t, ent, ent);
-#ifdef G_LUA
-                if (t->luaUse)
+        } 
+        else  if (t->use) 
+        {
+            t->use(t, ent, ent);
+            if (t->luaUse)
+            {
+                if (activator)
                 {
-                    if (activator)
-                    {
-                        LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, activator->s.number);
-                    } else
-                    {
-                        LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, ENTITYNUM_WORLD);
-                    }
+                    LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, activator->s.number);
+                } 
+                else
+                {
+                    LuaHook_G_EntityUse(t->luaUse, t->s.number, ent->s.number, ENTITYNUM_WORLD);
                 }
-#endif
             }
         }
-        if (!ent->inuse) {
+          
+        if (!ent->inuse) 
+        {
             G_Printf("Entity %i was removed while using targets\n", t->s.number); /* RPG-X | GSIO01 | 22.10.09: a little bit more information for the mapper */
             return;
         }
@@ -585,18 +605,17 @@ gentity_t *G_Spawn(void) {
 void G_FreeEntity(gentity_t *ed) {
     trap_UnlinkEntity(ed);		/* unlink from world */
 
-    if (ed->neverFree) {
+    if (ed->neverFree) 
+    {
         return;
     }
 
-#ifdef G_LUA
     /* Lua API callbacks */
     if (ed->luaFree && !ed->client)
     {
         LuaHook_G_EntityFree(ed->luaFree, ed->s.number);
     }
-#endif
-
+    
     memset(ed, 0, sizeof(*ed));
     ed->classname = "freed";
     ed->freetime = level.time;

@@ -3,7 +3,6 @@
 #include "g_lua.h"
 #include "g_cinematic.h"
 
-#ifdef G_LUA
 
 /***
 A library for cinematics. Not finished and therfore not further documented.
@@ -72,4 +71,3 @@ int Luaopen_Cinematic(lua_State *L) {
     luaL_register(L, "cinematic", lib_cinematic);
     return 1;
 }
-#endif //G_LUA

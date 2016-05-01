@@ -1,6 +1,6 @@
 #include "cg_lua.h"
 
-#ifdef CG_LUA
+
 static int Cent_GC(lua_State * L)
 {
     return 0;
@@ -71,4 +71,3 @@ cent_t *Lua_GetCent(lua_State * L, int argNum)
     luaL_argcheck(L, ud != NULL, argNum, "\'centity\' expected");
     return (cent_t *)ud;
 }
-#endif
