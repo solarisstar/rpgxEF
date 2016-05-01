@@ -1,22 +1,22 @@
-/* Copyright (C) 2002 Jean-Marc Valin 
+/* Copyright (C) 2002 Jean-Marc Valin
    File: exc_10_32_table.c
    Codebook for excitation in narrowband CELP mode (4000 bps)
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    - Redistributions of source code must retain the above copyright
    notice, this list of conditions and the following disclaimer.
-   
+
    - Redistributions in binary form must reproduce the above copyright
    notice, this list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
-   
+
    - Neither the name of the Xiph.org Foundation nor the names of its
    contributors may be used to endorse or promote products derived from
    this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -29,7 +29,6 @@
    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-
 
 const signed char exc_10_32_table[320] = {
 7,17,17,27,25,22,12,4,-3,0,
@@ -63,4 +62,4 @@ const signed char exc_10_32_table[320] = {
 6,-17,9,-11,-20,52,-19,3,-6,-6,
 -8,-5,23,-41,37,1,-21,10,-14,8,
 7,5,-15,-15,23,39,-26,-33,7,2,
--32,-30,-21,-8,4,12,17,15,14,11};
+-32,-30,-21,-8,4,12,17,15,14,11 };

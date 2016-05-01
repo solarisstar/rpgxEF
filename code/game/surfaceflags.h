@@ -63,4 +63,3 @@
 #define SURF_SNOW				0x200000	//!< snow, use grass footsteps etc.
 #define SURF_WOOD				0x400000	//!< wood, use grass footsteps etc.
 //RPG-X | GSIO01 | 20/05/2009 | END MOD
-

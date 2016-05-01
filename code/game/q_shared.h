@@ -1163,10 +1163,10 @@ typedef struct entityState_s {
 	int		eventParm;
 
 	// for players
-	int		powerups;		// bit flags
-	int		weapon;			// determines weapon and flash model, etc
-	int		legsAnim;		// mask off ANIM_TOGGLEBIT
-	int		torsoAnim;		// mask off ANIM_TOGGLEBIT
+	int		 powerups;		// bit flags
+	int      weapon;			// determines weapon and flash model, etc
+	int		 legsAnim;		// mask off ANIM_TOGGLEBIT
+	int		 torsoAnim;		// mask off ANIM_TOGGLEBIT
 
 #ifdef MISSION_PACK
 	int		generic1;

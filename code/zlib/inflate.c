@@ -3,82 +3,82 @@
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
-/*
- * Change history:
- *
- * 1.2.beta0    24 Nov 2002
- * - First version -- complete rewrite of inflate to simplify code, avoid
- *   creation of window when not needed, minimize use of window when it is
- *   needed, make inffast.c even faster, implement gzip decoding, and to
- *   improve code readability and style over the previous zlib inflate code
- *
- * 1.2.beta1    25 Nov 2002
- * - Use pointers for available input and output checking in inffast.c
- * - Remove input and output counters in inffast.c
- * - Change inffast.c entry and loop from avail_in >= 7 to >= 6
- * - Remove unnecessary second byte pull from length extra in inffast.c
- * - Unroll direct copy to three copies per loop in inffast.c
- *
- * 1.2.beta2    4 Dec 2002
- * - Change external routine names to reduce potential conflicts
- * - Correct filename to inffixed.h for fixed tables in inflate.c
- * - Make hbuf[] unsigned char to match parameter type in inflate.c
- * - Change strm->next_out[-state->offset] to *(strm->next_out - state->offset)
- *   to avoid negation problem on Alphas (64 bit) in inflate.c
- *
- * 1.2.beta3    22 Dec 2002
- * - Add comments on state->bits assertion in inffast.c
- * - Add comments on op field in inftrees.h
- * - Fix bug in reuse of allocated window after inflateReset()
- * - Remove bit fields--back to byte structure for speed
- * - Remove distance extra == 0 check in inflate_fast()--only helps for lengths
- * - Change post-increments to pre-increments in inflate_fast(), PPC biased?
- * - Add compile time option, POSTINC, to use post-increments instead (Intel?)
- * - Make MATCH copy in inflate() much faster for when inflate_fast() not used
- * - Use local copies of stream next and avail values, as well as local bit
- *   buffer and bit count in inflate()--for speed when inflate_fast() not used
- *
- * 1.2.beta4    1 Jan 2003
- * - Split ptr - 257 statements in inflate_table() to avoid compiler warnings
- * - Move a comment on output buffer sizes from inffast.c to inflate.c
- * - Add comments in inffast.c to introduce the inflate_fast() routine
- * - Rearrange window copies in inflate_fast() for speed and simplification
- * - Unroll last copy for window match in inflate_fast()
- * - Use local copies of window variables in inflate_fast() for speed
- * - Pull out common write == 0 case for speed in inflate_fast()
- * - Make op and len in inflate_fast() unsigned for consistency
- * - Add FAR to lcode and dcode declarations in inflate_fast()
- * - Simplified bad distance check in inflate_fast()
- * - Added inflateBackInit(), inflateBack(), and inflateBackEnd() in new
- *   source file infback.c to provide a call-back interface to inflate for
- *   programs like gzip and unzip -- uses window as output buffer to avoid
- *   window copying
- *
- * 1.2.beta5    1 Jan 2003
- * - Improved inflateBack() interface to allow the caller to provide initial
- *   input in strm.
- * - Fixed stored blocks bug in inflateBack()
- *
- * 1.2.beta6    4 Jan 2003
- * - Added comments in inffast.c on effectiveness of POSTINC
- * - Typecasting all around to reduce compiler warnings
- * - Changed loops from while (1) or do {} while (1) to for (;;), again to
- *   make compilers happy
- * - Changed type of window in inflateBackInit() to unsigned char *
- *
- * 1.2.beta7    27 Jan 2003
- * - Changed many types to unsigned or unsigned short to avoid warnings
- * - Added inflateCopy() function
- *
- * 1.2.0        9 Mar 2003
- * - Changed inflateBack() interface to provide separate opaque descriptors
- *   for the in() and out() functions
- * - Changed inflateBack() argument and in_func typedef to swap the length
- *   and buffer address return values for the input function
- * - Check next_in and next_out for Z_NULL on entry to inflate()
- *
- * The history for versions after 1.2.0 are in ChangeLog in zlib distribution.
- */
+ /*
+  * Change history:
+  *
+  * 1.2.beta0    24 Nov 2002
+  * - First version -- complete rewrite of inflate to simplify code, avoid
+  *   creation of window when not needed, minimize use of window when it is
+  *   needed, make inffast.c even faster, implement gzip decoding, and to
+  *   improve code readability and style over the previous zlib inflate code
+  *
+  * 1.2.beta1    25 Nov 2002
+  * - Use pointers for available input and output checking in inffast.c
+  * - Remove input and output counters in inffast.c
+  * - Change inffast.c entry and loop from avail_in >= 7 to >= 6
+  * - Remove unnecessary second byte pull from length extra in inffast.c
+  * - Unroll direct copy to three copies per loop in inffast.c
+  *
+  * 1.2.beta2    4 Dec 2002
+  * - Change external routine names to reduce potential conflicts
+  * - Correct filename to inffixed.h for fixed tables in inflate.c
+  * - Make hbuf[] unsigned char to match parameter type in inflate.c
+  * - Change strm->next_out[-state->offset] to *(strm->next_out - state->offset)
+  *   to avoid negation problem on Alphas (64 bit) in inflate.c
+  *
+  * 1.2.beta3    22 Dec 2002
+  * - Add comments on state->bits assertion in inffast.c
+  * - Add comments on op field in inftrees.h
+  * - Fix bug in reuse of allocated window after inflateReset()
+  * - Remove bit fields--back to byte structure for speed
+  * - Remove distance extra == 0 check in inflate_fast()--only helps for lengths
+  * - Change post-increments to pre-increments in inflate_fast(), PPC biased?
+  * - Add compile time option, POSTINC, to use post-increments instead (Intel?)
+  * - Make MATCH copy in inflate() much faster for when inflate_fast() not used
+  * - Use local copies of stream next and avail values, as well as local bit
+  *   buffer and bit count in inflate()--for speed when inflate_fast() not used
+  *
+  * 1.2.beta4    1 Jan 2003
+  * - Split ptr - 257 statements in inflate_table() to avoid compiler warnings
+  * - Move a comment on output buffer sizes from inffast.c to inflate.c
+  * - Add comments in inffast.c to introduce the inflate_fast() routine
+  * - Rearrange window copies in inflate_fast() for speed and simplification
+  * - Unroll last copy for window match in inflate_fast()
+  * - Use local copies of window variables in inflate_fast() for speed
+  * - Pull out common write == 0 case for speed in inflate_fast()
+  * - Make op and len in inflate_fast() unsigned for consistency
+  * - Add FAR to lcode and dcode declarations in inflate_fast()
+  * - Simplified bad distance check in inflate_fast()
+  * - Added inflateBackInit(), inflateBack(), and inflateBackEnd() in new
+  *   source file infback.c to provide a call-back interface to inflate for
+  *   programs like gzip and unzip -- uses window as output buffer to avoid
+  *   window copying
+  *
+  * 1.2.beta5    1 Jan 2003
+  * - Improved inflateBack() interface to allow the caller to provide initial
+  *   input in strm.
+  * - Fixed stored blocks bug in inflateBack()
+  *
+  * 1.2.beta6    4 Jan 2003
+  * - Added comments in inffast.c on effectiveness of POSTINC
+  * - Typecasting all around to reduce compiler warnings
+  * - Changed loops from while (1) or do {} while (1) to for (;;), again to
+  *   make compilers happy
+  * - Changed type of window in inflateBackInit() to unsigned char *
+  *
+  * 1.2.beta7    27 Jan 2003
+  * - Changed many types to unsigned or unsigned short to avoid warnings
+  * - Added inflateCopy() function
+  *
+  * 1.2.0        9 Mar 2003
+  * - Changed inflateBack() interface to provide separate opaque descriptors
+  *   for the in() and out() functions
+  * - Changed inflateBack() argument and in_func typedef to swap the length
+  *   and buffer address return values for the input function
+  * - Check next_in and next_out for Z_NULL on entry to inflate()
+  *
+  * The history for versions after 1.2.0 are in ChangeLog in zlib distribution.
+  */
 
 #include "zutil.h"
 #include "inftrees.h"
@@ -91,14 +91,14 @@
 #  endif
 #endif
 
-/* function prototypes */
+  /* function prototypes */
 local void fixedtables OF((struct inflate_state FAR *state));
 local int updatewindow OF((z_streamp strm, unsigned out));
 #ifdef BUILDFIXED
-   void makefixed OF((void));
+void makefixed OF((void));
 #endif
 local unsigned syncsearch OF((unsigned FAR *have, unsigned char FAR *buf,
-                              unsigned len));
+    unsigned len));
 
 int ZEXPORT inflateReset(strm)
 z_streamp strm;
@@ -160,15 +160,14 @@ int stream_size;
     }
     if (strm->zfree == (free_func)0) strm->zfree = zcfree;
     state = (struct inflate_state FAR *)
-            ZALLOC(strm, 1, sizeof(struct inflate_state));
+        ZALLOC(strm, 1, sizeof(struct inflate_state));
     if (state == Z_NULL) return Z_MEM_ERROR;
     Tracev((stderr, "inflate: allocated\n"));
     strm->state = (struct internal_state FAR *)state;
     if (windowBits < 0) {
         state->wrap = 0;
         windowBits = -windowBits;
-    }
-    else {
+    } else {
         state->wrap = (windowBits >> 4) + 1;
 #ifdef GUNZIP
         if (windowBits < 48) windowBits &= 15;
@@ -287,7 +286,7 @@ void makefixed()
     for (;;) {
         if ((low % 7) == 0) printf("\n        ");
         printf("{%u,%u,%d}", state.lencode[low].op, state.lencode[low].bits,
-               state.lencode[low].val);
+            state.lencode[low].val);
         if (++low == size) break;
         putchar(',');
     }
@@ -298,7 +297,7 @@ void makefixed()
     for (;;) {
         if ((low % 6) == 0) printf("\n        ");
         printf("{%u,%u,%d}", state.distcode[low].op, state.distcode[low].bits,
-               state.distcode[low].val);
+            state.distcode[low].val);
         if (++low == size) break;
         putchar(',');
     }
@@ -332,8 +331,8 @@ unsigned out;
     /* if it hasn't been done already, allocate space for the window */
     if (state->window == Z_NULL) {
         state->window = (unsigned char FAR *)
-                        ZALLOC(strm, 1U << state->wbits,
-                               sizeof(unsigned char));
+            ZALLOC(strm, 1U << state->wbits,
+                sizeof(unsigned char));
         if (state->window == Z_NULL) return 1;
     }
 
@@ -350,8 +349,7 @@ unsigned out;
         zmemcpy(state->window, strm->next_out - state->wsize, state->wsize);
         state->write = 0;
         state->whave = state->wsize;
-    }
-    else {
+    } else {
         dist = state->wsize - state->write;
         if (dist > copy) dist = copy;
         zmemcpy(state->window + state->write, strm->next_out - copy, dist);
@@ -360,8 +358,7 @@ unsigned out;
             zmemcpy(state->window, strm->next_out - copy, copy);
             state->write = copy;
             state->whave = state->wsize;
-        }
-        else {
+        } else {
             state->write += dist;
             if (state->write == state->wsize) state->write = 0;
             if (state->whave < state->wsize) state->whave += dist;
@@ -438,15 +435,15 @@ unsigned out;
         bits += 8; \
     } while (0)
 
-/* Assure that there are at least n bits in the bit accumulator.  If there is
-   not enough available input to do that, then return from inflate(). */
+   /* Assure that there are at least n bits in the bit accumulator.  If there is
+      not enough available input to do that, then return from inflate(). */
 #define NEEDBITS(n) \
     do { \
         while (bits < (unsigned)(n)) \
             PULLBYTE(); \
     } while (0)
 
-/* Return the low n bits of the bit accumulator (n < 16) */
+      /* Return the low n bits of the bit accumulator (n < 16) */
 #define BITS(n) \
     ((unsigned)hold & ((1U << (n)) - 1))
 
@@ -572,7 +569,7 @@ int flush;
     unsigned char hbuf[4];      /* buffer for gzip header crc calculation */
 #endif
     static const unsigned short order[19] = /* permutation of code lengths */
-        {16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
+    { 16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15 };
 
     if (strm == Z_NULL || strm->state == Z_NULL || strm->next_out == Z_NULL ||
         (strm->next_in == Z_NULL && strm->avail_in != 0))
@@ -673,8 +670,7 @@ int flush;
                     state->head->extra_len = (unsigned)hold;
                 if (state->flags & 0x0200) CRC2(state->check, hold);
                 INITBITS();
-            }
-            else if (state->head != Z_NULL)
+            } else if (state->head != Z_NULL)
                 state->head->extra = Z_NULL;
             state->mode = EXTRA;
         case EXTRA:
@@ -686,8 +682,8 @@ int flush;
                         state->head->extra != Z_NULL) {
                         len = state->head->extra_len - state->length;
                         zmemcpy(state->head->extra + len, next,
-                                len + copy > state->head->extra_max ?
-                                state->head->extra_max - len : copy);
+                            len + copy > state->head->extra_max ?
+                            state->head->extra_max - len : copy);
                     }
                     if (state->flags & 0x0200)
                         state->check = crc32(state->check, next, copy);
@@ -706,8 +702,8 @@ int flush;
                 do {
                     len = (unsigned)(next[copy++]);
                     if (state->head != Z_NULL &&
-                            state->head->name != Z_NULL &&
-                            state->length < state->head->name_max)
+                        state->head->name != Z_NULL &&
+                        state->length < state->head->name_max)
                         state->head->name[state->length++] = len;
                 } while (len && copy < have);
                 if (state->flags & 0x0200)
@@ -715,8 +711,7 @@ int flush;
                 have -= copy;
                 next += copy;
                 if (len) goto inf_leave;
-            }
-            else if (state->head != Z_NULL)
+            } else if (state->head != Z_NULL)
                 state->head->name = Z_NULL;
             state->length = 0;
             state->mode = COMMENT;
@@ -727,8 +722,8 @@ int flush;
                 do {
                     len = (unsigned)(next[copy++]);
                     if (state->head != Z_NULL &&
-                            state->head->comment != Z_NULL &&
-                            state->length < state->head->comm_max)
+                        state->head->comment != Z_NULL &&
+                        state->length < state->head->comm_max)
                         state->head->comment[state->length++] = len;
                 } while (len && copy < have);
                 if (state->flags & 0x0200)
@@ -736,8 +731,7 @@ int flush;
                 have -= copy;
                 next += copy;
                 if (len) goto inf_leave;
-            }
-            else if (state->head != Z_NULL)
+            } else if (state->head != Z_NULL)
                 state->head->comment = Z_NULL;
             state->mode = HCRC;
         case HCRC:
@@ -784,18 +778,18 @@ int flush;
             switch (BITS(2)) {
             case 0:                             /* stored block */
                 Tracev((stderr, "inflate:     stored block%s\n",
-                        state->last ? " (last)" : ""));
+                    state->last ? " (last)" : ""));
                 state->mode = STORED;
                 break;
             case 1:                             /* fixed block */
                 fixedtables(state);
                 Tracev((stderr, "inflate:     fixed codes block%s\n",
-                        state->last ? " (last)" : ""));
+                    state->last ? " (last)" : ""));
                 state->mode = LEN;              /* decode codes */
                 break;
             case 2:                             /* dynamic block */
                 Tracev((stderr, "inflate:     dynamic codes block%s\n",
-                        state->last ? " (last)" : ""));
+                    state->last ? " (last)" : ""));
                 state->mode = TABLE;
                 break;
             case 3:
@@ -814,7 +808,7 @@ int flush;
             }
             state->length = (unsigned)hold & 0xffff;
             Tracev((stderr, "inflate:       stored length %u\n",
-                    state->length));
+                state->length));
             INITBITS();
             state->mode = COPY;
         case COPY:
@@ -864,7 +858,7 @@ int flush;
             state->lencode = (code const FAR *)(state->next);
             state->lenbits = 7;
             ret = inflate_table(CODES, state->lens, 19, &(state->next),
-                                &(state->lenbits), state->work);
+                &(state->lenbits), state->work);
             if (ret) {
                 strm->msg = (char *)"invalid code lengths set";
                 state->mode = BAD;
@@ -884,8 +878,7 @@ int flush;
                     NEEDBITS(this.bits);
                     DROPBITS(this.bits);
                     state->lens[state->have++] = this.val;
-                }
-                else {
+                } else {
                     if (this.val == 16) {
                         NEEDBITS(this.bits + 2);
                         DROPBITS(this.bits);
@@ -897,15 +890,13 @@ int flush;
                         len = state->lens[state->have - 1];
                         copy = 3 + BITS(2);
                         DROPBITS(2);
-                    }
-                    else if (this.val == 17) {
+                    } else if (this.val == 17) {
                         NEEDBITS(this.bits + 3);
                         DROPBITS(this.bits);
                         len = 0;
                         copy = 3 + BITS(3);
                         DROPBITS(3);
-                    }
-                    else {
+                    } else {
                         NEEDBITS(this.bits + 7);
                         DROPBITS(this.bits);
                         len = 0;
@@ -930,7 +921,7 @@ int flush;
             state->lencode = (code const FAR *)(state->next);
             state->lenbits = 9;
             ret = inflate_table(LENS, state->lens, state->nlen, &(state->next),
-                                &(state->lenbits), state->work);
+                &(state->lenbits), state->work);
             if (ret) {
                 strm->msg = (char *)"invalid literal/lengths set";
                 state->mode = BAD;
@@ -939,7 +930,7 @@ int flush;
             state->distcode = (code const FAR *)(state->next);
             state->distbits = 6;
             ret = inflate_table(DISTS, state->lens + state->nlen, state->ndist,
-                            &(state->next), &(state->distbits), state->work);
+                &(state->next), &(state->distbits), state->work);
             if (ret) {
                 strm->msg = (char *)"invalid distances set";
                 state->mode = BAD;
@@ -963,7 +954,7 @@ int flush;
                 last = this;
                 for (;;) {
                     this = state->lencode[last.val +
-                            (BITS(last.bits + last.op) >> last.bits)];
+                        (BITS(last.bits + last.op) >> last.bits)];
                     if ((unsigned)(last.bits + this.bits) <= bits) break;
                     PULLBYTE();
                 }
@@ -973,8 +964,8 @@ int flush;
             state->length = (unsigned)this.val;
             if ((int)(this.op) == 0) {
                 Tracevv((stderr, this.val >= 0x20 && this.val < 0x7f ?
-                        "inflate:         literal '%c'\n" :
-                        "inflate:         literal 0x%02x\n", this.val));
+                    "inflate:         literal '%c'\n" :
+                    "inflate:         literal 0x%02x\n", this.val));
                 state->mode = LIT;
                 break;
             }
@@ -1008,7 +999,7 @@ int flush;
                 last = this;
                 for (;;) {
                     this = state->distcode[last.val +
-                            (BITS(last.bits + last.op) >> last.bits)];
+                        (BITS(last.bits + last.op) >> last.bits)];
                     if ((unsigned)(last.bits + this.bits) <= bits) break;
                     PULLBYTE();
                 }
@@ -1051,12 +1042,10 @@ int flush;
                 if (copy > state->write) {
                     copy -= state->write;
                     from = state->window + (state->wsize - copy);
-                }
-                else
+                } else
                     from = state->window + (state->write - copy);
                 if (copy > state->length) copy = state->length;
-            }
-            else {                              /* copy from output */
+            } else {                              /* copy from output */
                 from = put - state->offset;
                 copy = state->length;
             }
@@ -1082,13 +1071,13 @@ int flush;
                 state->total += out;
                 if (out)
                     strm->adler = state->check =
-                        UPDATE(state->check, put - out, out);
+                    UPDATE(state->check, put - out, out);
                 out = left;
                 if ((
 #ifdef GUNZIP
-                     state->flags ? hold :
+                    state->flags ? hold :
 #endif
-                     REVERSE(hold)) != state->check) {
+                    REVERSE(hold)) != state->check) {
                     strm->msg = (char *)"incorrect data check";
                     state->mode = BAD;
                     break;
@@ -1130,7 +1119,7 @@ int flush;
        error.  Call updatewindow() to create and/or update the window state.
        Note: a memory error from inflate() is non-recoverable.
      */
-  inf_leave:
+inf_leave:
     RESTORE();
     if (state->wsize || (state->mode < CHECK && out != strm->avail_out))
         if (updatewindow(strm, out)) {
@@ -1144,9 +1133,9 @@ int flush;
     state->total += out;
     if (state->wrap && out)
         strm->adler = state->check =
-            UPDATE(state->check, strm->next_out - out, out);
+        UPDATE(state->check, strm->next_out - out, out);
     strm->data_type = state->bits + (state->last ? 64 : 0) +
-                      (state->mode == TYPE ? 128 : 0);
+        (state->mode == TYPE ? 128 : 0);
     if (((in == 0 && out == 0) || flush == Z_FINISH) && ret == Z_OK)
         ret = Z_BUF_ERROR;
     return ret;
@@ -1195,12 +1184,11 @@ uInt dictLength;
     }
     if (dictLength > state->wsize) {
         zmemcpy(state->window, dictionary + dictLength - state->wsize,
-                state->wsize);
+            state->wsize);
         state->whave = state->wsize;
-    }
-    else {
+    } else {
         zmemcpy(state->window + state->wsize - dictLength, dictionary,
-                dictLength);
+            dictLength);
         state->whave = dictLength;
     }
     state->havedict = 1;
@@ -1337,12 +1325,12 @@ z_streamp source;
 
     /* allocate space */
     copy = (struct inflate_state FAR *)
-           ZALLOC(source, 1, sizeof(struct inflate_state));
+        ZALLOC(source, 1, sizeof(struct inflate_state));
     if (copy == Z_NULL) return Z_MEM_ERROR;
     window = Z_NULL;
     if (state->window != Z_NULL) {
         window = (unsigned char FAR *)
-                 ZALLOC(source, 1U << state->wbits, sizeof(unsigned char));
+            ZALLOC(source, 1U << state->wbits, sizeof(unsigned char));
         if (window == Z_NULL) {
             ZFREE(source, copy);
             return Z_MEM_ERROR;

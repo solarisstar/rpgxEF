@@ -3,7 +3,7 @@
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
-/* @(#) $Id$ */
+ /* @(#) $Id$ */
 
 #define ZLIB_INTERNAL
 #include "zlib.h"
@@ -55,9 +55,9 @@
 
 /* ========================================================================= */
 uLong ZEXPORT adler32(adler, buf, len)
-    uLong adler;
-    const Bytef *buf;
-    uInt len;
+uLong adler;
+const Bytef *buf;
+uInt len;
 {
     unsigned long sum2;
     unsigned n;
@@ -126,9 +126,9 @@ uLong ZEXPORT adler32(adler, buf, len)
 
 /* ========================================================================= */
 uLong ZEXPORT adler32_combine(adler1, adler2, len2)
-    uLong adler1;
-    uLong adler2;
-    z_off_t len2;
+uLong adler1;
+uLong adler2;
+z_off_t len2;
 {
     unsigned long sum1;
     unsigned long sum2;

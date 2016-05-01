@@ -7,14 +7,14 @@
  * desc:		bot characters
  *
  * $Archive: /StarTrek/Code-DM/game/be_ai_char.h $
- * $Author: Jmonroe $ 
+ * $Author: Jmonroe $
  * $Revision: 1 $
  * $Modtime: 1/21/00 10:12p $
  * $Date: 1/25/00 6:26p $
  *
  *****************************************************************************/
 
-//!loads a bot character from a file
+ //!loads a bot character from a file
 int BotLoadCharacter(char *charfile, int skill);
 //!frees a bot character
 void BotFreeCharacter(int character);

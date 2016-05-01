@@ -6,7 +6,7 @@
  * desc:		char AI
  *
  * $Archive: /StarTrek/Code-DM/game/be_ai_chat.h $
- * $Author: Jmonroe $ 
+ * $Author: Jmonroe $
  * $Revision: 1 $
  * $Modtime: 1/21/00 10:12p $
  * $Date: 1/25/00 6:26p $
@@ -24,30 +24,30 @@
 #define CHAT_ALL					0
 #define CHAT_TEAM					1
 
-//a console message
+ //a console message
 typedef struct bot_consolemessage_s
 {
-	int handle;
-	float time;									//!<message time
-	int type;									//!<message type
-	char message[MAX_MESSAGE_SIZE];				//!<message
-	struct bot_consolemessage_s *prev, *next;	//!<prev and next in list
+    int handle;
+    float time;									//!<message time
+    int type;									//!<message type
+    char message[MAX_MESSAGE_SIZE];				//!<message
+    struct bot_consolemessage_s *prev, *next;	//!<prev and next in list
 } bot_consolemessage_t;
 
 //!match variable
 typedef struct bot_matchvariable_s
 {
-	char offset;
-	int length;
+    char offset;
+    int length;
 } bot_matchvariable_t;
 
 //!returned to AI when a match is found
 typedef struct bot_match_s
 {
-	char string[MAX_MESSAGE_SIZE];
-	int type;
-	int subtype;
-	bot_matchvariable_t variables[MAX_MATCHVARIABLES];
+    char string[MAX_MESSAGE_SIZE];
+    int type;
+    int subtype;
+    bot_matchvariable_t variables[MAX_MATCHVARIABLES];
 } bot_match_t;
 
 //!setup the chat AI
@@ -94,4 +94,3 @@ int BotLoadChatFile(int chatstate, char *chatfile, char *chatname);
 void BotSetChatGender(int chatstate, int gender);
 //!store the bot name in the chat state
 void BotSetChatName(int chatstate, char *name);
-

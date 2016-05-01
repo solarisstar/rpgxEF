@@ -1,13 +1,13 @@
-/* Copyright (C) 2002 Jean-Marc Valin 
+/* Copyright (C) 2002 Jean-Marc Valin
    File: gain_table.c
    Codebook for 3-tap pitch prediction gain (128 entries)
-  
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are
    met:
 
    1. Redistributions of source code must retain the above copyright notice,
-   this list of conditions and the following disclaimer.  
+   this list of conditions and the following disclaimer.
 
    2. Redistributions in binary form must reproduce the above copyright
    notice, this list of conditions and the following disclaimer in the
@@ -157,4 +157,4 @@ const signed char gain_cdbk_nb[512] = {
 -64, -41, -62, 36,
 -52, 15, 16, 58,
 -30, -22, -32, 6,
--7, 9, -38, 36};
+-7, 9, -38, 36 };

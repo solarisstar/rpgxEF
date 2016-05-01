@@ -17,9 +17,9 @@ Get the forward vector.
 @return Forward vector.
 */
 static int weapon_GetForward(lua_State *L) {
-	Lua_PushVector(L, forward);
+    Lua_PushVector(L, forward);
 
-	return 1;
+    return 1;
 }
 
 /***
@@ -28,9 +28,9 @@ Get the right vector.
 @return Right vector.
 */
 static int weapon_GetRight(lua_State *L) {
-	Lua_PushVector(L, right);
+    Lua_PushVector(L, right);
 
-	return 1;
+    return 1;
 }
 
 /***
@@ -39,9 +39,9 @@ Get the up vector.
 @return Up vector.
 */
 static int weapon_GetUp(lua_State *L) {
-	Lua_PushVector(L, up);
+    Lua_PushVector(L, up);
 
-	return 1;
+    return 1;
 }
 
 /***
@@ -50,9 +50,9 @@ Get the muzzle point.
 @return Muzzle point.
 */
 static int weapon_GetMuzzle(lua_State *L) {
-	Lua_PushVector(L, muzzle);
+    Lua_PushVector(L, muzzle);
 
-	return 1;
+    return 1;
 }
 
 /***
@@ -69,54 +69,54 @@ Do damage to an entity.
 @return Success or failure.
 */
 static int weapon_Damage(lua_State *L) {
-	lent_t* lent;
-	gentity_t* target = NULL;
-	gentity_t* inflictor = NULL;
-	gentity_t* attacker = NULL;
-	vec_t *dir, *point;
-	int damage, dflags, mod;
+    lent_t* lent;
+    gentity_t* target = NULL;
+    gentity_t* inflictor = NULL;
+    gentity_t* attacker = NULL;
+    vec_t *dir, *point;
+    int damage, dflags, mod;
 
-	lent = Lua_GetEntity(L, 1);
-	if(lent == NULL || lent->e == NULL) {
-		lua_pushboolean(L, qfalse);
-		return 0;
-	}
-	target = Lua_GetEntity(L, 1)->e;
+    lent = Lua_GetEntity(L, 1);
+    if (lent == NULL || lent->e == NULL) {
+        lua_pushboolean(L, qfalse);
+        return 0;
+    }
+    target = Lua_GetEntity(L, 1)->e;
 
-	lent = Lua_GetEntity(L, 2);
-	if(lent != NULL && lent->e != NULL) {
-		inflictor = lent->e;
-	}
+    lent = Lua_GetEntity(L, 2);
+    if (lent != NULL && lent->e != NULL) {
+        inflictor = lent->e;
+    }
 
-	lent = Lua_GetEntity(L, 3);
-	if(lent != NULL && lent->e != NULL) {
-		attacker = lent->e;
-	}
+    lent = Lua_GetEntity(L, 3);
+    if (lent != NULL && lent->e != NULL) {
+        attacker = lent->e;
+    }
 
-	dir = Lua_GetVector(L, 4);
-	point = Lua_GetVector(L, 5);
-	damage = (int)luaL_checknumber(L, 6);
-	dflags = (int)luaL_checknumber(L, 7);
-	mod = (int)luaL_checknumber(L, 8);
+    dir = Lua_GetVector(L, 4);
+    point = Lua_GetVector(L, 5);
+    damage = (int)luaL_checknumber(L, 6);
+    dflags = (int)luaL_checknumber(L, 7);
+    mod = (int)luaL_checknumber(L, 8);
 
-	G_Damage(target, inflictor, attacker, dir, point, damage, dflags, mod);
+    G_Damage(target, inflictor, attacker, dir, point, damage, dflags, mod);
 
-	lua_pushboolean(L, qtrue);
-	return 0;
+    lua_pushboolean(L, qtrue);
+    return 0;
 }
 
 static const luaL_Reg lib_weapons[] = {
-	{ "GetForward",	weapon_GetForward	},
-	{ "GetRight",	weapon_GetRight		},
-	{ "GetUp",		weapon_GetUp		},
-	{ "GetMuzzle",	weapon_GetMuzzle	},
-	{ "Damage",		weapon_Damage		},
-	{ NULL,			NULL				}
+    { "GetForward",	weapon_GetForward	},
+    { "GetRight",	weapon_GetRight		},
+    { "GetUp",		weapon_GetUp		},
+    { "GetMuzzle",	weapon_GetMuzzle	},
+    { "Damage",		weapon_Damage		},
+    { NULL,			NULL				}
 };
 
 int Luaopen_Weapons(lua_State *L) {
-	luaL_register(L, "weapons", lib_weapons);
+    luaL_register(L, "weapons", lib_weapons);
 
-	return 1;
+    return 1;
 }
 #endif

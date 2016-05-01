@@ -35,31 +35,31 @@ Can be used as a LIFO stack of FIFO queue. */
  * LT_DATA means that a custom struct was added.
  */
 typedef enum {
-	LT_BOOLEAN,
-	LT_CHAR,
-	LT_UNSIGNED_CHAR,
-	LT_SHORT,
-	LT_UNSIGNED_SHORT,
-	LT_INT,
-	LT_UNSIGNED_INT,
-	LT_LONG,
-	LT_UNSIGNED_LONG,
-	LT_DOUBLE,
-	LT_STRING,
-	LT_DATA,
-	LT_MAX
+    LT_BOOLEAN,
+    LT_CHAR,
+    LT_UNSIGNED_CHAR,
+    LT_SHORT,
+    LT_UNSIGNED_SHORT,
+    LT_INT,
+    LT_UNSIGNED_INT,
+    LT_LONG,
+    LT_UNSIGNED_LONG,
+    LT_DOUBLE,
+    LT_STRING,
+    LT_DATA,
+    LT_MAX
 } dataType_t;
 
 /**
  *	Container for data added to the list.
- *	Use of a container allows to add standard c types to the list 
+ *	Use of a container allows to add standard c types to the list
  *	without the need to embed them into a struct.
  */
 struct container {
-	void*		data;		/*!< pointer to the data */
-	size_t		size;		/*!< size of the data    */
-	dataType_t	type;		/*!< type of the data    */
-	char		pointer;	/*!< determin if the data is a pointer */
+    void*		data;		/*!< pointer to the data */
+    size_t		size;		/*!< size of the data    */
+    dataType_t	type;		/*!< type of the data    */
+    char		pointer;	/*!< determin if the data is a pointer */
 } container;
 
 /**
@@ -71,9 +71,9 @@ typedef struct container* container_p;
  *	Node for a double linked list.
  */
 struct linked_node {
-	container_p cont;			/*!< cointainer with the data */
-	struct linked_node* next;	/*!< next list element */
-	struct linked_node* prev;	/*!< previous list element */
+    container_p cont;			/*!< cointainer with the data */
+    struct linked_node* next;	/*!< next list element */
+    struct linked_node* prev;	/*!< previous list element */
 };
 
 /**
@@ -94,43 +94,43 @@ typedef struct list * list_p;
 /**
  * Struct describing a list.
  */
-struct list{
-	int length;					/*!< count of elements in the list */
-	lnode_p first;				/*!< first element of the list */
-	lnode_p last;				/*!< last element of the list */
-	void (*destructor)(void*);	/*!< pointer to destructor for data. Default is free. */
-	list_iter_p (*iterator)(list_p list, char init);	/*!< creates a new list iterator */
-	int (*add_ptr)(list_p list, void* data, dataType_t type, char end); /*!< add a pointer to the list */
-	int (*append_ptr)(list_p list, void* data, dataType_t type); /*!< append a pointer to the list */
-	int (*prepend_ptr)(list_p list, void* data, dataType_t type); /*!< prepend a pointer to the list */
-	int (*add)(list_p list, void* data, dataType_t type, size_t size, char end); /*!< add data to the list */
-	int (*append)(list_p list, void* data, dataType_t type, size_t size); /*!< append data to the list */
-	int (*prepend)(list_p list, void* data, dataType_t type, size_t size); /*!< prepend data to the list */
-	container_p (*at)(list_p list, int idx); /*!< get container at given index */
-	void (*clear)(list_p list); /*!< clear the list */
-	container_p (*current)(list_iter_p iter); /*!< get the current element for the iterator */
-	container_p (*cycl_next)(list_iter_p iter); /*!< get the next element for the iterator (cyclic access) */
-	container_p (*cycl_prev)(list_iter_p iter); /*!< get the previous element for the iterator (cyclic acccess) */
-	container_p (*front)(list_p list); /*!< get the first element of the list */
-	container_p (*end)(list_p list); /*!< get the last element of the list */
-	container_p (*next)(list_iter_p iter); /*!< get the next element for the iterator */
-	container_p (*prev)(list_iter_p iter); /*!< get the previous element for the iterator */
-	container_p (*poll)(list_p list); /*<! poll */
-	container_p (*pop)(list_p list); /*<! pop */
-	void (*remove)(list_p list, char end); /*!< remove an element from the list */
-	void (*removeAt)(list_p list, int idx); /*!< remove an element at a specified index */
+struct list {
+    int length;					/*!< count of elements in the list */
+    lnode_p first;				/*!< first element of the list */
+    lnode_p last;				/*!< last element of the list */
+    void(*destructor)(void*);	/*!< pointer to destructor for data. Default is free. */
+    list_iter_p(*iterator)(list_p list, char init);	/*!< creates a new list iterator */
+    int(*add_ptr)(list_p list, void* data, dataType_t type, char end); /*!< add a pointer to the list */
+    int(*append_ptr)(list_p list, void* data, dataType_t type); /*!< append a pointer to the list */
+    int(*prepend_ptr)(list_p list, void* data, dataType_t type); /*!< prepend a pointer to the list */
+    int(*add)(list_p list, void* data, dataType_t type, size_t size, char end); /*!< add data to the list */
+    int(*append)(list_p list, void* data, dataType_t type, size_t size); /*!< append data to the list */
+    int(*prepend)(list_p list, void* data, dataType_t type, size_t size); /*!< prepend data to the list */
+    container_p(*at)(list_p list, int idx); /*!< get container at given index */
+    void(*clear)(list_p list); /*!< clear the list */
+    container_p(*current)(list_iter_p iter); /*!< get the current element for the iterator */
+    container_p(*cycl_next)(list_iter_p iter); /*!< get the next element for the iterator (cyclic access) */
+    container_p(*cycl_prev)(list_iter_p iter); /*!< get the previous element for the iterator (cyclic acccess) */
+    container_p(*front)(list_p list); /*!< get the first element of the list */
+    container_p(*end)(list_p list); /*!< get the last element of the list */
+    container_p(*next)(list_iter_p iter); /*!< get the next element for the iterator */
+    container_p(*prev)(list_iter_p iter); /*!< get the previous element for the iterator */
+    container_p(*poll)(list_p list); /*<! poll */
+    container_p(*pop)(list_p list); /*<! pop */
+    void(*remove)(list_p list, char end); /*!< remove an element from the list */
+    void(*removeAt)(list_p list, int idx); /*!< remove an element at a specified index */
 };
 
-/** 
+/**
  * Struct describing a list iterator.
  */
 struct list_iter {
-	list_p	list;			/*!< the list */
-	lnode_p current;		/*!< current node */
-	char started;			/*!< has iteration started */
+    list_p	list;			/*!< the list */
+    lnode_p current;		/*!< current node */
+    char started;			/*!< has iteration started */
 };
 
-/** 
+/**
  * Create a linked_list object. This pointer is created on the heap and must be
  * cleared with a call to destroy_list to avoid memory leaks.
  *
@@ -139,7 +139,7 @@ struct list_iter {
 list_p create_list(void);
 
 /**
- * Completely free the data associated with the list. 
+ * Completely free the data associated with the list.
  *
  *	\param list pointer to a list
  */
@@ -158,6 +158,6 @@ void destroy_iterator(list_iter_p iter);
  *	\param l a list
  *	\param destructor pointer to destructor function
  */
-void list_init(struct list * l, void (*destructor)(void*));
+void list_init(struct list * l, void(*destructor)(void*));
 
 #endif

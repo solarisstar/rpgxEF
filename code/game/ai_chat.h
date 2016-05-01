@@ -7,14 +7,14 @@
  * desc:		Quake3 bot AI
  *
  * $Archive: /StarTrek/Code-DM/game/ai_chat.h $
- * $Author: Jmonroe $ 
+ * $Author: Jmonroe $
  * $Revision: 1 $
  * $Modtime: 1/21/00 10:12p $
  * $Date: 1/25/00 6:26p $
  *
  *****************************************************************************/
 
-//
+ //
 int BotChat_EnterGame(bot_state_t *bs);
 //
 int BotChat_ExitGame(bot_state_t *bs);
@@ -42,4 +42,3 @@ float BotChatTime(bot_state_t *bs);
 int BotValidChatPosition(bot_state_t *bs);
 //! test the initial bot chats
 void BotChatTest(bot_state_t *bs);
-

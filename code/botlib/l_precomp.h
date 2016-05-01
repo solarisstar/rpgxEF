@@ -30,28 +30,27 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *****************************************************************************/
 
 #ifndef MAX_PATH
-	#define MAX_PATH			MAX_QPATH
+#define MAX_PATH			MAX_QPATH
 #endif
 
 #ifndef PATH_SEPERATORSTR
-	#if defined(WIN32)|defined(_WIN32)|defined(__NT__)|defined(__WINDOWS__)|defined(__WINDOWS_386__)
-		#define PATHSEPERATOR_STR		"\\"
-	#else
-		#define PATHSEPERATOR_STR		"/"
-	#endif
+#if defined(WIN32)|defined(_WIN32)|defined(__NT__)|defined(__WINDOWS__)|defined(__WINDOWS_386__)
+#define PATHSEPERATOR_STR		"\\"
+#else
+#define PATHSEPERATOR_STR		"/"
+#endif
 #endif
 #ifndef PATH_SEPERATORCHAR
-	#if defined(WIN32)|defined(_WIN32)|defined(__NT__)|defined(__WINDOWS__)|defined(__WINDOWS_386__)
-		#define PATHSEPERATOR_CHAR		'\\'
-	#else
-		#define PATHSEPERATOR_CHAR		'/'
-	#endif
+#if defined(WIN32)|defined(_WIN32)|defined(__NT__)|defined(__WINDOWS__)|defined(__WINDOWS_386__)
+#define PATHSEPERATOR_CHAR		'\\'
+#else
+#define PATHSEPERATOR_CHAR		'/'
+#endif
 #endif
 
 #if defined(BSPC) && !defined(QDECL)
 #define QDECL
 #endif
-
 
 #define DEFINE_FIXED			0x0001
 
@@ -67,17 +66,17 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define INDENT_IFDEF			0x0008
 #define INDENT_IFNDEF			0x0010
 
-//macro definitions
+ //macro definitions
 typedef struct define_s
 {
-	char *name;							//define name
-	int flags;							//define flags
-	int builtin;						// > 0 if builtin define
-	int numparms;						//number of define parameters
-	token_t *parms;						//define parameters
-	token_t *tokens;					//macro tokens (possibly containing parm tokens)
-	struct define_s *next;				//next defined macro in a list
-	struct define_s *hashnext;			//next define in the hash chain
+    char *name;							//define name
+    int flags;							//define flags
+    int builtin;						// > 0 if builtin define
+    int numparms;						//number of define parameters
+    token_t *parms;						//define parameters
+    token_t *tokens;					//macro tokens (possibly containing parm tokens)
+    struct define_s *next;				//next defined macro in a list
+    struct define_s *hashnext;			//next define in the hash chain
 } define_t;
 
 //indents
@@ -85,27 +84,26 @@ typedef struct define_s
 //#if, #else, #elif, #ifdef, #ifndef
 typedef struct indent_s
 {
-	int type;								//indent type
-	int skip;								//true if skipping current indent
-	script_t *script;						//script the indent was in
-	struct indent_s *next;					//next indent on the indent stack
+    int type;								//indent type
+    int skip;								//true if skipping current indent
+    script_t *script;						//script the indent was in
+    struct indent_s *next;					//next indent on the indent stack
 } indent_t;
 
 //source file
 typedef struct source_s
 {
-	char filename[1024];					//file name of the script
-	char includepath[1024];					//path to include files
-	punctuation_t *punctuations;			//punctuations to use
-	script_t *scriptstack;					//stack with scripts of the source
-	token_t *tokens;						//tokens to read first
-	define_t *defines;						//list with macro definitions
-	define_t **definehash;					//hash chain with defines
-	indent_t *indentstack;					//stack with indents
-	int skip;								// > 0 if skipping conditional code
-	token_t token;							//last read token
+    char filename[1024];					//file name of the script
+    char includepath[1024];					//path to include files
+    punctuation_t *punctuations;			//punctuations to use
+    script_t *scriptstack;					//stack with scripts of the source
+    token_t *tokens;						//tokens to read first
+    define_t *defines;						//list with macro definitions
+    define_t **definehash;					//hash chain with defines
+    indent_t *indentstack;					//stack with indents
+    int skip;								// > 0 if skipping conditional code
+    token_t token;							//last read token
 } source_t;
-
 
 //read a token from the source
 int PC_ReadToken(source_t *source, token_t *token);
@@ -152,9 +150,9 @@ source_t *LoadSourceMemory(char *ptr, int length, char *name);
 //free the given source
 void FreeSource(source_t *source);
 //print a source error
-void QDECL SourceError(source_t *source, char *str, ...) __attribute__ ((format (printf, 2, 3)));
+void QDECL SourceError(source_t *source, char *str, ...) __attribute__((format(printf, 2, 3)));
 //print a source warning
-void QDECL SourceWarning(source_t *source, char *str, ...)  __attribute__ ((format (printf, 2, 3)));
+void QDECL SourceWarning(source_t *source, char *str, ...)  __attribute__((format(printf, 2, 3)));
 
 #ifdef BSPC
 // some of BSPC source does include game/q_shared.h and some does not
@@ -163,11 +161,11 @@ void QDECL SourceWarning(source_t *source, char *str, ...)  __attribute__ ((form
 #define MAX_TOKENLENGTH		1024
 typedef struct pc_token_s
 {
-	int type;
-	int subtype;
-	int intvalue;
-	float floatvalue;
-	char string[MAX_TOKENLENGTH];
+    int type;
+    int subtype;
+    int intvalue;
+    float floatvalue;
+    char string[MAX_TOKENLENGTH];
 } pc_token_t;
 #endif //!_Q_SHARED_H
 #endif //BSPC

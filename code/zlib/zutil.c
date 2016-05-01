@@ -3,12 +3,12 @@
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
-/* @(#) $Id$ */
+ /* @(#) $Id$ */
 
 #include "zutil.h"
 
 #ifndef NO_DUMMY_DECL
-struct internal_state      {int dummy;}; /* for buggy compilers */
+struct internal_state { int dummy; }; /* for buggy compilers */
 #endif
 
 const char * const z_errmsg[10] = {
@@ -21,8 +21,7 @@ const char * const z_errmsg[10] = {
 "insufficient memory", /* Z_MEM_ERROR     (-4) */
 "buffer error",        /* Z_BUF_ERROR     (-5) */
 "incompatible version",/* Z_VERSION_ERROR (-6) */
-""};
-
+"" };
 
 const char * ZEXPORT zlibVersion()
 {
@@ -87,25 +86,25 @@ uLong ZEXPORT zlibCompileFlags()
 #endif
 #ifdef STDC
 #  ifdef NO_vsnprintf
-        flags += 1L << 25;
+    flags += 1L << 25;
 #    ifdef HAS_vsprintf_void
-        flags += 1L << 26;
+    flags += 1L << 26;
 #    endif
 #  else
 #    ifdef HAS_vsnprintf_void
-        flags += 1L << 26;
+    flags += 1L << 26;
 #    endif
 #  endif
 #else
-        flags += 1L << 24;
+    flags += 1L << 24;
 #  ifdef NO_snprintf
-        flags += 1L << 25;
+    flags += 1L << 25;
 #    ifdef HAS_sprintf_void
-        flags += 1L << 26;
+    flags += 1L << 26;
 #    endif
 #  else
 #    ifdef HAS_snprintf_void
-        flags += 1L << 26;
+    flags += 1L << 26;
 #    endif
 #  endif
 #endif
@@ -119,8 +118,8 @@ uLong ZEXPORT zlibCompileFlags()
 #  endif
 int z_verbose = verbose;
 
-void z_error (m)
-    char *m;
+void z_error(m)
+char *m;
 {
     fprintf(stderr, "%s\n", m);
     exit(1);
@@ -131,25 +130,25 @@ void z_error (m)
  * uncompress()
  */
 const char * ZEXPORT zError(err)
-    int err;
+int err;
 {
     return ERR_MSG(err);
 }
 
 #if defined(_WIN32_WCE)
-    /* The Microsoft C Run-Time Library for Windows CE doesn't have
-     * errno.  We define it as a global variable to simplify porting.
-     * Its value is always 0 and should not be used.
-     */
-    int errno = 0;
+/* The Microsoft C Run-Time Library for Windows CE doesn't have
+ * errno.  We define it as a global variable to simplify porting.
+ * Its value is always 0 and should not be used.
+ */
+int errno = 0;
 #endif
 
 #ifndef HAVE_MEMCPY
 
 void zmemcpy(dest, source, len)
-    Bytef* dest;
-    const Bytef* source;
-    uInt  len;
+Bytef* dest;
+const Bytef* source;
+uInt  len;
 {
     if (len == 0) return;
     do {
@@ -158,21 +157,21 @@ void zmemcpy(dest, source, len)
 }
 
 int zmemcmp(s1, s2, len)
-    const Bytef* s1;
-    const Bytef* s2;
-    uInt  len;
+const Bytef* s1;
+const Bytef* s2;
+uInt  len;
 {
     uInt j;
 
     for (j = 0; j < len; j++) {
-        if (s1[j] != s2[j]) return 2*(s1[j] > s2[j])-1;
+        if (s1[j] != s2[j]) return 2 * (s1[j] > s2[j]) - 1;
     }
     return 0;
 }
 
 void zmemzero(dest, len)
-    Bytef* dest;
-    uInt  len;
+Bytef* dest;
+uInt  len;
 {
     if (len == 0) return;
     do {
@@ -180,7 +179,6 @@ void zmemzero(dest, len)
     } while (--len != 0);
 }
 #endif
-
 
 #ifdef SYS16BIT
 
@@ -196,7 +194,7 @@ void zmemzero(dest, len)
  */
 
 #define MAX_PTR 10
-/* 10*64K = 640K */
+ /* 10*64K = 640K */
 
 local int next_ptr = 0;
 
@@ -213,7 +211,7 @@ local ptr_table table[MAX_PTR];
  * a protected system like OS/2. Use Microsoft C instead.
  */
 
-voidpf zcalloc (voidpf opaque, unsigned items, unsigned size)
+voidpf zcalloc(voidpf opaque, unsigned items, unsigned size)
 {
     voidpf buf = opaque; /* just to make some compilers happy */
     ulg bsize = (ulg)items*size;
@@ -231,13 +229,13 @@ voidpf zcalloc (voidpf opaque, unsigned items, unsigned size)
     table[next_ptr].org_ptr = buf;
 
     /* Normalize the pointer to seg:0 */
-    *((ush*)&buf+1) += ((ush)((uch*)buf-0) + 15) >> 4;
+    *((ush*)&buf + 1) += ((ush)((uch*)buf - 0) + 15) >> 4;
     *(ush*)&buf = 0;
     table[next_ptr++].new_ptr = buf;
     return buf;
 }
 
-void  zcfree (voidpf opaque, voidpf ptr)
+void  zcfree(voidpf opaque, voidpf ptr)
 {
     int n;
     if (*(ush*)&ptr != 0) { /* object < 64K */
@@ -250,7 +248,7 @@ void  zcfree (voidpf opaque, voidpf ptr)
 
         farfree(table[n].org_ptr);
         while (++n < next_ptr) {
-            table[n-1] = table[n];
+            table[n - 1] = table[n];
         }
         next_ptr--;
         return;
@@ -260,7 +258,6 @@ void  zcfree (voidpf opaque, voidpf ptr)
 }
 
 #endif /* __TURBOC__ */
-
 
 #ifdef M_I86
 /* Microsoft C in 16-bit mode */
@@ -272,13 +269,13 @@ void  zcfree (voidpf opaque, voidpf ptr)
 #  define _hfree   hfree
 #endif
 
-voidpf zcalloc (voidpf opaque, unsigned items, unsigned size)
+voidpf zcalloc(voidpf opaque, unsigned items, unsigned size)
 {
     if (opaque) opaque = 0; /* to make compiler happy */
     return _halloc((long)items, size);
 }
 
-void  zcfree (voidpf opaque, voidpf ptr)
+void  zcfree(voidpf opaque, voidpf ptr)
 {
     if (opaque) opaque = 0; /* to make compiler happy */
     _hfree(ptr);
@@ -288,7 +285,6 @@ void  zcfree (voidpf opaque, voidpf ptr)
 
 #endif /* SYS16BIT */
 
-
 #ifndef MY_ZCALLOC /* Any system without a special alloc function */
 
 #ifndef STDC
@@ -297,19 +293,19 @@ extern voidp  calloc OF((uInt items, uInt size));
 extern void   free   OF((voidpf ptr));
 #endif
 
-voidpf zcalloc (opaque, items, size)
-    voidpf opaque;
-    unsigned items;
-    unsigned size;
+voidpf zcalloc(opaque, items, size)
+voidpf opaque;
+unsigned items;
+unsigned size;
 {
     if (opaque) items += size - size; /* make compiler happy */
     return sizeof(uInt) > 2 ? (voidpf)malloc(items * size) :
-                              (voidpf)calloc(items, size);
+        (voidpf)calloc(items, size);
 }
 
-void  zcfree (opaque, ptr)
-    voidpf opaque;
-    voidpf ptr;
+void  zcfree(opaque, ptr)
+voidpf opaque;
+voidpf ptr;
 {
     free(ptr);
     if (opaque) return; /* make compiler happy */

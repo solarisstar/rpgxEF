@@ -1,7 +1,6 @@
 // Copyright (C) 1999-2000 Id Software, Inc.
 //
 
-
 #define INVENTORY_NONE				0
 
 //armor

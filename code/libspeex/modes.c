@@ -1,4 +1,4 @@
-/* Copyright (C) 2002-2006 Jean-Marc Valin 
+/* Copyright (C) 2002-2006 Jean-Marc Valin
    File: modes.c
 
    Describes the different modes of the codec
@@ -6,18 +6,18 @@
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    - Redistributions of source code must retain the above copyright
    notice, this list of conditions and the following disclaimer.
-   
+
    - Redistributions in binary form must reproduce the above copyright
    notice, this list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
-   
+
    - Neither the name of the Xiph.org Foundation nor the names of its
    contributors may be used to endorse or promote products derived from
    this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -50,7 +50,6 @@
 #define NULL 0
 #endif
 
-
 /* Extern declarations for all codebooks we use here */
 extern const signed char gain_cdbk_nb[];
 extern const signed char gain_cdbk_lbr[];
@@ -60,7 +59,6 @@ extern const signed char exc_8_128_table[];
 extern const signed char exc_10_32_table[];
 extern const signed char exc_10_16_table[];
 extern const signed char exc_20_32_table[];
-
 
 /* Parameters for Long-Term Prediction (LTP)*/
 static const ltp_params ltp_params_nb = {
@@ -117,7 +115,6 @@ static const split_cb_params split_cb_nb_lbr = {
    0,
 };
 
-
 /* Split-VQ innovation parameters narrowband */
 static const split_cb_params split_cb_nb = {
    5,               /*subvect_size*/
@@ -144,8 +141,6 @@ static const split_cb_params split_cb_sb = {
    8,               /*shape_bits*/
    0,
 };
-
-
 
 /* 2150 bps "vocoder-like" mode for comfort noise */
 static const SpeexSubmode nb_submode1 = {
@@ -315,7 +310,6 @@ static const SpeexSubmode nb_submode7 = {
    492
 };
 
-
 /* Default mode for narrowband */
 static const SpeexNBMode nb_mode = {
    160,    /*frameSize*/
@@ -335,7 +329,6 @@ static const SpeexNBMode nb_mode = {
    {1, 8, 2, 3, 3, 4, 4, 5, 5, 6, 7}
 };
 
-
 /* Default mode for narrowband */
 const SpeexMode speex_nb_mode = {
    &nb_mode,
@@ -353,10 +346,7 @@ const SpeexMode speex_nb_mode = {
    &nb_decoder_ctl,
 };
 
-
-
 int speex_mode_query(const SpeexMode *mode, int request, void *ptr)
 {
-   return mode->query(mode->mode, request, ptr);
+    return mode->query(mode->mode, request, ptr);
 }
-

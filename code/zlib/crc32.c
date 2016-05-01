@@ -9,15 +9,15 @@
  * factor of two increase in speed on a Power PC G4 (PPC7455) using gcc -O3.
  */
 
-/* @(#) $Id$ */
+ /* @(#) $Id$ */
 
-/*
-  Note on the use of DYNAMIC_CRC_TABLE: there is no mutex or semaphore
-  protection on the static variables used to control the first-use generation
-  of the crc tables.  Therefore, if you #define DYNAMIC_CRC_TABLE, you should
-  first call get_crc_table() to initialize the tables before allowing more than
-  one thread to use crc32().
- */
+ /*
+   Note on the use of DYNAMIC_CRC_TABLE: there is no mutex or semaphore
+   protection on the static variables used to control the first-use generation
+   of the crc tables.  Therefore, if you #define DYNAMIC_CRC_TABLE, you should
+   first call get_crc_table() to initialize the tables before allowing more than
+   one thread to use crc32().
+  */
 
 #ifdef MAKECRCH
 #  include <stdio.h>
@@ -30,19 +30,19 @@
 
 #define local static
 
-/* Find a four-byte integer type for crc32_little() and crc32_big(). */
+  /* Find a four-byte integer type for crc32_little() and crc32_big(). */
 #ifndef NOBYFOUR
 #  ifdef STDC           /* need ANSI C limits.h to determine sizes */
 #    include <limits.h>
 #    define BYFOUR
 #    if (UINT_MAX == 0xffffffffUL)
-       typedef unsigned int u4;
+typedef unsigned int u4;
 #    else
 #      if (ULONG_MAX == 0xffffffffUL)
-         typedef unsigned long u4;
+typedef unsigned long u4;
 #      else
 #        if (USHRT_MAX == 0xffffffffUL)
-           typedef unsigned short u4;
+typedef unsigned short u4;
 #        else
 #          undef BYFOUR     /* can't find a four-byte integer type! */
 #        endif
@@ -55,10 +55,10 @@
 #ifdef BYFOUR
 #  define REV(w) (((w)>>24)+(((w)>>8)&0xff00)+ \
                 (((w)&0xff00)<<8)+(((w)&0xff)<<24))
-   local unsigned long crc32_little OF((unsigned long,
-                        const unsigned char FAR *, unsigned));
-   local unsigned long crc32_big OF((unsigned long,
-                        const unsigned char FAR *, unsigned));
+local unsigned long crc32_little OF((unsigned long,
+    const unsigned char FAR *, unsigned));
+local unsigned long crc32_big OF((unsigned long,
+    const unsigned char FAR *, unsigned));
 #  define TBLS 8
 #else
 #  define TBLS 1
@@ -66,7 +66,7 @@
 
 /* Local functions for crc concatenation */
 local unsigned long gf2_matrix_times OF((unsigned long *mat,
-                                         unsigned long vec));
+    unsigned long vec));
 local void gf2_matrix_square OF((unsigned long *square, unsigned long *mat));
 
 #ifdef DYNAMIC_CRC_TABLE
@@ -75,7 +75,7 @@ local volatile int crc_table_empty = 1;
 local unsigned long FAR crc_table[TBLS][256];
 local void make_crc_table OF((void));
 #ifdef MAKECRCH
-   local void write_table OF((FILE *, const unsigned long FAR *));
+local void write_table OF((FILE *, const unsigned long FAR *));
 #endif /* MAKECRCH */
 /*
   Generate tables for a byte-wise 32-bit CRC calculation on the polynomial:
@@ -110,7 +110,7 @@ local void make_crc_table()
     unsigned long poly;                 /* polynomial exclusive-or pattern */
     /* terms of polynomial defining this crc (except x^32): */
     static volatile int first = 1;      /* flag to limit concurrent making */
-    static const unsigned char p[] = {0,1,2,4,5,7,8,10,11,12,16,22,23,26};
+    static const unsigned char p[] = { 0,1,2,4,5,7,8,10,11,12,16,22,23,26 };
 
     /* See if another task is already doing this (not thread-safe, but better
        than nothing -- significantly reduces duration of vulnerability in
@@ -120,7 +120,7 @@ local void make_crc_table()
 
         /* make exclusive-or pattern from polynomial (0xedb88320UL) */
         poly = 0UL;
-        for (n = 0; n < sizeof(p)/sizeof(unsigned char); n++)
+        for (n = 0; n < sizeof(p) / sizeof(unsigned char); n++)
             poly |= 1UL << (31 - p[n]);
 
         /* generate a crc for every 8-bit value */
@@ -146,8 +146,7 @@ local void make_crc_table()
 #endif /* BYFOUR */
 
         crc_table_empty = 0;
-    }
-    else {      /* not first */
+    } else {      /* not first */
         /* wait for the other guy to finish (not efficient, but rare) */
         while (crc_table_empty)
             ;
@@ -181,14 +180,14 @@ local void make_crc_table()
 
 #ifdef MAKECRCH
 local void write_table(out, table)
-    FILE *out;
-    const unsigned long FAR *table;
+FILE *out;
+const unsigned long FAR *table;
 {
     int n;
 
     for (n = 0; n < 256; n++)
         fprintf(out, "%s0x%08lxUL%s", n % 5 ? "" : "    ", table[n],
-                n == 255 ? "\n" : (n % 5 == 4 ? ",\n" : ", "));
+            n == 255 ? "\n" : (n % 5 == 4 ? ",\n" : ", "));
 }
 #endif /* MAKECRCH */
 
@@ -199,9 +198,9 @@ local void write_table(out, table)
 #include "crc32.h"
 #endif /* DYNAMIC_CRC_TABLE */
 
-/* =========================================================================
- * This function can be used by asm versions of crc32()
- */
+ /* =========================================================================
+  * This function can be used by asm versions of crc32()
+  */
 const unsigned long FAR * ZEXPORT get_crc_table()
 {
 #ifdef DYNAMIC_CRC_TABLE
@@ -217,9 +216,9 @@ const unsigned long FAR * ZEXPORT get_crc_table()
 
 /* ========================================================================= */
 unsigned long ZEXPORT crc32(crc, buf, len)
-    unsigned long crc;
-    const unsigned char FAR *buf;
-    unsigned len;
+unsigned long crc;
+const unsigned char FAR *buf;
+unsigned len;
 {
     if (buf == Z_NULL) return 0UL;
 
@@ -260,9 +259,9 @@ unsigned long ZEXPORT crc32(crc, buf, len)
 
 /* ========================================================================= */
 local unsigned long crc32_little(crc, buf, len)
-    unsigned long crc;
-    const unsigned char FAR *buf;
-    unsigned len;
+unsigned long crc;
+const unsigned char FAR *buf;
+unsigned len;
 {
     register u4 c;
     register const u4 FAR *buf4;
@@ -300,9 +299,9 @@ local unsigned long crc32_little(crc, buf, len)
 
 /* ========================================================================= */
 local unsigned long crc32_big(crc, buf, len)
-    unsigned long crc;
-    const unsigned char FAR *buf;
-    unsigned len;
+unsigned long crc;
+const unsigned char FAR *buf;
+unsigned len;
 {
     register u4 c;
     register const u4 FAR *buf4;
@@ -340,8 +339,8 @@ local unsigned long crc32_big(crc, buf, len)
 
 /* ========================================================================= */
 local unsigned long gf2_matrix_times(mat, vec)
-    unsigned long *mat;
-    unsigned long vec;
+unsigned long *mat;
+unsigned long vec;
 {
     unsigned long sum;
 
@@ -357,8 +356,8 @@ local unsigned long gf2_matrix_times(mat, vec)
 
 /* ========================================================================= */
 local void gf2_matrix_square(square, mat)
-    unsigned long *square;
-    unsigned long *mat;
+unsigned long *square;
+unsigned long *mat;
 {
     int n;
 
@@ -368,9 +367,9 @@ local void gf2_matrix_square(square, mat)
 
 /* ========================================================================= */
 uLong ZEXPORT crc32_combine(crc1, crc2, len2)
-    uLong crc1;
-    uLong crc2;
-    z_off_t len2;
+uLong crc1;
+uLong crc2;
+z_off_t len2;
 {
     int n;
     unsigned long row;
