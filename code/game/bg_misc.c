@@ -32,7 +32,7 @@ char	races[256];
  */
 int Max_Ammo[WP_NUM_WEAPONS] =
 {
-    0,						// WP_0,
+    0,						// WP_NULL,
 
     5,						// WP_NULL_HAND
 

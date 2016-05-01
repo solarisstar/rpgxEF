@@ -145,7 +145,7 @@ void FX_CompressionExplosion(vec3_t start, vec3_t origin, vec3_t normal, qboolea
     vec3_t			hitpos;
     float			scale;
     int				i, j, numSparks;
-    weaponInfo_t	*weaponInfo = &cg_weapons[WP_6];
+    weaponInfo_t	*weaponInfo = &cg_weapons[WP_COMPRESSION_RIFLE];
     float distance;
 
     vec3_t color = { 0.7, 0.43, 0.44 };

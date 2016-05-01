@@ -35,16 +35,16 @@ void CG_CheckAmmo(void) {
     total = 0;
 
     //TiM
-    //for ( i = WP_5 ; i < WP_NUM_WEAPONS ; i++ ) {
-    for (i = WP_1; i < WP_NUM_WEAPONS; i++) {
+    //for ( i = WP_PHASER ; i < WP_NUM_WEAPONS ; i++ ) {
+    for (i = WP_NULL_HAND; i < WP_NUM_WEAPONS; i++) {
         if (!(weapons & (1 << i))) {
             continue;
         }
         switch (i) {
-        case WP_10:
-        case WP_8:
-        case WP_1:
-        case WP_6:
+        case WP_DISRUPTOR:
+        case WP_GRENADE_LAUNCHER:
+        case WP_NULL_HAND:
+        case WP_COMPRESSION_RIFLE:
             total += cg.snap->ps.ammo[i] * 1000;
             break;
         default:

@@ -326,22 +326,22 @@ static void CG_Item(centity_t *cent) {
 
     // RPG-X: Marcin: Custom angles for each weapon so they lie on the ground correctly. - 06/12/2008
     const vec3_t weaponangles[WP_NUM_WEAPONS] = {
-        { 0,   0,   0   },  // WP_0
-        { 0,   0,   0   },  // WP_1
-        { 52,  280, 18  },  // WP_2
-        { 48,  26,  33  },  // WP_3
-        { 335, 210, 347 },  // WP_4
-        { 15,  160, 65  },  // WP_5
-        { 5,   10,  70  },  // WP_6
-        { 5,   6,   70  },  // WP_7
-        { 5,   17,  70  },  // WP_8
-        { 350, 23,  70  },  // WP_9
-        { 15,  187, 80  },  // WP_10
-        { 0,   270, 86  },  // WP_11
-        { 0,   247, 90  },  // WP_12
-        { 36,  190, 40  },  // WP_13
-        { 0,   0,   105 },  // WP_14
-        { 0,   210, 90  }   // WP_15
+        { 0,   0,   0   },  // WP_NULL
+        { 0,   0,   0   },  // WP_NULL_HAND
+        { 52,  280, 18  },  // WP_TRICORDER
+        { 48,  26,  33  },  // WP_PADD
+        { 335, 210, 347 },  // WP_COFFEE
+        { 15,  160, 65  },  // WP_PHASER
+        { 5,   10,  70  },  // WP_COMPRESSION_RIFLE
+        { 5,   6,   70  },  // WP_TR116
+        { 5,   17,  70  },  // WP_GRENADE_LAUNCHER
+        { 350, 23,  70  },  // WP_QUANTUM_BURST
+        { 15,  187, 80  },  // WP_DISRUPTOR
+        { 0,   270, 86  },  // WP_MEDKIT
+        { 0,   247, 90  },  // WP_VOYAGER_HYPO
+        { 36,  190, 40  },  // WP_DERMAL_REGEN
+        { 0,   0,   105 },  // WP_TOOLKIT
+        { 0,   210, 90  }   // WP_HYPERSPANNER
     };
 
     es = &cent->currentState;
@@ -588,7 +588,7 @@ static void CG_Missile(centity_t *cent, qboolean altfire) {
     VectorCopy(cent->lerpOrigin, ent.origin);
     VectorCopy(cent->lerpOrigin, ent.oldorigin);
 
-    if (cent->currentState.weapon == WP_9) {
+    if (cent->currentState.weapon == WP_QUANTUM_BURST) {
         ent.reType = RT_SPRITE;
         ent.data.sprite.radius = 16;
         ent.data.sprite.rotation = 0;
@@ -612,7 +612,7 @@ static void CG_Missile(centity_t *cent, qboolean altfire) {
         }
 
         // spin as it moves
-        if (s1->pos.trType != TR_STATIONARY && (cent->currentState.weapon != WP_10)) { //RPG-X-TiM: Stop from spinning O_o  I got dizzy
+        if (s1->pos.trType != TR_STATIONARY && (cent->currentState.weapon != WP_DISRUPTOR)) { //RPG-X-TiM: Stop from spinning O_o  I got dizzy
             RotateAroundDirection(ent.axis, cg.time * 0.25);
         } else {
             RotateAroundDirection(ent.axis, s1->time);

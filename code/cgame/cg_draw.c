@@ -1027,7 +1027,7 @@ static void CG_DrawStatusBar(void)
     // Radar
     // By Sam "-=Jazz=-"Dickinson
     // http://www.telefragged.com/jazz
-    if ((cg.snap->ps.weapon == WP_2 || cg.snap->ps.weapon == WP_6) && cg_drawradar.integer != 0 && !cg.zoomed)
+    if ((cg.snap->ps.weapon == WP_TRICORDER || cg.snap->ps.weapon == WP_COMPRESSION_RIFLE) && cg_drawradar.integer != 0 && !cg.zoomed)
     {
         vec4_t	radColor;
 
@@ -2064,7 +2064,7 @@ static void CG_DrawCrosshair(void) {
     //end dCross
 
     //If admins scan non-players
-    if (cg.predictedPlayerState.weapon == WP_2 && cg.predictedPlayerState.eFlags & EF_FIRING) {
+    if (cg.predictedPlayerState.weapon == WP_TRICORDER && cg.predictedPlayerState.eFlags & EF_FIRING) {
         if (cg_showEntityNums.integer && cgs.clientinfo[cg.snap->ps.clientNum].isAdmin && cg.crosshairClientNum < ENTITYNUM_WORLD) {
             vec4_t ccolor;
             ccolor[0] = 0.694f;	//0.9F;//R
@@ -2557,7 +2557,7 @@ static void CG_ScanForCrosshairEntity(void) {
 
     VectorMA(start, 8912, df_f, end);
 
-    if (cg.snap->ps.weapon == WP_7 && cg.zoomed) {
+    if (cg.snap->ps.weapon == WP_TR116 && cg.zoomed) {
         CG_Trace(&trace, start, vec3_origin, vec3_origin, end,
             cg.snap->ps.clientNum, CONTENTS_BODY);
 
@@ -2634,7 +2634,7 @@ static void CG_DrawCrosshairNames(void) {
 
     //If they're actively firing the tricorder
     if (((cg.snap->ps.eFlags & EF_FIRING) && !(cg.snap->ps.eFlags & EF_ALT_FIRING))
-        && cg.snap->ps.weapon == WP_2) {
+        && cg.snap->ps.weapon == WP_TRICORDER) {
         if (cg.crosshairClientNum != cg.predictedPlayerState.clientNum && cg.crosshairClientNum < MAX_CLIENTS) { //ENTITYNUM_WORLD
             drawCrosshairName = qfalse;
 
@@ -2715,7 +2715,7 @@ static void CG_DrawCrosshairNames(void) {
 
                 Com_sprintf(namestr, sizeof(namestr), "%s: %s", "Name", name);
 
-                if (cent->currentState.weapon != WP_1)
+                if (cent->currentState.weapon != WP_NULL_HAND)
                 {
                     if (cg_weapons[cent->currentState.weapon].item->pickup_name) {
                         weap = cg_weapons[cent->currentState.weapon].item->pickup_name;
@@ -3044,7 +3044,7 @@ static void CG_DrawZoomMask(void)
     int			x, y;
 
     //TiM: New system. :)  Base zoom on current active weapon. :)
-    if (!(cg.snap->ps.weapon == WP_6 || cg.snap->ps.weapon == WP_7))
+    if (!(cg.snap->ps.weapon == WP_COMPRESSION_RIFLE || cg.snap->ps.weapon == WP_TR116))
     {
         cg.zoomed = qfalse;
         cg.zoomLocked = qfalse;
@@ -3078,7 +3078,7 @@ static void CG_DrawZoomMask(void)
         // Set fade color
         trap_R_SetColor(color1);
 
-        if (cg.snap->ps.weapon == WP_7) {
+        if (cg.snap->ps.weapon == WP_TR116) {
             static int TR116LoopTime = 0;
 
             //Loop the whirring sight sound
@@ -3122,7 +3122,7 @@ static void CG_DrawZoomMask(void)
         }
 
         //yellow
-        if (cg.snap->ps.weapon == WP_7) {
+        if (cg.snap->ps.weapon == WP_TR116) {
             color1[0] = 0.886f;
             color1[1] = 0.749f;
             color1[2] = 0.0f;
@@ -3135,7 +3135,7 @@ static void CG_DrawZoomMask(void)
         }
 
         // Convert zoom and view axis into some numbers to throw onto the screen
-        if (cg.snap->ps.weapon == WP_7) {
+        if (cg.snap->ps.weapon == WP_TR116) {
             x = 74;
             y = 340;
         } else {
@@ -3160,7 +3160,7 @@ static void CG_DrawZoomMask(void)
             }
 
             trap_R_SetColor(color1);
-            if (cg.snap->ps.weapon == WP_7) {
+            if (cg.snap->ps.weapon == WP_TR116) {
                 CG_DrawPic(start_x, start_y, width, height, cgs.media.zoomMask116Shader);
             } else {
                 CG_DrawPic(start_x, start_y, width, height, cgs.media.zoomMaskShader);

@@ -460,7 +460,7 @@ static void PlayerSettings_DrawPlayer(void *self)
     /*s_playersettings.playerinfo.height = s_playersettings.height.curvalue;
     s_playersettings.playerinfo.weight = s_playersettings.weight.curvalue;*/
 
-    UI_PlayerInfo_SetInfo(&s_playersettings.playerinfo, BOTH_WALK1, BOTH_WALK1, viewangles, vec3_origin, WP_0, s_playersettings.height.curvalue, s_playersettings.weight.curvalue, qfalse);
+    UI_PlayerInfo_SetInfo(&s_playersettings.playerinfo, BOTH_WALK1, BOTH_WALK1, viewangles, vec3_origin, WP_NULL, s_playersettings.height.curvalue, s_playersettings.weight.curvalue, qfalse);
 
     b = (menubitmap_s*)self;
     UI_DrawPlayer((float)b->generic.x, (float)b->generic.y, (float)b->width, (float)b->height, origin, &s_playersettings.playerinfo, (int)(uis.realtime / 1.5));
@@ -686,7 +686,7 @@ static void PlayerSettings_SetMenuItems(void)
     viewangles[ROLL]  = 0;
 
     UI_PlayerInfo_SetModel( &s_playersettings.playerinfo, UI_Cvar_VariableString( "model" ) );
-    UI_PlayerInfo_SetInfo( &s_playersettings.playerinfo, LEGS_IDLE, TORSO_STAND2, viewangles, vec3_origin, WP_6, qfalse );
+    UI_PlayerInfo_SetInfo( &s_playersettings.playerinfo, LEGS_IDLE, TORSO_STAND2, viewangles, vec3_origin, WP_COMPRESSION_RIFLE, qfalse );
 
     // handicap
     h = Com_Clamp( 5, 100, trap_Cvar_VariableValue("handicap") );

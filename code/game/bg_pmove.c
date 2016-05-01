@@ -2610,7 +2610,7 @@ static void PM_TorsoAnimation( void )
 //! alt ammo usage
 int		altAmmoUsage[WP_NUM_WEAPONS] =
 {
-	0,				//!<WP_0,
+	0,				//!<WP_NULL,
 	1,				//!<WP_PHASER,				
 	8,				//!<WP_COMPRESSION_RIFLE,	
 	3,				//!<WP_NULL_HAND,				
