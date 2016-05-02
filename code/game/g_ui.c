@@ -55,7 +55,7 @@ void ui_transporter_use(gentity_t *ent, gentity_t *other, gentity_t *activator) 
         target = ent->target_ent;
         ent->count = 1; /* in use indicator */
         ent->touched = activator;
-        trap_SendServerCommand(activator - g_entities, va("ui_transporter %i", target - g_entities));
+        trap_SendServerCommand(activator - g_entities, va("ui_transporter %li", target - g_entities));
         ent->nextthink = level.time + 2500;
     }
 }
@@ -281,7 +281,7 @@ void ui_holodeck_use(gentity_t *ent, gentity_t *other, gentity_t *activator) {
         target = ent->target_ent;
         ent->count = 1; /* in use indicator */
         ent->touched = activator;
-        trap_SendServerCommand(activator - g_entities, va("ui_holodeck %i", target - g_entities));
+        trap_SendServerCommand(activator - g_entities, va("ui_holodeck %li", target - g_entities));
         ent->nextthink = level.time + 2500;
     }
 }

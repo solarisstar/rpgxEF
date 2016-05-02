@@ -7239,10 +7239,10 @@ static void Cmd_findEntitiesInRadius(gentity_t *ent) {
         }
 
         if (all) {
-            G_PrintfClient(ent, "Entity: %i, Classname: %s", t - g_entities, t->classname);
+            G_PrintfClient(ent, "Entity: %li, Classname: %s", t - g_entities, t->classname);
         } else {
             if (!Q_stricmpn(t->classname, classname, strlen(classname))) {
-                G_PrintfClient(ent, "Entity: %i Classname: %s", t - g_entities, classname);
+                G_PrintfClient(ent, "Entity: %li Classname: %s", t - g_entities, classname);
             }
         }
     }
