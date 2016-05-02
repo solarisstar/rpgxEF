@@ -5,14 +5,14 @@
 #include "fx_local.h"
 
 //RPG-X : TiM - Weapons Arrays
-static int RAweapons[8] = { WP_3,
-                            WP_2,
-                            WP_6,
-                            WP_7,
-                            WP_12,
-                            WP_13,
-                            WP_11,
-                            WP_4
+static int RAweapons[8] = { WP_PADD,
+                            WP_TRICORDER,
+                            WP_COMPRESSION_RIFLE,
+                            WP_TR116,
+                            WP_VOYAGER_HYPO,
+                            WP_DERMAL_REGEN,
+                            WP_MEDKIT,
+                            WP_COFFEE
 };
 
 static char *RAweapFileName[8] = { "padd",
@@ -43,52 +43,52 @@ typedef struct wpnBarrelInfo_s
 
 wpnBarrelInfo_t wpnBarrelData[] =
 {
-    {WP_1,			0, 0},
+    {WP_NULL_HAND,			0, 0},
 
-    {WP_2,			0, 0},
-    {WP_3,				0, 0},
-    {WP_4,				0, 0},
+    {WP_TRICORDER,			0, 0},
+    {WP_PADD,				0, 0},
+    {WP_COFFEE,				0, 0},
 
-    {WP_5,				0, 0},
-    {WP_6,	0, 120},
-    {WP_7,				1, 60},
+    {WP_PHASER,				0, 0},
+    {WP_COMPRESSION_RIFLE,	0, 120},
+    {WP_TR116,				1, 60},
 
-    {WP_8,	2, 150},
-    {WP_9,		1, 200},
-    {WP_10,			1, 130},
+    {WP_GRENADE_LAUNCHER,	2, 150},
+    {WP_QUANTUM_BURST,		1, 200},
+    {WP_DISRUPTOR,			1, 130},
 
-    {WP_11,				0, 0},
-    {WP_12,		0, 0},
-    {WP_13,		0, 0},
+    {WP_MEDKIT,				0, 0},
+    {WP_VOYAGER_HYPO,		0, 0},
+    {WP_DERMAL_REGEN,		0, 0},
 
-    {WP_14,			0, 0},
-    {WP_15,			0, 0},
+    {WP_TOOLKIT,			0, 0},
+    {WP_HYPERSPANNER,			0, 0},
 
     // make sure this is the last entry in this array, please
-    {WP_0,				0, 0},
+    {WP_NULL,				0, 0},
 };
 
 //wpnBarrelInfo_t wpnBarrelData[] =
 //{
-//	{WP_5,				0, 0},
-//	{WP_6,	0, 100},
-//	{WP_1,				0, 0},
-//	{WP_4,	0, 0},
-//	{WP_10,				1, 80},
-//	{WP_8,	2, 140},
-//	{WP_7,	1, 120},
-//	{WP_9,		1, 200},
-//	{WP_13,		0, 0},
-//	{WP_12,		0, 0},
-//	{WP_14,	0, 0},
-//	{WP_11,		0, 0},
-//	{WP_2,			0, 0},
-//	{WP_3,				0, 0},
+//	{WP_PHASER,				0, 0},
+//	{WP_COMPRESSION_RIFLE,	0, 100},
+//	{WP_NULL_HAND,				0, 0},
+//	{WP_COFFEE,	0, 0},
+//	{WP_DISRUPTOR,				1, 80},
+//	{WP_GRENADE_LAUNCHER,	2, 140},
+//	{WP_TR116,	1, 120},
+//	{WP_QUANTUM_BURST,		1, 200},
+//	{WP_DERMAL_REGEN,		0, 0},
+//	{WP_VOYAGER_HYPO,		0, 0},
+//	{WP_TOOLKIT,	0, 0},
+//	{WP_MEDKIT,		0, 0},
+//	{WP_TRICORDER,			0, 0},
+//	{WP_PADD,				0, 0},
 //	{WP_NEUTRINO_PROBE,			0, 0},
-//	{WP_7,				0, 90},
+//	{WP_TR116,				0, 90},
 //
 //	// make sure this is the last entry in this array, please
-//	{WP_0,				0},
+//	{WP_NULL,				0},
 //};
 
 void CG_RegisterWeapon(int weaponNum) {
@@ -115,7 +115,7 @@ void CG_RegisterWeapon(int weaponNum) {
 
     for (item = bg_itemlist + 1; item->classname; item++) {
         if (item->giType == IT_WEAPON && item->giTag == weaponNum) {
-            /*if ( weaponNum == WP_10 ) {
+            /*if ( weaponNum == WP_DISRUPTOR ) {
                 Com_Printf( S_COLOR_RED "Registering %s with pickup name of %s\n", bg_itemlist[10].classname, bg_itemlist[10].pickup_name );
             }*/
             weaponInfo->item = item;
@@ -154,7 +154,7 @@ void CG_RegisterWeapon(int weaponNum) {
     strcat(path, "_flash.md3");
     weaponInfo->flashModel = trap_R_RegisterModel(path);
 
-    for (barrelInfo = wpnBarrelData; barrelInfo->giTag != WP_0; barrelInfo++)
+    for (barrelInfo = wpnBarrelData; barrelInfo->giTag != WP_NULL; barrelInfo++)
     {
         if (barrelInfo->giTag == weaponNum)
         {
@@ -183,7 +183,7 @@ void CG_RegisterWeapon(int weaponNum) {
     }
 
     switch (weaponNum) {
-    case WP_5:
+    case WP_PHASER:
         MAKERGB(weaponInfo->flashDlightColor, 0, 0, 0);
 
         weaponInfo->firingSound = trap_S_RegisterSound(SOUND_DIR "phaser/phaserfiring.wav");
@@ -203,12 +203,12 @@ void CG_RegisterWeapon(int weaponNum) {
 
         break;
 
-    case WP_13:
+    case WP_DERMAL_REGEN:
         weaponInfo->firingSound = trap_S_RegisterSound(SOUND_DIR "dermal_regen/dm_1.wav");
         weaponInfo->altFiringSound = trap_S_RegisterSound(SOUND_DIR "dermal_regen/dm_2.wav");
         break;
 
-    case WP_10:
+    case WP_DISRUPTOR:
         //weaponInfo->missileTrailFunc = FX_StasisProjectileThink;
         weaponInfo->missileModel = trap_R_RegisterModel("models/weapons2/alien_disruptor/disruptor_bolt.md3");
         weaponInfo->missileDlight = 70;
@@ -234,7 +234,7 @@ void CG_RegisterWeapon(int weaponNum) {
 
         break;
 
-    case WP_8:
+    case WP_GRENADE_LAUNCHER:
         weaponInfo->missileModel = trap_R_RegisterModel("models/weapons2/launcher/projectile.md3");
         if (rpg_ctribgrenade.integer == 1)//RPG-X: - RedTechie Possible Hack! FIX | TiM: Heh, you're a possible hack :)
         {
@@ -267,7 +267,7 @@ void CG_RegisterWeapon(int weaponNum) {
         cgs.media.borgEyeFlareShader = trap_R_RegisterShader("gfx/misc/borgeyeflare");
         break;
 
-    case WP_4:
+    case WP_COFFEE:
         //MAKERGB( weaponInfo->flashDlightColor, 1, 0.6, 0.6 );
 
         /*weaponInfo->flashSound = trap_S_RegisterSound( SOUND_DIR "scavenger/fire.wav" );
@@ -288,7 +288,7 @@ void CG_RegisterWeapon(int weaponNum) {
         cgs.media.compressionMarkShader		= trap_R_RegisterShader( "gfx/damage/burnmark1" );*/
         break;
 
-    case WP_9:
+    case WP_QUANTUM_BURST:
         MAKERGB(weaponInfo->flashDlightColor, 0.6, 0.6, 1);	//Bluish
 
         weaponInfo->missileTrailFunc = FX_QuantumThink;
@@ -316,7 +316,7 @@ void CG_RegisterWeapon(int weaponNum) {
         cgs.media.quantumBoom = trap_S_RegisterSound(SOUND_DIR "explosions/explode5.wav");
         break;
 
-    case WP_1:
+    case WP_NULL_HAND:
         /*MAKERGB( weaponInfo->flashDlightColor, 0.6, 0.6, 1 );
 
         weaponInfo->flashSound = trap_S_RegisterSound( SOUND_DIR "IMOD/fire.wav" );
@@ -329,7 +329,7 @@ void CG_RegisterWeapon(int weaponNum) {
         cgs.media.imodExplosionShader	= trap_R_RegisterShader( "imodExplosion" );*/
         break;
 
-    case WP_6:
+    case WP_COMPRESSION_RIFLE:
         if (!grp_berp.integer) {
             MAKERGB(weaponInfo->flashDlightColor, 0.59, 0.24, 0.25);
             MAKERGB(weaponInfo->missileDlightColor, 0.59, 0.24, 0.25);
@@ -364,7 +364,7 @@ void CG_RegisterWeapon(int weaponNum) {
 
         break;
 
-        /*	case WP_7:
+        /*	case WP_TR116:
                 MAKERGB( weaponInfo->flashDlightColor, 0.16, 0.16, 1 );
                 weaponInfo->flashSound			= trap_S_RegisterSound( "sound/weapons/hitonhead.wav" );
                 weaponInfo->altFlashSnd			= trap_S_RegisterSound( "sound/weapons/guncharge.wav" );
@@ -373,7 +373,7 @@ void CG_RegisterWeapon(int weaponNum) {
                 weaponInfo->mainHitSound = trap_S_RegisterSound( SOUND_DIR "prifle/impact.wav" );
                 break;*/
                 /*
-                case WP_7:										//OLD CODE (replaced for TR116)
+                case WP_TR116:										//OLD CODE (replaced for TR116)
                     MAKERGB( weaponInfo->flashDlightColor, 0.6, 0.6, 1 );
 
                     weaponInfo->flashSound = trap_S_RegisterSound( SOUND_DIR "tetrion/fire.wav" );
@@ -393,43 +393,43 @@ void CG_RegisterWeapon(int weaponNum) {
                     cgs.media.bulletmarksShader			= trap_R_RegisterShader( "textures/decals/bulletmark4" );
                     break;
             */
-    case WP_12:
+    case WP_VOYAGER_HYPO:
         weaponInfo->flashSound = weaponInfo->altFlashSnd = trap_S_RegisterSound("sound/items/jetpuffmed.wav");
         break;
 
-    case WP_2:
+    case WP_TRICORDER:
         weaponInfo->firingSound = trap_S_RegisterSound("sound/items/tricorderscan.wav"); //altFlashSnd
         weaponInfo->altFiringSound = trap_S_RegisterSound("sound/ambience/voyager/medictricorder.wav"); //flashSound
 
         //weaponInfo->isAnimSndBased = qtrue;
         break;
 
-    case WP_3:
+    case WP_PADD:
         weaponInfo->firingSound = trap_S_RegisterSound(SOUND_DIR "padd/padd_1.wav"); //flashSound
         weaponInfo->altFiringSound = trap_S_RegisterSound(SOUND_DIR "padd/padd_2.wav"); //altFlashSnd
 
         weaponInfo->isAnimSndBased = qtrue;
         break;
 
-    case WP_15:
+    case WP_HYPERSPANNER:
         weaponInfo->firingSound = trap_S_RegisterSound(SOUND_DIR "hyperspanner/spanner_1.wav");
         weaponInfo->altFiringSound = trap_S_RegisterSound(SOUND_DIR "hyperspanner/spanner_2.wav");
         break;
 
-    case WP_7:
+    case WP_TR116:
         weaponInfo->flashSound = trap_S_RegisterSound(SOUND_DIR "hitonhead.wav");
         weaponInfo->altFlashSnd = weaponInfo->flashSound;
         //weaponInfo->altFlashSnd = trap_S_RegisterSound( "sound/weapons/guncharge.wav" );
         break;
 
         //Toolkit
-    case WP_14:
+    case WP_TOOLKIT:
         weaponInfo->flashSound = trap_S_RegisterSound(SOUND_DIR "toolkit/toolkit_1.wav");
         weaponInfo->altFlashSnd = trap_S_RegisterSound(SOUND_DIR "toolkit/toolkit_2.wav");
         break;
 
         //Medkit
-    case WP_11:
+    case WP_MEDKIT:
         weaponInfo->flashSound = trap_S_RegisterSound(SOUND_DIR "medkit/medkit_1.wav");
         weaponInfo->altFlashSnd = trap_S_RegisterSound(SOUND_DIR "medkit/medkit_2.wav");
         break;
@@ -473,7 +473,7 @@ void CG_RegisterItemVisuals(int itemNum) {
     // since the seeker uses the scavenger rifes sounds, we must precache the scavenger rifle stuff if we hit the item seeker
 /*	if ( item->giTag == PW_FLASHLIGHT)
     {
-        CG_RegisterWeapon( WP_4 );
+        CG_RegisterWeapon( WP_COFFEE );
     }*/
 
     // hang onto the handles for holdable items in case they're useable (e.g. detpack)
@@ -642,21 +642,21 @@ void CG_LightningBolt(centity_t *cent, vec3_t origin)
     if (cent->currentState.clientNum == cg.snap->ps.clientNum && !cg.renderingThirdPerson && !(cent->currentState.eFlags & EF_ITEMPLACEHOLDER)) //fuck decoys
     {
         // different checks for first person view
-        if (cg.snap->ps.weapon == WP_15 ||
-            cg.snap->ps.weapon == WP_5 ||
-            cg.snap->ps.weapon == WP_13 ||
-            (cg.snap->ps.eFlags & EF_ALT_FIRING && cg.snap->ps.weapon == WP_6)
-            || (!(cg.snap->ps.eFlags & EF_ALT_FIRING) && cg.snap->ps.weapon == WP_10)
+        if (cg.snap->ps.weapon == WP_HYPERSPANNER ||
+            cg.snap->ps.weapon == WP_PHASER ||
+            cg.snap->ps.weapon == WP_DERMAL_REGEN ||
+            (cg.snap->ps.eFlags & EF_ALT_FIRING && cg.snap->ps.weapon == WP_COMPRESSION_RIFLE)
+            || (!(cg.snap->ps.eFlags & EF_ALT_FIRING) && cg.snap->ps.weapon == WP_DISRUPTOR)
             )
         {	/*continue*/
         } else
             return;
     } else {
-        if (cent->currentState.weapon == WP_15 ||
-            cent->currentState.weapon == WP_5 ||
-            cent->currentState.weapon == WP_13 ||
-            (cent->currentState.eFlags & EF_ALT_FIRING && (cent->currentState.weapon == WP_6)) ||
-            (!(cent->currentState.eFlags & EF_ALT_FIRING) && cent->currentState.weapon == WP_10)
+        if (cent->currentState.weapon == WP_HYPERSPANNER ||
+            cent->currentState.weapon == WP_PHASER ||
+            cent->currentState.weapon == WP_DERMAL_REGEN ||
+            (cent->currentState.eFlags & EF_ALT_FIRING && (cent->currentState.weapon == WP_COMPRESSION_RIFLE)) ||
+            (!(cent->currentState.eFlags & EF_ALT_FIRING) && cent->currentState.weapon == WP_DISRUPTOR)
             )
         {	/*continue*/
         } else
@@ -723,7 +723,7 @@ void CG_LightningBolt(centity_t *cent, vec3_t origin)
     // Add in the effect
     switch (cent->currentState.weapon)
     {
-    case WP_5:
+    case WP_PHASER:
         if (cg.snap->ps.rechargeTime == 0)
         {
             if (cent->currentState.eFlags & EF_ALT_FIRING)
@@ -732,31 +732,31 @@ void CG_LightningBolt(centity_t *cent, vec3_t origin)
                 FX_PhaserFire(origin, trace.endpos, trace.plane.normal, spark, impact, cent->pe.empty);
         }
         break;
-    case WP_6:
+    case WP_COMPRESSION_RIFLE:
         if (cent->currentState.eFlags & EF_ALT_FIRING)
         {
             FX_PrifleBeamFire(origin, trace.endpos, trace.plane.normal, spark, impact, cent->pe.empty);
         }
         break;
-    case WP_15:
+    case WP_HYPERSPANNER:
         if (cent->currentState.eFlags & EF_ALT_FIRING)
             FX_ProbeBeam(origin, forward, cent->currentState.clientNum, qtrue);
         else
             FX_ProbeBeam(origin, forward, cent->currentState.clientNum, qfalse);
         break;
 
-    case WP_13:
+    case WP_DERMAL_REGEN:
         if (cent->currentState.eFlags & EF_ALT_FIRING)
             FX_RegenBeam(origin, forward, cent->currentState.clientNum, qtrue);
         else
             FX_RegenBeam(origin, forward, cent->currentState.clientNum, qfalse);
         break;
 
-    case WP_10:
+    case WP_DISRUPTOR:
         if (cent->currentState.eFlags & EF_FIRING && !(cent->currentState.eFlags & EF_ALT_FIRING))
             FX_DisruptorBeamFire(origin, trace.endpos, trace.plane.normal, spark, impact, cent->pe.empty);
 
-        /*	case WP_13:
+        /*	case WP_DERMAL_REGEN:
                 if (!(cent->currentState.eFlags & EF_ALT_FIRING))
                 {
                     vec3_t org;
@@ -1075,7 +1075,7 @@ void CG_AddPlayerWeapon(refEntity_t *parent, playerState_t *ps, centity_t *cent)
 
     // set custom shading for railgun refire rate
     /*if ( ps ) {
-        if ( cg.predictedPlayerState.weapon == WP_1
+        if ( cg.predictedPlayerState.weapon == WP_NULL_HAND
             && cg.predictedPlayerState.weaponstate == WEAPON_FIRING ) {
             float	f;
 
@@ -1141,7 +1141,7 @@ void CG_AddPlayerWeapon(refEntity_t *parent, playerState_t *ps, centity_t *cent)
         if (cent->currentState.eFlags & EF_ALT_FIRING)
         {
             // hark, I smell hackery afoot
-            if ((weaponNum == WP_5) && !(cg.predictedPlayerState.ammo[WP_5]))
+            if ((weaponNum == WP_PHASER) && !(cg.predictedPlayerState.ammo[WP_PHASER]))
             {
                 trap_S_AddLoopingSound(cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.phaserEmptySound);
                 cent->pe.lightningFiring = qtrue;
@@ -1151,12 +1151,12 @@ void CG_AddPlayerWeapon(refEntity_t *parent, playerState_t *ps, centity_t *cent)
                 cent->pe.lightningFiring = qtrue;
             }
 
-            if (weaponNum == WP_14 || weaponNum == WP_11) {
+            if (weaponNum == WP_TOOLKIT || weaponNum == WP_MEDKIT) {
                 cent->pe.lightningFiring = qtrue;
             }
         } else if (cent->currentState.eFlags & EF_FIRING)
         {
-            if ((weaponNum == WP_5) && !(cg.predictedPlayerState.ammo[WP_5]))
+            if ((weaponNum == WP_PHASER) && !(cg.predictedPlayerState.ammo[WP_PHASER]))
             {
                 trap_S_AddLoopingSound(cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.phaserEmptySound);
                 cent->pe.lightningFiring = qtrue;
@@ -1167,7 +1167,7 @@ void CG_AddPlayerWeapon(refEntity_t *parent, playerState_t *ps, centity_t *cent)
             }
 
             //TiM: Haxxor.  I want the medkit + toolkit sounds to play only once when u hold them down
-            if (weaponNum == WP_14 || weaponNum == WP_11) {
+            if (weaponNum == WP_TOOLKIT || weaponNum == WP_MEDKIT) {
                 cent->pe.lightningFiring = qtrue;
             }
         }
@@ -1177,9 +1177,9 @@ void CG_AddPlayerWeapon(refEntity_t *parent, playerState_t *ps, centity_t *cent)
     //RPG-X : TiM - A little variety here :) Toolkit gets attached to player model's left hand, medkit on waist :)
     //Hack: I dunno why, but unless I specified thirdperson (ie (!ps) ), the viewmodel went crazy. :P
     if (!ps) {
-        if ((weaponNum == WP_14)) { //Toolkit //cg.predictedPlayerState.weapon
+        if ((weaponNum == WP_TOOLKIT)) { //Toolkit //cg.predictedPlayerState.weapon
             CG_PositionEntityOnTag(&gun, parent, parent->hModel, "tag_lhand");
-        } else if ((weaponNum == WP_11)) { //Medkit
+        } else if ((weaponNum == WP_MEDKIT)) { //Medkit
             CG_PositionEntityOnTag(&gun, parent, parent->hModel, "tag_torso");
         }
         /*else {
@@ -1189,7 +1189,7 @@ void CG_AddPlayerWeapon(refEntity_t *parent, playerState_t *ps, centity_t *cent)
         gun.nonNormalizedAxes = qfalse;
     }
 
-    if (weaponNum == WP_4) {
+    if (weaponNum == WP_COFFEE) {
         if (!ps) {
             if (!(!cg.renderingThirdPerson && cent->currentState.clientNum == cg.predictedPlayerState.clientNum))
                 CG_CoffeeSteam(&gun, weapon, qtrue);
@@ -1204,7 +1204,7 @@ void CG_AddPlayerWeapon(refEntity_t *parent, playerState_t *ps, centity_t *cent)
     // add the spinning barrel
     //
     //
-    for (barrelInfo = wpnBarrelData; barrelInfo->giTag != WP_0; barrelInfo++)
+    for (barrelInfo = wpnBarrelData; barrelInfo->giTag != WP_NULL; barrelInfo++)
     {
         if (barrelInfo->giTag == weaponNum)
         {
@@ -1226,7 +1226,7 @@ void CG_AddPlayerWeapon(refEntity_t *parent, playerState_t *ps, centity_t *cent)
             barrel.hModel = weapon->barrelModel[i];
             angles[YAW] = 0;
             angles[PITCH] = 0;
-            if (weaponNum == WP_7) {
+            if (weaponNum == WP_TR116) {
                 angles[ROLL] = CG_MachinegunSpinAngle(cent);
             } else {
                 angles[ROLL] = 0;//CG_MachinegunSpinAngle( cent );
@@ -1254,7 +1254,7 @@ void CG_AddPlayerWeapon(refEntity_t *parent, playerState_t *ps, centity_t *cent)
     }
 
     //Com_Printf("eType: %i, eventParm: %i, weaponNum: %i\n", cent->currentState.eType, cent->currentState.eventParm, weaponNum);
-    if (weaponNum == WP_6
+    if (weaponNum == WP_COMPRESSION_RIFLE
         &&
         cent->currentState.powerups & (1 << PW_FLASHLIGHT)
         &&
@@ -1293,8 +1293,8 @@ void CG_AddPlayerWeapon(refEntity_t *parent, playerState_t *ps, centity_t *cent)
     }
 
     // add the flash
-    if ((weaponNum == WP_5 ||
-        weaponNum == WP_13)
+    if ((weaponNum == WP_PHASER ||
+        weaponNum == WP_DERMAL_REGEN)
         && (nonPredictedCent->currentState.eFlags & EF_FIRING))
     {
         // continuous flash
@@ -1325,11 +1325,11 @@ void CG_AddPlayerWeapon(refEntity_t *parent, playerState_t *ps, centity_t *cent)
     AnglesToAxis(angles, flash.axis);
 
     //TiM - Instead of briefly showing the flash, show it scaling down
-    if (weaponNum != WP_5 &&
-        weaponNum != WP_15 &&
-        weaponNum != WP_13 &&
-        !(weaponNum == WP_6 && (cent->currentState.eFlags & EF_ALT_FIRING)) &&
-        !(weaponNum == WP_10 && !(cent->currentState.eFlags & EF_ALT_FIRING))
+    if (weaponNum != WP_PHASER &&
+        weaponNum != WP_HYPERSPANNER &&
+        weaponNum != WP_DERMAL_REGEN &&
+        !(weaponNum == WP_COMPRESSION_RIFLE && (cent->currentState.eFlags & EF_ALT_FIRING)) &&
+        !(weaponNum == WP_DISRUPTOR && !(cent->currentState.eFlags & EF_ALT_FIRING))
         )
     {
         float scale;
@@ -1343,13 +1343,13 @@ void CG_AddPlayerWeapon(refEntity_t *parent, playerState_t *ps, centity_t *cent)
 
     //TiM - quick hack
     //jiggle the scale of the phaser rifle on alt fire around
-    if ((weaponNum == WP_6 && (cent->currentState.eFlags & EF_ALT_FIRING))
+    if ((weaponNum == WP_COMPRESSION_RIFLE && (cent->currentState.eFlags & EF_ALT_FIRING))
         ||
-        (weaponNum == WP_10 && !(cent->currentState.eFlags & EF_ALT_FIRING)))
+        (weaponNum == WP_DISRUPTOR && !(cent->currentState.eFlags & EF_ALT_FIRING)))
     {
         float min, max;
 
-        if (weaponNum == WP_6)
+        if (weaponNum == WP_COMPRESSION_RIFLE)
         {
             min = 1.3f;
             max = 1.6f;
@@ -1441,7 +1441,7 @@ void CG_AddViewWeapon(playerState_t *ps) {
         return;
     }
 
-    if ((cg.zoomed) && (ps->weapon == WP_6)) { //RPG-X : TiM - People were saying that being able to see the gunsight on the rifle thru the gunsight in zoom mode was weird :P
+    if ((cg.zoomed) && (ps->weapon == WP_COMPRESSION_RIFLE)) { //RPG-X : TiM - People were saying that being able to see the gunsight on the rifle thru the gunsight in zoom mode was weird :P
         return;
     }
 
@@ -1574,12 +1574,12 @@ CG_DrawWeaponSelect
 ===================
 */
 
-static int	weaponRows[6][3] = { { WP_1, 0, 0 },
-                                 { WP_2, WP_3, WP_4 },
-                                 { WP_5, WP_6, WP_7 },
-                                 { WP_8, WP_9, WP_10 },
-                                 { WP_11, WP_12, WP_13 },
-                                 { WP_14, WP_15, 0 } };
+static int	weaponRows[6][3] = { { WP_NULL_HAND, 0, 0 },
+                                 { WP_TRICORDER, WP_PADD, WP_COFFEE },
+                                 { WP_PHASER, WP_COMPRESSION_RIFLE, WP_TR116 },
+                                 { WP_GRENADE_LAUNCHER, WP_QUANTUM_BURST, WP_DISRUPTOR },
+                                 { WP_MEDKIT, WP_VOYAGER_HYPO, WP_DERMAL_REGEN },
+                                 { WP_TOOLKIT, WP_HYPERSPANNER, 0 } };
 
 void CG_DrawWeaponSelect(void) {
     int		i, rowCount, cellCount;
@@ -1688,19 +1688,19 @@ static qboolean CG_WeaponSelectable(int i) {
 extern int altAmmoUsage[];
 /*
 {
-    0,				//WP_0,
-    2,				//WP_5,
-    10,				//WP_6,
-    3,				//WP_1,
-    5,				//WP_4,
-    1,				//WP_10,
-    1,				//WP_8,
-    2,				//WP_7,
-    2,				//WP_9,
-    5				//WP_13,
-    20,				//WP_12,
-    ##,				//WP_14,
-    ##,				//WP_11,
+    0,				//WP_NULL,
+    2,				//WP_PHASER,
+    10,				//WP_COMPRESSION_RIFLE,
+    3,				//WP_NULL_HAND,
+    5,				//WP_COFFEE,
+    1,				//WP_DISRUPTOR,
+    1,				//WP_GRENADE_LAUNCHER,
+    2,				//WP_TR116,
+    2,				//WP_QUANTUM_BURST,
+    5				//WP_DERMAL_REGEN,
+    20,				//WP_VOYAGER_HYPO,
+    ##,				//WP_TOOLKIT,
+    ##,				//WP_MEDKIT,
 };
 */
 
@@ -1760,7 +1760,7 @@ void CG_NextWeapon_f(void) {
 
     //TiM: Just for the record.  Phenix.  Enumerated value lists.  Look them up.  Use them!
     //Reading this code was really tricky when it didn't have to be >.<
-    //ie 1 = WP_5 etc
+    //ie 1 = WP_PHASER etc
 }
 
 /*
@@ -1808,12 +1808,12 @@ CG_Weapon_f
 ===============
 */
 /*TiM : Here for reference
-static int	weaponRows[6][3] = { WP_1, 0, 0,
-                                 WP_2, WP_3, WP_4,
-                                 WP_5, WP_6, WP_7,
-                                 WP_8, WP_9, WP_10,
-                                 WP_11, WP_12, WP_13,
-                                 WP_14, WP_NEUTRINO_PROBE, 0 };*/
+static int	weaponRows[6][3] = { WP_NULL_HAND, 0, 0,
+                                 WP_TRICORDER, WP_PADD, WP_COFFEE,
+                                 WP_PHASER, WP_COMPRESSION_RIFLE, WP_TR116,
+                                 WP_GRENADE_LAUNCHER, WP_QUANTUM_BURST, WP_DISRUPTOR,
+                                 WP_MEDKIT, WP_VOYAGER_HYPO, WP_DERMAL_REGEN,
+                                 WP_TOOLKIT, WP_NEUTRINO_PROBE, 0 };*/
 
 void CG_Weapon_f(void) {
     int		num;
@@ -1847,8 +1847,8 @@ void CG_Weapon_f(void) {
 
     //Hacky Override: 0 = Null hand no matter what.
     if (num == 0) {
-        if (bits & (1 << WP_1)) {
-            cg.weaponSelect = WP_1;
+        if (bits & (1 << WP_NULL_HAND)) {
+            cg.weaponSelect = WP_NULL_HAND;
         }
         return;
     }
@@ -1928,7 +1928,7 @@ void CG_Weapon_f(void) {
     //weapons we have in sequential order, select the one that corresponds.
 
     //Start at number 2, skipping null hand.  He owns us all
-    /*for ( i = WP_2, weaponCount = 0; i < MAX_WEAPONS; i++ ) {
+    /*for ( i = WP_TRICORDER, weaponCount = 0; i < MAX_WEAPONS; i++ ) {
         //if we have that weapon
         if ( bits & ( 1 << i ) ) {
             weaponCount++;
@@ -1998,7 +1998,7 @@ void CG_FireWeapon(centity_t *cent, qboolean alt_fire) {
     //const char	*info2;
 
     ent = &cent->currentState;
-    if (ent->weapon == WP_0 || ent->weapon == WP_1) {
+    if (ent->weapon == WP_NULL || ent->weapon == WP_NULL_HAND) {
         return;
     }
     if (ent->weapon >= WP_NUM_WEAPONS) {
@@ -2012,12 +2012,12 @@ void CG_FireWeapon(centity_t *cent, qboolean alt_fire) {
     cent->muzzleFlashTime = cg.time;
 
     // lightning gun only does this this on initial press
-    if (ent->weapon == WP_5 /*||
-            ent->weapon == WP_13*/
-        || ent->weapon == WP_14
-        || ent->weapon == WP_11
-        || (!(cent->currentState.eFlags & EF_ALT_FIRING) && ent->weapon == WP_10)
-        || (cent->currentState.eFlags & EF_ALT_FIRING && ent->weapon == WP_6)
+    if (ent->weapon == WP_PHASER /*||
+            ent->weapon == WP_DERMAL_REGEN*/
+        || ent->weapon == WP_TOOLKIT
+        || ent->weapon == WP_MEDKIT
+        || (!(cent->currentState.eFlags & EF_ALT_FIRING) && ent->weapon == WP_DISRUPTOR)
+        || (cent->currentState.eFlags & EF_ALT_FIRING && ent->weapon == WP_COMPRESSION_RIFLE)
         )
     {
         if (cent->pe.lightningFiring) {
@@ -2037,7 +2037,7 @@ void CG_FireWeapon(centity_t *cent, qboolean alt_fire) {
     if (alt_fire)
     {
         //RPG-X: RedTechie - Wrong place for show tris
-        /*if( ent->weapon == WP_7 )
+        /*if( ent->weapon == WP_TR116 )
         {
             if(tris_state == 1)
                 tris_state = 0;
@@ -2052,11 +2052,11 @@ void CG_FireWeapon(centity_t *cent, qboolean alt_fire) {
             //admin alt hypos no fire coz it grinds my teeth
             if (cgs.clientinfo[cg.snap->ps.clientNum].isAdmin/*cgs.clientinfo[cent->currentState.clientNum].pClass == PC_ADMIN*/
                 &&
-                cent->currentState.weapon == WP_12) {
+                cent->currentState.weapon == WP_VOYAGER_HYPO) {
                 return;
             }
 
-            if (ent->weapon == WP_8) {
+            if (ent->weapon == WP_GRENADE_LAUNCHER) {
                 if (rpg_tripmines != 1) {
                     trap_S_StartSound(NULL, ent->number, CHAN_WEAPON, weap->altFlashSnd);
                 }
@@ -2068,7 +2068,7 @@ void CG_FireWeapon(centity_t *cent, qboolean alt_fire) {
     {
         if (weap->flashSound)
         {
-            if (ent->weapon == WP_8) {
+            if (ent->weapon == WP_GRENADE_LAUNCHER) {
                 if ((rpg_effectsgun == 1) || (rpg_tripmines == 1)) {
                     return;
                 } else {
@@ -2094,7 +2094,7 @@ void CG_FireSeeker(centity_t *cent)
     weaponInfo_t	*weap;
 
     ent = &cent->currentState;
-    weap = &cg_weapons[WP_4];
+    weap = &cg_weapons[WP_COFFEE];
 
     trap_S_StartSound(NULL, ent->number, CHAN_WEAPON, weap->flashSound);
 }
@@ -2137,31 +2137,31 @@ void CG_MissileHitWall(centity_t *cent, int weapon, vec3_t origin, vec3_t dir)
 
     switch (weapon) {
     default:
-    case WP_5:
+    case WP_PHASER:
         // no explosion at LG impact, it is added with the beam
         mark = cgs.media.holeMarkShader;
         radius = 12;
         break;
-    case WP_13:
+    case WP_DERMAL_REGEN:
         // no explosion at LG impact, it is added with the beam
         mark = cgs.media.holeMarkShader;
         radius = 12;
         break;
-    case WP_8:
+    case WP_GRENADE_LAUNCHER:
         FX_GrenadeExplode(origin, dir);
         return;
         break;
-    case WP_10:
+    case WP_DISRUPTOR:
         FX_DisruptorWeaponHitWall(origin, dir, 2); //cent->currentState.time2
         return;
         break;
-    case WP_1:
+    case WP_NULL_HAND:
         /*mod = cgs.media.ringFlashModel;
         shader = cgs.media.imodExplosionShader;
         mark = cgs.media.energyMarkShader;
         radius = 24;*/
         break;
-    case WP_6:
+    case WP_COMPRESSION_RIFLE:
         //mod = cgs.media.ringFlashModel;
         //shader = cgs.media.imodExplosionShader;
         //mark = cgs.media.energyMarkShader;
@@ -2169,11 +2169,11 @@ void CG_MissileHitWall(centity_t *cent, int weapon, vec3_t origin, vec3_t dir)
         FX_CompressionExplosion(cent->lerpOrigin, origin, dir, qfalse);
         return;
         break;
-    case WP_7:
+    case WP_TR116:
         //FX_TetrionAltHitWall( origin, dir );
         return;
         break;
-        /*	case WP_4:
+        /*	case WP_COFFEE:
                 if (cent->currentState.eFlags & EF_ALT_FIRING)
                 {
                     FX_ScavengerAltExplode( origin, dir );
@@ -2184,7 +2184,7 @@ void CG_MissileHitWall(centity_t *cent, int weapon, vec3_t origin, vec3_t dir)
                 }
                 return;
                 break;*/
-                /*	case WP_11:
+                /*	case WP_MEDKIT:
                         if ( !( cent->currentState.eFlags & EF_ALT_FIRING ))
                         {
                             FX_BorgWeaponHitWall( origin, dir );
@@ -2192,7 +2192,7 @@ void CG_MissileHitWall(centity_t *cent, int weapon, vec3_t origin, vec3_t dir)
                         return;
                         break;*/
 
-    case WP_9:
+    case WP_QUANTUM_BURST:
         if (cent->currentState.eFlags & EF_ALT_FIRING)
         {
             FX_QuantumAltHitWall(origin, dir);
@@ -2254,7 +2254,7 @@ void CG_BounceEffect(centity_t *cent, int weapon, vec3_t origin, vec3_t normal)
 
     switch (weapon)
     {
-    case WP_8:
+    case WP_GRENADE_LAUNCHER:
         info = CG_ConfigString(CS_SERVERINFO);
         rpg_tripmines = atoi(Info_ValueForKey(info, "rpg_invisibletripmines"));
         if (rpg_tripmines != 1) {
@@ -2266,7 +2266,7 @@ void CG_BounceEffect(centity_t *cent, int weapon, vec3_t origin, vec3_t normal)
         }
         break;
 
-    case WP_7:
+    case WP_TR116:
         //trap_S_StartSound( origin, ENTITYNUM_WORLD, CHAN_AUTO, trap_S_RegisterSound ( va(SOUND_DIR "tetrion/ricochet%d.wav", irandom(1, 3)) ) );
         //FX_TetrionRicochet( origin, normal );
         break;
@@ -2418,12 +2418,12 @@ void CG_PlayShooterSound(centity_t *cent) {
     weap = &cg_weapons[cent->currentState.eventParm];
 
     switch (cent->currentState.eventParm) {
-    case WP_6:
-    case WP_8:
-    case WP_9:
+    case WP_COMPRESSION_RIFLE:
+    case WP_GRENADE_LAUNCHER:
+    case WP_QUANTUM_BURST:
         trap_S_StartSound(cent->currentState.origin, cent->currentState.number, CHAN_VOICE, weap->flashSound);
         break;
-    case WP_10:
+    case WP_DISRUPTOR:
         trap_S_StartSound(cent->currentState.origin, cent->currentState.number, CHAN_VOICE, weap->altFlashSnd);
         break;
     }

@@ -53,6 +53,52 @@ static list_iter_p list_iterator(list_p list, char init) {
     return iter;
 }
 
+static int list_add_impl(list_p list, void* data, dataType_t type, size_t size, char end) {
+    lnode_p node = (lnode_p)malloc(sizeof(struct linked_node));
+
+    node->cont = (container_p)malloc(sizeof(container));
+    if (node->cont == NULL) {
+        return 0;
+    }
+
+    int isPtr = (size == 0); //Size is zero since we don't need to malloc
+
+    node->cont->type = type;
+    node->cont->pointer = isPtr;
+    node->cont->size = size;
+
+    if (isPtr) {
+        node->cont->data = malloc(size);
+        if (node->cont->data == NULL) {
+            return 0;
+        }
+        memcpy(node->cont->data, data, size);
+    } else {
+        node->cont->data = data;
+    }
+
+    if (list->first == NULL) {
+        node->prev = NULL;
+        node->next = NULL;
+        list->first = node;
+        list->last = node;
+    } else if (end == LIST_FRONT) {
+        list->first->prev = node;
+        node->next = list->first;
+        node->prev = NULL;
+        list->first = node;
+    } else { // LIST_BACK and default 
+        list->last->next = node;
+        node->prev = list->last;
+        node->next = NULL;
+        list->last = node;
+    }
+    list->length++;
+
+    return list->length;
+}
+
+
 /**
  * Add an item with the given value, type, and size to the list.
  * The data is copied by value, so the original pointer must be freed if it
@@ -67,53 +113,14 @@ static list_iter_p list_iterator(list_p list, char init) {
  *	\return Count of elements in the list
  */
 static int list_add(list_p list, void* data, dataType_t type, size_t size, char end) {
-    lnode_p node = (lnode_p)malloc(sizeof(struct linked_node));
-
-    node->cont = (container_p)malloc(sizeof(container));
-    if (node->cont == NULL) {
-        return 0;
-    }
-
-    node->cont->type = type;
-    node->cont->data = malloc(size);
-    if (node->cont->data == NULL) {
-        return 0;
-    }
-    memcpy(node->cont->data, data, size);
-    node->cont->pointer = 0;
-    node->cont->size = size;
-
-    if (list->first == NULL) {
-        node->prev = NULL;
-        node->next = NULL;
-        list->first = node;
-        list->last = node;
-    } else if (end == LIST_BACK) {
-        list->last->next = node;
-        node->prev = list->last;
-        node->next = NULL;
-        list->last = node;
-    } else if (end == LIST_FRONT) {
-        list->first->prev = node;
-        node->next = list->first;
-        node->prev = NULL;
-        list->first = node;
-    } else { // assume back
-        list->last->next = node;
-        node->prev = list->last;
-        node->next = NULL;
-        list->last = node;
-    }
-    list->length++;
-
-    return list->length;
+    return list_add_impl(list, data, type, size, end);
 }
 
 /**
- * Add an item with the given calue, type, and size to the end of the list.
+ * Add an item with the given value, type, and size to the end of the list.
  * The data is copied by value, so the original pointer must be freed if it
  * was allocated on the heap.
- * Returns the length of the list if successfull else returns 0.
+ * Returns the length of the list if successfully else returns 0.
  *
  *	\param list pointer to a list
  *	\param data pointer to data
@@ -126,10 +133,10 @@ static int list_append(list_p list, void* data, dataType_t type, size_t size) {
 }
 
 /**
- * Add an item with the given calue, type, and size to the front of the list.
+ * Add an item with the given value, type, and size to the front of the list.
  * The data is copied by value, so the original pointer must be freed if it
  * was allocated on the heap.
- * Returns the length of the list if successfull else returns 0.
+ * Returns the length of the list if successfully else returns 0.
  *
  *	\param list pointer to a list
  *	\param data pointer to data
@@ -152,47 +159,12 @@ static int list_prepend(list_p list, void* data, dataType_t type, size_t size) {
  *	\return Count of elements in the list
  */
 static int list_add_ptr(list_p list, void* data, dataType_t type, char end) {
-    lnode_p node = (lnode_p)malloc(sizeof(struct linked_node));
-
-    node->cont = (container_p)malloc(sizeof(container));
-    if (node->cont == NULL) {
-        return 0;
-    }
-
-    node->cont->type = type;
-    node->cont->data = data;
-    node->cont->pointer = 1;
-    node->cont->size = 0;
-
-    if (list->first == NULL) {
-        node->prev = NULL;
-        node->next = NULL;
-        list->first = node;
-        list->last = node;
-    } else if (end == LIST_BACK) {
-        list->last->next = node;
-        node->prev = list->last;
-        node->next = NULL;
-        list->last = node;
-    } else if (end == LIST_FRONT) {
-        list->first->prev = node;
-        node->next = list->first;
-        node->prev = NULL;
-        list->first = node;
-    } else { // assume back
-        list->last->next = node;
-        node->prev = list->last;
-        node->next = NULL;
-        list->last = node;
-    }
-    list->length++;
-
-    return list->length;
+    list_add_impl(list, data, type, 0, end);
 }
 
 /**
- * Add a pointer to an item with the given calue, type, and size to the end of the list.
- * Returns the length of the list if successfull else returns 0.
+ * Add a pointer to an item with the given value, type, and size to the end of the list.
+ * Returns the length of the list if successfully else returns 0.
  *
  *	\param list pointer to a list
  *	\param data pointer to data
@@ -204,8 +176,8 @@ static int list_append_ptr(list_p list, void* data, dataType_t type) {
 }
 
 /**
- * Add a pointer to an item with the given calue, type, and size to the front of the list.
- * Returns the length of the list if successfull else returns 0.
+ * Add a pointer to an item with the given value, type, and size to the front of the list.
+ * Returns the length of the list if successfully else returns 0.
  *
  *	\param list pointer to a list
  *	\param data pointer to data

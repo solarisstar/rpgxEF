@@ -812,7 +812,7 @@ static void PlayerModel_UpdateModel(void)
     VectorClear(moveangles);
 
     UI_PlayerInfo_SetModel(&s_playermodel.playerinfo, s_playermodel.modelData);
-    UI_PlayerInfo_SetInfo(&s_playermodel.playerinfo, BOTH_WALK1, BOTH_WALK1, viewangles, moveangles, WP_0, trap_Cvar_VariableValue("height"), trap_Cvar_VariableValue("weight"), qfalse);
+    UI_PlayerInfo_SetInfo(&s_playermodel.playerinfo, BOTH_WALK1, BOTH_WALK1, viewangles, moveangles, WP_NULL, trap_Cvar_VariableValue("height"), trap_Cvar_VariableValue("weight"), qfalse);
 }
 
 /*

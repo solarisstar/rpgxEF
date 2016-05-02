@@ -111,7 +111,7 @@ void FX_QuantumHitWall(vec3_t origin, vec3_t normal)
     vec3_t			vel;
     float			scale;
     int				i;
-    weaponInfo_t	*weaponInfo = &cg_weapons[WP_9];
+    weaponInfo_t	*weaponInfo = &cg_weapons[WP_QUANTUM_BURST];
 
     CG_InitLensFlare(origin,
         400, 400,
@@ -189,7 +189,7 @@ void FX_QuantumAltHitWall(vec3_t origin, vec3_t normal)
     float			scale;
     int				i;
     vec3_t	RGB = { 1.0, 0.6, 0.3 }, RGB2 = { 1.0, 0.3, 0.0 };
-    weaponInfo_t	*weaponInfo = &cg_weapons[WP_9];
+    weaponInfo_t	*weaponInfo = &cg_weapons[WP_QUANTUM_BURST];
 
     CG_InitLensFlare(origin,
         500, 500,

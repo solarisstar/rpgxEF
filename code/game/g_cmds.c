@@ -323,7 +323,7 @@ static void Cmd_Give_f(gentity_t *ent) {
     case TYPE_ALL:
         targEnt->health = ps->stats[STAT_MAX_HEALTH];
 
-        ps->stats[STAT_WEAPONS] = (1 << WP_NUM_WEAPONS) - 1 - (1 << WP_0);
+        ps->stats[STAT_WEAPONS] = (1 << WP_NUM_WEAPONS) - 1 - (1 << WP_NULL);
 
         //RPG-X: J2J - Added so you dont just get empty weapons
         for (i = MAX_WEAPONS - 1; i > -1; i--) { /* RPG-X | Marcin | 30/12/2008 */ // GSIO: Changed from i++ to i--
@@ -337,7 +337,7 @@ static void Cmd_Give_f(gentity_t *ent) {
         targEnt->health = ps->stats[STAT_MAX_HEALTH];
         break;
     case TYPE_WEAPONS:
-        ps->stats[STAT_WEAPONS] = (1 << WP_NUM_WEAPONS) - 1 - (1 << WP_0);
+        ps->stats[STAT_WEAPONS] = (1 << WP_NUM_WEAPONS) - 1 - (1 << WP_NULL);
 
         //RPG-X: J2J - Added so you dont just get empty weapons
         for (i = MAX_WEAPONS - 1; i > -1; i--) { // GSIO: changed from i++ to i--
@@ -579,7 +579,7 @@ static void Cmd_Kill_f(gentity_t *ent)
 
     //RPG-X: Medics revive Support for suiciding
     if (rpg_medicsrevive.integer != 0) {
-        ps->stats[STAT_WEAPONS] = (1 << WP_0);
+        ps->stats[STAT_WEAPONS] = (1 << WP_NULL);
         ps->stats[STAT_HOLDABLE_ITEM] = HI_NONE;
         ps->stats[STAT_HEALTH] = ent->health = 1;
         G_Client_Die(ent, ent, ent, 1, meansOfDeath); //MOD_SUICIDE
@@ -885,7 +885,7 @@ qboolean SetClass(gentity_t *ent, char *s, char *teamName, qboolean SaveToCvar) 
             //RPG-X: RedTechie - No respawn for n00bs set all info and frap that a n00b needs HERE this eliminates respawns for n00bs
             if (g_classData[pclass].isn00b/*pclass == PC_N00B*/) {
                 G_Client_Spawn(ent, 1, qfalse);
-                ps->stats[STAT_WEAPONS] = (1 << WP_0);
+                ps->stats[STAT_WEAPONS] = (1 << WP_NULL);
                 ps->stats[STAT_HOLDABLE_ITEM] = HI_NONE;
 
                 //Take some admin powerups away and give some n00b powerps ;)
@@ -2171,7 +2171,7 @@ static void Cmd_ForceKill_f(gentity_t *ent) {
 
             //RPG-X: Medics revive Support for suiciding
             if (rpg_medicsrevive.integer == 1) {
-                ps->stats[STAT_WEAPONS] = (1 << WP_0);
+                ps->stats[STAT_WEAPONS] = (1 << WP_NULL);
                 ps->stats[STAT_HOLDABLE_ITEM] = HI_NONE;
                 ps->stats[STAT_HEALTH] = target->health = 1;
                 G_Client_Die(target, target, target, 100000, MOD_FORCEDSUICIDE);
@@ -2212,7 +2212,7 @@ static void Cmd_ForceKill_f(gentity_t *ent) {
 
         //RPG-X: Medics revive Support for suiciding
         if (rpg_medicsrevive.integer == 1) {
-            ps->stats[STAT_WEAPONS] = (1 << WP_0);
+            ps->stats[STAT_WEAPONS] = (1 << WP_NULL);
             ps->stats[STAT_HOLDABLE_ITEM] = HI_NONE;
             ps->stats[STAT_HEALTH] = target->health = 1;
             G_Client_Die(target, target, target, 100000, MOD_FORCEDSUICIDE);
@@ -2344,7 +2344,7 @@ static void Cmd_ForceKillRadius_f(gentity_t *ent)
             OtherPlayer->flags &= ~FL_GODMODE;							//Bypass godmode (?)
             //RPG-X: Medics revive Support for suiciding
             if (rpg_medicsrevive.integer == 1) {
-                oPs->stats[STAT_WEAPONS] = (1 << WP_0);
+                oPs->stats[STAT_WEAPONS] = (1 << WP_NULL);
                 oPs->stats[STAT_HOLDABLE_ITEM] = HI_NONE;
                 oPs->stats[STAT_HEALTH] = OtherPlayer->health = 1;
                 G_Client_Die(OtherPlayer, OtherPlayer, OtherPlayer, 100000, MOD_FORCEDSUICIDE);
@@ -2364,7 +2364,7 @@ static void Cmd_ForceKillRadius_f(gentity_t *ent)
         ent->flags &= ~FL_GODMODE;							//Bypass godmode (?)
         //RPG-X: Medics revive Support for suiciding
         if (rpg_medicsrevive.integer == 1) {
-            ePs->stats[STAT_WEAPONS] = (1 << WP_0);
+            ePs->stats[STAT_WEAPONS] = (1 << WP_NULL);
             ePs->stats[STAT_HOLDABLE_ITEM] = HI_NONE;
             ePs->stats[STAT_HEALTH] = ent->health = 1;
             G_Client_Die(ent, ent, ent, 100000, MOD_FORCEDSUICIDE);
@@ -5314,15 +5314,15 @@ static void Cmd_remodulate_f(gentity_t *ent) {
 
     switch (i) {
     case 1:
-        level.borgAdaptHits[WP_5] = 0;
+        level.borgAdaptHits[WP_PHASER] = 0;
         trap_SendServerCommand(-1, va("print \"Phasers have been remodulated.\n\""));
         break;
     case 2:
-        level.borgAdaptHits[WP_6] = 0;
+        level.borgAdaptHits[WP_COMPRESSION_RIFLE] = 0;
         trap_SendServerCommand(-1, va("print \"Compression Rifles have been remodulated.\n\""));
         break;
     case 3:
-        level.borgAdaptHits[WP_10] = 0;
+        level.borgAdaptHits[WP_DISRUPTOR] = 0;
         trap_SendServerCommand(-1, va("print \"Disruptors have been remodulated.\n\""));
         break;
     default:
@@ -6789,7 +6789,7 @@ static void Cmd_spawnTentity_f(gentity_t *ent) {
             if (numArgs < 3) {
                 G_FreeEntity(newEnt);
                 trap_SendServerCommand(clientNum, "print \"Insufficent number of arguments for target_give!\n\"");
-                trap_SendServerCommand(clientNum, "print \"Usage: spawnTEnt target_give targetname items (example for items: WP_5 | WP_14)\n\"");
+                trap_SendServerCommand(clientNum, "print \"Usage: spawnTEnt target_give targetname items (example for items: WP_PHASER | WP_TOOLKIT)\n\"");
                 return;
             }
             trap_Argv(2, arg, sizeof(arg));

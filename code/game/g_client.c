@@ -1765,13 +1765,13 @@ void G_Client_WeaponsForClass(gclient_t *client, pclass_t pclass)
     int		i;
     int		Bits;
 
-    Bits = (1 << WP_1);
+    Bits = (1 << WP_NULL_HAND);
     Bits |= g_classData[pclass].weaponsFlags;
 
-    for (i = WP_1; i < MAX_WEAPONS; i++) {
+    for (i = WP_NULL_HAND; i < MAX_WEAPONS; i++) {
         //if we want no weapons and aren't an admin, skip this particular weapon
         if (rpg_noweapons.integer != 0 && !g_classData[pclass].isAdmin/*pclass != PC_ADMIN*/) {
-            if (i >= WP_5 && i <= WP_10) {
+            if (i >= WP_PHASER && i <= WP_DISRUPTOR) {
                 continue;
             }
         }
@@ -2041,7 +2041,7 @@ void G_Client_Spawn(gentity_t *ent, int rpgx_spawn, qboolean fromDeath) {
             trap_LinkEntity(ent);
 
             // force the base weapon up
-            client->ps.weapon = WP_1; //TiM: WP_5
+            client->ps.weapon = WP_NULL_HAND; //TiM: WP_PHASER
             client->ps.weaponstate = WEAPON_READY;
         }
     }
@@ -2076,7 +2076,7 @@ void G_Client_Spawn(gentity_t *ent, int rpgx_spawn, qboolean fromDeath) {
         client->ps.weapon = 1;
 
         //TiM - Always default to the null hand
-        client->ps.weapon = WP_1;
+        client->ps.weapon = WP_NULL_HAND;
     }
 
     // run a client frame to drop exactly to the floor,
@@ -2222,8 +2222,8 @@ gentity_t *SpawnBeamOutPlayer(gentity_t	*ent) {
     body->s.torsoAnim = ent->client->ps.stats[TORSOANIM];
 
     //--------------------------- WEAPON ADJUST
-    if (body->s.weapon == WP_5 || body->s.weapon == WP_13)
-        body->s.weapon = WP_6;
+    if (body->s.weapon == WP_PHASER || body->s.weapon == WP_DERMAL_REGEN)
+        body->s.weapon = WP_COMPRESSION_RIFLE;
 
     return body;
 }
