@@ -627,12 +627,11 @@ void grenadeSpewShrapnel(gentity_t *ent)
 
 static void FireTripmine(gentity_t * ent, gentity_t * grenade)
 {
-     gentity_t  *tripwire = NULL;
-    int tripcount;
-    int tripcount_org;
-    int lowestTimeStamp;
-    int foundTripWires[MAX_GENTITIES] = { ENTITYNUM_NONE };
+    gentity_t  *tripwire = NULL;
     int tripcount = 0;
+    int tripcount_org = 0;
+    int lowestTimeStamp = level.time;
+    int foundTripWires[MAX_GENTITIES] = { ENTITYNUM_NONE };
 
     while ((tripwire = G_Find(tripwire, FOFS(classname), "tripwire")) != NULL) {
         if (tripwire->parent != ent) {
@@ -643,7 +642,6 @@ static void FireTripmine(gentity_t * ent, gentity_t * grenade)
     
     tripwire = NULL;
     tripcount_org = tripcount;
-    lowestTimeStamp = level.time;
     // TODO imporve the efficiency of this loop
     // TODO probably sort on the timestamp. I'd love to get rid of
     // TODO all these variables. - Telex
