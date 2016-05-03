@@ -218,7 +218,6 @@ to beam to various locations.
 =========================
 */
 void CG_BeamList_cmd(void) {
-    const char *locStr;
     int i;
 
     /* Print Titles */
@@ -228,12 +227,10 @@ void CG_BeamList_cmd(void) {
     /* Based off the string data that is transmitted to the CG on Init
        Get the name and index of each location */
     for (i = 1; i < MAX_LOCATIONS; i++) {
-        locStr = CG_ConfigString(CS_LOCATIONS + i);
-
+        const char *locStr =  = CG_ConfigString(CS_LOCATIONS + i);
         if (locStr[0]) {
             CG_Printf("%s \t - \t%i\n", locStr, i);
         }
-        locStr = NULL; /* reset just in case */
     }
 }
 
@@ -379,7 +376,6 @@ void CG_LocEdit_f(void) {
     char path[MAX_QPATH];
     char buffer[MAX_STRING_CHARS];
     const char *argptr;
-    int  i;
 
     argptr = CG_Argv(1);
 
@@ -401,7 +397,7 @@ void CG_LocEdit_f(void) {
 
         if (f) {
             if ((argptr = CG_Argv(2)) != NULL) {
-                i = atoi(argptr);
+                int i = atoi(argptr);
                 if (i) {
                     trap_FS_Write("LocationsList2\n", 15, f);
                 } else {

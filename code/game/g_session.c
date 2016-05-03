@@ -35,7 +35,7 @@ static void G_WriteClientSessionData(gclient_t *client) {
         client->sess.losses
     );
 
-    var = va("session%i", client - level.clients);
+    var = va("session%li", client - level.clients);
 
     trap_Cvar_Set(var, s);
 }
@@ -45,7 +45,7 @@ void G_ReadSessionData(gclient_t *client) {
     const char	*var;
     int team, spec;
 
-    var = va("session%i", client - level.clients);
+    var = va("session%li", client - level.clients);
     trap_Cvar_VariableStringBuffer(var, s, sizeof(s));
 
     sscanf(s, "%i %i %i %i %i %i %i",

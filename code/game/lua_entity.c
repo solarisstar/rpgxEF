@@ -717,7 +717,7 @@ static int Entity_ToString(lua_State * L)
     }
 
     gent = lent->e;
-    Com_sprintf(buf, sizeof(buf), "entity: class=%s name=%s id=%i pointer=%p\n", gent->classname, gent->targetname, gent - g_entities, gent);
+    Com_sprintf(buf, sizeof(buf), "entity: class=%s name=%s id=%li pointer=%p\n", gent->classname, gent->targetname, gent - g_entities, gent);
     lua_pushstring(L, buf);
 
     LUA_DEBUG("END - entity.ToString");

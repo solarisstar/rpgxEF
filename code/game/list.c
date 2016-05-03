@@ -99,12 +99,18 @@ static int list_add_impl(list_p list, void* data, dataType_t type, size_t size, 
 
 on_error:
     if (node){
+<<<<<<< HEAD
         if (node->cont){
             free(node->cont);
         }
         free(node);
         return 0;
     }
+=======
+        free(node);
+    }
+    return 0;
+>>>>>>> chore/build_warnings
 }
 
 
@@ -168,7 +174,7 @@ static int list_prepend(list_p list, void* data, dataType_t type, size_t size) {
  *	\return Count of elements in the list
  */
 static int list_add_ptr(list_p list, void* data, dataType_t type, char end) {
-    list_add_impl(list, data, type, 0, end);
+    return list_add_impl(list, data, type, 0, end);
 }
 
 /**

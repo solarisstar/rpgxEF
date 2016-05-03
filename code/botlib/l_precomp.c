@@ -304,7 +304,6 @@ void PC_FreeToken(token_t *token)
 int PC_ReadSourceToken(source_t *source, token_t *token)
 {
     token_t *t;
-    script_t *script;
     int type, skip;
 
     //if there's no token already available
@@ -326,7 +325,7 @@ int PC_ReadSourceToken(source_t *source, token_t *token)
         //if this was the initial script
         if (!source->scriptstack->next) return qfalse;
         //remove the script and return to the last one
-        script = source->scriptstack;
+        script_t *script = source->scriptstack;
         source->scriptstack = source->scriptstack->next;
         FreeScript(script);
     } //end while

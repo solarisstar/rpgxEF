@@ -749,12 +749,12 @@ static void randomSkin(const char* race, char* model, int current_team, int clie
 
     skinsForRace = (char **)malloc(MAX_SKINS_FOR_RACE * 128 * sizeof(char));
     if (!skinsForRace) {
-        G_Error("Was unable to allocate %i bytes.\n", MAX_SKINS_FOR_RACE * 128 * sizeof(char));
+        G_Error("Was unable to allocate %lu bytes.\n", MAX_SKINS_FOR_RACE * 128 * sizeof(char));
         goto end;
     }
     skinNamesAlreadyUsed = (char **)malloc(16 * 128 * sizeof(char));
     if (!skinNamesAlreadyUsed) {
-        G_Error("Was unable to allocate %i bytes.\n", 16 * 128 * sizeof(char));
+        G_Error("Was unable to allocate %lu bytes.\n", 16 * 128 * sizeof(char));
         goto end;
     }
 
@@ -790,7 +790,7 @@ static void randomSkin(const char* race, char* model, int current_team, int clie
             {
                 userinfo = (char *)malloc(MAX_INFO_STRING * sizeof(char));
                 if (!userinfo) {
-                    G_Error("Was unable to allocate %i bytes.\n", MAX_INFO_STRING * sizeof(char));
+                    G_Error("Was unable to allocate %lu bytes.\n", MAX_INFO_STRING * sizeof(char));
                     goto end;
                 }
                 // so what's this clients model then?

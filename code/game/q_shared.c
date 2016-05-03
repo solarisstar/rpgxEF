@@ -922,7 +922,7 @@ void QDECL Com_sprintf(char *dest, int size, const char *fmt, ...) {
 
     bigbuffer = (char *)malloc(sizeof(char)*(size + 1));
     if (!bigbuffer) {
-        Com_Printf("Com_sprintf: could not allocate %u bytes for BigBuffer\n", sizeof(char)*(size + 1));
+        Com_Printf("Com_sprintf: could not allocate %lu bytes for BigBuffer\n", sizeof(char)*(size + 1));
         return;
     }
 
