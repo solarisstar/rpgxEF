@@ -2847,21 +2847,16 @@ static void Cmd_Rank_f(gentity_t *ent)
         if (!Q_stricmp(ArgStr, g_rankNames[i].consoleName)) {
             newScore = i;
 
-            if (newScore == OldScore)
+            if (newScore == OldScore){
                 return;
+            }
 
-            if (!MaxRankHit)
-            {
+            if (!MaxRankHit) {
                 SetScore(ent, newScore);
                 trap_SendServerCommand(ent - g_entities, va("prank %s", g_rankNames[i].consoleName));
                 break;
-            } else
-            {
-                if (!MaxRankHit)
-                    trap_SendServerCommand(ent - g_entities, va("print \"This rank is disabled\n\""));
-                else
-                    trap_SendServerCommand(ent - g_entities, va("print \"You cannot set your rank that high on this server.\n\""));
-
+            } else {
+                trap_SendServerCommand(ent - g_entities, va("print \"You cannot set your rank that high on this server.\n\""));
                 return;
             }
         }

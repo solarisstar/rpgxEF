@@ -811,7 +811,7 @@ CG_AddWeaponWithPowerups
 static void CG_AddWeaponWithPowerups(refEntity_t *gun, int powerups, beamData_t* beamData, int cloakTime, int decloakTime) //
 {
     // add powerup effects
-    if (powerups & (1 << PW_INVIS) || (!(powerups & (1 << PW_INVIS)) && decloakTime > 0)) {
+    if (powerups & (1 << PW_INVIS) || && decloakTime > 0)) {
         //TiM - modified so it persists during the first bit of cloaking / last of decloaking
         if ((cloakTime <= 0 && decloakTime <= 0) || (decloakTime > 0 && cg.time < (decloakTime + Q_FLASH_TIME * 0.5))
             || (cloakTime > 0 && cg.time > (cloakTime + Q_FLASH_TIME * 0.5)))
@@ -2404,7 +2404,7 @@ void CG_SurfaceExplosion(vec3_t origin, vec3_t normal, float radius, float shake
     for (i = 0; i < NUM_EXPLOSIONS - 1; i++)
     {
         VectorSet(new_org, (origin[0] + (32 + (crandom() * 8))*crandom()), (origin[1] + (32 + (crandom() * 8))*crandom()), (origin[2] + (32 + (crandom() * 8))*crandom()));
-        le = CG_MakeExplosion2(new_org, direction, cgs.media.explosionModel, 5, cgs.media.surfaceExplosionShader,
+        CG_MakeExplosion2(new_org, direction, cgs.media.explosionModel, 5, cgs.media.surfaceExplosionShader,
             300 + (rand() & 99), qfalse, radius * 0.05f + (crandom() *0.3f), LEF_NONE);
     }
 

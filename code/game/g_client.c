@@ -750,12 +750,12 @@ static void randomSkin(const char* race, char* model, int current_team, int clie
     skinsForRace = (char **)malloc(MAX_SKINS_FOR_RACE * 128 * sizeof(char));
     if (!skinsForRace) {
         G_Error("Was unable to allocate %i bytes.\n", MAX_SKINS_FOR_RACE * 128 * sizeof(char));
-        return;
+        goto end;
     }
     skinNamesAlreadyUsed = (char **)malloc(16 * 128 * sizeof(char));
     if (!skinNamesAlreadyUsed) {
         G_Error("Was unable to allocate %i bytes.\n", 16 * 128 * sizeof(char));
-        return;
+        goto end;
     }
 
     memset(skinsForRace, 0, MAX_SKINS_FOR_RACE * 128 * sizeof(char));
@@ -791,7 +791,7 @@ static void randomSkin(const char* race, char* model, int current_team, int clie
                 userinfo = (char *)malloc(MAX_INFO_STRING * sizeof(char));
                 if (!userinfo) {
                     G_Error("Was unable to allocate %i bytes.\n", MAX_INFO_STRING * sizeof(char));
-                    return;
+                    goto end;
                 }
                 // so what's this clients model then?
                 trap_GetUserinfo(i, userinfo, MAX_INFO_STRING * sizeof(char));
@@ -827,9 +827,7 @@ static void randomSkin(const char* race, char* model, int current_team, int clie
             temp = rand() % current_skin_count;
             Q_strncpyz(model, skinNamesAlreadyUsed[temp], MAX_QPATH);
             ForceClientSkin(model, "");
-            free(skinNamesAlreadyUsed);
-            free(skinsForRace);
-            return;
+            goto end;
         }
     }
 
@@ -853,8 +851,15 @@ static void randomSkin(const char* race, char* model, int current_team, int clie
         model[0] = 0;
     }
 
-    free(skinsForRace);
-    free(skinNamesAlreadyUsed);
+
+end:
+    if (skinsForRace) {
+        free(skinsForRace);
+    }
+    if (skinNamesAlreadyUsed) {
+        free(skinNamesAlreadyUsed);
+    }
+    return;
 }
 
 /*
@@ -1687,13 +1692,13 @@ void G_Client_Begin(int clientNum, qboolean careAboutWarmup, qboolean isBot, qbo
         unsigned long	securityID;
 
         trap_GetUserinfo(clientNum, userInfo, sizeof(userInfo));
-        if (!userInfo[0])
+        if (!userInfo[0]) {
             return;
+        }
 
         securityID = (unsigned)atoul(Info_ValueForKey(userInfo, "sv_securityCode"));
 
-        if (securityID <= 0 || securityID >= 0xffffffff)
-        {
+        if (securityID >= 0xffffffff) {
             trap_SendServerCommand(clientNum, va("configID %s", ent->client->pers.ip));
         }
     }

@@ -2818,15 +2818,14 @@ int PC_ExpectTokenType(source_t *source, int type, int subtype, token_t *token)
 {
     char str[MAX_TOKEN];
 
-    if (!PC_ReadToken(source, token))
-    {
+    if (!PC_ReadToken(source, token)) {
         SourceError(source, "couldn't read expected token");
         return qfalse;
-    } //end if
+    }
 
     if (token->type != type)
     {
-        strcpy(str, "");
+        // strcpy(str, "");
         if (type == TT_STRING) strcpy(str, "string");
         if (type == TT_LITERAL) strcpy(str, "literal");
         if (type == TT_NUMBER) strcpy(str, "number");

@@ -71,13 +71,13 @@ static int list_add(list_p list, void* data, dataType_t type, size_t size, char 
 
     node->cont = (container_p)malloc(sizeof(container));
     if (node->cont == NULL) {
-        return 0;
+        goto on_error;
     }
 
     node->cont->type = type;
     node->cont->data = malloc(size);
     if (node->cont->data == NULL) {
-        return 0;
+        goto on_error;
     }
     memcpy(node->cont->data, data, size);
     node->cont->pointer = 0;
@@ -87,11 +87,6 @@ static int list_add(list_p list, void* data, dataType_t type, size_t size, char 
         node->prev = NULL;
         node->next = NULL;
         list->first = node;
-        list->last = node;
-    } else if (end == LIST_BACK) {
-        list->last->next = node;
-        node->prev = list->last;
-        node->next = NULL;
         list->last = node;
     } else if (end == LIST_FRONT) {
         list->first->prev = node;
@@ -107,6 +102,12 @@ static int list_add(list_p list, void* data, dataType_t type, size_t size, char 
     list->length++;
 
     return list->length;
+
+on_error:
+    if (node) {
+        free(node);
+    }
+    return 0;
 }
 
 /**
@@ -156,7 +157,7 @@ static int list_add_ptr(list_p list, void* data, dataType_t type, char end) {
 
     node->cont = (container_p)malloc(sizeof(container));
     if (node->cont == NULL) {
-        return 0;
+        goto on_error;
     }
 
     node->cont->type = type;
@@ -168,11 +169,6 @@ static int list_add_ptr(list_p list, void* data, dataType_t type, char end) {
         node->prev = NULL;
         node->next = NULL;
         list->first = node;
-        list->last = node;
-    } else if (end == LIST_BACK) {
-        list->last->next = node;
-        node->prev = list->last;
-        node->next = NULL;
         list->last = node;
     } else if (end == LIST_FRONT) {
         list->first->prev = node;
@@ -188,6 +184,12 @@ static int list_add_ptr(list_p list, void* data, dataType_t type, char end) {
     list->length++;
 
     return list->length;
+
+on_error:
+    if (node){
+        free(node);
+    }
+    return 0;
 }
 
 /**

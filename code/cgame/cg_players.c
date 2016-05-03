@@ -3521,7 +3521,7 @@ void CG_AddRefEntityWithPowerups(refEntity_t *ent, int powerups, int eFlags, bea
         ent->customShader = cgs.media.borgFullBodyShieldShader;
         trap_R_AddRefEntityToScene(ent);
         return;
-    } else if (powerups & (1 << PW_INVIS) || (!(powerups & (1 << PW_INVIS)) && decloakTime > 0))
+    } else if (powerups & (1 << PW_INVIS) || && decloakTime > 0))
     {
         if ((cloakTime <= 0 && decloakTime <= 0) || (decloakTime > 0 && cg.time < (decloakTime + Q_FLASH_TIME * 0.5))
             || (cloakTime > 0 && cg.time > (cloakTime + Q_FLASH_TIME * 0.5)))
