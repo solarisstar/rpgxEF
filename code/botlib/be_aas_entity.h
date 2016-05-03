@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *****************************************************************************/
 
 #ifdef AASINTERN
-//invalidates all entity infos
+ //invalidates all entity infos
 void AAS_InvalidateEntities(void);
 //unlink not updated entities
 void AAS_UnlinkInvalidEntities(void);
@@ -60,4 +60,3 @@ void AAS_EntityOrigin(int entnum, vec3_t origin);
 int AAS_EntityType(int entnum);
 //returns the model index of the entity
 int AAS_EntityModelindex(int entnum);
-

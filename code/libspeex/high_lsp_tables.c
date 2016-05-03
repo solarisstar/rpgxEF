@@ -1,13 +1,13 @@
-/* Copyright (C) 2002 Jean-Marc Valin 
+/* Copyright (C) 2002 Jean-Marc Valin
    File: high_lsp_tables.c
    Codebooks for high-band LSPs in SB-CELP mode
-  
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are
    met:
 
    1. Redistributions of source code must retain the above copyright notice,
-   this list of conditions and the following disclaimer.  
+   this list of conditions and the following disclaimer.
 
    2. Redistributions in binary form must reproduce the above copyright
    notice, this list of conditions and the following disclaimer in the
@@ -28,8 +28,8 @@
    ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
    POSSIBILITY OF SUCH DAMAGE.
 */
- 
-const signed char high_lsp_cdbk[512]={
+
+const signed char high_lsp_cdbk[512] = {
 39,12,-14,-20,-29,-61,-67,-76,
 -32,-71,-67,68,77,46,34,5,
 -13,-48,-46,-72,-81,-84,-60,-58,
@@ -93,10 +93,9 @@ const signed char high_lsp_cdbk[512]={
 -9,-35,-27,-38,7,10,4,-9,
 -42,-85,-102,-127,52,44,28,10,
 -47,-61,-40,-39,-17,-1,-10,-33,
--42,-74,-48,21,-4,70,52,10};
+-42,-74,-48,21,-4,70,52,10 };
 
-
-const signed char high_lsp_cdbk2[512]={
+const signed char high_lsp_cdbk2[512] = {
 -36,-62,6,-9,-10,-14,-56,23,
 1,-26,23,-48,-17,12,8,-7,
 23,29,-36,-28,-6,-29,-17,-5,
@@ -160,4 +159,4 @@ const signed char high_lsp_cdbk2[512]={
 -28,-37,63,44,41,3,2,14,
 9,-6,75,-8,-7,-12,-15,-12,
 13,9,-4,30,-22,-65,15,0,
--45,4,-4,1,5,22,11,23};
+-45,4,-4,1,5,22,11,23 };

@@ -9,7 +9,6 @@
 // Tab Size:		4 (real tabs)
 //===========================================================================
 
-
 //========================================================
 //========================================================
 //name
@@ -55,7 +54,6 @@
 #define CHARACTERISTIC_AIM_SKILL_STASIS				18	//float [0, 1]
 #define CHARACTERISTIC_AIM_SKILL_GRENADELAUNCHER	19	//float [0, 1]
 #define CHARACTERISTIC_AIM_SKILL_QUANTUM			20	//float [0, 1]
-
 
 //========================================================
 //chat
@@ -122,4 +120,3 @@
 #define CHARACTERISTIC_ALERTNESS					46	//float [0, 1]
 //how much the bot fires it's weapon
 #define CHARACTERISTIC_FIRETHROTTLE					47	//float [0, 1]
-

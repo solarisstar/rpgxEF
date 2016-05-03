@@ -12,7 +12,7 @@ SINGLE PLAYER LEVEL SELECT MENU
 
 #include "ui_local.h"
 //
-//typedef struct 
+//typedef struct
 //{
 //	menuframework_s	menu;
 //	menubitmap_s	mainmenu;
@@ -65,7 +65,7 @@ SINGLE PLAYER LEVEL SELECT MENU
 //
 //#define MAX_LONGNAME		24
 //
-//typedef struct 
+//typedef struct
 //{
 //	menuframework_s	menu;
 //
@@ -116,7 +116,7 @@ SINGLE PLAYER LEVEL SELECT MENU
 ////=========================================================================================
 //// Reset Menu Struct
 ////=========================================================================================
-//typedef struct 
+//typedef struct
 //{
 //	menuframework_s	menu;
 //	menubitmap_s	mainmenu;
@@ -150,25 +150,24 @@ SINGLE PLAYER LEVEL SELECT MENU
 //PlayerIcon
 //=================
 //*/
-void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize ) {
-	char	*skin;
-	char	model[MAX_QPATH];
+void PlayerIcon(const char *modelAndSkin, char *iconName, int iconNameMaxSize) {
+    char	*skin;
+    char	model[MAX_QPATH];
 
-	Q_strncpyz( model, modelAndSkin, sizeof(model));
-	skin = Q_strrchr( model, '/' );
-	if ( skin ) {
-		*skin++ = '\0';
-	}
-	else {
-		skin = "default";
-	}
+    Q_strncpyz(model, modelAndSkin, sizeof(model));
+    skin = Q_strrchr(model, '/');
+    if (skin) {
+        *skin++ = '\0';
+    } else {
+        skin = "default";
+    }
 
-	//TiM - Removed skin and added RPG-X parms
-	Com_sprintf(iconName, iconNameMaxSize, "models/players_rpgx/%s/model_icon.jpg", model );
+    //TiM - Removed skin and added RPG-X parms
+    Com_sprintf(iconName, iconNameMaxSize, "models/players_rpgx/%s/model_icon.jpg", model);
 
-	if( !trap_R_RegisterShaderNoMip( iconName ) && Q_stricmp( skin, "default" ) != 0 ) {
-		Com_sprintf(iconName, iconNameMaxSize, "models/players_rpgx/%s/model_icon.jpg", model );
-	}
+    if (!trap_R_RegisterShaderNoMip(iconName) && Q_stricmp(skin, "default") != 0) {
+        Com_sprintf(iconName, iconNameMaxSize, "models/players_rpgx/%s/model_icon.jpg", model);
+    }
 }
 //
 //
@@ -177,7 +176,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //PlayerIconhandle
 //=================
 //*/
-//static qhandle_t PlayerIconHandle( const char *modelAndSkin ) 
+//static qhandle_t PlayerIconHandle( const char *modelAndSkin )
 //{
 //	char	iconName[MAX_QPATH];
 //
@@ -191,7 +190,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_SetBots
 //=================
 //*/
-//static void UI_SPLevelMenu_SetBots( void ) 
+//static void UI_SPLevelMenu_SetBots( void )
 //{
 //	char	*p;
 //	char	*bot;
@@ -203,7 +202,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	Q_strncpyz( bots, Info_ValueForKey( levelMenuInfo.selectedArenaInfo, "bots" ), sizeof(bots) );
 //
 //	p = &bots[0];
-//	while( *p && levelMenuInfo.numBots < 7 ) 
+//	while( *p && levelMenuInfo.numBots < 7 )
 //	{
 //		//skip spaces
 //		while( *p && *p == ' ' ) {
@@ -217,7 +216,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //		bot = p;
 //
 //		// skip until space of null
-//		while( *p && *p != ' ' ) 
+//		while( *p && *p != ' ' )
 //		{
 //			p++;
 //		}
@@ -226,12 +225,12 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //		}
 //
 //		botInfo = UI_GetBotInfoByName( bot );
-//		if( botInfo ) 
+//		if( botInfo )
 //		{
 //			levelMenuInfo.botPics[levelMenuInfo.numBots] = PlayerIconHandle( Info_ValueForKey( botInfo, "model" ) );
 //			Q_strncpyz( levelMenuInfo.botNames[levelMenuInfo.numBots], Info_ValueForKey( botInfo, "name" ), 10 );
 //		}
-//		else 
+//		else
 //		{
 //			levelMenuInfo.botPics[levelMenuInfo.numBots] = 0;
 //			Q_strncpyz( levelMenuInfo.botNames[levelMenuInfo.numBots], bot, 10 );
@@ -248,7 +247,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //=================
 //*/
 //extern vmCvar_t	ui_language;
-//static void UI_SPLevelMenu_SetMenuArena( int n, int level, const char *arenaInfo ) 
+//static void UI_SPLevelMenu_SetMenuArena( int n, int level, const char *arenaInfo )
 //{
 //	char		map[MAX_QPATH];
 //	char			string[MAX_LONGNAME];
@@ -271,13 +270,13 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //
 //
 //	UI_GetBestScore( level, &levelMenuInfo.levelScores[n], &levelMenuInfo.levelScoresSkill[n] );
-//	if( levelMenuInfo.levelScores[n] > 8 ) 
+//	if( levelMenuInfo.levelScores[n] > 8 )
 //	{
 //		levelMenuInfo.levelScores[n] = 8;
 //	}
 //
 //	strcpy( levelMenuInfo.levelPicNames[n], va( "levelshots/%s.tga", map ) );
-//	if( !trap_R_RegisterShaderNoMip( levelMenuInfo.levelPicNames[n] ) ) 
+//	if( !trap_R_RegisterShaderNoMip( levelMenuInfo.levelPicNames[n] ) )
 //	{
 //		strcpy( levelMenuInfo.levelPicNames[n], ART_MAP_UNKNOWN );
 //	}
@@ -292,29 +291,29 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_SetMenuItems
 //=================
 //*/
-//static void UI_SPLevelMenu_SetMenuItems( void ) 
+//static void UI_SPLevelMenu_SetMenuItems( void )
 //{
 //	int			n,i;
 //	int			level;
 //	const char	*arenaInfo;
 //	char		*type;
 //
-//	if ( selectedArena == -1 ) 
+//	if ( selectedArena == -1 )
 //	{
 //		selectedArena = 0;
 //	}
 //
-////	if( selectedArenaSet == trainingTier || selectedArenaSet == finalTier ) 
+////	if( selectedArenaSet == trainingTier || selectedArenaSet == finalTier )
 ////	{
 ////		selectedArena = 0;
 ////	}
 //
-//	if( selectedArena != -1 ) 
+//	if( selectedArena != -1 )
 //	{
 //		trap_Cvar_SetValue( "ui_spSelection", selectedArenaSet * ARENAS_PER_TIER + selectedArena );
 //	}
 //
-//	if( selectedArenaSet == trainingTier ) 
+//	if( selectedArenaSet == trainingTier )
 //	{
 //		arenaInfo = UI_GetSpecialArenaInfo( "training" );
 //		level = atoi( Info_ValueForKey( arenaInfo, "num" ) );
@@ -336,7 +335,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //		levelMenuInfo.item_maps[2].shader = 0;
 //		levelMenuInfo.item_maps[3].shader = 0;
 //	}
-//	else if( selectedArenaSet == finalTier ) 
+//	else if( selectedArenaSet == finalTier )
 //	{
 //		arenaInfo = UI_GetSpecialArenaInfo( "final" );
 //		level = atoi( Info_ValueForKey( arenaInfo, "num" ) );
@@ -358,7 +357,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //		levelMenuInfo.item_maps[2].shader = 0;
 //		levelMenuInfo.item_maps[3].shader = 0;
 //	}
-//	else 
+//	else
 //	{
 //		Bitmap_Init( &levelMenuInfo.item_maps[0] );
 //		levelMenuInfo.item_maps[0].generic.bottom += 18;
@@ -366,19 +365,19 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //		memset( levelMenuInfo.levelNames,0, sizeof(levelMenuInfo.levelNames));
 //
 //		// Zero out info
-//		for ( n = 0; n < MAX_ITEM_MAPS; n++ ) 
+//		for ( n = 0; n < MAX_ITEM_MAPS; n++ )
 //		{
 //			levelMenuInfo.item_maps[n].generic.flags |= QMF_HIDDEN | QMF_INACTIVE;
 //			levelMenuInfo.levelScores[n] = 0;
 //		}
 //
 //		i = 0;
-//		for ( n = 0; n < MAX_ITEM_MAPS; n++ ) 
+//		for ( n = 0; n < MAX_ITEM_MAPS; n++ )
 //		{
 //			level = selectedArenaSet * ARENAS_PER_TIER + n;
 //			arenaInfo = UI_GetArenaInfoByNumber( level );
 //			type = Info_ValueForKey( arenaInfo, "type" );
-//			if( strstr( type, "single" ) ) 
+//			if( strstr( type, "single" ) )
 //			{
 //				UI_SPLevelMenu_SetMenuArena( n, level, arenaInfo );
 //				i++;
@@ -387,27 +386,27 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //
 //		levelMenuInfo.numMaps = i;
 //
-//		if( selectedArena != -1 ) 
+//		if( selectedArena != -1 )
 //		{
 //			levelMenuInfo.selectedArenaInfo = UI_GetArenaInfoByNumber( selectedArenaSet * ARENAS_PER_TIER + selectedArena );
 //		}
 //	}
 //
 //	// enable/disable arrows when they are valid/invalid
-//	if ( selectedArenaSet == minTier ) 
+//	if ( selectedArenaSet == minTier )
 //	{
 //		levelMenuInfo.item_leftarrow.generic.flags |= ( QMF_INACTIVE | QMF_GRAYED );
 //	}
-//	else 
+//	else
 //	{
 //		levelMenuInfo.item_leftarrow.generic.flags &= ~( QMF_INACTIVE | QMF_GRAYED );
 //	}
 //
-//	if ( selectedArenaSet >= maxTier ) 
+//	if ( selectedArenaSet >= maxTier )
 //	{
 //		levelMenuInfo.item_rightarrow.generic.flags |= ( QMF_INACTIVE | QMF_GRAYED );
 //	}
-//	else 
+//	else
 //	{
 //		levelMenuInfo.item_rightarrow.generic.flags &= ~( QMF_INACTIVE | QMF_GRAYED );
 //	}
@@ -422,9 +421,9 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_ResetAction
 //=================
 //*/
-//static void UI_SPLevelMenu_ResetAction( qboolean result ) 
+//static void UI_SPLevelMenu_ResetAction( qboolean result )
 //{
-//	if( !result ) 
+//	if( !result )
 //	{
 //		return;
 //	}
@@ -445,7 +444,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //*/
 //static void UI_SPLevelMenu_ResetEvent( void* ptr, int event )
 //{
-//	if (event != QM_ACTIVATED) 
+//	if (event != QM_ACTIVATED)
 //	{
 //		return;
 //	}
@@ -460,9 +459,9 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_LevelEvent
 //=================
 //*/
-//static void UI_SPLevelMenu_LevelEvent( void* ptr, int notification ) 
+//static void UI_SPLevelMenu_LevelEvent( void* ptr, int notification )
 //{
-//	if (notification != QM_ACTIVATED) 
+//	if (notification != QM_ACTIVATED)
 //	{
 //		return;
 //	}
@@ -480,14 +479,14 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_LeftArrowEvent
 //=================
 //*/
-//static void UI_SPLevelMenu_LeftArrowEvent( void* ptr, int notification ) 
+//static void UI_SPLevelMenu_LeftArrowEvent( void* ptr, int notification )
 //{
-//	if (notification != QM_ACTIVATED) 
+//	if (notification != QM_ACTIVATED)
 //	{
 //		return;
 //	}
 //
-//	if ( selectedArenaSet == minTier ) 
+//	if ( selectedArenaSet == minTier )
 //	{
 //		return;
 //	}
@@ -503,14 +502,14 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_RightArrowEvent
 //=================
 //*/
-//static void UI_SPLevelMenu_RightArrowEvent( void* ptr, int notification ) 
+//static void UI_SPLevelMenu_RightArrowEvent( void* ptr, int notification )
 //{
-//	if (notification != QM_ACTIVATED) 
+//	if (notification != QM_ACTIVATED)
 //	{
 //		return;
 //	}
 //
-//	if ( selectedArenaSet == maxTier ) 
+//	if ( selectedArenaSet == maxTier )
 //	{
 //		return;
 //	}
@@ -526,9 +525,9 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_PlayerEvent
 //=================
 //*/
-//static void UI_SPLevelMenu_PlayerEvent( void* ptr, int notification ) 
+//static void UI_SPLevelMenu_PlayerEvent( void* ptr, int notification )
 //{
-//	if (notification != QM_ACTIVATED) 
+//	if (notification != QM_ACTIVATED)
 //	{
 //		return;
 //	}
@@ -541,9 +540,9 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_CreateEvent
 //=================
 //*/
-//static void UI_SPLevelMenu_CreateEvent( void* ptr, int notification ) 
+//static void UI_SPLevelMenu_CreateEvent( void* ptr, int notification )
 //{
-//	if (notification != QM_ACTIVATED) 
+//	if (notification != QM_ACTIVATED)
 //	{
 //		return;
 //	}
@@ -556,9 +555,9 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_AdvancedEvent
 //=================
 //*/
-//static void UI_SPLevelMenu_AdvancedEvent( void* ptr, int notification ) 
+//static void UI_SPLevelMenu_AdvancedEvent( void* ptr, int notification )
 //{
-//	if (notification != QM_ACTIVATED) 
+//	if (notification != QM_ACTIVATED)
 //	{
 //		return;
 //	}
@@ -577,11 +576,11 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_AwardEvent
 //=================
 //*/
-//static void UI_SPLevelMenu_AwardEvent( void* ptr, int notification ) 
+//static void UI_SPLevelMenu_AwardEvent( void* ptr, int notification )
 //{
 //	int		n;
 //
-//	if (notification != QM_ACTIVATED) 
+//	if (notification != QM_ACTIVATED)
 //	{
 //		return;
 //	}
@@ -596,14 +595,14 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_NextEvent
 //=================
 //*/
-//static void UI_SPLevelMenu_NextEvent( void* ptr, int notification ) 
+//static void UI_SPLevelMenu_NextEvent( void* ptr, int notification )
 //{
-//	if (notification != QM_ACTIVATED) 
+//	if (notification != QM_ACTIVATED)
 //	{
 //		return;
 //	}
 //
-//	if ( selectedArena == -1 ) 
+//	if ( selectedArena == -1 )
 //	{
 //		selectedArena = 0;
 //	}
@@ -617,14 +616,14 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_BackEvent
 //=================
 //*/
-//static void UI_SPLevelMenu_BackEvent( void* ptr, int notification ) 
+//static void UI_SPLevelMenu_BackEvent( void* ptr, int notification )
 //{
-//	if (notification != QM_ACTIVATED) 
+//	if (notification != QM_ACTIVATED)
 //	{
 //		return;
 //	}
 //
-//	if ( selectedArena == -1 ) 
+//	if ( selectedArena == -1 )
 //	{
 //		selectedArena = 0;
 //	}
@@ -650,7 +649,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //#define LEVEL_DESC_LEFT_MARGIN		332
 //#define MAP_WIDTH 118
 //
-//static void UI_SPLevelMenu_MenuDraw( void ) 
+//static void UI_SPLevelMenu_MenuDraw( void )
 //{
 //	int				n;//, i;
 //	int				x, y;
@@ -661,7 +660,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	char			buf[MAX_INFO_VALUE];
 //	char			string[64];
 //
-//	if(	levelMenuInfo.reinit ) 
+//	if(	levelMenuInfo.reinit )
 //	{
 //		UI_PopMenu();
 //		UI_SPLevelMenu();
@@ -677,14 +676,14 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	trap_R_SetColor( colorTable[CT_LTPURPLE3]);
 //	UI_DrawHandlePic( 84,  50,  64,  -32, levelMenuInfo.corner_ll_18_34);	// Corner at bottom
 //	UI_DrawHandlePic( 84, 190,  64,  32, levelMenuInfo.corner_ll_18_34);	// Corner at bottom
-//	UI_DrawHandlePic( 108, 60, 506,  18, uis.whiteShader);	// Top line 
+//	UI_DrawHandlePic( 108, 60, 506,  18, uis.whiteShader);	// Top line
 //	UI_DrawHandlePic( 84,  85,  34, 102, uis.whiteShader);	// Left side of frame
 //
 //	UI_DrawHandlePic(  93, 194,  34,  18, uis.whiteShader);	// Bottom line after corner
-//	UI_DrawHandlePic( 130, 194,  26,  18, uis.whiteShader);	// Line under left arrow 
+//	UI_DrawHandlePic( 130, 194,  26,  18, uis.whiteShader);	// Line under left arrow
 //	UI_DrawHandlePic( 159, 194, 391,  18, uis.whiteShader);	// Line between next and previous buttons
-//	UI_DrawHandlePic( 553, 194,  26,  18, uis.whiteShader);	// Line under right arrow 
-//	UI_DrawHandlePic( 582, 194,  30,  18, uis.whiteShader);	// Line after right arrow 
+//	UI_DrawHandlePic( 553, 194,  26,  18, uis.whiteShader);	// Line under right arrow
+//	UI_DrawHandlePic( 582, 194,  30,  18, uis.whiteShader);	// Line after right arrow
 //
 //	UI_DrawProportionalString(  133,  61, va( (char*)menu_normal_text[MNT_LEVELS],
 //		((selectedArenaSet*ARENAS_PER_TIER)+1),
@@ -721,7 +720,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //
 //	// check for model changes
 //	trap_Cvar_VariableStringBuffer( "model", buf, sizeof(buf) );
-//	if( Q_stricmp( buf, levelMenuInfo.playerModel ) != 0 ) 
+//	if( Q_stricmp( buf, levelMenuInfo.playerModel ) != 0 )
 //	{
 //		Q_strncpyz( levelMenuInfo.playerModel, buf, sizeof(levelMenuInfo.playerModel) );
 //		PlayerIcon( levelMenuInfo.playerModel, levelMenuInfo.playerPicName, sizeof(levelMenuInfo.playerPicName) );
@@ -734,27 +733,27 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	// draw player award levels
 ///*	y = AWARDS_Y;
 //	i = 0;
-//	for( n = 0; n < AWARD_MAX; n++ ) 
+//	for( n = 0; n < AWARD_MAX; n++ )
 //	{
 //		level = levelMenuInfo.awardLevels[n];
-//		if( level > 0 ) 
+//		if( level > 0 )
 //		{
 //			x = 385 + (i * 38);
 //			i++;
 //
-//			if( level == 1 ) 
+//			if( level == 1 )
 //			{
 //				continue;
 //			}
 //
-//			if( level >= 1000000 ) 
+//			if( level >= 1000000 )
 //			{
 //				Com_sprintf( string, sizeof(string), "%im", level / 1000000 );
 //			}
 //			else if( level >= 1000 ) {
 //				Com_sprintf( string, sizeof(string), "%ik", level / 1000 );
 //			}
-//			else 
+//			else
 //			{
 //				Com_sprintf( string, sizeof(string), "%i", level );
 //			}
@@ -764,7 +763,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	}
 //*/
 //	// Print black rectangle below map picture
-//	for ( n = 0; n < levelMenuInfo.numMaps; n++ ) 
+//	for ( n = 0; n < levelMenuInfo.numMaps; n++ )
 //	{
 //		x = levelMenuInfo.item_maps[n].generic.x;
 //		y = levelMenuInfo.item_maps[n].generic.y;
@@ -774,7 +773,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	// show levelshots for levels of current tier
 //	Vector4Copy( color_white, color );
 //	color[3] = 0.5+0.5*sin(uis.realtime/PULSE_DIVISOR);
-//	for ( n = 0; n < levelMenuInfo.numMaps; n++ ) 
+//	for ( n = 0; n < levelMenuInfo.numMaps; n++ )
 //	{
 //		x = levelMenuInfo.item_maps[n].generic.x;
 //		y = levelMenuInfo.item_maps[n].generic.y;
@@ -782,26 +781,26 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //		// Map name below picture
 //		UI_DrawProportionalString( x + (MAP_WIDTH/2), y + 90, levelMenuInfo.levelLongNames[n], UI_CENTER|UI_TINYFONT, colorTable[CT_WHITE] );
 //
-//		if( levelMenuInfo.levelScores[n] == 1 ) 
+//		if( levelMenuInfo.levelScores[n] == 1 )
 //		{
-//			UI_DrawHandlePic( x, y, 48, 48, levelMenuInfo.levelCompletePic[levelMenuInfo.levelScoresSkill[n] - 1] ); 
+//			UI_DrawHandlePic( x, y, 48, 48, levelMenuInfo.levelCompletePic[levelMenuInfo.levelScoresSkill[n] - 1] );
 //		}
 //
-//		if ( n == selectedArena ) 
+//		if ( n == selectedArena )
 //		{
-//			if( Menu_ItemAtCursor( &levelMenuInfo.menu ) == &levelMenuInfo.item_maps[n] ) 
+//			if( Menu_ItemAtCursor( &levelMenuInfo.menu ) == &levelMenuInfo.item_maps[n] )
 //			{
 //				trap_R_SetColor( color );
 //			}
 //
-//			UI_DrawHandlePic( x-1, y-1, MAP_WIDTH, 118 - 14, levelMenuInfo.levelSelectedPic ); 
+//			UI_DrawHandlePic( x-1, y-1, MAP_WIDTH, 118 - 14, levelMenuInfo.levelSelectedPic );
 //
 //			trap_R_SetColor( NULL );
 //		}
-//		else if( Menu_ItemAtCursor( &levelMenuInfo.menu ) == &levelMenuInfo.item_maps[n] ) 
+//		else if( Menu_ItemAtCursor( &levelMenuInfo.menu ) == &levelMenuInfo.item_maps[n] )
 //		{
 //			trap_R_SetColor( color );
-//			UI_DrawHandlePic( x-1, y-1, MAP_WIDTH, 118 - 14, levelMenuInfo.levelSelectedPic ); 
+//			UI_DrawHandlePic( x-1, y-1, MAP_WIDTH, 118 - 14, levelMenuInfo.levelSelectedPic );
 //			trap_R_SetColor( NULL );
 //		}
 //	}
@@ -819,7 +818,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	y = 242;
 //	pad = 64 + 3;
 //	x = 84 - pad;
-//	for( n = 0; n < levelMenuInfo.numBots; n++ ) 
+//	for( n = 0; n < levelMenuInfo.numBots; n++ )
 //	{
 //		if (n == 4)	//	Next line of bad guys
 //		{
@@ -828,11 +827,11 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //		}
 //
 //		x += pad;
-//		if( levelMenuInfo.botPics[n] ) 
+//		if( levelMenuInfo.botPics[n] )
 //		{
 //			UI_DrawHandlePic( x, y, 64, 64, levelMenuInfo.botPics[n]);
 //		}
-//		else 
+//		else
 //		{
 //			UI_FillRect( x, y, 64, 64, colorTable[CT_BLACK] );
 //			UI_DrawProportionalString( x+22, y+18, "?", UI_BIGFONT, color_orange );
@@ -845,27 +844,27 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //
 //	// Left rounded ends for buttons
 //	trap_R_SetColor( colorTable[levelMenuInfo.mainmenu.color]);
-//	UI_DrawHandlePic(110 - 14, levelMenuInfo.mainmenu.generic.y, 
+//	UI_DrawHandlePic(110 - 14, levelMenuInfo.mainmenu.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, uis.graphicButtonLeftEnd);
 //
 //	trap_R_SetColor( colorTable[levelMenuInfo.back.color]);
-//	UI_DrawHandlePic(110 - 14, levelMenuInfo.back.generic.y, 
+//	UI_DrawHandlePic(110 - 14, levelMenuInfo.back.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, uis.graphicButtonLeftEnd);
 //
 //	trap_R_SetColor( colorTable[levelMenuInfo.item_reset.color]);
-//	UI_DrawHandlePic(levelMenuInfo.item_reset.generic.x - 14, levelMenuInfo.item_reset.generic.y, 
+//	UI_DrawHandlePic(levelMenuInfo.item_reset.generic.x - 14, levelMenuInfo.item_reset.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, uis.graphicButtonLeftEnd);
 //
 //	trap_R_SetColor( colorTable[levelMenuInfo.playerinfo.color]);
-//	UI_DrawHandlePic(levelMenuInfo.playerinfo.generic.x - 14, levelMenuInfo.playerinfo.generic.y, 
+//	UI_DrawHandlePic(levelMenuInfo.playerinfo.generic.x - 14, levelMenuInfo.playerinfo.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, uis.graphicButtonLeftEnd);
 //
 //	trap_R_SetColor( colorTable[levelMenuInfo.create.color]);
-//	UI_DrawHandlePic(levelMenuInfo.create.generic.x - 14, levelMenuInfo.create.generic.y, 
+//	UI_DrawHandlePic(levelMenuInfo.create.generic.x - 14, levelMenuInfo.create.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, uis.graphicButtonLeftEnd);
 //
 //	trap_R_SetColor( colorTable[levelMenuInfo.advanced.color]);
-//	UI_DrawHandlePic(levelMenuInfo.advanced.generic.x - 14, levelMenuInfo.advanced.generic.y, 
+//	UI_DrawHandlePic(levelMenuInfo.advanced.generic.x - 14, levelMenuInfo.advanced.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, uis.graphicButtonLeftEnd);
 //
 //
@@ -877,13 +876,13 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_Cache
 //=================
 //*/
-//void UI_SPLevelMenu_Cache( void ) 
+//void UI_SPLevelMenu_Cache( void )
 //{
 //	int				n;
 //
 //	trap_R_RegisterShaderNoMip( ART_MAP_UNKNOWN );
 //
-//	for( n = 0; n < AWARD_MAX; n++ ) 
+//	for( n = 0; n < AWARD_MAX; n++ )
 //	{
 //		trap_R_RegisterShaderNoMip( ui_medalPicNames[n] );
 //		levelMenuInfo.awardSounds[n] = trap_S_RegisterSound( ui_medalSounds[n] );
@@ -910,7 +909,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_Init
 //=================
 //*/
-//static void UI_SPLevelMenu_Init( void ) 
+//static void UI_SPLevelMenu_Init( void )
 //{
 //	int		skill;
 //	int		n;
@@ -922,7 +921,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //
 //	// What skill level are we playing at??
 //	skill = (int)trap_Cvar_VariableValue( "g_spSkill" );
-//	if( skill < 1 || skill > 5 ) 
+//	if( skill < 1 || skill > 5 )
 //	{
 //		trap_Cvar_Set( "g_spSkill", "2" );
 //		skill = 2;
@@ -941,7 +940,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //
 //	UI_SPLevelMenu_Cache();
 //
-//	levelMenuInfo.mainmenu.generic.type				= MTYPE_BITMAP;      
+//	levelMenuInfo.mainmenu.generic.type				= MTYPE_BITMAP;
 //	levelMenuInfo.mainmenu.generic.flags			= QMF_HIGHLIGHT_IF_FOCUS;
 //	levelMenuInfo.mainmenu.generic.x				= 110;
 //	levelMenuInfo.mainmenu.generic.y				= 391;
@@ -958,7 +957,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	levelMenuInfo.mainmenu.textcolor				= CT_BLACK;
 //	levelMenuInfo.mainmenu.textcolor2				= CT_WHITE;
 //
-//	levelMenuInfo.back.generic.type				= MTYPE_BITMAP;      
+//	levelMenuInfo.back.generic.type				= MTYPE_BITMAP;
 //	levelMenuInfo.back.generic.flags			= QMF_HIGHLIGHT_IF_FOCUS;
 //	levelMenuInfo.back.generic.x				= 110;
 //	levelMenuInfo.back.generic.y				= 415;
@@ -1106,7 +1105,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	levelMenuInfo.playerinfo.textcolor2				= CT_WHITE;
 //
 //
-//	for( n = 0; n < AWARD_MAX; n++ ) 
+//	for( n = 0; n < AWARD_MAX; n++ )
 //	{
 //		levelMenuInfo.awardLevels[n] = UI_GetAwardLevel( n );
 //	}
@@ -1114,9 +1113,9 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //
 //	y = AWARDS_Y;
 //	count = 0;
-//	for( n = 0; n < AWARD_MAX; n++ ) 
+//	for( n = 0; n < AWARD_MAX; n++ )
 //	{
-//		if( levelMenuInfo.awardLevels[n] ) 
+//		if( levelMenuInfo.awardLevels[n] )
 //		{
 //			x = 385 + (count * 38);
 //
@@ -1207,7 +1206,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //
 //	Menu_AddItem( &levelMenuInfo.menu, &levelMenuInfo.item_player );
 //
-////	for( n = 0; n < count; n++ ) 
+////	for( n = 0; n < count; n++ )
 ////	{
 ////		Menu_AddItem( &levelMenuInfo.menu, &levelMenuInfo.item_awards[n] );
 ////	}
@@ -1220,13 +1219,13 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	Menu_AddItem( &levelMenuInfo.menu, &levelMenuInfo.item_null );
 //
 //	trap_Cvar_VariableStringBuffer( "ui_spSelection", buf, sizeof(buf) );
-//	if( *buf ) 
+//	if( *buf )
 //	{
 //		n = atoi( buf );
 //		selectedArenaSet = n / ARENAS_PER_TIER;
 //		selectedArena = n % ARENAS_PER_TIER;
 //	}
-//	else 
+//	else
 //	{
 //		selectedArenaSet = currentSet;
 //		selectedArena = currentGame;
@@ -1241,7 +1240,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu
 //=================
 //*/
-//void UI_SPLevelMenu( void ) 
+//void UI_SPLevelMenu( void )
 //{
 //	int			level;
 //	int			trainingLevel;
@@ -1249,12 +1248,12 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //
 //	trainingTier = -1;
 //	arenaInfo = UI_GetSpecialArenaInfo( "training" );
-//	if( arenaInfo ) 
+//	if( arenaInfo )
 //	{
 //		minTier = trainingTier;
 //		trainingLevel = atoi( Info_ValueForKey( arenaInfo, "num" ) );
 //	}
-//	else 
+//	else
 //	{
 //		minTier = 0;
 //		trainingLevel = -2;
@@ -1265,10 +1264,10 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	if( arenaInfo ) {
 //		maxTier = finalTier;
 //	}
-//	else 
+//	else
 //	{
 //		maxTier = finalTier - 1;
-//		if( maxTier < minTier ) 
+//		if( maxTier < minTier )
 //		{
 //			maxTier = minTier;
 //		}
@@ -1278,13 +1277,13 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //
 //	if ( level == -1 ) {
 //		level = UI_GetNumSPArenas() - 1;
-//		if( maxTier == finalTier ) 
+//		if( maxTier == finalTier )
 //		{
 //			level++;
 //		}
 //	}
 //
-//	if( level == trainingLevel ) 
+//	if( level == trainingLevel )
 //	{
 //		currentSet = -1;
 //		currentGame = 0;
@@ -1306,7 +1305,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_f
 //=================
 //*/
-//void UI_SPLevelMenu_f( void ) 
+//void UI_SPLevelMenu_f( void )
 //{
 //	trap_Key_SetCatcher( KEYCATCH_UI );
 //	uis.menusp = 0;
@@ -1320,7 +1319,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_SPLevelMenu_ReInit
 //=================
 //*/
-//void UI_SPLevelMenu_ReInit( void ) 
+//void UI_SPLevelMenu_ReInit( void )
 //{
 //	levelMenuInfo.reinit = qtrue;
 //}
@@ -1359,7 +1358,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //UI_resetGameMenu_Draw
 //===============
 //*/
-//static void UI_resetGameMenu_Draw( void ) 
+//static void UI_resetGameMenu_Draw( void )
 //{
 //	int y;
 //
@@ -1402,11 +1401,11 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	UI_DrawProportionalString( 262, y, menu_normal_text[MNT_RESET_PLAYER],UI_BLINK | UI_SMALLFONT, colorTable[CT_RED] );
 //
 //	trap_R_SetColor( colorTable[resetGameMenuInfo.mainmenu.color]);
-//	UI_DrawHandlePic(110 - 14, resetGameMenuInfo.mainmenu.generic.y, 
+//	UI_DrawHandlePic(110 - 14, resetGameMenuInfo.mainmenu.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, uis.graphicButtonLeftEnd);
 //
 //	trap_R_SetColor( colorTable[resetGameMenuInfo.back.color]);
-//	UI_DrawHandlePic(110 - 14, resetGameMenuInfo.back.generic.y, 
+//	UI_DrawHandlePic(110 - 14, resetGameMenuInfo.back.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, uis.graphicButtonLeftEnd);
 //
 //	// standard menu drawing
@@ -1448,7 +1447,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	resetGameMenuInfo.menu.titleI						= MNT_CONTROLSMENU_TITLE;
 //	resetGameMenuInfo.menu.footNoteEnum					= MNT_RESETPLAYER;
 //
-//	resetGameMenuInfo.mainmenu.generic.type				= MTYPE_BITMAP;      
+//	resetGameMenuInfo.mainmenu.generic.type				= MTYPE_BITMAP;
 //	resetGameMenuInfo.mainmenu.generic.flags			= QMF_HIGHLIGHT_IF_FOCUS;
 //	resetGameMenuInfo.mainmenu.generic.x				= 110;
 //	resetGameMenuInfo.mainmenu.generic.y				= 391;
@@ -1465,7 +1464,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	resetGameMenuInfo.mainmenu.textcolor				= CT_BLACK;
 //	resetGameMenuInfo.mainmenu.textcolor2				= CT_WHITE;
 //
-//	resetGameMenuInfo.back.generic.type				= MTYPE_BITMAP;      
+//	resetGameMenuInfo.back.generic.type				= MTYPE_BITMAP;
 //	resetGameMenuInfo.back.generic.flags			= QMF_HIGHLIGHT_IF_FOCUS;
 //	resetGameMenuInfo.back.generic.x				= 110;
 //	resetGameMenuInfo.back.generic.y				= 415;
@@ -1482,7 +1481,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	resetGameMenuInfo.back.textcolor				= CT_BLACK;
 //	resetGameMenuInfo.back.textcolor2				= CT_WHITE;
 //
-//	resetGameMenuInfo.yes.generic.type					= MTYPE_BITMAP;      
+//	resetGameMenuInfo.yes.generic.type					= MTYPE_BITMAP;
 //	resetGameMenuInfo.yes.generic.flags					= QMF_HIGHLIGHT_IF_FOCUS;
 //	resetGameMenuInfo.yes.generic.x						= 462;
 //	resetGameMenuInfo.yes.generic.y						= 391;
@@ -1588,7 +1587,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //SPChooseMenu_Cache
 //===============
 //*/
-//void SPChooseMenu_Cache( void ) 
+//void SPChooseMenu_Cache( void )
 //{
 //}
 //
@@ -1601,7 +1600,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //{
 //	int x,y;
 //
-//	SPChooseMenu_Cache(); 
+//	SPChooseMenu_Cache();
 //
 //	s_spchoose.menu.nitems					= 0;
 //	s_spchoose.menu.draw					= SPChoose_MenuDraw;
@@ -1615,7 +1614,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	s_spchoose.menu.footNoteEnum			= MNT_SOLOMATCHTYPES;
 //	s_spchoose.menu.fullscreen				= qtrue;
 //
-//	s_spchoose.mainmenu.generic.type		= MTYPE_BITMAP;      
+//	s_spchoose.mainmenu.generic.type		= MTYPE_BITMAP;
 //	s_spchoose.mainmenu.generic.flags		= QMF_HIGHLIGHT_IF_FOCUS;
 //	s_spchoose.mainmenu.generic.x			= 482;
 //	s_spchoose.mainmenu.generic.y			= 136;
@@ -1674,7 +1673,7 @@ void PlayerIcon( const char *modelAndSkin, char *iconName, int iconNameMaxSize )
 //	Menu_AddItem( &s_spchoose.menu,	&s_spchoose.create );
 //
 //}
-//	
+//
 ///*
 //=================
 //UI_SPChooseMenu

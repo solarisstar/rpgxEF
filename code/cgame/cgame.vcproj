@@ -52,7 +52,7 @@
 				FavorSizeOrSpeed="1"
 				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="lua\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;XTRA;G_LUA"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;XTRA;"
 				RuntimeLibrary="1"
 				BufferSecurityCheck="false"
 				UsePrecompiledHeader="0"

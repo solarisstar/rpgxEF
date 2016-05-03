@@ -91,7 +91,7 @@
 //	}
 //
 //
-//	switch( s_teammain.playerClass.curvalue ) 
+//	switch( s_teammain.playerClass.curvalue )
 //	{
 //	case TM_NOCLASS:
 //		trap_Cmd_ExecuteText( EXEC_APPEND, "cmd class noclass\n" );
@@ -139,12 +139,12 @@
 //*/
 //static void TeamMain_MenuEvent( void* ptr, int event )
 //{
-//	if( event != QM_ACTIVATED ) 
+//	if( event != QM_ACTIVATED )
 //	{
 //		return;
 //	}
 //
-//	switch( ((menucommon_s*)ptr)->id ) 
+//	switch( ((menucommon_s*)ptr)->id )
 //	{
 //	case ID_INGAMEMENU:
 //		UpdatePlayerClass();
@@ -190,7 +190,7 @@
 //UI_TeamMainMenu_Draw
 //=================
 //*/
-//static void UI_TeamMainMenu_Draw( void ) 
+//static void UI_TeamMainMenu_Draw( void )
 //{
 //	UI_MenuFrame(&s_teammain.menu);
 //
@@ -199,24 +199,24 @@
 //
 //
 //	trap_R_SetColor( colorTable[CT_WHITE]);
-//	UI_DrawHandlePic(s_teammain.playerClass.generic.x + 160, s_teammain.playerClass.generic.y, 
+//	UI_DrawHandlePic(s_teammain.playerClass.generic.x + 160, s_teammain.playerClass.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, s_teammain.pClassShaders[s_teammain.playerClass.curvalue]);
 //
 //	// Left rounded ends for buttons
 //	trap_R_SetColor( colorTable[CT_DKPURPLE1]);
-//	UI_DrawHandlePic(s_teammain.joinred.generic.x - 14, s_teammain.joinred.generic.y, 
+//	UI_DrawHandlePic(s_teammain.joinred.generic.x - 14, s_teammain.joinred.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, uis.graphicButtonLeftEnd);
 //
-//	UI_DrawHandlePic(s_teammain.joinblue.generic.x - 14, s_teammain.joinblue.generic.y, 
+//	UI_DrawHandlePic(s_teammain.joinblue.generic.x - 14, s_teammain.joinblue.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, uis.graphicButtonLeftEnd);
 //
-//	UI_DrawHandlePic(s_teammain.joinauto.generic.x - 14, s_teammain.joinauto.generic.y, 
+//	UI_DrawHandlePic(s_teammain.joinauto.generic.x - 14, s_teammain.joinauto.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, uis.graphicButtonLeftEnd);
 //
-//	UI_DrawHandlePic(s_teammain.joingame.generic.x - 14, s_teammain.joingame.generic.y, 
+//	UI_DrawHandlePic(s_teammain.joingame.generic.x - 14, s_teammain.joingame.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, uis.graphicButtonLeftEnd);
 //
-//	UI_DrawHandlePic(s_teammain.spectate.generic.x - 14, s_teammain.spectate.generic.y, 
+//	UI_DrawHandlePic(s_teammain.spectate.generic.x - 14, s_teammain.spectate.generic.y,
 //		MENU_BUTTON_MED_HEIGHT, MENU_BUTTON_MED_HEIGHT, uis.graphicButtonLeftEnd);
 //
 //	// standard menu drawing
@@ -227,7 +227,7 @@
 //static sfxHandle_t TeamMenu_MenuKey( int key )
 //{
 //		switch (key)
-//		{		
+//		{
 //			case K_ESCAPE:
 //				UpdatePlayerClass();
 //				break;
@@ -246,7 +246,7 @@
 //TeamMain_MenuInit
 //===============
 //*/
-//void TeamMain_MenuInit( void ) 
+//void TeamMain_MenuInit( void )
 //{
 //	int		y,pad,x;
 //	int		gametype;
@@ -256,7 +256,7 @@
 //
 //	TeamMain_Cache();
 //
-//	trap_GetConfigString(CS_SERVERINFO, info, MAX_INFO_STRING);   
+//	trap_GetConfigString(CS_SERVERINFO, info, MAX_INFO_STRING);
 //
 //	s_teammain.menu.wrapAround					= qtrue;
 //	s_teammain.menu.fullscreen					= qtrue;
@@ -269,7 +269,7 @@
 //	s_teammain.menu.titleI						= MNT_TEAMMENU_TITLE;
 //	s_teammain.menu.footNoteEnum				= MNT_TEAM_MENU;
 //
-//	s_teammain.ingamemenu.generic.type			= MTYPE_BITMAP;      
+//	s_teammain.ingamemenu.generic.type			= MTYPE_BITMAP;
 //	s_teammain.ingamemenu.generic.flags			= QMF_HIGHLIGHT_IF_FOCUS;
 //	s_teammain.ingamemenu.generic.x				= 482;
 //	s_teammain.ingamemenu.generic.y				= 136;
@@ -343,20 +343,20 @@
 //	s_teammain.joinauto.textcolor2				= CT_WHITE;
 //
 //	y += pad;
-//	s_teammain.playerClass.generic.type				= MTYPE_SPINCONTROL;      
+//	s_teammain.playerClass.generic.type				= MTYPE_SPINCONTROL;
 //	s_teammain.playerClass.generic.flags			= QMF_HIGHLIGHT_IF_FOCUS;
 //	s_teammain.playerClass.generic.x				= x - 14;
 //	s_teammain.playerClass.generic.y				= y;
 //	s_teammain.playerClass.generic.name				= GRAPHIC_SQUARE;
 //	s_teammain.playerClass.generic.id				= ID_PLAYERCLASS;
-//	s_teammain.playerClass.generic.callback			= TeamMain_MenuEvent; 
+//	s_teammain.playerClass.generic.callback			= TeamMain_MenuEvent;
 //	s_teammain.playerClass.color					= CT_DKPURPLE1;
 //	s_teammain.playerClass.color2					= CT_LTPURPLE1;
 //	s_teammain.playerClass.textX					= MENU_BUTTON_TEXT_X;
 //	s_teammain.playerClass.textY					= MENU_BUTTON_TEXT_Y;
 //	s_teammain.playerClass.textEnum					= MBT_PLAYERCLASS;
 //	s_teammain.playerClass.textcolor				= CT_BLACK;
-//	s_teammain.playerClass.textcolor2				= CT_WHITE;	
+//	s_teammain.playerClass.textcolor2				= CT_WHITE;
 //
 //	// If assimilation is on then use player_class2 which includes Borg as a class
 ///*	if (atoi( Info_ValueForKey( info, "g_pModAssimilation" )) == 0)
@@ -378,7 +378,7 @@
 //	{
 //		s_teammain.playerClass.listnames				= player_classes;
 //	}*/
-//	
+//
 //	//RPG-X: RedTechie - Originaly was trying to grey out menu if n00b but this just remberes so nexts time they connect its still greyed out ROFL
 //	/*if (!Q_stricmp( ui_playerClass.string, "N00B" ))
 //	{
@@ -430,9 +430,9 @@
 //
 //
 //	gametype = atoi( Info_ValueForKey( info,"g_gametype" ) );
-//			      
+//
 //	// set initial states
-//	switch( gametype ) 
+//	switch( gametype )
 //	{
 //	case GT_SINGLE_PLAYER:
 //	case GT_FFA:
@@ -460,49 +460,49 @@
 //	Menu_AddItem( &s_teammain.menu, (void*) &s_teammain.spectate );
 //
 //	// Set up current value based on class
-//	if ( !Q_stricmp( ui_playerClass.string, "NOCLASS" ) ) 
+//	if ( !Q_stricmp( ui_playerClass.string, "NOCLASS" ) )
 //	{
 //		s_teammain.playerClass.curvalue = TM_NOCLASS;
 //	}
-//	else if ( !Q_stricmp( ui_playerClass.string, "SECURITY" ) ) 
+//	else if ( !Q_stricmp( ui_playerClass.string, "SECURITY" ) )
 //	{
 //		s_teammain.playerClass.curvalue = TM_INFILTRATOR;
 //	}
-//	else if ( !Q_stricmp( ui_playerClass.string, "MEDICAL" ) ) 
+//	else if ( !Q_stricmp( ui_playerClass.string, "MEDICAL" ) )
 //	{
 //		s_teammain.playerClass.curvalue = TM_SNIPER;
 //	}
-//	else if ( !Q_stricmp( ui_playerClass.string, "ALIEN" ) ) 
+//	else if ( !Q_stricmp( ui_playerClass.string, "ALIEN" ) )
 //	{
 //		s_teammain.playerClass.curvalue = TM_HEAVY;
 //	}
-//	else if ( !Q_stricmp( ui_playerClass.string, "COMMAND" ) ) 
+//	else if ( !Q_stricmp( ui_playerClass.string, "COMMAND" ) )
 //	{
 //		s_teammain.playerClass.curvalue = TM_DEMO;
 //	}
-//	else if ( !Q_stricmp( ui_playerClass.string, "SCIENCE" ) ) 
+//	else if ( !Q_stricmp( ui_playerClass.string, "SCIENCE" ) )
 //	{
 //		s_teammain.playerClass.curvalue = TM_MEDIC;
 //	}
-//	else if ( !Q_stricmp( ui_playerClass.string, "ENGINEER" ) ) 
+//	else if ( !Q_stricmp( ui_playerClass.string, "ENGINEER" ) )
 //	{
 //		s_teammain.playerClass.curvalue = TM_TECH;
 //	}
-//	else if ( !Q_stricmp( ui_playerClass.string, "MARINE" ) ) 
+//	else if ( !Q_stricmp( ui_playerClass.string, "MARINE" ) )
 //	{
 //		s_teammain.playerClass.curvalue = TM_ALPHAOMEGA22;
 //	}
-//	else if ( !Q_stricmp( ui_playerClass.string, "N00B" ) ) 
+//	else if ( !Q_stricmp( ui_playerClass.string, "N00B" ) )
 //	{
 //		s_teammain.playerClass.curvalue = TM_N00B;
 //	}
 //	else
 //	{
-//	/*else if ( !Q_stricmp( ui_playerClass.string, "BORG" ) ) 
+//	/*else if ( !Q_stricmp( ui_playerClass.string, "BORG" ) )
 //	{
 //		s_teammain.playerClass.curvalue = TM_BORG;
 //	}
-//	else if ( !Q_stricmp( ui_playerClass.string, "HERO" ) ) 
+//	else if ( !Q_stricmp( ui_playerClass.string, "HERO" ) )
 //	{
 //		s_teammain.playerClass.curvalue = TM_ACTIONHERO;
 //	}
@@ -521,7 +521,7 @@
 //TeamMain_Cache
 //===============
 //*/
-//void TeamMain_Cache( void ) 
+//void TeamMain_Cache( void )
 //{
 //	s_teammain.pClassShaders[TM_NOCLASS] = trap_R_RegisterShaderNoMip( "menu/art/pc_noclass.tga" );//PC_NOCLASS,
 //	s_teammain.pClassShaders[TM_INFILTRATOR] = trap_R_RegisterShaderNoMip( "menu/art/pc_security.tga" );//PC_INFILTRATOR,//fast, low attack

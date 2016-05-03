@@ -7,14 +7,14 @@
  * desc:		elementary actions
  *
  * $Archive: /StarTrek/Code-DM/game/be_ea.h $
- * $Author: Dkramer $ 
+ * $Author: Dkramer $
  * $Revision: 2 $
  * $Modtime: 4/21/00 2:20p $
  * $Date: 4/24/00 11:25a $
  *
  *****************************************************************************/
 
-//ClientCommand elementary actions
+ //ClientCommand elementary actions
 void EA_Say(int client, char *str);
 void EA_SayTeam(int client, char *str);
 void EA_SayClass(int client, char *str);
@@ -22,7 +22,7 @@ void EA_UseItem(int client, char *it);
 void EA_DropItem(int client, char *it);
 void EA_UseInv(int client, char *inv);
 void EA_DropInv(int client, char *inv);
-void EA_Command(int client, char *command );
+void EA_Command(int client, char *command);
 //regular elementary actions
 void EA_SelectWeapon(int client, int weapon);
 void EA_Attack(int client);

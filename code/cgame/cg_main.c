@@ -191,10 +191,8 @@ vmCvar_t	rpg_forceFieldSet;
 vmCvar_t	grp_berp;
 
 // lua
-#ifdef CG_LUA
 vmCvar_t			cg_debugLua;
 vmCvar_t			cg_logLua;
-#endif
 
 typedef struct {
 	vmCvar_t	*vmCvar;
@@ -323,10 +321,8 @@ static cvarTable_t	cvarTable[] = {
 	{ &grp_berp, "grp_berp", "0", CVAR_ARCHIVE | CVAR_LATCH },
 
 	// lua
-#ifdef CG_LUA
 	{ &cg_debugLua, "cg_debuglua", "0", CVAR_ARCHIVE | CVAR_LATCH },
 	{ &cg_logLua, "cg_loglua", "0", CVAR_ARCHIVE }
-#endif
 
 };
 
@@ -1147,11 +1143,11 @@ void CG_InitModRules( void )
 {
 	if ( cgs.pModDisintegration )
 	{//don't use up ammo in disintegration mode
-		altAmmoUsage[WP_6] = 0;
+		altAmmoUsage[WP_COMPRESSION_RIFLE] = 0;
 	}
 	if ( cgs.pModSpecialties )
 	{//tripwires use more ammo
-		altAmmoUsage[WP_8] = 3;
+		altAmmoUsage[WP_GRENADE_LAUNCHER] = 3;
 	}
 }
 
@@ -1225,7 +1221,7 @@ void CG_Init( int serverMessageNum, int serverCommandSequence ) {
 
 	BG_LoadItemNames();
 
-	cg.weaponSelect = WP_1;
+	cg.weaponSelect = WP_NULL_HAND;
 
 	cgs.redflag = cgs.blueflag = -1; // For compatibily, default to unset for
 	// old servers

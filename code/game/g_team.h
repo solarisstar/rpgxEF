@@ -5,4 +5,3 @@
 const char *TeamName(int team);
 const char *OtherTeamName(int team);
 const char *TeamColorString(int team);
-

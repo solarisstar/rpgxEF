@@ -6,7 +6,7 @@
  * desc:		goal AI
  *
  * $Archive: /StarTrek/Code-DM/game/be_ai_goal.h $
- * $Author: Mgummelt $ 
+ * $Author: Mgummelt $
  * $Revision: 2 $
  * $Modtime: 3/12/01 1:53p $
  * $Date: 3/12/01 4:43p $
@@ -21,16 +21,16 @@
 #define GFL_ROAM				2
 #define GFL_DROPPED				4
 
-//a bot goal
+ //a bot goal
 typedef struct bot_goal_s
 {
-	vec3_t origin;				//!<origin of the goal
-	int areanum;				//!<area number of the goal
-	vec3_t mins, maxs;			//!<mins and maxs of the goal
-	int entitynum;				//!<number of the goal entity
-	int number;					//!<goal number
-	int flags;					//!<goal flags
-	int iteminfo;				//!<item information
+    vec3_t origin;				//!<origin of the goal
+    int areanum;				//!<area number of the goal
+    vec3_t mins, maxs;			//!<mins and maxs of the goal
+    int entitynum;				//!<number of the goal entity
+    int number;					//!<goal number
+    int flags;					//!<goal flags
+    int iteminfo;				//!<item information
 } bot_goal_t;
 
 //!reset the whole goal state, but keep the item weights
@@ -58,7 +58,7 @@ int BotGetSecondGoal(int goalstate, bot_goal_t *goal);
 int BotChooseLTGItem(int goalstate, vec3_t origin, int *inventory, int travelflags, qboolean botRoamsOnly);
 //!choose the best nearby goal item for the bot
 int BotChooseNBGItem(int goalstate, vec3_t origin, int *inventory, int travelflags,
-							bot_goal_t *ltg, float maxtime, qboolean botRoamsOnly);
+    bot_goal_t *ltg, float maxtime, qboolean botRoamsOnly);
 //!returns true if the bot touches the goal
 int BotTouchingGoal(vec3_t origin, bot_goal_t *goal);
 //!returns true if the goal should be visible but isn't
