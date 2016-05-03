@@ -24,7 +24,7 @@ Then chose the xubuntu-xx.yy-desktop-amd64.iso image (where xx.yy is 16.04 at th
 * When prompted for a "root password",. insert the password you chose for your user account while installing Linux on your VM
 * The script automatcially downloads the RPG-X EF Repository from GitHub and puts it in /home/<yourusername>/Projects/rpgxef (obviously, <yourusername> is the username of your Linux user account)
 * It also automatically downloads all development dependencies needed for building the source code
-* In the terminal, navigate tot he rpgxef repository directory which was just created: cd /home/<yourusername>/Projects/rpgxef
+* In the terminal, navigate to the rpgxef repository directory which was just created: cd /home/<yourusername>/Projects/rpgxef
 
 ### Building for Linux
 * In the terminal, type: make
@@ -51,16 +51,16 @@ and then copying the following files from your VM onto your computer:
   * Run ./make-i368.sh for building the Linux 32 bits variant
   * Run ./cross-make-mingw.sh for building the Windows 32 bits variant
   * Run ./cross-make-mingw64.sh for building the Windows 64 bits variant
-* Install a fresh copy of the RPG-X Standard Edition from TLO: http://www.last-outpost.net/rpgx/ and put the build files in the correct directory, then run executable file to launch RPG-X EF
+* Install a fresh copy of the RPG-X Standard Edition from TLO: http://www.last-outpost.net/rpgx/ and put the build files in the correct directory as described below, then run executable file to launch RPG-X EF
 
-  * Copy the following files to the base install directory of RPG-X (where the current .exe is located, overwrite if asked): 
-    * build/release-<platform>-<arch>/rpgxEF.<arch> 
-    * build/release-<platform>-<arch>/renderer_opengl1_<arch> 
+  * Copy the following files to the base install directory of RPG-X (where the current binary is located, overwrite if asked): 
+    * build/release-PLATFORM-ARCH/rpgxEF.ARCH
+    * build/release-PLATFORM-ARCH/renderer_opengl1_ARCH (.so for Linux, .dll for Windows)
 
-  * Copy the following files to the RPG-X2 directory located in your RPG-X install directory:
-    * build/release-<platform>-<arch>/rpgxEF/ui<arch>, 
-    * build/release-<platform>-<arch>/rpgxEF/qagame<arch>
-    * build/release-<platform>-<arch>/rpgxEF/cgame<arch>
+  * Copy the following files (.so for Linux, .dll for Windows) to the RPG-X2 directory located in your RPG-X install directory:
+    * build/release-PLATFORM-ARCH/rpgxEF/uiARCH, 
+    * build/release-PLATFORM-ARCH/rpgxEF/qagameARCH
+    * build/release-PLATFORM-ARCH/rpgxEF/cgameARCH
 
 * Be sure to run the game with the following cvars: +set vm_game 0 +set vm_ui 0 +set vm_cgame 0 +set fs_game RPG-X2
 
