@@ -2601,9 +2601,7 @@ void G_Client_LocationsMessage(gentity_t *ent) {
     char		entry[1024];
     char		string[1400];
     int			stringlength;
-    int			i, j;
     gentity_t	*player;
-    int			cnt;
 
     //don't bother sending during intermission?
     if (level.intermissiontime)
@@ -2612,7 +2610,7 @@ void G_Client_LocationsMessage(gentity_t *ent) {
     // figure out what client should be on the display
     // we are limited to 8, but we want to use the top eight players
     // but in client order (so they don't keep changing position on the overlay)
-    for (i = 0, cnt = 0; i < g_maxclients.integer && cnt < TEAM_MAXOVERLAY; i++) {
+    for (int i = 0; i < g_maxclients.integer; i++) {
         player = g_entities + level.sortedClients[i];
         if (player->inuse && player->client->sess.sessionTeam ==
             ent->client->sess.sessionTeam) {
@@ -2623,14 +2621,22 @@ void G_Client_LocationsMessage(gentity_t *ent) {
     string[0] = 0;
     stringlength = 0;
 
-    for (i = 0, cnt = 0; i < g_maxclients.integer && cnt < TEAM_MAXOVERLAY; i++) {
+
+    int cnt = 0;
+
+    for (i = 0; i < g_maxclients.integer; i++) {
+
+        if (cnt >= TEAM_MAXOVERLAY) {
+            break;
+        }
+
         player = g_entities + i;
         //RPG-X | Phenix | 05/03/2005
         if (player->inuse) {
             //to counter for the fact we could pwn the server doing this, remove all superfluous data
 
             Com_sprintf(entry, sizeof(entry), " %i %i ", i, player->client->pers.teamState.location);
-            j = strlen(entry);
+            int j = strlen(entry);
             if (stringlength + j > sizeof(string))
                 break;
             strcpy(string + stringlength, entry);

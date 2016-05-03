@@ -2901,6 +2901,10 @@ static void Cmd_ForceRank_f(gentity_t *ent)
     gentity_t *sayA;
     int newScore = -1;
 
+    //TODO if ent - g_entities is just the player's id, then we 
+    // should just define that as a local variable rather than 
+    // constantly re-computing it. 
+
 #ifndef SQL
     if (!IsAdmin(ent)) {
         trap_SendServerCommand(ent - g_entities, va("print \"ERROR: You are not logged in as an admin.\n\" "));
@@ -2960,10 +2964,14 @@ static void Cmd_ForceRank_f(gentity_t *ent)
         return;
     }
 
-    if (OldScore > ent->client->ps.persistant[PERS_SCORE]) {
-        trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE " was demoted to %s\n\"", other->client->pers.netname, g_rankNames[i].formalName));
+    if (i < MAX_RANKS) {
+        if (OldScore > ent->client->ps.persistant[PERS_SCORE]) {
+            trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE " was demoted to %s\n\"", other->client->pers.netname, g_rankNames[i].formalName));
+        } else {
+            trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE " was promoted to %s\n\"", other->client->pers.netname, g_rankNames[i].formalName));
+        }
     } else {
-        trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE " was promoted to %s\n\"", other->client->pers.netname, g_rankNames[i].formalName));
+        trap_SendServerCommand(ent - g_entities, va("print \"This rank doesn't exist on this server!\n\"\n"));
     }
 
     G_LogPrintf("%s changed %s's rank to %s (%s)\n", ent->client->pers.netname, other->client->pers.netname, ArgStr, ent->client->pers.ip);

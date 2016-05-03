@@ -1719,7 +1719,8 @@ static void PlayerModel_MenuInit(int menuFrom)
     qsort((void *)s_playermodel.genderList, s_playermodel.numGenders + 1, sizeof(filterData_t), FilterList_Compare);
 
     //Populate the spin control pointers
-    for (i = 0; i < 128; i++) {
+    int end = min(MAX_RACES, MAX_GENDERS);
+    for (i = 0; i < end; i++) {
         if (!s_playermodel.genderList[i].filterName[0] && !s_playermodel.raceList[i].filterName[0])
             break;
 
