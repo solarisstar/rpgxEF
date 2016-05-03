@@ -2874,6 +2874,10 @@ static void Cmd_Rank_f(gentity_t *ent)
         return;
     }
 
+    if (i >= MAX_RANKS){
+        trap_SendServerCommand(ent - g_entities, va("print \" Somehow you exceeded the max rank.\n\""));
+    }
+
     if (OldScore > ent->client->ps.persistant[PERS_SCORE]) {
         trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE " was demoted to %s\n\"", ent->client->pers.netname, g_rankNames[i].formalName));
     } else {

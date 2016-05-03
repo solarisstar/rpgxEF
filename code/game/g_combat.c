@@ -1176,11 +1176,11 @@ void G_Damage(gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     // the total will be turned into screen blends and view angle kicks
     // at the end of the frame
     if (client) {
-        if (attacker) {
-            client->ps.persistant[PERS_ATTACKER] = attacker->s.number;
-        } else {
-            client->ps.persistant[PERS_ATTACKER] = ENTITYNUM_WORLD;
-        }
+        // if (attacker) {
+        client->ps.persistant[PERS_ATTACKER] = attacker->s.number;
+        // } else {
+        //     client->ps.persistant[PERS_ATTACKER] = ENTITYNUM_WORLD;
+        // }
         //RPG-X: - RedTechie no armor in RPG
         client->damage_blood += take;
         client->damage_knockback += knockback;
@@ -1199,7 +1199,7 @@ void G_Damage(gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
         targ->client->lasthurt_mod = mod;
 
         // Modify the damage for location damage
-        if (point && targ->health > 1 && attacker && take)
+        if (point && targ->health > 1 /* && attacker */ && take)
             take = G_LocationDamage(point, targ, attacker, take);
         else
             targ->client->lasthurt_location = LOCATION_NONE;
