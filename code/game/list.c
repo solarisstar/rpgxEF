@@ -99,18 +99,12 @@ static int list_add_impl(list_p list, void* data, dataType_t type, size_t size, 
 
 on_error:
     if (node){
-<<<<<<< HEAD
         if (node->cont){
             free(node->cont);
         }
         free(node);
         return 0;
     }
-=======
-        free(node);
-    }
-    return 0;
->>>>>>> chore/build_warnings
 }
 
 
