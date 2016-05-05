@@ -194,7 +194,7 @@ Hashing
 typedef struct {
     char* charName;
     void* next;
-} ht_element_t;
+} hashtable_element_t;
 
 unsigned long ht_hash(unsigned char *str) {
     unsigned long hash = 5381;
@@ -206,9 +206,9 @@ unsigned long ht_hash(unsigned char *str) {
     return hash;
 }
 
-qboolean ht_contains_name(ht_element_t* ht[], char* str){
+qboolean hashtable_contains_name(hashtable_element_t* hashtable[], char* str){
     long hash = ht_hash((unsigned char*)str) % NUM_HT_BUCKETS;
-    ht_element_t* curr = ht[hash];
+    hashtable_element_t* curr = hashtable[hash];
     while(curr){
         if (!strcmp(str, curr->charName)){
             return qtrue;
@@ -1179,8 +1179,8 @@ static void PlayerModel_BuildList(void)
     ///Com_Printf("%i folders found\n", numdirs );
 
     int pool_idx = 0;
-    ht_element_t  ele_pool[MAX_PLAYERCHARS];
-    ht_element_t* ht[NUM_HT_BUCKETS];
+    hashtable_element_t  element_pool[MAX_PLAYERCHARS];
+    hashtable_element_t* hashtable[NUM_HT_BUCKETS];
 
     for (i = 0; i < numdirs && s_playermodel.numChars < MAX_PLAYERCHARS; i++, dirptr += dirlen + 1)
     {
@@ -1199,7 +1199,7 @@ static void PlayerModel_BuildList(void)
             continue;
         }
 
-        if (ht_contains_name(ht, dirptr)){
+        if (hashtable_contains_name(hashtable, dirptr)){
             continue;
         }
 
@@ -1268,9 +1268,9 @@ static void PlayerModel_BuildList(void)
             // that checks for duplicates. This is a little hard
             // to read, but this code needed optimization.
             long hash = ht_hash((unsigned char*)dirptr) % NUM_HT_BUCKETS;
-            ele_pool[pool_idx].charName = dirptr;
-            ele_pool[pool_idx].next = ht[hash];
-            ht[hash] = &ele_pool[pool_idx];
+            element_pool[pool_idx].charName = dirptr;
+            element_pool[pool_idx].next = hashtable[hash];
+            hashtable[hash] = &element_pool[pool_idx];
             pool_idx++;
         }
     }
