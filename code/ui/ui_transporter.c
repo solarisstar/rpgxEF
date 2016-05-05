@@ -444,10 +444,6 @@ void SrvData_Init(void) {
         if (!srvList[i][0]) break;
         s_transporter.srvListPtr[i] = srvList[i];
     }
-
-    // if (i < 6) {
-    //     s_transporter.srvListPtr[i + 1] = 0;
-    // }
 }
 
 /*
