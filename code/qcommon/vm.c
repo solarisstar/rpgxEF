@@ -64,6 +64,13 @@ VM_Init
 ==============
 */
 void VM_Init(void) {
+    /* 
+     * The game ships with multiple quake VMs for cross-platform support.
+     * These can be replaced with platform dependent files such as
+     * .dll or .so files. Setting these to 0 tells rpgxEF to search for
+     * such files over .vm files. IF YOU SET THESE TO 1 YOUR GAME WILL
+     * CRASH UNLESS YOU COMPILE NEW VMs.
+     */
     Cvar_Get("vm_cgame", "0", CVAR_ARCHIVE);	// !@# SHIP WITH SET TO 0
     Cvar_Get("vm_game", "0", CVAR_ARCHIVE);	// !@# SHIP WITH SET TO 0
     Cvar_Get("vm_ui", "0", CVAR_ARCHIVE);		// !@# SHIP WITH SET TO 0
