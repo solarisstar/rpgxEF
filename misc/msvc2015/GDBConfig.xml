@@ -1,0 +1,5 @@
+<PipeLaunchOptions xmlns="http://schemas.microsoft.com/vstudio/MDDDebuggerOptions/2014"
+    PipePath="C:\Program Files (x86)\PuTTY\plink.exe" PipeArguments="-X -ssh -i private.ppk maarten@192.168.1.21 -batch -t gdb --interpreter=mi"
+    ExePath="/media/sf_rpgxEF/GameFiles/rpgxEF.x86_64" ExeArguments="+set vm_game 0 +set vm_ui 0 +set vm_cgame 0 +set fs_game RPG-X2"
+    TargetArchitecture="X64" WorkingDirectory="/media/sf_rpgxEF/GameFiles/" AdditionalSOLibSearchPath="">
+</PipeLaunchOptions>
