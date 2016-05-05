@@ -2,7 +2,7 @@
  * This code implements the MD5 message-digest algorithm.
  * The algorithm is due to Ron Rivest.	This code was
  * written by Colin Plumb in 1993, no copyright is claimed.
- * Tch_main:362his code is in the public domain; do with it what you wish.
+ * This code is in the public domain; do with it what you wish.
  *
  * Equivalent code is available from RSA Data Security, Inc.
  * This code has been tested against that, and is equivalent,
