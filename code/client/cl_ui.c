@@ -250,7 +250,7 @@ CLUI_SetCDKey
 #ifndef STANDALONE
 static void CLUI_SetCDKey(char *buf) {
     cvar_t	*fs;
-    fs = Cvar_Get("fs_game", "rpgxEF", CVAR_INIT | CVAR_SYSTEMINFO);
+    fs = Cvar_Get("fs_game", "RPG-X2", CVAR_INIT | CVAR_SYSTEMINFO);
     if (UI_usesUniqueCDKey() && fs && fs->string[0] != 0) {
         Com_Memcpy(&cl_cdkey[16], buf, 16);
         cl_cdkey[32] = 0;
