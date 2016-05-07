@@ -1169,7 +1169,6 @@ static void PlayerModel_BuildList(void)
     char		dirlist[8192];
     char		filelist[128]; //2048
     char*		dirptr;
-    int			i, j;
     int			dirlen;
     charData_t	*tempBuff;
 
@@ -1191,7 +1190,7 @@ static void PlayerModel_BuildList(void)
     hashtable_element_t  element_pool[MAX_PLAYERCHARS];
     hashtable_element_t* hashtable[NUM_HT_BUCKETS];
 
-    for (i = 0; i < numdirs && s_playermodel.numChars < MAX_PLAYERCHARS; i++, dirptr += dirlen + 1)
+    for (int i = 0; i < numdirs && s_playermodel.numChars < MAX_PLAYERCHARS; i++, dirptr += dirlen + 1)
     {
 
         if (!dirptr) {
@@ -1293,7 +1292,7 @@ static void PlayerModel_BuildList(void)
     qsort(s_playermodel.charNames, s_playermodel.numChars, sizeof(charData_t), PlayerListOrder_Compare);
 
     //copy to the upper case list for rendering to the menu
-    for (i = 0; i < s_playermodel.numChars; i++)
+    for (int i = 0; i < s_playermodel.numChars; i++)
         Q_strncpyz(s_playermodel.charNamesUpr[i], s_playermodel.charNames[i].charName, sizeof(s_playermodel.charNamesUpr[i]));
 
     setup_complete = qtrue;
