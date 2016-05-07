@@ -103,8 +103,8 @@ on_error:
             free(node->cont);
         }
         free(node);
-        return 0;
     }
+    return 0;
 }
 
 
