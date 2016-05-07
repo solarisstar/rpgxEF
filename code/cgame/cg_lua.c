@@ -15,7 +15,7 @@ void QDECL LUA_DEBUG(const char *fmt, ...)
     if (cg_debugLua.integer >= 1)
     {
         va_start(argptr, fmt);
-        Com_sprintf(text, sizeof(text), fmt, argptr);
+        vsprintf(text, fmt, argptr);
         va_end(argptr);
         CG_Printf(S_COLOR_YELLOW "LUA DEBUG:" S_COLOR_WHITE " %s\n", text);
     }
@@ -28,7 +28,7 @@ void QDECL LUA_LOG(const char *fmt, ...)
     int             min, tens, sec;
 
     va_start(argptr, fmt);
-    Com_sprintf(buff, sizeof(buff), fmt, argptr);
+    vsprintf(buff, fmt, argptr);
     va_end(argptr);
 
     if (cg_logLua.integer) {
