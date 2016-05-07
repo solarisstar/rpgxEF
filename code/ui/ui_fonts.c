@@ -232,12 +232,9 @@ Fonts_MenuEvent
 */
 static void Fonts_MenuEvent(void* ptr, int notification)
 {
-    menuframework_s*	m;
-
+    
     if (notification != QM_ACTIVATED)
         return;
-
-    m = ((menucommon_s*)ptr)->parent;
 
     switch (((menucommon_s*)ptr)->id)
     {

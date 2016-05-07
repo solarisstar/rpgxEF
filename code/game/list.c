@@ -58,7 +58,7 @@ static int list_add_impl(list_p list, void* data, dataType_t type, size_t size, 
 
     node->cont = (container_p)malloc(sizeof(container));
     if (node->cont == NULL) {
-        return 0;
+        goto on_error;
     }
 
     int isPtr = (size == 0); //Size is zero since we don't need to malloc
@@ -70,7 +70,7 @@ static int list_add_impl(list_p list, void* data, dataType_t type, size_t size, 
     if (isPtr) {
         node->cont->data = malloc(size);
         if (node->cont->data == NULL) {
-            return 0;
+            goto on_error;
         }
         memcpy(node->cont->data, data, size);
     } else {
@@ -96,6 +96,12 @@ static int list_add_impl(list_p list, void* data, dataType_t type, size_t size, 
     list->length++;
 
     return list->length;
+
+on_error:
+    if (node){
+        free(node);
+    }
+    return 0;
 }
 
 
@@ -159,7 +165,7 @@ static int list_prepend(list_p list, void* data, dataType_t type, size_t size) {
  *	\return Count of elements in the list
  */
 static int list_add_ptr(list_p list, void* data, dataType_t type, char end) {
-    list_add_impl(list, data, type, 0, end);
+    return list_add_impl(list, data, type, 0, end);
 }
 
 /**
@@ -510,7 +516,7 @@ static container_p list_at(list_p list, int idx) {
     container_p c = NULL;
     int i;
 
-    if (idx < 0 || idx >= list->length || list == NULL) {
+    if (list == NULL || idx < 0 || idx >= list->length) {
         return NULL;
     }
 

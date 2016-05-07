@@ -359,7 +359,7 @@ void CG_PrecacheRemapShaders(void) {
 	data = (char *)malloc(sizeof(char)*(len+1));
 	if(!data) {
 		trap_FS_FCloseFile(f);
-		CG_Printf(S_COLOR_RED "Error - could not allocate %d byte of memory.\n", sizeof(char)*(len+1));
+		CG_Printf(S_COLOR_RED "Error - could not allocate %lu byte of memory.\n", sizeof(char)*(len+1));
 		return;
 	}
 
