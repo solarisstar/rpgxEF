@@ -252,7 +252,7 @@ static void MD5Final(struct MD5Context *ctx, unsigned char *digest)
 
     if (digest != NULL)
         memcpy(digest, ctx->buf, 16);
-    memset(ctx, 0, sizeof(ctx));	/* In case it's sensitive */
+    memset(ctx, 0, sizeof(*ctx));	/* In case it's sensitive */
 }
 
 char *Com_MD5File(const char *fn, int length, const char *prefix, int prefix_len)

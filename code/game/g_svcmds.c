@@ -474,8 +474,9 @@ void Svcmd_FindID_f(void)
     {
         id = &idFilters[i];
 
-        if (!id || id->playerID <= 0)
+        if (!id) {
             continue;
+        }
 
         memset(name, 0, sizeof(name));
         Q_strncpyz(name, id->playerName, sizeof(name));

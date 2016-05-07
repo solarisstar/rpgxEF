@@ -2847,21 +2847,16 @@ static void Cmd_Rank_f(gentity_t *ent)
         if (!Q_stricmp(ArgStr, g_rankNames[i].consoleName)) {
             newScore = i;
 
-            if (newScore == OldScore)
+            if (newScore == OldScore){
                 return;
+            }
 
-            if (!MaxRankHit)
-            {
+            if (!MaxRankHit) {
                 SetScore(ent, newScore);
                 trap_SendServerCommand(ent - g_entities, va("prank %s", g_rankNames[i].consoleName));
                 break;
-            } else
-            {
-                if (!MaxRankHit)
-                    trap_SendServerCommand(ent - g_entities, va("print \"This rank is disabled\n\""));
-                else
-                    trap_SendServerCommand(ent - g_entities, va("print \"You cannot set your rank that high on this server.\n\""));
-
+            } else {
+                trap_SendServerCommand(ent - g_entities, va("print \"You cannot set your rank that high on this server.\n\""));
                 return;
             }
         }
@@ -2877,6 +2872,10 @@ static void Cmd_Rank_f(gentity_t *ent)
         trap_SendServerCommand(ent - g_entities, va("print \"This rank doesn't exist on this server!\n\"\n"));
         SetScore(ent, OldScore);
         return;
+    }
+
+    if (i >= MAX_RANKS){
+        trap_SendServerCommand(ent - g_entities, va("print \" Somehow you exceeded the max rank.\n\""));
     }
 
     if (OldScore > ent->client->ps.persistant[PERS_SCORE]) {
@@ -2901,6 +2900,10 @@ static void Cmd_ForceRank_f(gentity_t *ent)
     int i;
     gentity_t *sayA;
     int newScore = -1;
+
+    //TODO if ent - g_entities is just the player's id, then we 
+    // should just define that as a local variable rather than 
+    // constantly re-computing it. 
 
 #ifndef SQL
     if (!IsAdmin(ent)) {
@@ -2932,12 +2935,12 @@ static void Cmd_ForceRank_f(gentity_t *ent)
 
     other = &g_entities[targetNum];
 
-    //Lets get old score first just incase
-    OldScore = other->client->ps.persistant[PERS_SCORE]; //ent
-
     if (!other || !other->inuse || !other->client) {
         return;
     }
+
+    //Lets get old score first just incase
+    OldScore = other->client->ps.persistant[PERS_SCORE]; //ent
 
     //Get the raw rank value
     trap_Argv(2, ArgStr, sizeof(ArgStr));
@@ -2961,10 +2964,14 @@ static void Cmd_ForceRank_f(gentity_t *ent)
         return;
     }
 
-    if (OldScore > ent->client->ps.persistant[PERS_SCORE]) {
-        trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE " was demoted to %s\n\"", other->client->pers.netname, g_rankNames[i].formalName));
+    if (i < MAX_RANKS) {
+        if (OldScore > ent->client->ps.persistant[PERS_SCORE]) {
+            trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE " was demoted to %s\n\"", other->client->pers.netname, g_rankNames[i].formalName));
+        } else {
+            trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE " was promoted to %s\n\"", other->client->pers.netname, g_rankNames[i].formalName));
+        }
     } else {
-        trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE " was promoted to %s\n\"", other->client->pers.netname, g_rankNames[i].formalName));
+        trap_SendServerCommand(ent - g_entities, va("print \"This rank doesn't exist on this server!\n\"\n"));
     }
 
     G_LogPrintf("%s changed %s's rank to %s (%s)\n", ent->client->pers.netname, other->client->pers.netname, ArgStr, ent->client->pers.ip);
@@ -5082,15 +5089,15 @@ static void Cmd_MeActionLocal_f(gentity_t* ent)
     {
         OtherPlayer = &g_entities[i];			//Point OtherPlayer to next player
 
+        //Check is OtherPlayer is valid
+        if (!OtherPlayer || !OtherPlayer->inuse || !OtherPlayer->client) {
+            continue;
+        }
+
         //Send message to admins warning about command being used.
         //TiM - since double spamming is annoying, ensure that the target admin wants this alert
-        if (!OtherPlayer->client->noAdminChat && IsAdmin(OtherPlayer))
+        if (!OtherPlayer->client->noAdminChat && IsAdmin(OtherPlayer)){
             trap_SendServerCommand(-1, va("print \"%s" S_COLOR_CYAN" (locally) " S_COLOR_WHITE "%s\n\"", ent->client->pers.netname, message));
-
-        //Check is OtherPlayer is valid
-        if (!OtherPlayer || !OtherPlayer->inuse || !OtherPlayer->client)
-        {
-            continue;
         }
 
         if (trap_InPVS(ent->client->ps.origin, OtherPlayer->client->ps.origin))
@@ -5125,18 +5132,24 @@ static void Cmd_MapsList_f(gentity_t *ent)
 
     for (i = 0; i < numFiles; i++, filePtr += (len + 1))
     {
+
+        if (!filePtr){
+            return;
+        }
+
         len = strlen(filePtr);
 
-        if (len <= 0 || !filePtr)
+        if (len <= 0){
             return;
+        }
 
-        if (strchr(filePtr, '/') || strchr(filePtr, '\\'))
-        {
+        if (strchr(filePtr, '/') || strchr(filePtr, '\\')) {
             continue;
         }
 
-        if (strlen(mapList) + len + 20 >= sizeof(mapList))
+        if (strlen(mapList) + len + 20 >= sizeof(mapList)){
             break;
+        }
 
         Q_strcat(mapList, sizeof(mapList), filePtr);
         Q_strcat(mapList, sizeof(mapList), "\n");
@@ -7239,10 +7252,10 @@ static void Cmd_findEntitiesInRadius(gentity_t *ent) {
         }
 
         if (all) {
-            G_PrintfClient(ent, "Entity: %i, Classname: %s", t - g_entities, t->classname);
+            G_PrintfClient(ent, "Entity: %li, Classname: %s", t - g_entities, t->classname);
         } else {
             if (!Q_stricmpn(t->classname, classname, strlen(classname))) {
-                G_PrintfClient(ent, "Entity: %i Classname: %s", t - g_entities, classname);
+                G_PrintfClient(ent, "Entity: %li Classname: %s", t - g_entities, classname);
             }
         }
     }

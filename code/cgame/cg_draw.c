@@ -435,7 +435,6 @@ void CG_DrawLensFlare(lensFlare_t *flare)
     int		h = flare->h1;
     float	x, y, streakX, streakY;
     int		xCart, yCart;
-    int		i;
     vec4_t	color, reflecColor, strkColor;
     int		xMax, yMax;
     vec3_t	distDif, black = { 0.0, 0.0, 0.0 };
@@ -533,7 +532,7 @@ void CG_DrawLensFlare(lensFlare_t *flare)
 
     //Lens Reflections - those cool circly bits that go in the opposite direction of the flare
     if (reflecAlpha != 0.0) {//Sheez, only do this if we really WANT it O_o
-        for (i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             //if they wanted the cool photoshoppy style reflections
             if (flare->defReflecs) {
                 VectorCopy(lensReflec[i].color, reflecColor);

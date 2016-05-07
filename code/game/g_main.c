@@ -652,7 +652,7 @@ static qboolean G_LoadClassData(char* fileName)
     buffer = (char *)malloc((fileLen + 1) * sizeof(char));
 
     if (!buffer) {
-        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %i bytes.\n", (fileLen + 1) * sizeof(char));
+        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %lu bytes.\n", (fileLen + 1) * sizeof(char));
         trap_FS_FCloseFile(f);
         return qfalse;
     }
@@ -907,7 +907,7 @@ static void G_LoadTimedMessages(void) {
 
     buffer = (char *)malloc(sizeof(char) * (len + 1));
     if (!buffer) {
-        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %i byte.\n", (len + 1) * sizeof(char));
+        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %lu byte.\n", (len + 1) * sizeof(char));
         trap_FS_FCloseFile(f);
         return;
     }
@@ -975,7 +975,7 @@ static void G_LoadHolodeckFile(void) {
 
     info = (char *)malloc(MAX_INFO_STRING * sizeof(char));
     if (!info) {
-        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %i byte.\n", MAX_INFO_STRING * sizeof(char));
+        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %lu byte.\n", MAX_INFO_STRING * sizeof(char));
         return;
     }
 
@@ -995,7 +995,7 @@ static void G_LoadHolodeckFile(void) {
 
     buffer = (char *)malloc(32000 * sizeof(char));
     if (!buffer) {
-        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %i bytes.\n", 32000 * sizeof(char));
+        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %lu bytes.\n", 32000 * sizeof(char));
         trap_FS_FCloseFile(f);
         return;
     }
@@ -1107,7 +1107,7 @@ static void G_LoadServerChangeFile(void) {
 
     buffer = (char *)malloc(32000 * sizeof(char));
     if (!buffer) {
-        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %i bytes.\n", 32000 * sizeof(char));
+        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %lu bytes.\n", 32000 * sizeof(char));
         trap_FS_FCloseFile(f);
         return;
     }
@@ -1201,7 +1201,7 @@ static void G_LoadMapChangeFile(void) {
 
     buffer = (char *)malloc(32000 * sizeof(char));
     if (!buffer) {
-        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %i bytes.\n", 32000 * sizeof(char));
+        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %lu bytes.\n", 32000 * sizeof(char));
         trap_FS_FCloseFile(f);
         return;
     }
@@ -1288,7 +1288,7 @@ static void G_LoadLocationsFile(void)
 
     serverInfo = (char *)malloc(MAX_INFO_STRING * sizeof(char));
     if (!serverInfo) {
-        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %i bytes.\n", MAX_INFO_STRING * sizeof(char));
+        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %lu bytes.\n", MAX_INFO_STRING * sizeof(char));
         return;
     }
 
@@ -1309,7 +1309,7 @@ static void G_LoadLocationsFile(void)
 
     buffer = (char *)malloc((file_len + 1) * sizeof(char));
     if (!buffer) {
-        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %i bytes.\n", (file_len + 1) * sizeof(char));
+        G_Printf(S_COLOR_RED "ERROR: Was unable to allocate %lu bytes.\n", (file_len + 1) * sizeof(char));
         trap_FS_FCloseFile(f);
         return;
     }
@@ -2500,9 +2500,9 @@ static void CheckTournement(void) {
     }
 
     if (g_gametype.integer == GT_TOURNAMENT) {
-        if (level.warmupTime == 0 || level.warmupTime != 0) {//RPG-X: RedTechie - No warmup Fail safe
+        // if (level.warmupTime == 0 || level.warmupTime != 0) {//RPG-X: RedTechie - No warmup Fail safe
             return;
-        }
+        // }
     } else if (g_gametype.integer != GT_SINGLE_PLAYER) {
         if (level.warmupTime == 0) {
             return;

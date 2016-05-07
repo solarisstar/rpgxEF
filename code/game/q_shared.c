@@ -922,7 +922,7 @@ void QDECL Com_sprintf(char *dest, int size, const char *fmt, ...) {
 
     bigbuffer = (char *)malloc(sizeof(char)*(size + 1));
     if (!bigbuffer) {
-        Com_Printf("Com_sprintf: could not allocate %u bytes for BigBuffer\n", sizeof(char)*(size + 1));
+        Com_Printf("Com_sprintf: could not allocate %lu bytes for BigBuffer\n", sizeof(char)*(size + 1));
         return;
     }
 
@@ -1218,32 +1218,30 @@ void Info_SetValueForKey(char *s, const char *key, const char *value) {
         Com_Error(ERR_DROP, "Info_SetValueForKey: oversize infostring");
     }
 
-    if (strchr(key, '\\') || strchr(value, '\\'))
-    {
+    if (!value || !strlen(value)) {
+        return;
+    }
+
+    if (strchr(key, '\\') || strchr(value, '\\')) {
         Com_Printf("Can't use keys or values with a \\\n");
         return;
     }
 
-    if (strchr(key, ';') || strchr(value, ';'))
-    {
+    if (strchr(key, ';') || strchr(value, ';')) {
         Com_Printf("Can't use keys or values with a semicolon\n");
         return;
     }
 
-    if (strchr(key, '\"') || strchr(value, '\"'))
-    {
+    if (strchr(key, '\"') || strchr(value, '\"')) {
         Com_Printf("Can't use keys or values with a \"\n");
         return;
     }
 
     Info_RemoveKey(s, key);
-    if (!value || !strlen(value))
-        return;
 
     Com_sprintf(newi, sizeof(newi), "\\%s\\%s", key, value);
 
-    if (strlen(newi) + strlen(s) > MAX_INFO_STRING)
-    {
+    if (strlen(newi) + strlen(s) > MAX_INFO_STRING) {
         Com_Printf("Info string length exceeded\n");
         return;
     }
@@ -1265,32 +1263,30 @@ void Info_SetValueForKey_Big(char *s, const char *key, const char *value) {
         Com_Error(ERR_DROP, "Info_SetValueForKey: oversize infostring");
     }
 
-    if (strchr(key, '\\') || strchr(value, '\\'))
-    {
+    if (!value || !strlen(value)) {
+        return;
+    }
+
+    if (strchr(key, '\\') || strchr(value, '\\')) {
         Com_Printf("Can't use keys or values with a \\\n");
         return;
     }
 
-    if (strchr(key, ';') || strchr(value, ';'))
-    {
+    if (strchr(key, ';') || strchr(value, ';')) {
         Com_Printf("Can't use keys or values with a semicolon\n");
         return;
     }
 
-    if (strchr(key, '\"') || strchr(value, '\"'))
-    {
+    if (strchr(key, '\"') || strchr(value, '\"')) {
         Com_Printf("Can't use keys or values with a \"\n");
         return;
     }
 
     Info_RemoveKey_Big(s, key);
-    if (!value || !strlen(value))
-        return;
 
     Com_sprintf(newi, sizeof(newi), "\\%s\\%s", key, value);
 
-    if (strlen(newi) + strlen(s) > BIG_INFO_STRING)
-    {
+    if (strlen(newi) + strlen(s) > BIG_INFO_STRING) {
         Com_Printf("BIG Info string length exceeded\n");
         return;
     }

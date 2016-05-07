@@ -527,10 +527,9 @@ static void CG_EncodeIDFile(void)
     {
         fileHandle_t		f;
         //unsigned char		buffer[SECURITY_SIZE];
-        int					fileLen;
         rpgxSecurityFile_t	sF;
 
-        fileLen = trap_FS_FOpenFile(SECURITY_FILE, &f, FS_READ);
+        int fileLen = trap_FS_FOpenFile(SECURITY_FILE, &f, FS_READ);
 
         if (!f || fileLen != SECURITY_SIZE)
         {
@@ -558,7 +557,7 @@ static void CG_EncodeIDFile(void)
         //okay, reopen the file for writing, and input the new ID
         f = 0;
 
-        fileLen = trap_FS_FOpenFile(SECURITY_FILE, &f, FS_WRITE);
+        trap_FS_FOpenFile(SECURITY_FILE, &f, FS_WRITE);
         if (!f)
         {
             CG_Error("ERROR: Could not validate %s file for writing.\n", SECURITY_FILE);

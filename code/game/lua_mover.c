@@ -166,9 +166,9 @@ static int Mover_AsTrain(lua_State * L)
         lua_pushboolean(L, qfalse);
         return 1;
     }
-    
+
     LUA_DEBUG("Mover_AsTrain - start: ent=%d target=%d speed=%f", ent->s.number, targ->s.number, speed);
-        
+
     if (speed < 1)
     {
         LUA_DEBUG("Mover_AsTrain - moving: speed less than 1 fixed");
@@ -269,7 +269,6 @@ static int Mover_SetAngles(lua_State * L)
         newAngles[1] = luaL_checkint(L, 3);
         newAngles[2] = luaL_checkint(L, 4);
     }
-    
     if (ent)
     {
         LUA_DEBUG("Mover_SetAngles - start: ent=%d angles=%s", ent->s.number, vtos(newAngles));
@@ -335,7 +334,6 @@ static int Mover_SetAngles2(lua_State * L)
         newAngles[1] = luaL_checkint(L, 3);
         newAngles[2] = luaL_checkint(L, 4);
     }
-
     if (ent)
     {
         LUA_DEBUG("Mover_SetAngles2 - start: ent=%d angles=%s", ent->s.number, vtos(newAngles));
@@ -402,7 +400,6 @@ static int Mover_SetPosition(lua_State * L)
         newOrigin[1] = luaL_checkint(L, 3);
         newOrigin[2] = luaL_checkint(L, 4);
     }
-
     if (ent)
     {
         LUA_DEBUG("Mover_SetPosition - start: ent=%d pos=%s", ent->s.number, vtos(newOrigin));
@@ -488,9 +485,9 @@ static int Mover_ToAngles(lua_State * L)
         newAngles[2] = luaL_checkint(L, 5);
     }
 
-    LUA_DEBUG("Mover_ToAngles - start: ent=%d angles=%s speed=%f", ent->s.number, vtos(newAngles), speed);
     if (ent)
     {
+        LUA_DEBUG("Mover_ToAngles - start: ent=%d angles=%s speed=%f", ent->s.number, vtos(newAngles), speed);
         BG_EvaluateTrajectory(&ent->s.apos, level.time, ent->s.apos.trBase);
         SetTrajectoryLinear(&ent->s.apos, speed, newAngles);
         ent->moverState = MOVER_LUA;
@@ -555,7 +552,7 @@ static int Mover_ToPosition(lua_State * L)
 
     if (ent)
     {
-            LUA_DEBUG("Mover_ToPosition - start: ent=%d pos=%s speed=%f", ent->s.number, vtos(newOrigin), speed);
+        LUA_DEBUG("Mover_ToPosition - start: ent=%d pos=%s speed=%f", ent->s.number, vtos(newOrigin), speed);
         BG_EvaluateTrajectory(&ent->s.pos, level.time, ent->s.pos.trBase);
         SetTrajectoryLinear(&ent->s.pos, speed, newOrigin);
         ent->moverState = MOVER_LUA;

@@ -625,58 +625,53 @@ void grenadeSpewShrapnel(gentity_t *ent)
     G_FreeEntity(ent);
 }
 
-static void FireTripmine(gentity_t * tripwire, gentity_t * ent, int * foundTripWires, int *tripcount, int *tripcount_org, int *lowestTimeStamp, int *removeMe, int *i, gentity_t * grenade)
+static void FireTripmine(gentity_t * ent, gentity_t * grenade)
 {
-    /*
-     * limit to 10 placed at any one time
-     * see how many there are now
-     */
-    while ((tripwire = G_Find(tripwire, FOFS(classname), "tripwire")) != NULL)
-    {
-        if (tripwire->parent != ent)
-        {
+    gentity_t  *tripwire = NULL;
+    int tripcount = 0;
+    int tripcount_org = 0;
+    int lowestTimeStamp = level.time;
+    int foundTripWires[MAX_GENTITIES] = { ENTITYNUM_NONE };
+
+    while ((tripwire = G_Find(tripwire, FOFS(classname), "tripwire")) != NULL) {
+        if (tripwire->parent != ent) {
             continue;
         }
-        foundTripWires[*tripcount++] = tripwire->s.number;
+        foundTripWires[tripcount++] = tripwire->s.number;
     }
-    /* now remove first ones we find until there are only 9 left */
+    
     tripwire = NULL;
-    *tripcount_org = *tripcount;
-    *lowestTimeStamp = level.time;
-    /* RPG-X: RedTechie - Added 51 tripwires for each person */
-    while (*tripcount > 50) /* 9 */
-    {
-        *removeMe = -1;
-        for (*i = 0; *i < *tripcount_org; *i++)
-        {
-            if (foundTripWires[*i] == ENTITYNUM_NONE)
-            {
+    tripcount_org = tripcount;
+    // TODO imporve the efficiency of this loop
+    // TODO probably sort on the timestamp. I'd love to get rid of
+    // TODO all these variables. - Telex
+    while (tripcount > 50) {
+
+        int removeMe = -1;
+        for (int i = 0; i < tripcount_org; i++) {
+            if (foundTripWires[i] == ENTITYNUM_NONE) {
                 continue;
             }
-            tripwire = &g_entities[foundTripWires[*i]];
-            if (tripwire && tripwire->timestamp < *lowestTimeStamp)
-            {
-                *removeMe = *i;
-                *lowestTimeStamp = tripwire->timestamp;
+            tripwire = &g_entities[foundTripWires[i]];
+            if (tripwire && tripwire->timestamp < lowestTimeStamp) {
+                removeMe = i;
+                lowestTimeStamp = tripwire->timestamp;
             }
         }
-        if (*removeMe != -1)
-        {
+        if (removeMe != -1) {
             /* remove it... or blow it? */
-            if (&g_entities[foundTripWires[*removeMe]] == NULL)
-            {
+            if (&g_entities[foundTripWires[removeMe]] == NULL) {
                 break;
-            } else
-            {
-                G_FreeEntity(&g_entities[foundTripWires[*removeMe]]);
+            } else {
+                G_FreeEntity(&g_entities[foundTripWires[removeMe]]);
             }
-            foundTripWires[*removeMe] = ENTITYNUM_NONE;
-            *tripcount--;
-        } else
-        {
+            foundTripWires[removeMe] = ENTITYNUM_NONE;
+            tripcount--;
+        } else {
             break;
         }
     }
+
     /* now make the new one */
     grenade->classname = "tripwire";
     if (rpg_dmgFlags.integer & 8) {
@@ -707,10 +702,10 @@ static void FireMine(gentity_t * grenade)
     grenade->nextthink = level.time + GRENADE_ALT_TIME; /* How long 'til she blows */
 }
 
-static void * FireAdminGun(vec3_t end, trace_t *tr, gentity_t * ent, gentity_t * tent)
+static void FireAdminGun(vec3_t end, trace_t *tr, gentity_t * ent, gentity_t * tent)
 {
     VectorMA(muzzle, MAXRANGE_CRIFLE, forward, end);
-    trap_Trace(&tr, muzzle, NULL, NULL, end, ent->s.number, MASK_SHOT);
+    trap_Trace(tr, muzzle, NULL, NULL, end, ent->s.number, MASK_SHOT);
 
     /*
      * TiM : FX Gun additional effects.
@@ -816,11 +811,10 @@ static void * FireAdminGun(vec3_t end, trace_t *tr, gentity_t * ent, gentity_t *
     } else {
         tent = G_TempEntity(tr->endpos, EV_EFFECTGUN_SHOOT);
     }
-
     tent->s.eFlags |= EF_FIRING;
 }
 
-static void * FireGrenade(gentity_t * grenade, vec3_t dir, gentity_t * ent, vec3_t start)
+static void FireGrenade(gentity_t * grenade, vec3_t dir, gentity_t * ent, vec3_t start)
 {
     /* RPG-X: RedTechie - Moved here to stop entities from being sucked up */
     grenade = G_Spawn();
@@ -880,32 +874,26 @@ static void * FireGrenade(gentity_t * grenade, vec3_t dir, gentity_t * ent, vec3
 static void WP_FireGrenade(gentity_t *ent, qboolean alt_fire)
 {
     gentity_t	*grenade;
-    gentity_t	*tripwire = NULL;
     gentity_t	*tent = 0;
     vec3_t		dir, start;
-    int		tripcount = 0;
-    int		foundTripWires[MAX_GENTITIES] = { ENTITYNUM_NONE };
-    int		tripcount_org;
-    int		lowestTimeStamp;
-    int		removeMe;
-    int		i;
     trace_t		tr;
     vec3_t		end;
 
     VectorCopy(forward, dir);
     VectorCopy(muzzle, start);
 
+    /* RPG-X: RedTechie - Moved here to stop entities from being sucked up */
+    grenade = G_Spawn();
+
+    /* kef -- make sure count is 0 so it won't get its bounciness removed like the tetrion projectile */
+    grenade->count = 0;
+
     if (RPGEntityCount != ENTITYNUM_MAX_NORMAL - 20) {
         if (alt_fire) {
-            /* RPG-X: RedTechie - Moved here to stop entities from being sucked up */
-            grenade = G_Spawn();
-
-            /* kef -- make sure count is 0 so it won't get its bounciness removed like the tetrion projectile */
-            grenade->count = 0;
 
             /* RPG-X: RedTechie - Forced Tripwires */
             if (rpg_invisibletripmines.integer == 1){
-                FireTripmine(tripwire, ent, foundTripWires, &tripcount, &tripcount_org, &lowestTimeStamp, &removeMe, &i, grenade);
+                FireTripmine(ent, grenade);
             } else {
                 FireMine(grenade);
             }

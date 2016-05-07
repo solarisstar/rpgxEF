@@ -14,7 +14,7 @@ static int Cent_ToString(lua_State * L)
 
     cent = Lua_GetCent(L, 1);
     ent = cent->e;
-    Com_sprintf(buf, sizeof(buf), "centity: id=%d pointer=%p\n", ent - cg_entities, ent);
+    Com_sprintf(buf, sizeof(buf), "centity: id=%lu pointer=%p\n", ent - cg_entities, ent);
     lua_pushstring(L, buf);
 
     return 1;

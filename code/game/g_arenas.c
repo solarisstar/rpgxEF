@@ -179,7 +179,7 @@ static gentity_t *SpawnModelOnVictoryPad(gentity_t *pad, vec3_t offset, gentity_
         return NULL;
     }
 
-    eState = &body->s;
+    // eState = &body->s;
     eShared = &body->r;
 
     body->classname = ent->client->pers.netname;
