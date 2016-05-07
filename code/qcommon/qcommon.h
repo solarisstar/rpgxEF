@@ -267,7 +267,7 @@ extern int demo_protocols[];
 	#define	UPDATE_SERVER_NAME	"motd.stef1.ravensoft.com"
 #endif
 #ifndef MASTER_SERVER_NAME
-	#define MASTER_SERVER_NAME	"master.stef1.ravensoft.com"
+    #define MASTER_SERVER_NAME  "efmaster.kickchat.com"
 #endif
 
 #define PORT_MASTER 27953
