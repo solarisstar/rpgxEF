@@ -1,0 +1,763 @@
+\documentclass{scrreprt}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{listings} 
+% -*- latex -*-
+% Definition of the Lua language for the listings package
+% Time-stamp: <2008-11-30 15:27:16 rsmith>
+% Written by Roland Smith <rsmith@xs4all.nl> and hereby placed in the public
+% domain. 
+\lstdefinelanguage{lua}
+  {morekeywords={and,break,do,else,elseif,end,false,for,function,if,in,local,
+     nil,not,or,repeat,return,then,true,until,while},
+   morekeywords={[2]arg,assert,collectgarbage,dofile,error,_G,getfenv,
+     getmetatable,ipairs,load,loadfile,loadstring,next,pairs,pcall,print,
+     rawequal,rawget,rawset,select,setfenv,setmetatable,tonumber,tostring,
+     type,unpack,_VERSION,xpcall},
+   morekeywords={[2]coroutine.create,coroutine.resume,coroutine.running,
+     coroutine.status,coroutine.wrap,coroutine.yield},
+   morekeywords={[2]module,require,package.cpath,package.load,package.loaded,
+     package.loaders,package.loadlib,package.path,package.preload,
+     package.seeall},
+   morekeywords={[2]string.byte,string.char,string.dump,string.find,
+     string.format,string.gmatch,string.gsub,string.len,string.lower,
+     string.match,string.rep,string.reverse,string.sub,string.upper},
+   morekeywords={[2]table.concat,table.insert,table.maxn,table.remove,
+   table.sort},
+   morekeywords={[2]math.abs,math.acos,math.asin,math.atan,math.atan2,
+     math.ceil,math.cos,math.cosh,math.deg,math.exp,math.floor,math.fmod,
+     math.frexp,math.huge,math.ldexp,math.log,math.log10,math.max,math.min,
+     math.modf,math.pi,math.pow,math.rad,math.random,math.randomseed,math.sin,
+     math.sinh,math.sqrt,math.tan,math.tanh},
+   morekeywords={[2]io.close,io.flush,io.input,io.lines,io.open,io.output,
+     io.popen,io.read,io.tmpfile,io.type,io.write,file:close,file:flush,
+     file:lines,file:read,file:seek,file:setvbuf,file:write},
+   morekeywords={[2]os.clock,os.date,os.difftime,os.execute,os.exit,os.getenv,
+     os.remove,os.rename,os.setlocale,os.time,os.tmpname},
+   sensitive=true,
+   morecomment=[l]{--},
+   morecomment=[s]{--[[}{]]--},
+   morestring=[b]",
+   morestring=[d]'
+  }
+\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt} 
+\lstset{language=lua} 
+\begin{document}
+\title{
+\Huge RPG-X2 Lua Documentation
+\author{
+Ubergames
+Walter Julius 'GSIO01' Hennecke}
+}
+\maketitle
+\newpage
+\tableofcontents
+\chapter{Introduction}
+\label{intro}
+\section{General Information}
+\label{gen-info}
+The RPG-X2 Lua Documentation documents and describes all Lua functions avaible in RPG-X2. The version you are reading right now is for \textbf{RPG-X2 version 2.2 beta 4.4.5}. The RPG-X2 Lua Documentation will be updated with every new release of RPG-X2.
+\section{Prerequisites}
+\label{preq}
+\begin{itemize}
+    \item In Lua variables are not declared with their type. In order to provid you information of what type a variable is the types will be written infront of variables in italic (example: \textit{integer} \textbf{clientNum}).
+    \item There are three different types of function calls in RPG-X2 Lua.\begin{itemize}
+    \item Function calls from Lua base libraries (example: \textbf{\textbf{tostring(clientNum)}}).
+    \item Function calls from RPG-X2 libraries which have the library name infront \textbf{library.function()} (example: \textbf{entity.Spawn()}).
+    \item Function calls on variables. This is possible on entities and vectors for example (example: \textbf{ent.Remove(ent)}).
+    \item Function calls where the variable a function is called on is the first argument \textbf{var.function(var)} can be written as \textbf{var:function()} (example: \textbf{ent.Remove(ent)} is the same as \textbf{ent:Remove()}).
+\end{itemize}
+\end{itemize}
+\chapter{Lua Hooks}
+\label{lua-hooks}
+\section{What is a Lua Hook}
+\label{wia-lh}
+A Lua Hook is a function that gets called when a specific event in the game logic happens. For example if the game is iniatialized in the game logic G\_InitGame function gets called. This function has a Lua Hook which means when the G\_InitGame function is called in the game logic the corresponding Lua function gets called as well. There are Lua Hooks with static function names and Lua Hooks with dynamic function names.
+\section{Static Lua Hooks}
+\label{s-lh}
+Static Lua hooks always have the same function name.
+\subsection{InitGame}
+\label{init-game}
+\textbf{InitGame(}\textit{integer} \textbf{leveltime,} \textit{integer} \textbf{randomssed, }\textit{integer} \textbf{restart)}
+\newline
+Gets called at game start or after a map\_restart command was issued.
+\newline
+\textbf{leveltime} current level time in milliseconds
+\newline
+\textbf{restart} is 1 when call is result of a map\_restart
+\subsection{ShutdownGame}
+\label{shutdown-game}
+\textbf{ShutdownGame(}\textit{integer} \textbf{restart)}
+\newline
+Gets called when the game shuts down (disconnect, game is closed, map change, map restart).
+\newline
+\textbf{restart} is 1 when call is result of a map\_restart
+\subsection{RunFrame}
+\label{run-frame}
+\textbf{RunFrame(}\textit{integer} \textbf{leveltime)}
+\newline
+Gets called everyframe. Should be used with cation because this is called every frame and the frametime is 50ms.
+\newline
+\textbf{leveltime} current leveltime in milliseconds
+\subsection{GClientPrint}
+\label{cli-print}
+\textbf{GClientPrint(}\textit{string} \textbf{text, }\textit{entity }\textbf{client)}
+\newline
+Gets called when the game logic function G\_PrintfClient gets called.
+\newline
+\textbf{text} text that gets printed
+\newline
+\textbf{client} the client the text gets printed for
+\subsection{GPrint}
+\label{g-print}
+\textbf{GPrint(}\textit{string}\textbf{ text)}
+\newline
+Gets called when the game logic function G\_Print is called.
+\newline
+\textbf{text} text that gets printed to the game console
+\newpage
+\section{Dynamic Lua Hooks}
+\label{dyn-lh}
+These hooks can have different functions names. All of the hooks are for etities. The function names for these are defined in radiant by key-value pairs.
+As the function names depend on these pairs the function names for these hooks in this documentation are the keys that are used to define the function names in Radiant.
+\subsection{luaThink}
+\label{luaThink}
+\textbf{luaThink(}\textit{entity}\textbf{ ent)}
+\newline
+Gets called each time the entity thinks.
+\newline
+\textbf{ent} the entity itself
+\subsection{luaTouch}
+\label{luaTouch}
+Gets called each time the entity is touched.
+\newline
+\textbf{ent} the entity itself
+\newline
+\textbf{other} the entity that touched \textbf{ent}
+\subsection{luaUse}
+\label{luaUse}
+Gets called each time the entity is used.
+\newline
+\textbf{ent} the entity itself
+\newline
+\textbf{activator} the entity that used \textbf{ent}
+\subsection{luaHurt}
+\label{luaHurt}
+\textbf{luaHurt(}\textit{entity}\textbf{ ent, }\textit{entity}\textbf{ inflictor,}\textit{entity}\textbf{attacker)}
+\newline
+Gets called each time the entity gets hurt.
+\newline
+\textbf{ent} the entity itself
+\newline
+\textbf{inflictor} the inflictor
+\newline
+\textbf{attacker} the attacker
+\subsection{luaDie}
+\label{luaDie}
+\textbf{luaDie(}\textit{entity} \textbf{ent,} \textit{entity} \textbf{inflictor,} \textit{entity} \textbf{attacker,} \textit{integer} \textbf{dmg,} \textit{integer}\textbf{ mod)}
+\newline
+Gets called when the entity dies.
+\newline
+\textbf{ent} the entity itself
+\newline
+\textbf{inflictor} the inflictor
+\newline
+\textbf{attacker} the attacker
+\newline
+\textbf{dmg} the ammount of damage
+\newline
+\textbf{mod} the means of death
+\subsection{luaFree}
+\label{luaFree}
+\textbf{luaFree(}\textit{entity} \textbf{ent)}
+\newline
+Gets called when the entity is freed which means it is removed.
+\newline
+\textbf{ent} the entity itself
+\subsection{luaReached}
+\label{luaReached}
+\textbf{luaReached(}\textit{entity }\textbf{ent)}
+\newline
+Gets called when movement of the entity has reached its endpoint.
+\newline
+\textbf{ent} the entity itself
+\subsection{luaReachedAngular}
+\label{luaReachedAngular}
+\textbf{luaReachedAngular(}\textit{entity }\textbf{ent)}
+\newline
+Gets called when angular movement of the entity has reached its endangles.
+\newline
+\textbf{ent} the entity itself
+\subsection{luaTrigger}
+\label{luaTrigger}
+\textbf{luaTrigger(}\textit{entity}\textbf{ ent, }\textit{entity}\textbf{ other)}
+\newline
+Gets called when the entity is triggered. Note that this is not the same as when the entity is used this is for trigger entities.
+\newline
+\textbf{ent} the entity itself
+\newline
+\textbf{other} the entity that triggerd \textbf{ent}
+\subsection{luaSpawn}
+\label{luaSpawn}
+\textbf{lauSpawn(}\textit{entity}\textbf{ ent)}
+\newline
+Gets called when the entities spawn function is called.
+\newline
+\textbf{ent} the entity itself.
+\newpage
+\chapter{RPG-X2 Map Scripting}
+\label{rpgx2-mapscripting}
+\section{Map scripts}
+\label{map-scripts}
+Currently on script file can be loaded for each map. This script file has to be located in \textit{scripts/lua/<mapname>} and must have the name \textit{<mapname>.lua}. \textit{<mapname>} is the name of the .map file and .bsp file.
+\section{Calling Functions}
+\label{map-callingfunction}
+There are Dynamic Lua Hooks for use in Radiant (listed below und Dynamic Lua Hooks in this ducumentation). You can use these hooks on entities by adding the corresponding Lua Hook key and the function name as value to an entity.
+\newline
+For example if you want a function \textit{PrintText} to be called when a \textit{func\_usable} is used you have to add the key \textit{luaUse} and the value \textit{PrintText} to this entity.
+\newpage
+\chapter{RPG-X2 Lua Libraries}
+\label{rpgx2-llibs}
+\section{game}
+\label{g}
+This library provides acces to some game logic function such as G\_Printf \newline
+and G\_ClientPrintf.
+\subsection{game.Print}
+\label{g-prnt}
+\textbf{game.Print(}\textit{string}\textbf{ text)}
+\newline
+Prints \textbf{text} to the game console (the server console).
+\subsection{game.ClientPrint}
+\label{g-clientprint}
+\textbf{game.ClientPrint(}\textit{integer}\textbf{ clientNum, }\textit{string}\textbf{ text)}
+\newline
+Prints \textbf{text} to the clients console that has the client number \textbf{clientNum}. If \textbf{clientNum} is -1 the text gets printed to all clients consoles.
+\subsection{game.CenterPrint}
+\label{g-centerprint}
+\textbf{game.CenterPrint(}\textit{integer}\textbf{ clientNum, }\textit{string}\textbf{ text)}
+\newline
+Prints \textbf{text} to the center of the screen of the client with client number \textbf{clientNum}. If \textbf{clientNum} is -1 the text gets printed for all clients.
+\subsection{game.MessagePrint}
+\label{g-messagepritn}
+\textbf{game.MessagePrint(}\textit{integer}\textbf{ clientNum, }\textit{string}\textbf{ text)}
+\newline
+Prints \textbf{text} to the lower right corner of the screen of the client with client number \textbf{clientNum}. If \textbf{clientNum} is -1 the text gets printed for all cleints.
+\subsection{game.LevelTime}
+\label{g-leveltime}
+\textbf{game.LevelTime()}
+Returns the curreten level time in milliseconds.
+\subsection{game.SetGlobal}
+\label{g-setglobal}
+\textbf{game.SetGlobal(}\textit{string}\textbf{ name, value)}
+\newline
+Sets a global lua varible which is called \textbf{name} to \textbf{value}. Creates a new global variable if a variable of \textbf{name} does not exist. \textbf{value} can be of any type.
+\subsection{game.GetGlobal}
+\label{g-getglobal}
+\textbf{game.GetGlobal(}\textit{string}\textbf{ name)}
+\newline
+Returns the value of the global variable \textbf{name}. Returns \textit{nil} if the variable does not exist.
+\newpage
+\section{qmath}
+\label{qmath}
+This library provides access to mathematical functions avaible in the game code.
+\subsection{qmath.abs}
+\label{qm-abs}
+\textbf{qmath.abs(}\textit{float}\textbf{ f)}
+\newline
+Returns the integer part of \textbf{f}.
+\subsection{qmath.sin}
+\label{qm-sin}
+\textbf{qmath.sin(}\textit{float}\textbf{ degree)}
+\newline
+Returns the sine of \textbf{degree}.
+\subsection{qmath.cos}
+\label{qm-cos}
+\textbf{qmath.cos(}\textit{float}\textbf{ degree)}
+\newline
+Returns the cosine of \textbf{degree}.
+\subsection{qmath.tan}
+\label{qm-tan}
+\textbf{qmath.tan(}\textit{float}\textbf{ degree)}
+\newline
+Returns the tangent of \textbf{degree}.
+\subsection{qmath.asin}
+\label{qm-asin}
+\textbf{qmath.asin(}\textit{float}\textbf{ f)}
+\newline
+Returns the arcsine of \textbf{f}.
+\subsection{qmath.acos}
+\label{qm-acos}
+\textbf{qmath.acos(}\textit{float}\textbf{ f)}
+\newline
+Returns the arccosine of \textbf{f}.
+\subsection{qmath.atan}
+\label{qm-atan}
+\textbf{qmath.atan(}\textit{float}\textbf{ f)}
+\newline
+Returns the arctangent of \textbf{f}.
+\subsection{qmath.floor}
+\label{qm-floor}
+\textbf{qmath.floor(}\textit{float}\textbf{ f)}
+\newline
+Returns the floored value of \textbf{f}.
+\subsection{qmath.ceil}
+\label{qm-ceil}
+\textbf{qath.ceil(}\textit{float}\textbf{ f)}
+\newline
+Returns the ceiled value of \textbf{f}.
+\subsection{qmath.fmod}
+\label{qm-fmod}
+\textbf{qmath.fmod(}\textit{float}\textbf{ f, }\textit{float}\textbf{ n)}
+\newline
+Returns the remainder of \begin{math}f/n.\end{math}
+\subsection{qmath.modf}
+\label{qm-modf}
+\textbf{qmath.modf(}\textit{float}\textbf{ f)}
+\newline
+Breaks \begin{math}f\end{math} apart into its integer par and its fractional part. The fractional part is returned while the integer part is assigned to \begin{math}f\end{math}
+\subsection{qmath.sqrt}
+\label{qm-sqrt}
+\textbf{qmath.sqrt(}\textit{float}\textbf{ f)}
+\newline
+Returns the square root of \textbf{f}.
+\subsection{qmath.log}
+\label{qm-log}
+\textbf{qmath.log(}\textit{float}\textbf{ f)}
+\newline
+Returns the logarithm of \textbf{f}.
+\subsection{qmath.log10}
+\label{qm-log10}
+\textbf{qmath.log10(}\textit{float}\textbf{ f)}
+\newline
+Returns the logarithm to the base of 10 of \textbf{f}.
+\subsection{qmath.deg}
+\label{qm-deg}
+\textbf{qmath.deg(}\textit{float}\textbf{ radian)}
+\newline
+Converts from radian to degrees.
+\subsection{qmath.rad}
+\label{qm-rad}
+\textbf{qmath.rad(}\textit{float}\textbf{ degree)}
+\newline
+Converts from degree to radian.
+\subsection{qmath.frexp}
+\label{qm-frexp}
+\textbf{qmath.frexp(}\textit{float}\textbf{ f)}
+\newline
+Breaks \textbf{f} into its binary significand and an integral exponent for 2. 
+\newline
+\begin{math}x=significand*2^exponent\end{math}
+\subsection{qmath.ldexp}
+\label{qm-ldexp}
+\textbf{qmath.ldexp(}\textit{float}\textbf{ f, }\textit{float}\textbf{ n)}
+\newline
+Returns the result from multiplying \textbf{f} by 2 raised to the power of \textbf{n}.
+\subsection{qmath.min}
+\label{qm-min}
+\textbf{qmath.min(}\textit{integer}\textbf{ array[])}
+\newline
+Return the lowest value in \textbf{array[]}.
+\subsection{qmath.max}
+\label{qm-max}
+\textbf{qmath.max(}\textit{integer}\textbf{ array[])}
+\newline
+Return the highest value in \textbf{array[]}.
+\subsection{qmath.random}
+\label{qm-random}
+\textbf{qmath.random()}
+\newline
+Returns random integers.
+\subsection{qmath.crandom}
+\label{qm-crandom}
+\textbf{qmath.crandom()}
+\newline
+Returns random floats (crazy random function).
+\newpage
+\section{vector}
+\label{vect}
+This provides a new type vector along with mathematical functions for it.
+\subsection{vector.New}
+\label{vect-new}
+\textbf{vector.New()}
+\newline
+Allocates and returns a new vector \begin{math}\left(\begin{array}{c} 0 \\ 0 \\ 0 \\ \end{array}\right)\end{math}.
+\subsection{vector.Construct}
+\label{vect-cons}
+\textbf{vector.Construct(}\textit{float}\textbf{ x, }\textit{float}\textbf{ y, }\textit{float}\textbf{ z)}
+\newline
+Allocates and return a new vector \begin{math}\left(\begin{array}{c} x \\ y \\ z \\  \end{array}\right)\end{math}.
+\subsection{vector.Set}
+\label{vect-set}
+\textbf{vector.Set(}\textit{vector}\textbf{ v, }\textit{float}\textbf{ x, }\textit{float}\textbf{ y, }\textit{float}\textbf{ z)}
+\newline
+Set the vector \textbf{v} to the specified values.
+\subsection{vector.clear}
+\label{vect-clear}
+\textbf{vector.Clear(}\textit{vector}\textbf{ v)}
+\newline
+Clears \textbf{vector} by setting it to \begin{math}\left(\begin{array}{c} 0 \\ 0 \\ 0 \\ \end{array}\right)\end{math}.
+\subsection{vector.Add}
+\label{vect-add}
+\textbf{vector.Add(}\textit{vector}\textbf{ a, }\textit{vector}\textbf{ b, }\textit{vector}\textbf{ c)}
+\newline
+Adds \textbf{a} and \textbf{b} ans stores the result in \textbf{c}.
+\subsection{vector.Substract}
+\label{vect-sub}
+\textbf{vector.Subtract(}\textit{vector}\textbf{ a, }\textit{vector}\textbf{ b, }\textit{vector}\textbf{ c)}
+\newline
+Subtracts \textbf{b} from \textbf{a} and stores the result in \textbf{c}.
+\subsection{vector.Scale}
+\label{vect-scale}
+\textbf{vector.Scale(}\textit{vector}\textbf{ a, }\textit{float}\textbf{ b, }\textit{vector}\textbf{ c)}
+\newline
+Scales \textbf{a} by the value of \textbf{b} and stores the result in \textbf{c}.
+\subsection{vector.Length}
+\label{vect-length}
+\textbf{vector.Length(}\textit{vector}\textbf{ a)}
+\newline
+Returns the length of \textbf{a}.
+\subsection{vector.Normalize}
+\label{vect-norm}
+\textbf{vector.Normalize(}\textit{vector}\textbf{ a)}
+\newline
+Normalizes \textbf{a}.
+\subsection{vector.RotateAroundPoint}
+\label{vect-rotarndpnt}
+\textbf{vector.RotateAroundPoint(}\textit{vector}\textbf{ dest, }\textit{vector}\textbf{ dir, }\textit{vector}\textbf{ point, }\textit{float}\textbf{ degrees)}
+\newline
+Rotates \textbf{point} around a given vector.
+\newline
+\textbf{dir} vector around which to rotate (must be normalized)
+\newline
+\textbf{point} point to be rotated
+\newline
+\textbf{degrees} how many degrees to rotate the point by
+\newline
+\textbf{dst} point after totation
+\subsection{vector.Perpendicular}
+\label{vect-Perpendicular}
+\textbf{vector.Perpendicular(}\textit{vector}\textbf{ dest, }\textit{vector}\textbf{ src)}
+\newline
+Finds a vector perpendicular to the source vector.
+\textbf{src} source vector
+\textbf{dest} a vector that is perpendicular to \textbf{src} (the result is stored here)
+\newpage
+\section{entity}
+\label{enty}
+This library holds function for entities. All functions listed with entity infront here are calls from the library. All functions listed with ent are called on a variable of the type entity.
+\subsection{entity.Find}
+\label{enty-find}
+\textbf{entity.Find(}\textit{string}\textbf{ targetname)}
+\newline
+Returns the first entity found that has a targetname of \textbf{targetname}.
+\subsection{entity.FindNumber}
+\label{enty.findnumber}
+\textbf{entity.FindNumber(}\textit{integer}\textbf{ entnum)}
+\newline
+Returns the entity with the entity number \textbf{entnum}.
+\subsection{entity.FindBModel}
+\label{enty-findbmodel}
+\textbf{entity.FindBModel(}\textit{integer}\textbf{ bmodelnum)}
+\newline
+Returns the entity with the brush model *\textbf{bmodelnumber}. This is the only failsafe way to find brush entities as the entity number is diffrent when you load a map local or join a server.
+\subsection{ent.GetNumber}
+\label{enty-getnumber}
+\textbf{ent.GetNumber(}\textit{entity}\textbf{ ent)} or \textbf{ent:GetNumber()}
+\newline
+Returns the entity number of the entity.
+\subsection{ent.SetKeyValue}
+\label{enty-setkeyvalue}
+\textbf{ent.SetKeyValue(}\textit{entity}\textbf{ ent, }\textit{string}\textbf{ key, }\textit{string}\textbf{ value)} or \textbf{ent:SetKeyValue(}\textit{string}\textbf{ key, }\textit{string}\textbf{ value)}
+\newline
+Sets a key-value pair for \textbf{ent} like in Radiant. Only works if the \textit{key} is part of \textit{fields\_t} (predefined keys).
+\subsection{entity.Remove}
+\label{enty-remove}
+\textbf{entity.Remove(}\textit{entity}\textbf{ ent)}
+\newline
+Removes/frees \textbf{ent}.
+\subsection{ent.GetOrigin}
+\label{enty-getorigin}
+\textbf{ent.GetOrigin(}\textit{entity}\textbf{ ent)} or \textbf{ent:GetOrigin()}
+\newline
+Returns the origin of \textbf{ent} as vector.
+\subsection{ent.IsClient}
+\label{enty-isclient}
+\textbf{ent.IsClient(}\textit{entity}\textbf{ ent)} or \textbf{ent:IsClient()}
+\newline
+Returns boolean. True if \textbf{ent} is a client.
+\subsection{ent.GetClientname}
+\label{enty-getclientname}
+\textbf{ent.GetClientname(}\textit{entity}\textbf{ ent)} or \textbf{ent:GetClientname()}
+\newline
+Returns the clientname of \textbf{ent}.
+\subsection{ent.GetClassname}
+\label{enty-getclassname}
+\textbf{ent.GetClassname(}\textit{entity}\textbf{ ent)} or \textbf{ent:GetClassname()}
+\newline
+Returns the classname of \textbf{ent}.
+\subsection{ent.SetClassname}
+\label{enty-setclassname}
+\textbf{ent.SetClassname(}\textit{entity}\textbf{ ent, }\textit{string}\textbf{ classname)} or 
+\newline
+\textbf{ent:SetClassname(}\textit{string}\textbf{ classname)}
+\newline
+Sets the classname of \textbf{ent} to \textbf{classname}.
+\subsection{ent.GetTargetname}
+\label{enty-gettargetname}
+\textbf{ent.GetTargetname(}\textit{entity}\textbf{ ent)} or \textbf{ent:GetTargetname()}
+\newline
+Returns the targetname of \textbf{ent}.
+\subsection{ent.SetupTrigger}
+\label{enty-setuptrigger}
+\textbf{ent.SetupTrigger(}\textit{enttiy}\textbf{ ent)} or \textbf{ent:SetupTrigger()}
+\newline
+Does some setup for entities spawned by script that are to be used as trigger.
+\subsection{entity.GetTarget}
+\label{enty-gettarget}
+\textbf{entity.GetTarget(}\textit{entity}\textbf{ ent)}
+Returns the target of \textbf{ent}.
+\subsection{entity.Use}
+\label{enty-use}
+\textbf{entity.Use(}\textit{entity}\textbf{ ent)}
+\newline
+Uses \textbf{ent}.
+\subsection{entity.Spawn}
+\label{enty-spawn}
+\textbf{entity.spawn()}
+\newline
+Tries to spawn a new entity and returns it. If no new entity can be spawned \textit{nil} is returned.
+\subsection{entiy.CallSpawn}
+\label{enty-callspawn}
+\textbf{entity.CallSpawn(}\textit{entity}\textbf{ ent)}
+\newline
+Calls the game logic spawn function for the class of \textbf{ent}.
+\subsection{entity.DelayedCallSpawn}
+\label{enty-delayedcallspawn}
+\textbf{entity.DelayedCallSpawn(}\textit{entity}\textbf{ ent, }\textit{integer}\textbf{ delay)}
+\newline
+Calls the game logic spawn function for the class of \textbf{ent} after a delay.
+\textbf{delay} delay in milliseconds
+\subsection{entity.RemoveSpawns}
+\label{enty-removespawns}
+\textbf{entity.RemoveSpawns()}
+\newline
+Removes all spawn points from the map.
+\subsection{ent.Lock}
+\label{enty-lock}
+\textbf{ent.Lock(}\textit{entity}\textbf{ ent)}
+\newline
+Looks the entity. Works with anything that can be locked (doors, turbolifts, usables, ...).
+\subsection{ent.Unlock}
+\label{enty-unlock}
+\textbf{ent.Unlock(}\textit{entity}\textbf{ ent)}
+\newline
+Unlocks the entity. Works with anything that can be locked (doors, turbolifts, usables, ...).
+\subsection{ent.IsLocked}
+\label{enty-locked}
+\textbf{ent.IsLocked(}\textit{entity}\textbf{ ent)}
+\newline
+Returns \textbf{true} if entity is locked else it returns \textbf{false}.
+\subsection{ent.GetParm}
+\label{enty-getparm}
+\textbf{ent.GetParm(}\textit{entity }\textbf{ent, }\textit{integer }\textbf{parm)}
+\newline
+Returns one of the four luaParms of an entity as string. Returns \textbf{nil} if the choosen luaParm is not set.
+\newline
+\textbf{parm} to return (number between 1 and 4)
+\subsection{ent.SetParm}
+\label{enty-setparm}
+\textbf{ent.SetParm(}\textit{entity }\textbf{ent, }\textit{integer }\textbf{parm, }\textit{string }\textbf{value)}
+\newline
+Sets one oth the four luaParms of an entity to \textbf{value}.
+\newline
+\textbf{parm} parm to be set (number between 1 and 4)
+\newline
+\textbf{value} value to set the parm to
+\newpage
+\section{mover}
+\label{mver}
+Important note: always call mover.Halt or mover.HaltAngles before you move a mover again otherwise the movement wont work correctly.
+\subsection{mover.Halt}
+\label{mver-halt}
+\textbf{mover.Halt(}\textit{entity}\textbf{ ent)}
+\newline
+Stops movement immediately.
+\subsection{mover.HaltAngles}
+\label{mver-haltangles}
+\textbf{mover.HaltAngles(}\textit{entity}\textbf{ ent)}
+\newline
+Stops angular movement immediately.
+\subsection{mover.AsTrain}
+\label{mver-astrain}
+\textbf{mover.AsTrain(}\textit{entity}\textbf{ mover, }\textit{entity}\textbf{ target, }\textit{float}\textbf{ speed)}
+\newline
+Moves an entity like a \textit{func\_train} entity. Targets have to be \textit{path\_corner} entities.
+\newline
+\textbf{target} the first \textit{path\_corner} to move to.
+\subsection{mover.SetAngles}
+\label{mver-setangles}
+\textbf{mover.SetAngles(}\textit{entity}\textbf{ ent, }\textit{vector}\textbf{ angles)} or \textbf{mover.SetAngles(}\textit{entity}\textbf{ ent, }\textit{float}\textbf{ x, }\textit{float}\textbf{ y, }\textit{float}\textbf{ z)}
+\newline
+Sets the angles of \textbf{ent} to the secified value(s).
+\subsection{mover.SetPosition}
+\label{mver-setposition}
+\textbf{mover.SetPosition(}\textit{entity}\textbf{ ent, }\textit{vector}\textbf{ pos)} or \textbf{mover.SetPosition(}\textit{entity}\textbf{ ent, }\textit{float}\textbf{ x, }\textit{float}\textbf{ y, }\textit{float}\textbf{ z)}
+\newline
+Set the position of \textbf{ent} to the specified value(s).
+\subsection{mover.ToAngles}
+\label{mver-toangles}
+\textbf{mover.ToAngles}(\textit{entity}\textbf{ ent, }\textit{float}\textbf{ speed, }\textit{vector}\textbf{ angles)} or \textbf{mover.ToAngles(}\textit{entity}\textbf{ ent, }\textit{float}\textbf{ speed, }\textit{float}\textbf{ x, }\textit{float}\textbf{ y, }\textit{float}\textbf{ z)}
+\newline
+Rotates \textbf{ent} to the specified angles.
+\subsection{mover.ToPosition}
+\label{mver-toposition}
+\textbf{mover.ToPosition(}\textit{entity}\textbf{ ent, }\textit{float}\textbf{ speed, }\textit{vector}\textbf{ angles)} or
+\newline
+\textbf{mover.ToPosition(}\textit{entity}\textbf{ ent, }\textit{float}\textbf{ speed, }\textit{float}\textbf{ x, }\textit{float}\textbf{ y, }\textit{float}\textbf{ z)}
+\newline
+Moves \textbf{ent} to the specified position.
+\newpage
+\section{sound}
+\label{sound}
+This library adds function to play and handle sounds.
+\subsection{Sound Channels}
+\label{sound-chan}
+In some function of the sound library you will be asked to specify a sound channel. Genral it will be ok to use CHAN\_AUTO and let the engine choose the channel. Anyway you will be able to choose channels yourself.
+\newline
+Here is a table with the diffrent channels and their numbers to use in functions:
+\newline
+\begin{center}
+\begin{tabular}[c]{| c | c |}
+\hline
+CHAN\_AUTO & 0 \\
+\hline
+CHAN\_LOCAL & 1 \\
+\hline
+CHAN\_WEAPON & 2 \\
+\hline
+CHAN\_VOICE & 3 \\
+\hline
+CHAN\_ITEM & 4 \\
+\hline
+CHAN\_BODY & 5 \\
+\hline
+CHAN\_LOCAL\_SOUND & 6 \\
+\hline
+CHAN\_ANNOUNCER & 7 \\
+\hline
+CHAN\_MENU1 & 8 \\
+\hline
+\end{tabular}
+\end{center}
+\subsection{sound.PlaySound}
+\label{snd-playsnd}
+\textbf{sound.PlaySound(}\textit{entity}\textbf{ ent, }\textit{integer}\textbf{ chan, }\textit{string}\textbf{ sound)}
+\newline
+Plays the sound file \textbf{sound} using the channel \textbf{chan} on the entity \textbf{ent}.
+\newpage
+\chapter{Examples}
+\label{examples}
+This section of the manual contains script examples which may help you to understand how certain functions should be used.
+\section{Example 1 - HelloWorld}
+\label{example1}
+This is a must have example I think as it always is there for any programming language you learn.
+\subsection{Hello World for game}
+\label{example11}
+\lstinputlisting[frame=single, label=helloworldgame, caption=Hello World for game]{examples/HelloWorldGame.lua}
+As you might not this is a function for luaUse (you can tell that from the function head).
+\subsection{Hello World for a client}
+\label{example12}
+\lstinputlisting[frame=single, label=helloworldclient, caption=Hello World for client]{examples/HelloWorldClient.lua}
+As you might not this is a function for luaUse (you can tell that from the function head).
+\lstinputlisting[frame=single, label=helloworldclient1, caption=First function]{examples/HelloWorldClient1.lua}
+This function prints a message to the clients console.
+\newline
+\lstinline|activator:GetNumber()| gets the entity number of the activator which in this case is the client number as well.
+\newline
+\lstinline|activator:GetClientname()| gets the clients clientname.
+\lstinputlisting[frame=single, label=helloworldclient2, caption=Second function]{examples/HelloWorldClient2.lua}
+This function prints a message to the center of the screen of a client.
+\lstinputlisting[frame=single, label=helloworldclient3, caption=Third function]{examples/HelloWorldClient3.lua}
+This function prints a message to the lower right corner of the clients screen.
+\subsection{Hello World for all clients}
+\label{example13}
+\lstinputlisting[frame=single, label=helloworldclientall, caption=Hello World for all client]{examples/HelloWorldClientAll.lua}
+This is very similar to the previous example the only difference is that instead of a client number -1 is the first arguments which results in the message to be printed to all clients.
+\section{Example 2 - Finding Entities}
+\label{example2}
+These examples will show the different ways of finding an entity.
+\subsection{Finding entities by their targetnames}
+\label{example21}
+\lstinputlisting[frame=single, label=findents1, caption=Find an entity by its targetname]{examples/FindingEnts1.lua}
+You should note that \lstinline|entity.Find()| only returns the first entity found which means if there are multiple entities with the same targetname and the one found first isn't yours you'll be unable to find the wanted entity by this way.
+\newline
+Also besides showing you how to find an entity you also can see howto use local variables in function here.
+\subsection{Finding entities by their entity number}
+\label{example22}
+\lstinputlisting[frame=single, label=findents2, caption=Find an entity by its entity number]{examples/FindingEnts2.lua}
+This is a quite failsafe way to find an entity there is just one thing you have to note: The entity number for an entity when the map is loaded locally is not the same as the entity number for an entity when running a dedicated server.
+\subsection{Finding entities by thier brush model}
+\label{example23}
+\lstinputlisting[frame=single, label=findents3, caption=Find an entity by its brush model]{examples/FindingEnts3.lua}
+This only works for brush entities of course but for these it is absolutly failsafe.
+\section{Example 3 - Spawning entities}
+This example shows you how to spawn entities from scripting. You can spawn almost all non brush entities as well as some brush entities that don't require a visible brush model (e.g. triggers).
+\lstinputlisting[frame=single, label=spawnents, caption=Spawning an entity]{examples/SpawningEnts.lua}
+\newpage
+So what does what and why?
+\newline
+\begin{lstlisting}
+local ent = entity.Spawn()
+\end{lstlisting}
+This tries to spawn a new entity and assign it to \lstinline|ent|.
+\newline
+\begin{lstlisting}
+if ent == nil then return
+\end{lstlisting} 
+This is a check to make sure that a new entity was sucessfully spawned. If that is not the case the further execution of the function is stopped.
+\newline
+\begin{lstlisting}
+ent:SetKeyValue("classname", "info_notnull");
+\end{lstlisting} 
+This sets the classname and by this the entity is turned to an entity of a specific type.
+\newline
+\begin{lstlisting}
+mover:SetPosition(0, 0, 0);
+\end{lstlisting} 
+This sets the origin of the entity.
+\newline
+\begin{lstlisting}
+entity.CallSpawn(ent);
+\end{lstlisting}
+This calls the spawn function of the entity.
+\chapter{How to ...}
+\label{howto}
+\section{add RPG-X2 Turbolifts to older maps}
+\label{howto-x2turbo}
+Comming soon ...
+\section{add Transporters with ui\_transporter to older maps}
+\label{howto-uitrans}
+Comming soon ...
+\section{convert func\_usable force field from older maps to func\_forcefield}
+\label{howto-usabletoforcefield}
+This HowTo shows you how you can convert a func\_usable to a func\_forcefield. Before we can start scripting we need to find out some things about the usable: 
+\begin{itemize}
+    \item How can you identify the usable 100 per cent failsafe.
+    \item What are the current spawnflags of the entity.
+\end{itemize}
+You can obtain the information by doing the following things.
+\begin{itemize}
+    \item Start RPG-X2 and laod the map.
+    \item Login as admin or change to admin class.
+    \item Goto the func\_usable and make sure it is visible (the force field is activated.
+    \item Target the usable with your crosshair.
+    \item Open console and type \textbf{getEntInfo}.
+\end{itemize}
+You'll get a list of usefull information. Now if the entity has a targetname the next thing to do is to check if it is the only one with it. While you are still in console type \textbf{getEntByTargetname} followed by the targetname.
+If only one entity is listed the func\_usable is the only one with this targetname and you are done otherwise just use the brushmodel of the func\_usable.
+The next step is to see if the spawnflags are ok for your needs. This means check if any spawnflags of func\_forcefield are included you don't want or if some are missing.
+No you start scripting. The best place to do this entity conversion is the \textbf{InitGame} function because this function is already called during map loading.
+\lstinputlisting[frame=single, label=fustoff, caption=Example 1]{examples/fusToff.lua}
+\lstinputlisting[frame=single, label=fustoff2, caption=Example 2]{examples/fusToff2.lua}
+\end{document}

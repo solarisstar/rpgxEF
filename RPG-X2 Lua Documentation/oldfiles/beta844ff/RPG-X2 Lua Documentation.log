@@ -1,0 +1,312 @@
+This is pdfTeX, Version 3.1415926-1.40.11 (MiKTeX 2.9) (preloaded format=pdflatex 2010.12.30)  30 DEC 2010 13:17
+entering extended mode
+**C:/stvoy/Code-DM/RPG-X2*Lua*Documentation/RPG-X2*Lua*Documentation.tex
+("C:/stvoy/Code-DM/RPG-X2 Lua Documentation/RPG-X2 Lua Documentation.tex"
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2009-06-19, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin, lat
+vian, lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerm
+an, ngerman-x-2009-06-19, nynorsk, oriya, panjabi, pinyin, polish, portuguese, 
+romanian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swis
+sgerman, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, u
+senglishmax, welsh, loaded.
+("C:\Program Files\MiKTeX 2.9\tex\latex\koma-script\scrreprt.cls"
+Document Class: scrreprt 2010/09/17 v3.07 KOMA-Script document class (report)
+("C:\Program Files\MiKTeX 2.9\tex\latex\koma-script\scrkbase.sty"
+Package: scrkbase 2010/09/17 v3.07 KOMA-Script package (KOMA-Script-dependent b
+asics and keyval usage)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\koma-script\scrbase.sty"
+Package: scrbase 2010/09/17 v3.07 KOMA-Script package (KOMA-Script-independent 
+basics and keyval usage)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\koma-script\scrlfile.sty"
+Package: scrlfile 2009/03/25 v3.03 KOMA-Script package (loading files)
+
+Package scrlfile, 2009/03/25 v3.03 KOMA-Script package (loading files)
+                  Copyright (C) Markus Kohm
+
+))) ("C:\Program Files\MiKTeX 2.9\tex\latex\koma-script\tocbasic.sty"
+Package: tocbasic 2010/09/14 v3.06a KOMA-Script package (handling toc-files)
+)
+Package tocbasic Info: omitting babel extension for `toc'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `toc' on input line 117.
+Package tocbasic Info: omitting babel extension for `lof'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `lof' on input line 118.
+Package tocbasic Info: omitting babel extension for `lot'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `lot' on input line 119.
+Class scrreprt Info: File `scrsize11pt.clo' used instead of
+(scrreprt)           file `scrsize11.clo' to setup font sizes on input line 131
+0.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\koma-script\scrsize11pt.clo"
+File: scrsize11pt.clo 2010/09/17 v3.07 KOMA-Script font size class option (11pt
+)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\koma-script\typearea.sty"
+Package: typearea 2010/09/17 v3.07 KOMA-Script package (type area)
+
+Package typearea, 2010/09/17 v3.07 KOMA-Script package (type area)
+                  Copyright (C) Frank Neukam, 1992-1994
+                  Copyright (C) Markus Kohm, 1994-
+
+\ta@bcor=\skip41
+\ta@div=\count79
+\ta@hblk=\skip42
+\ta@vblk=\skip43
+\ta@temp=\skip44
+Package typearea Info: These are the values describing the layout:
+(typearea)             DIV  = 10
+(typearea)             BCOR = 0.0pt
+(typearea)             \paperwidth      = 597.50793pt
+(typearea)              \textwidth      = 418.25555pt
+(typearea)              DIV departure   = -6%
+(typearea)              \evensidemargin = 17.3562pt
+(typearea)              \oddsidemargin  = 17.3562pt
+(typearea)             \paperheight     = 845.04694pt
+(typearea)              \textheight     = 595.80026pt
+(typearea)              \topmargin      = -25.16531pt
+(typearea)              \headheight     = 17.0pt
+(typearea)              \headsep        = 20.40001pt
+(typearea)              \topskip        = 11.0pt
+(typearea)              \footskip       = 47.60002pt
+(typearea)              \baselineskip   = 13.6pt
+(typearea)              on input line 1134.
+)
+\c@part=\count80
+\c@chapter=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\abovecaptionskip=\skip45
+\belowcaptionskip=\skip46
+\c@pti@nb@sid@b@x=\box26
+\c@figure=\count87
+\c@table=\count88
+\bibindent=\dimen102
+) ("C:\Program Files\MiKTeX 2.9\tex\latex\base\inputenc.sty"
+Package: inputenc 2008/03/30 v1.1d Input encoding file
+\inpenc@prehook=\toks15
+\inpenc@posthook=\toks16
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\latin1.def"
+File: latin1.def 2008/03/30 v1.1d Input encoding file
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2010/09/14 v0.05b Graphics/color for pdfTeX
+\Gread@gobject=\count89
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.sty"
+\lst@mode=\count90
+\lst@gtempboxa=\box27
+\lst@token=\toks17
+\lst@length=\count91
+\lst@currlwidth=\dimen105
+\lst@column=\count92
+\lst@pos=\count93
+\lst@lostspace=\dimen106
+\lst@width=\dimen107
+\lst@newlines=\count94
+\lst@lineno=\count95
+\lst@maxwidth=\dimen108
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+\c@lstnumber=\count96
+\lst@skipnumbers=\count97
+\lst@framebox=\box28
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.cfg"
+File: listings.cfg 2007/02/22 1.4 listings configuration
+))
+Package: listings 2007/02/22 1.4 (Carsten Heinz)
+
+("C:\stvoy\Code-DM\RPG-X2 Lua Documentation\RPG-X2 Lua Documentation.aux")
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+
+("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count98
+\scratchdimen=\dimen109
+\scratchbox=\box29
+\nofMPsegments=\count99
+\nofMParguments=\count100
+\everyMPshowfont=\toks18
+\MPscratchCnt=\count101
+\MPscratchDim=\dimen110
+\MPnumerator=\count102
+\everyMPtoPDFconversion=\toks19
+)
+\c@lstlisting=\count103
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.4> on input line 54.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 54.
+ [1
+
+
+
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
+("C:\stvoy\Code-DM\RPG-X2 Lua Documentation\RPG-X2 Lua Documentation.toc"
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 2.
+
+[2
+
+] [3])
+\tf@toc=\write3
+ [4]
+Chapter 1.
+
+Class scrreprt Warning: \float@addtolists detected!
+(scrreprt)              You should use the features of package `tocbasic'
+(scrreprt)              instead of \float@addtolists.
+(scrreprt)              Support for \float@addtolists may be removed from
+(scrreprt)              `scrreprt' soon .
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 64.
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 64.
+
+Overfull \hbox (31.01999pt too wide) in paragraph at lines 69--70
+\OT1/cmr/bx/n/10.95 var.function(var) \OT1/cmr/m/n/10.95 can be writ-ten as \OT
+1/cmr/bx/n/10.95 var:function() \OT1/cmr/m/n/10.95 (ex-am-ple: \OT1/cmr/bx/n/10
+.95 ent.Remove(ent)
+ []
+
+[5
+
+]
+Chapter 2.
+[6
+
+] [7] [8] [9]
+Chapter 3.
+[10
+
+]
+Chapter 4.
+[11
+
+] [12] [13] [14] [15] [16] [17] [18] [19] [20] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 626--630
+
+ []
+
+[22]
+Chapter 5.
+("C:\stvoy\Code-DM\RPG-X2 Lua Documentation\examples/HelloWorldGame.lua")
+("C:\stvoy\Code-DM\RPG-X2 Lua Documentation\examples/HelloWorldClient.lua")
+("C:\stvoy\Code-DM\RPG-X2 Lua Documentation\examples/HelloWorldClient1.lua")
+[23
+
+] ("C:\stvoy\Code-DM\RPG-X2 Lua Documentation\examples/HelloWorldClient2.lua") 
+("C:\stvoy\Code-DM\RPG-X2 Lua Documentation\examples/HelloWorldClient3.lua") ("
+C:\stvoy\Code-DM\RPG-X2 Lua Documentation\examples/HelloWorldClientAll.lua") ("
+C:\stvoy\Code-DM\RPG-X2 Lua Documentation\examples/FindingEnts1.lua")
+[24] ("C:\stvoy\Code-DM\RPG-X2 Lua Documentation\examples/FindingEnts2.lua")
+("C:\stvoy\Code-DM\RPG-X2 Lua Documentation\examples/FindingEnts3.lua")
+("C:\stvoy\Code-DM\RPG-X2 Lua Documentation\examples/SpawningEnts.lua")
+[25]
+Underfull \hbox (badness 10000) in paragraph at lines 708--710
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 713--715
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 718--720
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 723--725
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 728--730
+
+ []
+
+[26]
+Chapter 6.
+("C:\stvoy\Code-DM\RPG-X2 Lua Documentation\examples/fusToff.lua" [27
+
+])
+("C:\stvoy\Code-DM\RPG-X2 Lua Documentation\examples/fusToff2.lua") [28]
+("C:\stvoy\Code-DM\RPG-X2 Lua Documentation\RPG-X2 Lua Documentation.aux") ) 
+Here is how much of TeX's memory you used:
+ 4061 strings out of 494019
+ 59081 string characters out of 3146494
+ 150299 words of memory out of 3000000
+ 7318 multiletter control sequences out of 15000+200000
+ 9721 words of font info for 34 fonts, out of 3000000 for 9000
+ 714 hyphenation exceptions out of 8191
+ 35i,8n,40p,515b,1631s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:
+/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program
+ Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss
+bx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on "RPG-X2 Lua Documentation.pdf" (28 pages, 179749 bytes).
+PDF statistics:
+ 132 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

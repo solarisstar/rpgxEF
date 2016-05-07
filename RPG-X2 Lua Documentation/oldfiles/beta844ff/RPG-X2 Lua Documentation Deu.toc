@@ -1,0 +1,120 @@
+\select@language {ngerman}
+\contentsline {chapter}{\numberline {1}Einf\IeC {\"u}hrung}{7}
+\contentsline {section}{\numberline {1.1}Grundlegende Informationen}{7}
+\contentsline {section}{\numberline {1.2}Vorvereinbarungen}{7}
+\contentsline {chapter}{\numberline {2}Lua Hooks}{9}
+\contentsline {section}{\numberline {2.1}Was ist ein Lua Hook}{9}
+\contentsline {section}{\numberline {2.2}Statische Lua Hooks}{9}
+\contentsline {subsection}{\numberline {2.2.1}InitGame}{9}
+\contentsline {subsection}{\numberline {2.2.2}ShutdownGame}{9}
+\contentsline {subsection}{\numberline {2.2.3}RunFrame}{10}
+\contentsline {subsection}{\numberline {2.2.4}GClientPrint}{10}
+\contentsline {subsection}{\numberline {2.2.5}GPrint}{10}
+\contentsline {section}{\numberline {2.3}Dynamische Lua Hooks}{11}
+\contentsline {subsection}{\numberline {2.3.1}luaThink}{11}
+\contentsline {subsection}{\numberline {2.3.2}luaTouch}{11}
+\contentsline {subsection}{\numberline {2.3.3}luaUse}{11}
+\contentsline {subsection}{\numberline {2.3.4}luaHurt}{11}
+\contentsline {subsection}{\numberline {2.3.5}luaDie}{11}
+\contentsline {subsection}{\numberline {2.3.6}luaFree}{12}
+\contentsline {subsection}{\numberline {2.3.7}luaReached}{12}
+\contentsline {subsection}{\numberline {2.3.8}luaReachedAngular}{12}
+\contentsline {subsection}{\numberline {2.3.9}luaTrigger}{12}
+\contentsline {subsection}{\numberline {2.3.10}luaSpawn}{12}
+\contentsline {chapter}{\numberline {3}RPG-X2 Map Scripting}{13}
+\contentsline {section}{\numberline {3.1}Map scripts}{13}
+\contentsline {section}{\numberline {3.2}Aufruf von Funktionen}{13}
+\contentsline {chapter}{\numberline {4}RPG-X2 Lua Bibliotheken}{15}
+\contentsline {section}{\numberline {4.1}game}{15}
+\contentsline {subsection}{\numberline {4.1.1}game.Print}{15}
+\contentsline {subsection}{\numberline {4.1.2}game.ClientPrint}{15}
+\contentsline {subsection}{\numberline {4.1.3}game.CenterPrint}{15}
+\contentsline {subsection}{\numberline {4.1.4}game.MessagePrint}{15}
+\contentsline {subsection}{\numberline {4.1.5}game.LevelTime}{16}
+\contentsline {subsection}{\numberline {4.1.6}game.SetGlobal}{16}
+\contentsline {subsection}{\numberline {4.1.7}game.GetGlobal}{16}
+\contentsline {section}{\numberline {4.2}qmath}{17}
+\contentsline {subsection}{\numberline {4.2.1}qmath.abs}{17}
+\contentsline {subsection}{\numberline {4.2.2}qmath.sin}{17}
+\contentsline {subsection}{\numberline {4.2.3}qmath.cos}{17}
+\contentsline {subsection}{\numberline {4.2.4}qmath.tan}{17}
+\contentsline {subsection}{\numberline {4.2.5}qmath.asin}{17}
+\contentsline {subsection}{\numberline {4.2.6}qmath.acos}{17}
+\contentsline {subsection}{\numberline {4.2.7}qmath.atan}{17}
+\contentsline {subsection}{\numberline {4.2.8}qmath.floor}{17}
+\contentsline {subsection}{\numberline {4.2.9}qmath.ceil}{18}
+\contentsline {subsection}{\numberline {4.2.10}qmath.fmod}{18}
+\contentsline {subsection}{\numberline {4.2.11}qmath.modf}{18}
+\contentsline {subsection}{\numberline {4.2.12}qmath.sqrt}{18}
+\contentsline {subsection}{\numberline {4.2.13}qmath.log}{18}
+\contentsline {subsection}{\numberline {4.2.14}qmath.log10}{18}
+\contentsline {subsection}{\numberline {4.2.15}qmath.deg}{18}
+\contentsline {subsection}{\numberline {4.2.16}qmath.rad}{18}
+\contentsline {subsection}{\numberline {4.2.17}qmath.frexp}{18}
+\contentsline {subsection}{\numberline {4.2.18}qmath.ldexp}{19}
+\contentsline {subsection}{\numberline {4.2.19}qmath.min}{19}
+\contentsline {subsection}{\numberline {4.2.20}qmath.max}{19}
+\contentsline {subsection}{\numberline {4.2.21}qmath.random}{19}
+\contentsline {subsection}{\numberline {4.2.22}qmath.crandom}{19}
+\contentsline {section}{\numberline {4.3}vector}{20}
+\contentsline {subsection}{\numberline {4.3.1}vector.New}{20}
+\contentsline {subsection}{\numberline {4.3.2}vector.Construct}{20}
+\contentsline {subsection}{\numberline {4.3.3}vector.Set}{20}
+\contentsline {subsection}{\numberline {4.3.4}vector.clear}{20}
+\contentsline {subsection}{\numberline {4.3.5}vector.Add}{20}
+\contentsline {subsection}{\numberline {4.3.6}vector.Substract}{20}
+\contentsline {subsection}{\numberline {4.3.7}vector.Scale}{20}
+\contentsline {subsection}{\numberline {4.3.8}vector.Length}{21}
+\contentsline {subsection}{\numberline {4.3.9}vector.Normalize}{21}
+\contentsline {subsection}{\numberline {4.3.10}vector.RotateAroundPoint}{21}
+\contentsline {subsection}{\numberline {4.3.11}vector.Perpendicular}{21}
+\contentsline {section}{\numberline {4.4}entity}{22}
+\contentsline {subsection}{\numberline {4.4.1}entity.Find}{22}
+\contentsline {subsection}{\numberline {4.4.2}entity.FindNumber}{22}
+\contentsline {subsection}{\numberline {4.4.3}entity.FindBModel}{22}
+\contentsline {subsection}{\numberline {4.4.4}ent.GetNumber}{22}
+\contentsline {subsection}{\numberline {4.4.5}ent.SetKeyValue}{22}
+\contentsline {subsection}{\numberline {4.4.6}entity.Remove}{22}
+\contentsline {subsection}{\numberline {4.4.7}ent.GetOrigin}{23}
+\contentsline {subsection}{\numberline {4.4.8}ent.IsClient}{23}
+\contentsline {subsection}{\numberline {4.4.9}ent.GetClientname}{23}
+\contentsline {subsection}{\numberline {4.4.10}ent.GetClassname}{23}
+\contentsline {subsection}{\numberline {4.4.11}ent.SetClassname}{23}
+\contentsline {subsection}{\numberline {4.4.12}ent.GetTargetname}{23}
+\contentsline {subsection}{\numberline {4.4.13}ent.SetupTrigger}{23}
+\contentsline {subsection}{\numberline {4.4.14}entity.GetTarget}{23}
+\contentsline {subsection}{\numberline {4.4.15}entity.Use}{23}
+\contentsline {subsection}{\numberline {4.4.16}entity.Spawn}{24}
+\contentsline {subsection}{\numberline {4.4.17}entiy.CallSpawn}{24}
+\contentsline {subsection}{\numberline {4.4.18}entity.DelayedCallSpawn}{24}
+\contentsline {subsection}{\numberline {4.4.19}entity.RemoveSpawns}{24}
+\contentsline {subsection}{\numberline {4.4.20}ent.Lock}{24}
+\contentsline {subsection}{\numberline {4.4.21}ent.Unlock}{24}
+\contentsline {subsection}{\numberline {4.4.22}ent.IsLocked}{24}
+\contentsline {subsection}{\numberline {4.4.23}ent.GetParm}{24}
+\contentsline {subsection}{\numberline {4.4.24}ent.SetParm}{25}
+\contentsline {section}{\numberline {4.5}mover}{26}
+\contentsline {subsection}{\numberline {4.5.1}mover.Halt}{26}
+\contentsline {subsection}{\numberline {4.5.2}mover.HaltAngles}{26}
+\contentsline {subsection}{\numberline {4.5.3}mover.AsTrain}{26}
+\contentsline {subsection}{\numberline {4.5.4}mover.SetAngles}{26}
+\contentsline {subsection}{\numberline {4.5.5}mover.SetPosition}{26}
+\contentsline {subsection}{\numberline {4.5.6}mover.ToAngles}{26}
+\contentsline {subsection}{\numberline {4.5.7}mover.ToPosition}{27}
+\contentsline {section}{\numberline {4.6}sound}{28}
+\contentsline {subsection}{\numberline {4.6.1}Sound Kan\IeC {\"a}le}{28}
+\contentsline {subsection}{\numberline {4.6.2}sound.PlaySound}{28}
+\contentsline {chapter}{\numberline {5}Beispiele}{29}
+\contentsline {section}{\numberline {5.1}Beispiel 1 - Hallo Welt}{29}
+\contentsline {subsection}{\numberline {5.1.1}Hallo Welt f\IeC {\"u}r game}{29}
+\contentsline {subsection}{\numberline {5.1.2}Hallo Welt f\IeC {\"u}r einen Spieler}{29}
+\contentsline {subsection}{\numberline {5.1.3}Hallo Welt f\IeC {\"u}r alle Spieler}{30}
+\contentsline {section}{\numberline {5.2}Beispiel 2 - Entities Finden}{30}
+\contentsline {subsection}{\numberline {5.2.1}Entities \IeC {\"u}ber ihren targetname finden}{31}
+\contentsline {subsection}{\numberline {5.2.2}Entities \IeC {\"u}ber ihre Entitynummer finden}{31}
+\contentsline {subsection}{\numberline {5.2.3}Entities \IeC {\"u}ber ihr Brush Modell finden}{31}
+\contentsline {section}{\numberline {5.3}Beispiel 3 - Entities Spawnen}{31}
+\contentsline {chapter}{\numberline {6}Wie man ...}{35}
+\contentsline {section}{\numberline {6.1}Turbolifte zu \IeC {\"a}lteren RPG-X Maps hinzuf\IeC {\"u}gt}{35}
+\contentsline {section}{\numberline {6.2}Transporter die das ui\_transporter benutzen zu \IeC {\"a}lteren Maps hinzuf\IeC {\"u}gt}{35}
+\contentsline {section}{\numberline {6.3}func\_usable zu func\_forcefield konvertiert}{35}
