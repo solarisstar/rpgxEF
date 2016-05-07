@@ -183,7 +183,7 @@ static int list_add_ptr(list_p list, void* data, dataType_t type, char end) {
 
     return list->length;
 
-on_error:
+finally:
     if (node){
         free(node);
     }
