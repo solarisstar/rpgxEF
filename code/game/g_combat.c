@@ -1004,13 +1004,11 @@ void G_Damage(gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 
     if (!targ) return;
 
-#ifdef G_LUA
     if (targ->luaHurt && !targ->client)
     {
         LuaHook_G_EntityHurt(targ->luaHurt, targ->s.number, inflictor->s.number, attacker->s.number);
     }
-#endif
-
+    
     if (!targ->takedamage) {
         return;
     }
@@ -1257,12 +1255,10 @@ void G_Damage(gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
                 if (targ->health < -999)
                     targ->health = -999;
 
-#ifdef G_LUA
                 if (targ->luaDie && !targ->client)
                 {
                     LuaHook_G_EntityDie(targ->luaDie, targ->s.number, inflictor->s.number, attacker->s.number, take, mod);
                 }
-#endif
 
                 targ->enemy = attacker;
                 targ->die(targ, inflictor, attacker, take, mod);

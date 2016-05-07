@@ -76,7 +76,6 @@ void multi_trigger(gentity_t *ent, gentity_t *activator) {
 
     G_UseTargets(ent, ent->activator);
 
-#ifdef G_LUA
     if (ent->luaTrigger && !(ent->nextthink))
     {
         if (activator)
@@ -87,7 +86,6 @@ void multi_trigger(gentity_t *ent, gentity_t *activator) {
             LuaHook_G_EntityTrigger(ent->luaTrigger, ent->s.number, ENTITYNUM_WORLD);
         }
     }
-#endif
 
     if (ent->wait > 0) {
         ent->think = multi_wait;
@@ -193,15 +191,14 @@ trigger_always
  *
  * @param ent the trigger
  */
-void trigger_always_think(gentity_t *ent) {
+void trigger_always_think(gentity_t *ent) 
+{
     G_UseTargets(ent, ent);
 
-#ifdef G_LUA
     if (ent->luaTrigger)
     {
         LuaHook_G_EntityTrigger(ent->luaTrigger, ent->s.number, ent->s.number);
     }
-#endif
 
     G_FreeEntity(ent);
 }

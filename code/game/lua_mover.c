@@ -2,7 +2,6 @@
 
 #include "g_lua.h"
 
-#ifdef G_LUA
 /***
 A module for entity movement, especially for mover entities such as doors.
 @module mover
@@ -85,9 +84,9 @@ static int Mover_HaltAngles(lua_State * L)
         ent = lent->e;
     }
 
-    LUA_DEBUG("Mover_HaltAngles - start: ent=%d", ent->s.number);
     if (ent)
     {
+        LUA_DEBUG("Mover_HaltAngles - start: ent=%d", ent->s.number);
         BG_EvaluateTrajectory(&ent->s.apos, level.time, ent->s.apos.trBase);
         ent->s.apos.trType = TR_STATIONARY;
         ent->s.apos.trTime = level.time;
@@ -161,14 +160,15 @@ static int Mover_AsTrain(lua_State * L)
         targ = tlent->e;
     }
 
-    LUA_DEBUG("Mover_AsTrain - start: ent=%d target=%d speed=%f", ent->s.number, targ->s.number, speed);
-
     if (ent == NULL || targ == NULL)
     {
         LUA_DEBUG("Mover_AsTrain - return: ent or/and target missing");
         lua_pushboolean(L, qfalse);
         return 1;
     }
+    
+    LUA_DEBUG("Mover_AsTrain - start: ent=%d target=%d speed=%f", ent->s.number, targ->s.number, speed);
+        
     if (speed < 1)
     {
         LUA_DEBUG("Mover_AsTrain - moving: speed less than 1 fixed");
@@ -269,9 +269,10 @@ static int Mover_SetAngles(lua_State * L)
         newAngles[1] = luaL_checkint(L, 3);
         newAngles[2] = luaL_checkint(L, 4);
     }
-    LUA_DEBUG("Mover_SetAngles - start: ent=%d angles=%s", ent->s.number, vtos(newAngles));
+    
     if (ent)
     {
+        LUA_DEBUG("Mover_SetAngles - start: ent=%d angles=%s", ent->s.number, vtos(newAngles));
         VectorCopy(newAngles, ent->s.apos.trBase);
         VectorCopy(newAngles, ent->s.angles);
         trap_LinkEntity(ent);
@@ -334,9 +335,10 @@ static int Mover_SetAngles2(lua_State * L)
         newAngles[1] = luaL_checkint(L, 3);
         newAngles[2] = luaL_checkint(L, 4);
     }
-    LUA_DEBUG("Mover_SetAngles2 - start: ent=%d angles=%s", ent->s.number, vtos(newAngles));
+
     if (ent)
     {
+        LUA_DEBUG("Mover_SetAngles2 - start: ent=%d angles=%s", ent->s.number, vtos(newAngles));
         VectorCopy(newAngles, ent->s.angles2);
         trap_LinkEntity(ent);
         LUA_DEBUG("Mover_SetAngles2 - return: moved");
@@ -400,9 +402,10 @@ static int Mover_SetPosition(lua_State * L)
         newOrigin[1] = luaL_checkint(L, 3);
         newOrigin[2] = luaL_checkint(L, 4);
     }
-    LUA_DEBUG("Mover_SetPosition - start: ent=%d pos=%s", ent->s.number, vtos(newOrigin));
+
     if (ent)
     {
+        LUA_DEBUG("Mover_SetPosition - start: ent=%d pos=%s", ent->s.number, vtos(newOrigin));
         G_SetOrigin(ent, newOrigin);
         trap_LinkEntity(ent);
         LUA_DEBUG("Mover_SetPosition - return: moved");
@@ -550,9 +553,9 @@ static int Mover_ToPosition(lua_State * L)
         newOrigin[2] = luaL_checkint(L, 5);
     }
 
-    LUA_DEBUG("Mover_ToPosition - start: ent=%d pos=%s speed=%f", ent->s.number, vtos(newOrigin), speed);
     if (ent)
     {
+            LUA_DEBUG("Mover_ToPosition - start: ent=%d pos=%s speed=%f", ent->s.number, vtos(newOrigin), speed);
         BG_EvaluateTrajectory(&ent->s.pos, level.time, ent->s.pos.trBase);
         SetTrajectoryLinear(&ent->s.pos, speed, newOrigin);
         ent->moverState = MOVER_LUA;
@@ -580,4 +583,3 @@ int Luaopen_Mover(lua_State *L) {
     luaL_register(L, "mover", lib_mover);
     return 1;
 }
-#endif

@@ -2,8 +2,6 @@
 
 #include "g_lua.h"
 
-#ifdef G_LUA
-
 /***
 This module provides access to some of the servers functionality.
 @module game
@@ -479,4 +477,3 @@ int Luaopen_Game(lua_State *L) {
 
     return 1;
 }
-#endif

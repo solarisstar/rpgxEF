@@ -164,7 +164,7 @@ else
 DO_SOCC = $(CC) $(SOCFLAGS) $(WL) $(DEFINES) -o $@ -c $<
 endif
 # do cc for lua
-ifeq ($(DEBUF), 1)
+ifeq ($(DEBUG), 1)
 DO_LUACC = $(CC) -O2 -Wall -g3 $(SOCFLAGS) -DLUA_COMPAT_ALL -o $@ -c $<
 else
 DO_LUACC = $(CC) -O2 -Wall $(SOCFLAGS) -DLUA_COMPAT_ALL -o $@ -c $<

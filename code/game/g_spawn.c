@@ -45,7 +45,7 @@ field_t fields[] = {
     {"bluesnd", FOFS(bluesound), F_LSTRING},
     {"targetShaderName", FOFS(targetShaderName), F_LSTRING},
     {"targetShaderNewName", FOFS(targetShaderNewName), F_LSTRING},
-    #ifdef G_LUA
+
     {"luaThink", FOFS(luaThink), F_LSTRING},
     {"luaTouch", FOFS(luaTouch), F_LSTRING},
     {"luaUse", FOFS(luaUse), F_LSTRING},
@@ -62,7 +62,7 @@ field_t fields[] = {
     {"luaParm3", FOFS(luaParm3), F_LSTRING},
     {"luaParm4", FOFS(luaParm4), F_LSTRING},
     {"luaEntity", FOFS(luaEntity), F_INT},
-    #endif
+
     {"startRGBA", FOFS(startRGBA), F_VECTOR4},
     {"finalRGBA", FOFS(finalRGBA), F_VECTOR4},
     {NULL}
@@ -475,12 +475,10 @@ qboolean G_CallSpawn(gentity_t *ent) {
             }
             G_SpawnItem(ent, item);
 
-#ifdef G_LUA
             if (ent->luaSpawn)
             {
                 LuaHook_G_EntitySpawn(ent->luaSpawn, ent->s.number);
             }
-#endif
 
             return qtrue;
         }
@@ -507,12 +505,10 @@ qboolean G_CallSpawn(gentity_t *ent) {
         DEVELOPER(G_Printf(S_COLOR_RED "%s doesn't have a spawn function\n", ent->classname););
     }
 
-#ifdef G_LUA
     if (ent->luaSpawn)
     {
         LuaHook_G_EntitySpawn(ent->luaSpawn, ent->s.number);
     }
-#endif
 
     return qfalse;
 }

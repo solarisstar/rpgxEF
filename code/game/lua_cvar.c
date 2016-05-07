@@ -3,8 +3,6 @@
 #include "g_lua.h"
 #include <string.h>
 
-#ifdef G_LUA
-
 /***
 This module allows getting and setting game cvars.
 @module cvar
@@ -116,4 +114,3 @@ int Luaopen_Cvar(lua_State *L) {
 
     return 1;
 }
-#endif

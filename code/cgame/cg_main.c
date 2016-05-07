@@ -191,10 +191,8 @@ vmCvar_t	rpg_forceFieldSet;
 vmCvar_t	grp_berp;
 
 // lua
-#ifdef CG_LUA
 vmCvar_t			cg_debugLua;
 vmCvar_t			cg_logLua;
-#endif
 
 typedef struct {
 	vmCvar_t	*vmCvar;
@@ -323,10 +321,8 @@ static cvarTable_t	cvarTable[] = {
 	{ &grp_berp, "grp_berp", "0", CVAR_ARCHIVE | CVAR_LATCH },
 
 	// lua
-#ifdef CG_LUA
 	{ &cg_debugLua, "cg_debuglua", "0", CVAR_ARCHIVE | CVAR_LATCH },
 	{ &cg_logLua, "cg_loglua", "0", CVAR_ARCHIVE }
-#endif
 
 };
 

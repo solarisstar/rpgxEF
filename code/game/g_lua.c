@@ -2,8 +2,6 @@
 
 #include "g_lua.h"
 
-#ifdef G_LUA
-
 lvm_t       *lVM[NUM_VMS];
 
 void QDECL LUA_DEBUG(const char *fmt, ...)
@@ -1119,5 +1117,3 @@ void G_LuaCollectGarbage(void) {
         }
     }
 }
-
-#endif

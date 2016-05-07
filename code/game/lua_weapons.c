@@ -2,8 +2,6 @@
 
 #include "g_lua.h"
 
-#ifdef G_LUA
-
 /***
 A module for everything converning weapons.
 @module weapons
@@ -119,4 +117,3 @@ int Luaopen_Weapons(lua_State *L) {
 
     return 1;
 }
-#endif

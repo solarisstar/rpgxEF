@@ -60,10 +60,10 @@ static void TryUse(gentity_t *ent)
         }
         //FIXME: play sound?
         target->use(target, ent, ent);
-#ifdef G_LUA
         if (target->luaUse)
+        {
             LuaHook_G_EntityUse(target->luaUse, target - g_entities, ent - g_entities, ent - g_entities);
-#endif
+        }   
         return;
     } else if (target && target->use && Q_stricmp("misc_ammo_station", target->classname) == 0)
     {//ammo station
@@ -79,10 +79,11 @@ static void TryUse(gentity_t *ent)
             }
         }
         target->use(target, ent, ent);
-#ifdef G_LUA
         if (target->luaUse)
+        {
             LuaHook_G_EntityUse(target->luaUse, target - g_entities, ent - g_entities, ent - g_entities);
-#endif
+        }
+        
         return;
     } else if ((target && target->s.number == ENTITYNUM_WORLD) || (target->s.pos.trType == TR_STATIONARY && !(trace.surfaceFlags & SURF_NOIMPACT) && !target->takedamage))
     {
@@ -322,15 +323,14 @@ void G_TouchTriggers(gentity_t *ent) {
     VectorAdd(ps->origin, ent->r.mins, mins);
     VectorAdd(ps->origin, ent->r.maxs, maxs);
 
-    for (i = 0; i < num; i++) {
+    for (i = 0; i < num; i++) 
+    {
         hit = &g_entities[touch[i]];
-
-#ifdef G_LUA
+        
         if (hit->luaTouch)
         {
             LuaHook_G_EntityTouch(hit->luaTouch, hit->s.number, ent->s.number);
         }
-#endif
 
         if (!hit->touch && !ent->touch) {
             continue;

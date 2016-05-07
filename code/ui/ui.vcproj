@@ -51,7 +51,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;UI_EXPORTS;XTRA;G_LUA"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;UI_EXPORTS;XTRA"
 				StringPooling="true"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="1"
