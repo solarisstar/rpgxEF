@@ -11,6 +11,10 @@
 //=================================================
 #include "ui_local.h"
 
+#ifndef min
+#define min(a, b)	(a) < (b) ? a : b
+#endif
+
 #define	PIC_ARROW_UP		"menu/common/arrow_up_16.tga"
 #define	PIC_ARROW_DOWN		"menu/common/arrow_dn_16.tga"
 

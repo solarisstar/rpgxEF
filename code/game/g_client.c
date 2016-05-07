@@ -2621,10 +2621,8 @@ void G_Client_LocationsMessage(gentity_t *ent) {
     string[0] = 0;
     stringlength = 0;
 
-
     int cnt = 0;
-
-    for (i = 0; i < g_maxclients.integer; i++) {
+    for (int i = 0; i < g_maxclients.integer; i++) {
 
         if (cnt >= TEAM_MAXOVERLAY) {
             break;

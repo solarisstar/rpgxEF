@@ -1325,7 +1325,7 @@ CLIENT INFO
 */
 
 /*
-//This function has been rpg-x'ed®! (by J2J and fixed by RedTechie)
+//This function has been rpg-x'edï¿½! (by J2J and fixed by RedTechie)
 static qboolean	CG_ParseAnimationFile( const char *filename, clientInfo_t *ci ) {
     char		*text_p;
     int			len;
@@ -1856,7 +1856,6 @@ void CG_NewClientInfo(int clientNum) {
         char charStr[MAX_QPATH];
         char *model;
         char *skin;
-        size_t len;
 
         trap_Cvar_VariableStringBuffer("model", charStr, sizeof(charStr));
         if ((model = strchr(charStr, '/')) == NULL) {
@@ -1866,9 +1865,8 @@ void CG_NewClientInfo(int clientNum) {
 
             // At least one character after the slash
             // but it could be null terminator
-
             model++; // Move past the slash
-            modelLen = strlen(model);
+            size_t modelLen = strlen(model);
 
             //if there was a slash, but no model afterwards
             if (modelLen == 0) {
@@ -1879,7 +1877,7 @@ void CG_NewClientInfo(int clientNum) {
                 skin = "default";
             } else {
                 skin++;
-                skinLen = strlen(skin);
+                size_t skinLen = strlen(skin);
 
                 if (skinLen == 0) {
                     skin = "default";
@@ -2342,7 +2340,7 @@ static qboolean CG_RunLerpFrame(clientInfo_t *ci, lerpFrame_t *lf, int newAnimat
 CG_ClearLerpFrame
 ===============
 */
-//This function has been rpg-x'ed®! (by RedTechie)
+//This function has been rpg-x'edï¿½! (by RedTechie)
 void CG_ClearLerpFrame(clientInfo_t *ci, lerpFrame_t *lf, int animationNumber) { //RPG-X: RedTechie - Changed type from       static void      to     void
     if (!lf) return;
 
@@ -3521,7 +3519,7 @@ void CG_AddRefEntityWithPowerups(refEntity_t *ent, int powerups, int eFlags, bea
         ent->customShader = cgs.media.borgFullBodyShieldShader;
         trap_R_AddRefEntityToScene(ent);
         return;
-    } else if (powerups & (1 << PW_INVIS) || && decloakTime > 0))
+    } else if (powerups & (1 << PW_INVIS) || decloakTime > 0)
     {
         if ((cloakTime <= 0 && decloakTime <= 0) || (decloakTime > 0 && cg.time < (decloakTime + Q_FLASH_TIME * 0.5))
             || (cloakTime > 0 && cg.time > (cloakTime + Q_FLASH_TIME * 0.5)))

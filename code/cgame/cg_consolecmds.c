@@ -227,7 +227,7 @@ void CG_BeamList_cmd(void) {
     /* Based off the string data that is transmitted to the CG on Init
        Get the name and index of each location */
     for (i = 1; i < MAX_LOCATIONS; i++) {
-        const char *locStr =  = CG_ConfigString(CS_LOCATIONS + i);
+        const char *locStr = CG_ConfigString(CS_LOCATIONS + i);
         if (locStr[0]) {
             CG_Printf("%s \t - \t%i\n", locStr, i);
         }

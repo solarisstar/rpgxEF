@@ -811,7 +811,7 @@ CG_AddWeaponWithPowerups
 static void CG_AddWeaponWithPowerups(refEntity_t *gun, int powerups, beamData_t* beamData, int cloakTime, int decloakTime) //
 {
     // add powerup effects
-    if (powerups & (1 << PW_INVIS) || && decloakTime > 0)) {
+    if (powerups & (1 << PW_INVIS) || decloakTime > 0) {
         //TiM - modified so it persists during the first bit of cloaking / last of decloaking
         if ((cloakTime <= 0 && decloakTime <= 0) || (decloakTime > 0 && cg.time < (decloakTime + Q_FLASH_TIME * 0.5))
             || (cloakTime > 0 && cg.time > (cloakTime + Q_FLASH_TIME * 0.5)))

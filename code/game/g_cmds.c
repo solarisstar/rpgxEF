@@ -5133,7 +5133,7 @@ static void Cmd_MapsList_f(gentity_t *ent)
     for (i = 0; i < numFiles; i++, filePtr += (len + 1))
     {
 
-        if (!fileptr){
+        if (!filePtr){
             return;
         }
 

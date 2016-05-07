@@ -529,7 +529,7 @@ static void CG_EncodeIDFile(void)
         //unsigned char		buffer[SECURITY_SIZE];
         rpgxSecurityFile_t	sF;
 
-        fileLen = trap_FS_FOpenFile(SECURITY_FILE, &f, FS_READ);
+        int fileLen = trap_FS_FOpenFile(SECURITY_FILE, &f, FS_READ);
 
         if (!f || fileLen != SECURITY_SIZE)
         {
