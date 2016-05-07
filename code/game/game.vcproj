@@ -52,7 +52,7 @@
 				FavorSizeOrSpeed="1"
 				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="lua\include;mysql"
-				PreprocessorDefinitions="__WIN32__;WIN32;_DEBUG;_WINDOWS;DEBUG;QAGAME;XTRA;G_LUA;CG_LUA"
+				PreprocessorDefinitions="__WIN32__;WIN32;_DEBUG;_WINDOWS;DEBUG;QAGAME;XTRA"
 				StringPooling="false"
 				RuntimeLibrary="1"
 				BufferSecurityCheck="false"

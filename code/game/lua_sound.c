@@ -2,8 +2,6 @@
 
 #include "g_lua.h"
 
-#ifdef G_LUA
-
 /***
 A documentation to play sounds.
 @module sound
@@ -45,4 +43,3 @@ int Luaopen_Sound(lua_State *L) {
     luaL_register(L, "sound", lib_sound);
     return 1;
 }
-#endif

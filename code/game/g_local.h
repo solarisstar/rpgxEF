@@ -154,7 +154,8 @@ typedef enum
 *	Movers are things like doors, plats, buttons, etc.
 *
 */
-typedef enum {
+typedef enum 
+{
 	MOVER_POS1,
 	MOVER_POS2,
 	MOVER_1TO2,
@@ -170,11 +171,8 @@ typedef enum {
 	ADV_POS1,
 	ADV_POS2,
 	ADV_1TO2,
-	ADV_2TO1
-#ifdef G_LUA
-	,
+	ADV_2TO1,
 	MOVER_LUA
-#endif
 } moverState_t;
 
 #define SP_PODIUM_MODEL		"models/mapobjects/podium/podium4.md3"
@@ -341,7 +339,6 @@ struct gentity_s {
 
 	qboolean	tmpEntity;				//!< is this a temporal entity?
 
-#ifdef G_LUA
 	// for lua hooks
 	// pointers to lua functions
 	char*		luaTouch;
@@ -359,8 +356,7 @@ struct gentity_s {
 	char*		luaParm3;
 	char*		luaParm4;
 	qboolean	luaEntity;
-#endif
-
+	
 	vec4_t		startRGBA;
 	vec4_t		finalRGBA;
 };
@@ -2451,7 +2447,7 @@ int BotAIStartFrame( int time );
 //
 //	g_lua.c
 //
-#ifdef G_LUA
+
 /**
  *	Lua hook for InitGame event.
  *
@@ -2611,7 +2607,6 @@ void G_LuaShutdown(void);
 extern vmCvar_t g_debugLua;
 extern vmCvar_t lua_allowedModules;
 extern vmCvar_t lua_modules;
-#endif
 
 extern vmCvar_t g_developer;
 // developer tools:

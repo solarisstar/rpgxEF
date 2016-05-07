@@ -1,0 +1,38 @@
+library entity:
+	Avaible:
+		entity.FindNumber(int num)						--> finds and returns an entity by it's entity index number
+		entity.Find(string targetname)					--> finds and returns an entity by it's targetname
+		entity.FindBModel(string bmodel)				--> Find an entity by its brush model
+		entity.Target(entity ent)						--> returns one of the targets of an entity
+		entity.Teleport(entity ent, entity target)  	--> Teleports a player to an other entity
+		entity.IsRocket(entity ent)						--> Checks if an entity is a rocket
+		entity.IsGrenade(entity ent)					--> Checks if an entity is a grenade
+		entity.Spawn(void)								--> Spawn a new entity if possible
+		entity.GetNumber(entity ent)					--> Returns an entities index number
+		entity.IsClient(entity ent)						--> Checks if an entity is a client
+		entity.GetClientName(entity ent)				--> Returns the display name of a client
+		entity.Print									-->
+		entity.CenterPrint								-->
+		entity.GetClassname(entity ent)					--> Returns the classname of an entity
+		entity.SetClassname(entity ent, string name)	--> Sets the classname of an entity to namer
+		entity.GetTargetname(entity ent)				--> Returns the targetname of an entity
+		entity.Rotate(entity ent, vector dir			--> Rotates an entity in the specified directions
+		entity.__tostring(entity ent)					--> Prints an entity as string
+		entity.CallSpawn(entity ent)					--> Calls the spawn function for an entity
+		entity.Remove(entity ent)						--> Removes an entity if it is not protected (eg. Players)
+	ToDo:
+		entity.SetField(entity ent, string field)		--> Set a field of an entity to a new value
+		entity.SetValue(entity ent, string value)		--> Set a member of gentity_s to new value (for members that are not in fields_t)
+		
+library qmath:
+	Avaible:
+		qmath.fabs(float num)							--> Returns the integer part of a floating point number
+		qmath.sin(float degree)							--> Implementation of Sinus function, takes degree as argument not radian
+		qmath.cos(float degree)							--> Implementation of Cosinus function, takes degree as argument not radian
+		qmath.tan(float degree)							--> Implementation of Tan function, takes degree as argument not radian
+		qmath.asin(float number)						--> ~
+		qmath.acos(float number)						--> ~
+		qmath.atan(float number)						--> ~
+
+		qmath.ceil(float number)						--> rounds up
+		qmath.floor(float number)						--> rounds down

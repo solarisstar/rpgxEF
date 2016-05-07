@@ -2,7 +2,6 @@
 
 #include "g_lua.h"
 
-#ifdef G_LUA
 /***
 Provides access to many mathematical functions.
 @module qmath
@@ -421,4 +420,3 @@ int Luaopen_Qmath(lua_State * L)
     lua_setfield(L, -2, "huge");
     return 1;
 }
-#endif

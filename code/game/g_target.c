@@ -131,19 +131,21 @@ When used fires it'd target after a delay of 'wait' seconds
 "luaUse" - lua function to call at the beginning of the delay
 luaThink - lua function to call at end of delay
 */
-void Think_Target_Delay(gentity_t *ent) {
-#ifdef G_LUA
+void Think_Target_Delay(gentity_t *ent) 
+{
+
     if (ent->luaTrigger)
     {
         if (ent->activator)
         {
             LuaHook_G_EntityTrigger(ent->luaTrigger, ent->s.number, ent->activator->s.number);
-        } else
+        } 
+        else
         {
             LuaHook_G_EntityTrigger(ent->luaTrigger, ent->s.number, ENTITYNUM_WORLD);
         }
     }
-#endif
+
     if (ent->spawnflags & 1)
         G_UseTargets(ent, ent);
     else
@@ -526,27 +528,33 @@ void target_relay_use(gentity_t *self, gentity_t *other, gentity_t *activator) {
 
     if (!activator) return;
 
-    if (self->spawnflags & 4) {
+    if (self->spawnflags & 4) 
+    {
         gentity_t	*ent;
 
         ent = G_PickTarget(self->target);
-        if (ent && ent->use) {
-            if (self->spawnflags & 8) {
+        if (ent && ent->use) 
+        {
+            if (self->spawnflags & 8) 
+            {
                 ent->use(ent, self, self);
-#ifdef G_LUA
                 if (ent->luaUse)
+                {
                     LuaHook_G_EntityUse(self->luaUse, self->s.number, other->s.number, activator->s.number);
-#endif
-            } else {
+                }
+            } 
+            else 
+            {
                 ent->use(ent, self, activator);
-#ifdef G_LUA
                 if (ent->luaUse)
+                {    
                     LuaHook_G_EntityUse(self->luaUse, self->s.number, other->s.number, self->s.number);
-#endif
+                }
             }
         }
         return;
     }
+    
     if (self->spawnflags & 8)
         G_UseTargets(self, self);
     else
@@ -1037,35 +1045,46 @@ static void target_turbolift_endMove(gentity_t *ent)
         {
             if (!Q_stricmp(lights->classname, "func_usable"))
             {
-                if (!rpg_calcLiftTravelDuration.integer) {
+                if (!rpg_calcLiftTravelDuration.integer) 
+                {
                     lights->use(lights, lights, ent);
-#ifdef G_LUA
+
                     if (lights->luaUse)
+                    {
                         LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
-                } else {
-                    if (ent->s.eventParm < 0 && lights->targetname2) {
-                        if (!Q_stricmp(lights->targetname2, va("%s_dn", ent->target))) {
+                    }    
+                } 
+                else 
+                {
+                    if (ent->s.eventParm < 0 && lights->targetname2) 
+                    {
+                        if (!Q_stricmp(lights->targetname2, va("%s_dn", ent->target))) 
+                        {
                             lights->use(lights, lights, ent);
-#ifdef G_LUA
                             if (lights->luaUse)
+                            {    
                                 LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
+                            }
                         }
-                    } else if (ent->s.eventParm > 0 && lights->targetname2) {
-                        if (!Q_stricmp(lights->targetname2, va("%s_up", ent->target))) {
+                    } 
+                    else if (ent->s.eventParm > 0 && lights->targetname2) 
+                    {
+                        if (!Q_stricmp(lights->targetname2, va("%s_up", ent->target))) 
+                        {
                             lights->use(lights, lights, ent);
-#ifdef G_LUA
                             if (lights->luaUse)
+                            {    
                                 LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
+                            }
                         }
-                    } else {
+                    } 
+                    else 
+                    {
                         lights->use(lights, lights, ent);
-#ifdef G_LUA
                         if (lights->luaUse)
+                        {
                             LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
+                        }
                     }
                 }
             }
@@ -1076,35 +1095,45 @@ static void target_turbolift_endMove(gentity_t *ent)
         {
             if (!Q_stricmp(lights->classname, "func_usable"))
             {
-                if (!rpg_calcLiftTravelDuration.integer) {
+                if (!rpg_calcLiftTravelDuration.integer) 
+                {
                     lights->use(lights, lights, ent);
-#ifdef G_LUA
                     if (lights->luaUse)
+                    {
                         LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
-                } else {
-                    if (ent->s.eventParm < 0 && lights->targetname2) {
-                        if (!Q_stricmp(lights->targetname2, va("%s_dn", otherLift->target))) {
+                    }
+                } 
+                else
+                 {
+                    if (ent->s.eventParm < 0 && lights->targetname2) 
+                    {
+                        if (!Q_stricmp(lights->targetname2, va("%s_dn", otherLift->target))) 
+                        {
                             lights->use(lights, lights, ent);
-#ifdef G_LUA
                             if (lights->luaUse)
+                            {
                                 LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
+                            }
                         }
-                    } else if (ent->s.eventParm && lights->targetname2) {
-                        if (!Q_stricmp(lights->targetname2, va("%s_up", otherLift->target))) {
+                    } 
+                    else if (ent->s.eventParm && lights->targetname2) 
+                    {
+                        if (!Q_stricmp(lights->targetname2, va("%s_up", otherLift->target)))
+                        {
                             lights->use(lights, lights, ent);
-#ifdef G_LUA
                             if (lights->luaUse)
+                            {    
                                 LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
+                            }
                         }
-                    } else {
+                    } 
+                    else 
+                    {
                         lights->use(lights, lights, ent);
-#ifdef G_LUA
                         if (lights->luaUse)
+                        {    
                             LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
+                        }
                     }
                 }
             }
@@ -1276,12 +1305,14 @@ static void target_turbolift_startMove(gentity_t *ent)
     }
 
     //play move sound
-    if (rpg_calcLiftTravelDuration.integer) {
+    if (rpg_calcLiftTravelDuration.integer) 
+    {
         time = time2 = ent->health - otherLift->health;
         if (time < 0)
             time *= -1;
         if (ent->sound2to1) {
-            if (rpg_liftDurationModifier.value * 1000 * time >= ent->distance * 1000) {
+            if (rpg_liftDurationModifier.value * 1000 * time >= ent->distance * 1000) 
+            {
                 tent = G_Spawn();
                 tent->think = target_turbolift_startSoundEnd;
                 tent->nextthink = level.time + (ent->distance * 1000);
@@ -1289,103 +1320,132 @@ static void target_turbolift_startMove(gentity_t *ent)
                 tent->touched = otherLift;
                 G_AddEvent(ent, EV_GENERAL_SOUND, ent->sound2to1);
             }
-        } else {
+        } 
+        else 
+        {
             ent->r.svFlags &= ~SVF_NOCLIENT;
             otherLift->r.svFlags &= ~SVF_NOCLIENT;
         }
-    } else {
+    } 
+    else 
+    {
         ent->r.svFlags &= ~SVF_NOCLIENT;
 
         otherLift->r.svFlags &= ~SVF_NOCLIENT;
     }
+    
     //show flashy bits
     //find any usables parented to the lift ent, and use them
+    while ((lights = G_Find(lights, FOFS(targetname), ent->target)) != NULL)
     {
-        while ((lights = G_Find(lights, FOFS(targetname), ent->target)) != NULL)
+        if (!Q_stricmp(lights->classname, "func_usable"))
         {
-            if (!Q_stricmp(lights->classname, "func_usable"))
+            if (!rpg_calcLiftTravelDuration.integer) 
             {
-                if (!rpg_calcLiftTravelDuration.integer) {
-                    lights->use(lights, lights, ent);
-#ifdef G_LUA
-                    if (lights->luaUse)
-                        LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
-                } else {
-                    if (time2 < 0 && lights->targetname2) {
-                        if (!Q_stricmp(lights->targetname2, va("%s_dn", ent->target))) {
-                            lights->use(lights, lights, ent);
-#ifdef G_LUA
-                            if (lights->luaUse)
-                                LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
-                        }
-                    } else if (time2 > 0 && lights->targetname2) {
-                        if (!Q_stricmp(lights->targetname2, va("%s_up", ent->target))) {
-                            lights->use(lights, lights, ent);
-#ifdef G_LUA
-                            if (lights->luaUse)
-                                LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
-                        }
-                    } else {
-                        lights->use(lights, lights, ent);
-#ifdef G_LUA
-                        if (lights->luaUse)
-                            LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
-                    }
+                lights->use(lights, lights, ent);
+                if (lights->luaUse)
+                {    
+                    LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
                 }
-            }
-        }
-
-        lights = NULL;
-        while ((lights = G_Find(lights, FOFS(targetname), otherLift->target)) != NULL)
-        {
-            if (!Q_stricmp(lights->classname, "func_usable"))
+            } 
+            else 
             {
-                if (!rpg_calcLiftTravelDuration.integer) {
-                    lights->use(lights, lights, ent);
-#ifdef G_LUA
-                    if (lights->luaUse)
-                        LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
-                } else {
-                    if (time2 < 0 && lights->targetname2) {
-                        if (!Q_stricmp(lights->targetname2, va("%s_dn", otherLift->target))) {
-                            lights->use(lights, lights, ent);
-#ifdef G_LUA
-                            if (lights->luaUse);
-                            LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
-                        }
-                    } else if (time2 > 0 && lights->targetname2) {
-                        if (!Q_stricmp(lights->targetname2, va("%s_up", otherLift->target))) {
-                            lights->use(lights, lights, ent);
-#ifdef G_LUA
-                            if (lights->luaUse)
-                                LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
-                        }
-                    } else {
+                if (time2 < 0 && lights->targetname2) 
+                {
+                    if (!Q_stricmp(lights->targetname2, va("%s_dn", ent->target))) 
+                    {
                         lights->use(lights, lights, ent);
-#ifdef G_LUA
                         if (lights->luaUse)
+                        {   
                             LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
-#endif
+                        }
+                    }
+                } 
+                else if (time2 > 0 && lights->targetname2) 
+                {
+                    if (!Q_stricmp(lights->targetname2, va("%s_up", ent->target))) 
+                    {
+                        lights->use(lights, lights, ent);
+                        if (lights->luaUse)
+                        {    
+                            LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
+                        }
+                    }
+                } 
+                else 
+                {
+                    lights->use(lights, lights, ent);
+                    if (lights->luaUse)
+                    {
+                            LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
                     }
                 }
             }
         }
     }
 
+    lights = NULL;
+    while ((lights = G_Find(lights, FOFS(targetname), otherLift->target)) != NULL)
+    {
+        if (!Q_stricmp(lights->classname, "func_usable"))
+        {
+            if (!rpg_calcLiftTravelDuration.integer) 
+            {
+                lights->use(lights, lights, ent);
+                if (lights->luaUse)
+                {
+                    LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
+                }
+            } 
+            else 
+            {
+                if (time2 < 0 && lights->targetname2) 
+                {
+                    
+                    if (!Q_stricmp(lights->targetname2, va("%s_dn", otherLift->target))) 
+                    {
+                        lights->use(lights, lights, ent);
+                        if (lights->luaUse);
+                        {
+                            LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
+                        }
+                    }
+                } 
+                else if (time2 > 0 && lights->targetname2) 
+                {
+                    if (!Q_stricmp(lights->targetname2, va("%s_up", otherLift->target))) 
+                    {
+                        lights->use(lights, lights, ent);
+                        if (lights->luaUse)
+                        {
+                            LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
+                        }
+                    }
+                } 
+                else 
+                {
+                    lights->use(lights, lights, ent);
+                    if (lights->luaUse)
+                    {
+                        LuaHook_G_EntityUse(lights->luaUse, lights - g_entities, ent - g_entities, ent - g_entities);
+                    }
+                }
+            }
+        }
+    }
+    
+
     // check for shader remaps
-    if (rpg_calcLiftTravelDuration.integer || level.overrideCalcLiftTravelDuration) {
-        if (time2 < 0 && ent->truename && otherLift->truename) {
+    if (rpg_calcLiftTravelDuration.integer || level.overrideCalcLiftTravelDuration) 
+    {
+        if (time2 < 0 && ent->truename && otherLift->truename) 
+        {
             f = level.time * 0.001;
             AddRemap(ent->targetShaderName, ent->truename, f);
             AddRemap(otherLift->targetShaderName, otherLift->truename, f);
-        } else if (time2 > 0 && ent->falsename && otherLift->falsename) {
+        }
+         else if (time2 > 0 && ent->falsename && otherLift->falsename) 
+         {
             f = level.time * 0.001;
             AddRemap(ent->targetShaderName, ent->falsename, f);
             AddRemap(otherLift->targetShaderName, otherLift->falsename, f);
@@ -1393,7 +1453,8 @@ static void target_turbolift_startMove(gentity_t *ent)
         trap_SetConfigstring(CS_SHADERSTATE, BuildShaderStateConfig());
     }
 
-    if (rpg_calcLiftTravelDuration.integer) {
+    if (rpg_calcLiftTravelDuration.integer) 
+    {
         ent->s.eventParm = time2;
         time *= rpg_liftDurationModifier.value;
         time *= 1000;
@@ -1401,7 +1462,9 @@ static void target_turbolift_startMove(gentity_t *ent)
         otherLift->s.time2 = level.time + time;
         ent->nextthink = level.time + (time * 0.5f);
         ent->think = target_turbolift_TeleportPlayers;
-    } else {
+    } 
+    else 
+    {
         //sent to the client for client-side rotation
         ent->s.time2 = level.time + ent->wait;
         otherLift->s.time2 = level.time + ent->wait;
@@ -2301,55 +2364,70 @@ void target_warp_use(gentity_t *ent, gentity_t *other, gentity_t *activator) {
     }
 
     // swapWarp
-    if (!Q_stricmp(activator->target, ent->truename)) {
-        if (ent->n00bCount) {
+    if (!Q_stricmp(activator->target, ent->truename)) 
+    {
+        if (ent->n00bCount) 
+        {
             ent->target = ent->truetarget;
             G_UseTargets(ent, activator);
             ent->n00bCount = 0;
             ent->target = ent->yellowsound;
             G_UseTargets(ent, activator);
         }
-        for (i = 0; i < MAX_GENTITIES; i++) {
+        
+        for (i = 0; i < MAX_GENTITIES; i++) 
+        {
             if (!&g_entities[i]) continue;
-            if (Q_stricmp(g_entities[i].classname, "func_train") && !Q_stricmp(g_entities[i].swapname, ent->bluename)) {
+            if (Q_stricmp(g_entities[i].classname, "func_train") && !Q_stricmp(g_entities[i].swapname, ent->bluename)) 
+            {
                 target = &g_entities[i];
                 if (!target) continue;
-                if (ent->spawnflags & 4) {
+                if (ent->spawnflags & 4)
+                 {
                     target->use(target, ent, ent);
-#ifdef G_LUA
                     if (target->luaUse)
+                    {
                         LuaHook_G_EntityUse(target->luaUse, target - g_entities, ent - g_entities, ent - g_entities);
-#endif
-                } else {
+                    }
+                } 
+                else 
+                {
                     target->use(target, ent, activator);
-#ifdef G_LUA
                     if (target->luaUse)
+                    {    
                         LuaHook_G_EntityUse(target->luaUse, target - g_entities, ent - g_entities, activator - g_entities);
-#endif
+                    }
                 }
-            } else if (!Q_stricmp(g_entities[i].classname, "func_train") && !Q_stricmp(g_entities[i].swapname, ent->bluename)) {
+            } 
+            else if (!Q_stricmp(g_entities[i].classname, "func_train") && !Q_stricmp(g_entities[i].swapname, ent->bluename)) 
+            {
                 target = &g_entities[i];
                 if (!target) continue;
-                if (target->count == 1) {
+                if (target->count == 1) 
+                {
                     target->s.solid = 0;
                     target->r.contents = 0;
                     target->clipmask = 0;
                     target->r.svFlags |= SVF_NOCLIENT;
                     target->s.eFlags |= EF_NODRAW;
                     target->count = 0;
-                    if (first) {
+                    if (first) 
+                    {
                         ent->target = ent->redsound;
                         G_UseTargets(ent, activator);
                         first = qfalse;
                     }
-                } else {
+                } 
+                else 
+                {
                     target->clipmask = CONTENTS_BODY;
                     trap_SetBrushModel(target, target->model);
                     target->r.svFlags &= ~SVF_NOCLIENT;
                     target->s.eFlags &= ~EF_NODRAW;
                     target->clipmask = 0;
                     target->count = 1;
-                    if (first) {
+                    if (first) 
+                    {
                         ent->target = ent->bluesound;
                         G_UseTargets(ent, activator);
                         first = qfalse;
@@ -2357,34 +2435,50 @@ void target_warp_use(gentity_t *ent, gentity_t *other, gentity_t *activator) {
                 }
             }
         }
+        
         ent->sound1to2 = !ent->sound1to2;
-    } else if (!Q_stricmp(activator->target, ent->falsename)) { //eject
-        if (ent->n00bCount) {
+        
+    } 
+    else if (!Q_stricmp(activator->target, ent->falsename)) 
+    { //eject
+        if (ent->n00bCount)
+         {
             ent->target = ent->truetarget;
             G_UseTargets(ent, activator);
             ent->n00bCount = 0;
             ent->target = ent->yellowsound;
             G_UseTargets(ent, activator);
         }
-        if (ent->sound2to1) {
+        
+        if (ent->sound2to1) 
+        {
             ent->use = 0;
             ent->think = target_warp_reactivate;
             ent->nextthink = level.time + (ent->wait * 1000);
         }
+        
         ent->target = ent->falsetarget;
         G_UseTargets(ent, activator);
         ent->sound2to1 = !ent->sound2to1;
-    } else if (!Q_stricmp(activator->target, ent->swapname)) { // toggle warp
-        if (ent->sound1to2 && (ent->sound2to1 == 0)) {
+        
+    } 
+    else if (!Q_stricmp(activator->target, ent->swapname)) 
+    { // toggle warp
+        if (ent->sound1to2 && (ent->sound2to1 == 0)) 
+        {
             ent->target = ent->truetarget;
             G_UseTargets(ent, activator);
+            
             if (ent->n00bCount)
                 ent->target = ent->yellowsound;
             else
                 ent->target = ent->greensound;
+                
             G_UseTargets(ent, activator);
             ent->n00bCount = !ent->n00bCount;
-        } else {
+        } 
+        else 
+        {
             if (ent->soundPos1)
                 G_AddEvent(ent, EV_GENERAL_SOUND, ent->soundPos1);
         }

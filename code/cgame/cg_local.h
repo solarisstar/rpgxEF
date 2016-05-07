@@ -1614,10 +1614,8 @@ extern vmCvar_t			rpg_forceFieldSet;
 extern vmCvar_t			grp_berp;
 
 // lua
-#ifdef CG_LUA
 extern vmCvar_t			cg_debugLua;
 extern vmCvar_t			cg_logLua;
-#endif
 
 qboolean CG_Cvar_ClampInt(const char *name, vmCvar_t *vmCvar, int min, int max);
 

@@ -877,9 +877,7 @@ void CG_InitConsoleCommands(void) {
     trap_AddCommand("userDel");
 
     /* lua */
-#ifdef CG_LUA
     trap_AddCommand("lua_status");
-#endif
 
     /* cinematic cam test */
     trap_AddCommand("camtest");

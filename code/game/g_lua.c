@@ -2,8 +2,6 @@
 
 #include "g_lua.h"
 
-#ifdef G_LUA
-
 lvm_t       *lVM[NUM_VMS];
 
 void QDECL LUA_DEBUG(const char *fmt, ...)
@@ -14,7 +12,7 @@ void QDECL LUA_DEBUG(const char *fmt, ...)
     if (g_debugLua.integer >= 1)
     {
         va_start(argptr, fmt);
-        Com_sprintf(text, sizeof(text), fmt, argptr);
+        vsprintf(text, fmt, argptr);
         va_end(argptr);
         G_Printf(S_COLOR_YELLOW "LUA DEBUG:" S_COLOR_WHITE " %s\n", text);
     }
@@ -27,7 +25,7 @@ void QDECL LUA_LOG(const char *fmt, ...)
     int             min, tens, sec;
 
     va_start(argptr, fmt);
-    Com_sprintf(buff, sizeof(buff), fmt, argptr);
+    vsprintf(buff, fmt, argptr);
     va_end(argptr);
 
     if (g_dedicated.integer)
@@ -1119,5 +1117,3 @@ void G_LuaCollectGarbage(void) {
         }
     }
 }
-
-#endif

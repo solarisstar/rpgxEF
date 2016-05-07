@@ -323,27 +323,34 @@ static void G_MoverTeam(gentity_t *ent) {
     }
 
     // the move succeeded
-    for (part = ent; part; part = part->teamchain) {
+    for (part = ent; part; part = part->teamchain) 
+    {
         // call the reached function if time is at or past end point
-        if (part->s.pos.trType == TR_LINEAR_STOP) {
-            if (level.time >= part->s.pos.trTime + part->s.pos.trDuration) {
-                if (part->reached) {
+        if (part->s.pos.trType == TR_LINEAR_STOP) 
+        {
+            if (level.time >= part->s.pos.trTime + part->s.pos.trDuration)
+             {
+                if (part->reached) 
+                {
                     part->reached(part);
-#ifdef G_LUA
                     if (part->luaReached)
+                    {    
                         LuaHook_G_EntityReached(part->luaReached, part->s.number);
-#endif
+                    }
                 }
             }
         }
-        if (part->s.apos.trType == TR_LINEAR_STOP) {
-            if (level.time >= part->s.apos.trTime + part->s.apos.trDuration) {
-                if (part->reached) {
+        if (part->s.apos.trType == TR_LINEAR_STOP) 
+        {
+            if (level.time >= part->s.apos.trTime + part->s.apos.trDuration) 
+            {
+                if (part->reached) 
+                {
                     part->reached(part);
-#ifdef G_LUA
                     if (part->luaReachedAngular)
+                    {
                         LuaHook_G_EntityReachedAngular(part->luaReachedAngular, part->s.number);
-#endif
+                    }    
                 }
             }
         }
@@ -460,10 +467,8 @@ void SetMoverState(gentity_t *ent, moverState_t moverState, int time) {
         VectorScale(delta, f, ent->s.apos.trDelta);
         ent->s.apos.trType = TR_LINEAR_STOP;
         break;
-#ifdef G_LUA
     case MOVER_LUA:
         break;
-#endif
     default: // to make gcc happy
         break;
     }
@@ -634,25 +639,26 @@ void Reached_BinaryMover(gentity_t *ent) {
     // stop the looping sound
     ent->s.loopSound = ent->soundLoop;
 
-#ifdef G_LUA
     if (ent->luaTrigger)
     {
         if (ent->activator)
         {
             LuaHook_G_EntityTrigger(ent->luaTrigger, ent->s.number, ent->activator->s.number);
-        } else
+        } 
+        else
         {
             LuaHook_G_EntityTrigger(ent->luaTrigger, ent->s.number, ENTITYNUM_WORLD);
         }
     }
-#endif
 
-    if (ent->moverState == MOVER_1TO2) {
+    if (ent->moverState == MOVER_1TO2) 
+    {
         // reached pos2
         SetMoverState(ent, MOVER_POS2, level.time);
 
         // play sound
-        if (ent->soundPos2) {
+        if (ent->soundPos2)
+        {
             G_AddEvent(ent, EV_GENERAL_SOUND, ent->soundPos2);
         }
 
@@ -661,7 +667,8 @@ void Reached_BinaryMover(gentity_t *ent) {
             ent->think = 0;
             ent->nextthink = -1;
             ent->use = ReturnToPos1_Use; //0 //TiM - allow toggle doors
-        } else
+        } 
+        else
         {
             // return to pos1 after a delay
             ent->think = ReturnToPos1;
@@ -669,11 +676,14 @@ void Reached_BinaryMover(gentity_t *ent) {
         }
 
         // fire targets
-        if (!ent->activator) {
+        if (!ent->activator) 
+        {
             ent->activator = ent;
         }
         G_UseTargets(ent, ent->activator);
-    } else if (ent->moverState == MOVER_2TO1) {
+    } 
+    else if (ent->moverState == MOVER_2TO1)
+    {
         // reached pos1
         SetMoverState(ent, MOVER_POS1, level.time);
 
@@ -686,15 +696,19 @@ void Reached_BinaryMover(gentity_t *ent) {
             ent->use = G_Mover_UseBinaryMover;
 
         // close areaportals
-        if (ent->teammaster == ent || !ent->teammaster) {
+        if (ent->teammaster == ent || !ent->teammaster) 
+        {
             trap_AdjustAreaPortalState(ent, qfalse);
         }
-    } else if (ent->moverState == ROTATOR_1TO2) {
+    } 
+    else if (ent->moverState == ROTATOR_1TO2) 
+    {
         // reached pos2
         SetMoverState(ent, ROTATOR_POS2, level.time);
 
         // play sound
-        if (ent->soundPos2) {
+        if (ent->soundPos2) 
+        {
             G_AddEvent(ent, EV_GENERAL_SOUND, ent->soundPos2);
         }
 
@@ -702,23 +716,29 @@ void Reached_BinaryMover(gentity_t *ent) {
             ent->think = 0;
             ent->nextthink = -1;
             ent->use = ReturnToApos1_Use;
-        } else {
+        } 
+        else 
+        {
             // return to apos1 after a delay
             ent->think = ReturnToApos1;
             ent->nextthink = level.time + ent->wait;
         }
 
         // fire targets
-        if (!ent->activator) {
+        if (!ent->activator) 
+        {
             ent->activator = ent;
         }
         G_UseTargets(ent, ent->activator);
-    } else if (ent->moverState == ROTATOR_2TO1) {
+    } 
+    else if (ent->moverState == ROTATOR_2TO1) 
+    {
         // reached pos1
         SetMoverState(ent, ROTATOR_POS1, level.time);
 
         // play sound
-        if (ent->soundPos1) {
+        if (ent->soundPos1) 
+        {
             G_AddEvent(ent, EV_GENERAL_SOUND, ent->soundPos1);
         }
 
@@ -726,11 +746,13 @@ void Reached_BinaryMover(gentity_t *ent) {
             ent->use = G_Mover_UseBinaryMover;
 
         // close areaportals
-        if (ent->teammaster == ent || !ent->teammaster) {
+        if (ent->teammaster == ent || !ent->teammaster) 
+        {
             trap_AdjustAreaPortalState(ent, qfalse);
         }
-#ifdef G_LUA
-    } else if (ent->moverState == MOVER_LUA) {
+    } 
+    else if (ent->moverState == MOVER_LUA) 
+    {
         // lua all is fine
         if (level.time >= ent->s.pos.trTime + ent->s.pos.trDuration) {
             BG_EvaluateTrajectory(&ent->s.pos, level.time, ent->r.currentOrigin);
@@ -746,8 +768,9 @@ void Reached_BinaryMover(gentity_t *ent) {
             ent->s.apos.trTime = level.time;
             trap_LinkEntity(ent);
         }
-#endif
-    } else {
+    } 
+    else 
+    {
         G_Error("Reached_BinaryMover: bad moverState");
     }
 }
@@ -804,15 +827,18 @@ void G_Mover_UseBinaryMover(gentity_t *ent, gentity_t *other, gentity_t *activat
     if (activator)
         ent->activator = activator;
 
-#ifdef G_LUA
+
     if (ent->luaTrigger)
     {
         if (activator)
+        {
             LuaHook_G_EntityTrigger(ent->luaTrigger, ent->s.number, activator->s.number);
+        }
         else
+        {    
             LuaHook_G_EntityTrigger(ent->luaTrigger, ent->s.number, -1);
+        }
     }
-#endif
 
     if (ent->moverState == MOVER_POS1) {
         // start moving 50 msec later, becase if this was player
@@ -1215,10 +1241,10 @@ void G_Mover_TouchDoorTrigger(gentity_t *ent, gentity_t *other, trace_t *trace) 
     if (ent->parent->flags & FL_CLAMPED)
         return;
 
-#ifdef G_LUA
     if (ent->luaTrigger)
+    {
         LuaHook_G_EntityTrigger(ent->luaTrigger, ent - g_entities, other - g_entities);
-#endif
+    }
 
     if (other->client && (other->client->sess.sessionTeam == TEAM_SPECTATOR /*|| (other->client->ps.eFlags&EF_ELIMINATED)*/)) {
         // if the door is not open and not opening
@@ -1554,18 +1580,21 @@ Touch_Plat
 Don't allow decent if a living player is on it
 ===============
 */
-void Touch_Plat(gentity_t *ent, gentity_t *other, trace_t *trace) {
-    if (!other->client || other->client->ps.stats[STAT_HEALTH] <= 0) {
+void Touch_Plat(gentity_t *ent, gentity_t *other, trace_t *trace) 
+{
+    if (!other->client || other->client->ps.stats[STAT_HEALTH] <= 0) 
+    {
         return;
     }
 
-#ifdef G_LUA
     if (ent->luaTrigger)
+    {
         LuaHook_G_EntityTrigger(ent->luaTrigger, ent - g_entities, other - g_entities);
-#endif
-
+    }
+    
     // delay return-to-pos1 by one second
-    if (ent->moverState == MOVER_POS2) {
+    if (ent->moverState == MOVER_POS2) 
+    {
         ent->nextthink = level.time + 1000;
     }
 }
@@ -1577,23 +1606,28 @@ Touch_PlatCenterTrigger
 If the plat is at the bottom position, start it going up
 ===============
 */
-void Touch_PlatCenterTrigger(gentity_t *ent, gentity_t *other, trace_t *trace) {
-    if (!other->client) {
+void Touch_PlatCenterTrigger(gentity_t *ent, gentity_t *other, trace_t *trace) 
+{
+    if (!other->client) 
+    {
         return;
     }
 
-#ifdef G_LUA
     if (ent->luaTrigger)
+    {    
         LuaHook_G_EntityTrigger(ent->luaTrigger, ent - g_entities, other - g_entities);
-#endif
+    }
 
-    if (ent->parent->moverState == MOVER_POS1) {
+    if (ent->parent->moverState == MOVER_POS1) 
+    {
         G_Mover_UseBinaryMover(ent->parent, ent, other);
     }
 }
 
-void func_plat_use(gentity_t *ent, gentity_t *other, gentity_t *activator) {
-    if (ent->parent->moverState == MOVER_POS1) {
+void func_plat_use(gentity_t *ent, gentity_t *other, gentity_t *activator) 
+{
+    if (ent->parent->moverState == MOVER_POS1) 
+    {
         G_Mover_UseBinaryMover(ent->parent, other, activator);
     }
 }
@@ -1735,17 +1769,20 @@ Touch_Button
 
 ===============
 */
-void Touch_Button(gentity_t *ent, gentity_t *other, trace_t *trace) {
-    if (!other->client) {
+void Touch_Button(gentity_t *ent, gentity_t *other, trace_t *trace) 
+{
+    if (!other->client) 
+    {
         return;
     }
 
-#ifdef G_LUA
     if (ent->luaTrigger)
-        LuaHook_G_EntityTrigger(ent->luaTrigger, ent - g_entities, other - g_entities);
-#endif
+    {
+         LuaHook_G_EntityTrigger(ent->luaTrigger, ent - g_entities, other - g_entities);
+    }   
 
-    if (ent->moverState == MOVER_POS1) {
+    if (ent->moverState == MOVER_POS1) 
+    {
         G_Mover_UseBinaryMover(ent, other, other);
     }
 }
@@ -1869,7 +1906,7 @@ void Reached_Train(gentity_t *ent) {
         return;		// just stop
     }
 
-#ifdef G_LUA
+
     if (ent->luaTrigger)
     {
         LuaHook_G_EntityTrigger(ent->luaTrigger, ent->s.number, -1);
@@ -1878,7 +1915,6 @@ void Reached_Train(gentity_t *ent) {
     {
         LuaHook_G_EntityTrigger(next->luaTrigger, next->s.number, ent->s.number);
     }
-#endif
 
     // fire all other targets
     G_UseTargets(next, NULL);
@@ -2182,10 +2218,10 @@ static void forcefield_pain(gentity_t *ent, gentity_t *attacker, int damage)
     if (!ent->timestamp)
         return;
 
-#ifdef G_LUA
     if (ent->luaHurt)
+    {    
         LuaHook_G_EntityHurt(ent->luaHurt, ent - g_entities, attacker - g_entities, attacker - g_entities);
-#endif
+    }
 
     ent->r.svFlags &= ~SVF_NOCLIENT;
     ent->s.eFlags &= ~EF_NODRAW;
@@ -2254,10 +2290,10 @@ static void forcefield_touch(gentity_t *ent, gentity_t *other, trace_t *trace)
     if (!other->client || !ent->timestamp)
         return;
 
-#ifdef G_LUA
     if (ent->luaTrigger)
+    {
         LuaHook_G_EntityTrigger(ent->luaTrigger, ent - g_entities, other - g_entities);
-#endif
+    }   
 
     ent->r.svFlags &= ~SVF_NOCLIENT;
     ent->s.eFlags &= ~EF_NODRAW;
@@ -3079,12 +3115,10 @@ void Reached_AdvancedMover(gentity_t *ent) {
     qboolean bypass = qfalse;
     gentity_t *touched = ent->touched;
 
-#ifdef G_LUA
     if (ent->luaTrigger)
     {
         LuaHook_G_EntityTrigger(ent->luaTrigger, ent->s.number, -1);
     }
-#endif
 
     ent->s.loopSound = ent->soundLoop;
 

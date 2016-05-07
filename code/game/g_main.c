@@ -293,12 +293,10 @@ vmCvar_t	sql_use;		//!< Use SQL? 1 = mysql, 2 = sqlite
 // developer tools
 vmCvar_t	dev_showTriggers;
 
-#ifdef G_LUA
 // Print Lua debugging information into the game console?
 vmCvar_t        g_debugLua;
 vmCvar_t        lua_modules;
 vmCvar_t        lua_allowedModules;
-#endif
 
 vmCvar_t	g_developer;
 
@@ -463,11 +461,9 @@ static cvarTable_t		gameCvarTable[] = {
     { &rpg_spEasterEggs, 			"rpg_spEasterEggs", 			"0", 						CVAR_ARCHIVE, 											0, qfalse },
     { &dev_showTriggers, 			"dev_showTriggers", 			"0", 						CVAR_ARCHIVE, 											0, qfalse },
     { &sql_use, 					"sql_use", 						"0",			 			CVAR_ARCHIVE, 											0, qfalse },
-#ifdef G_LUA
     { &g_debugLua,					"g_debugLua", 					"0", 						0, 														0, qfalse },
     { &lua_allowedModules,			"lua_allowedModules", 			"", 						0, 														0, qfalse },
     { &lua_modules,					"lua_modules", 					"", 						0, 														0, qfalse },
-#endif
     { &rpg_rifleDamage, 			"rpg_rifleDamage", 				"75", 						CVAR_ARCHIVE, 											0, qfalse },
     { &rpg_rifleAltDamage, 			"rpg_rifleAltDamage", 			"16", 						CVAR_ARCHIVE, 											0, qfalse },
     { &rpg_phaserDamage, 			"rpg_phaserDamage", 			"55", 						CVAR_ARCHIVE, 											0, qfalse },
@@ -555,10 +551,8 @@ void QDECL G_PrintfClient(gentity_t *ent, const char *fmt, ...) {
     vsprintf(text, fmt, argptr);
     va_end(argptr);
 
-#ifdef G_LUA
     LuaHook_G_ClientPrint(text, ent - g_entities);
-#endif
-
+    
     trap_SendServerCommand(ent - g_entities, va("print \"%s\n\"", text));
 }
 
@@ -573,10 +567,8 @@ void QDECL G_Printf(const char *fmt, ...) {
     if (trap_Cvar_VariableIntegerValue("developer")) {
     }
 
-#ifdef G_LUA
     // Lua API callbacks
     LuaHook_G_Print(text);
-#endif
 
     trap_Printf(text);
 }
@@ -588,10 +580,8 @@ void QDECL G_Error(const char *fmt, ...) {
     va_start(argptr, fmt);
     vsprintf(text, fmt, argptr);
     va_end(argptr);
-
-#ifdef G_LUA
+    
     G_LuaShutdown();
-#endif
 
     trap_Error(text);
 }
@@ -1808,9 +1798,7 @@ void G_InitGame(int levelTime, int randomSeed, int restart) {
         G_Printf("Not logging to disk.\n");
     }
 
-#ifdef G_LUA
     G_LuaInit();
-#endif
 
     G_LogWeaponInit();
 
@@ -1927,9 +1915,7 @@ void G_InitGame(int levelTime, int randomSeed, int restart) {
 
     G_Printf("COMPLETED\n");
 
-#ifdef G_LUA
     LuaHook_G_InitGame(levelTime, randomSeed, restart);
-#endif
 
     if (dev_showTriggers.integer && !restart) {
         gentity_t *t;
@@ -1975,10 +1961,8 @@ extern list_iter_p iterTimedMessages; /* list iterator for timed messages */
 void G_ShutdownGame(int restart) {
     G_Printf("==== ShutdownGame ====\n");
 
-#ifdef G_LUA
     LuaHook_G_Shutdown(restart);
     G_LuaShutdown();
-#endif
 
 #if 0	// kef -- Pat sez this is causing some trouble these days
     G_LogWeaponOutput();
@@ -2596,12 +2580,10 @@ void G_RunThink(gentity_t *ent) {
         return;
     }
 
-#ifdef G_LUA
     if (ent->luaThink && !ent->client)
     {
         LuaHook_G_EntityThink(ent->luaThink, ent->s.number);
     }
-#endif
 
     ent->think(ent);
 }
@@ -2760,9 +2742,5 @@ void G_RunFrame(int levelTime) {
         }
     }
 
-    //RPG-X: Marcin: To clear pressedUse. - 30/12/2008
-
-#ifdef G_LUA
     LuaHook_G_RunFrame(levelTime);
-#endif
 }

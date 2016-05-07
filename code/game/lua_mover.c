@@ -2,7 +2,6 @@
 
 #include "g_lua.h"
 
-#ifdef G_LUA
 /***
 A module for entity movement, especially for mover entities such as doors.
 @module mover
@@ -581,4 +580,3 @@ int Luaopen_Mover(lua_State *L) {
     luaL_register(L, "mover", lib_mover);
     return 1;
 }
-#endif

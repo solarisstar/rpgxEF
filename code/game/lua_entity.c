@@ -5,7 +5,6 @@
 
 extern qboolean G_CallSpawn(gentity_t *ent);
 
-#ifdef G_LUA
 
 /***
 Module to access entity functions and manage enities.
@@ -4447,4 +4446,3 @@ lent_t *Lua_GetEntity(lua_State * L, int argNum)
     luaL_argcheck(L, ud != NULL, argNum, "\'entity\' expected");
     return (lent_t *)ud;
 }
-#endif
