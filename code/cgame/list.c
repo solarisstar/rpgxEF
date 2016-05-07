@@ -67,18 +67,16 @@ static list_iter_p list_iterator(list_p list, char init) {
  *	\return Count of elements in the list
  */
 static int list_add(list_p list, void* data, dataType_t type, size_t size, char end) {
-    lnode_p node = (lnode_p)malloc(sizeof(struct linked_node));
-
-    node->cont = (container_p)malloc(sizeof(container));
-    if (node->cont == NULL) {
-        goto on_error;
-    }
+    lnode_p node = malloc(sizeof(struct linked_node));
+    if(node == NULL) goto finally;
+    
+    node->cont = malloc(sizeof(container));
+    if (node->cont == NULL) goto finally;
 
     node->cont->type = type;
     node->cont->data = malloc(size);
-    if (node->cont->data == NULL) {
-        goto on_error;
-    }
+    if (node->cont->data == NULL) goto finally;
+    
     memcpy(node->cont->data, data, size);
     node->cont->pointer = 0;
     node->cont->size = size;
@@ -103,8 +101,9 @@ static int list_add(list_p list, void* data, dataType_t type, size_t size, char 
 
     return list->length;
 
-on_error:
+finally:
     if (node) {
+        if(node->cont) free(node->cont);
         free(node);
     }
     return 0;
@@ -153,12 +152,11 @@ static int list_prepend(list_p list, void* data, dataType_t type, size_t size) {
  *	\return Count of elements in the list
  */
 static int list_add_ptr(list_p list, void* data, dataType_t type, char end) {
-    lnode_p node = (lnode_p)malloc(sizeof(struct linked_node));
-
-    node->cont = (container_p)malloc(sizeof(container));
-    if (node->cont == NULL) {
-        goto on_error;
-    }
+    lnode_p node = malloc(sizeof(struct linked_node));
+    if(node == NULL)  goto finally;
+    
+    node->cont = malloc(sizeof(container));
+    if (node->cont == NULL)  goto finally;
 
     node->cont->type = type;
     node->cont->data = data;
