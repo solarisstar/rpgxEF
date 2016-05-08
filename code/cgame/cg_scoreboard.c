@@ -247,7 +247,6 @@ static void CG_DrawClientScore_Big(int y, score_t *score, float *color, float fa
     char	        *rpg_class;
     vec4_t	        rpg_color;
     vec_t			*ping_txtcolor = NULL;
-    int				intClamp;
 
     ci = &cgs.clientinfo[score->client];
 
@@ -329,21 +328,24 @@ static void CG_DrawClientScore_Big(int y, score_t *score, float *color, float fa
             UI_DrawProportionalString(SB_LOC_X_BIG, y, string, UI_TINYFONT | UI_LEFT, colorTable[CT_WHITE]);
         }
 
+        char id_string[4];
+        char time_string[6];
+        char ping_string[4];
+
         //player client Num
-        //Com_sprintf(string,sizeof(string), "%i", intClamp);				//RPG-X: J2J Switched Scoore to Client No.
-        intClamp = Com_Clamp(0, 128, cg_entities[score->client].currentState.clientNum);
-        UI_DrawProportionalString(SB_SCORE_X_BIG, y, va("%i", intClamp), UI_TINYFONT | UI_LEFT, colorTable[CT_WHITE]);
+        int player_id = Com_Clamp(0, 128, score->client);
+        Com_sprintf(id_string, sizeof id_string, "%i", player_id);
+        UI_DrawProportionalString(SB_SCORE_X_BIG, y, id_string, UI_TINYFONT | UI_LEFT, colorTable[CT_WHITE]);
 
         //player time
-        //If someone actually hits this limit, they officially have no life.
-        //Com_sprintf(string,sizeof(string),"%i", intClamp);
-        intClamp = Com_Clamp(0, 99999, score->time);
-        UI_DrawProportionalString(SB_TIME_X_BIG, y, va("%i", intClamp), UI_TINYFONT | UI_LEFT, colorTable[CT_WHITE]);
+        int player_tine = Com_Clamp(0, 99999, score->time);
+        Com_sprintf(time_string, sizeof time_string, "%i", player_tine);
+        UI_DrawProportionalString(SB_TIME_X_BIG, y, time_string, UI_TINYFONT | UI_LEFT, colorTable[CT_WHITE]);
 
         //player ping
-        //Com_sprintf(string,sizeof(string),"%i",score->ping);
-        intClamp = Com_Clamp(0, 999, score->ping);
-        UI_DrawProportionalString(SB_PING_X_BIG, y, va("%i", intClamp), UI_TINYFONT | UI_LEFT, ping_txtcolor);
+        int player_ping = Com_Clamp(0, 999, score->ping);
+        Com_sprintf(ping_string, sizeof ping_string, "%i", player_ping);
+        UI_DrawProportionalString(SB_PING_X_BIG, y, ping_string, UI_TINYFONT | UI_LEFT, ping_txtcolor);
     }
 
     //RPG-X: RedTechie - Draw live divider after every client
