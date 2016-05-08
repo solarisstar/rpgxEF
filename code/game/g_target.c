@@ -2815,8 +2815,6 @@ void target_selfdestruct_think(gentity_t *ent) {
         //let's be shakey for a sec... I hope lol ^^
         trap_SetConfigstring(CS_CAMERA_SHAKE, va("%i %i", 9999, (1000 + (level.time - level.startTime))));
     }
-    if (ent->target)
-        G_UseTargets(ent, ent);
     trap_SendServerCommand(-1, va("selfdestructupdate %i", -1));
     G_FreeEntity(ent);
     return;
