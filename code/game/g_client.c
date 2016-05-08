@@ -736,23 +736,23 @@ given a race name, go find all the skins that use it, and randomly select one
 */
 static void randomSkin(const char* race, char* model, int current_team, int clientNum)
 {
-    char	**skinsForRace;
+    char	**skinsForRace = NULL;
     int		howManySkins = 0;
     int		i, x;
     int		temp;
     int		skin_count_check;
-    char	**skinNamesAlreadyUsed;
+    char	**skinNamesAlreadyUsed = NULL;
     int		current_skin_count = 0;
     gentity_t	*ent = NULL;
     char	*userinfo;
     char	temp_model[MAX_QPATH];
 
-    skinsForRace = (char **)malloc(MAX_SKINS_FOR_RACE * 128 * sizeof(char));
+    skinsForRace = malloc(MAX_SKINS_FOR_RACE * 128 * sizeof(char));
     if (!skinsForRace) {
         G_Error("Was unable to allocate %lu bytes.\n", MAX_SKINS_FOR_RACE * 128 * sizeof(char));
         goto end;
     }
-    skinNamesAlreadyUsed = (char **)malloc(16 * 128 * sizeof(char));
+    skinNamesAlreadyUsed = malloc(16 * 128 * sizeof(char));
     if (!skinNamesAlreadyUsed) {
         G_Error("Was unable to allocate %lu bytes.\n", 16 * 128 * sizeof(char));
         goto end;
