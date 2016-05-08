@@ -2812,7 +2812,7 @@ void target_selfdestruct_think(gentity_t *ent) {
         }
         //let's hear it
         G_AddEvent(ent, EV_GLOBAL_SOUND, G_SoundIndex("sound/weapons/explosions/explode2.wav"));
-        //let's be shakey for a sec... I hope lol ^^
+        //let's be shakey for a sec... I hope lol ^_^
         trap_SetConfigstring(CS_CAMERA_SHAKE, va("%i %i", 9999, (1000 + (level.time - level.startTime))));
     }
     trap_SendServerCommand(-1, va("selfdestructupdate %i", -1));
