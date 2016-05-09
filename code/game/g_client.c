@@ -2341,7 +2341,6 @@ void G_Client_Disconnect(int32_t clientNum) {
     }
 
     trap_UnlinkEntity(ent);
-    memset(ent, 0, sizeof(*ent));
     ent->s.modelindex = 0;
     ent->inuse = qfalse;
     ent->classname = "disconnected";
