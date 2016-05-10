@@ -2556,8 +2556,8 @@ static void AdminAudio_Init(void)
         s_adminAudio.songButtons[i].textPtr = NULL;
         s_adminAudio.songButtons[i].textX = 4;
         s_adminAudio.songButtons[i].textY = 1;
-        s_adminAudio.songButtons[i].textcolor = CT_DKGOLD1;
-        s_adminAudio.songButtons[i].textcolor2 = CT_LTGOLD1;
+        s_adminAudio.songButtons[i].textcolor = CT_DKPURPLE1;
+        s_adminAudio.songButtons[i].textcolor2 = CT_LTPURPLE1;
         s_adminAudio.songButtons[i].textStyle = UI_SMALLFONT;
 
         y += 18;
@@ -2651,8 +2651,8 @@ static void AdminAudio_Init(void)
         s_adminAudio.soundButtons[i].textPtr = NULL;
         s_adminAudio.soundButtons[i].textX = 4;
         s_adminAudio.soundButtons[i].textY = 1;
-        s_adminAudio.soundButtons[i].textcolor = CT_DKGOLD1;
-        s_adminAudio.soundButtons[i].textcolor2 = CT_LTGOLD1;
+        s_adminAudio.soundButtons[i].textcolor = CT_DKPURPLE1;
+        s_adminAudio.soundButtons[i].textcolor2 = CT_LTPURPLE1;
         s_adminAudio.soundButtons[i].textStyle = UI_SMALLFONT;
 
         y += 18;
@@ -2742,9 +2742,13 @@ UI_AdminAudioMenu
 
 void UI_AdminAudioMenu(void)
 {
-    memset(&s_adminAudio, 0, sizeof(s_adminAudio));
-
-    AdminAudio_Init();
+    static qboolean setup = qfalse;
+    if (!setup)
+    {
+        memset(&s_adminAudio, 0, sizeof(s_adminAudio));
+        AdminAudio_Init();
+        setup = qtrue;
+    }
     Mouse_Show();
 
     UI_PushMenu(&s_adminAudio.menu);
