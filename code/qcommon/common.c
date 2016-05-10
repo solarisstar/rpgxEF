@@ -37,8 +37,8 @@ int demo_protocols[] = { 25, 59, 0 };
 
 #define MIN_DEDICATED_COMHUNKMEGS 1
 #define MIN_COMHUNKMEGS		56
-#define DEF_COMHUNKMEGS		64
-#define DEF_COMZONEMEGS		32
+#define DEF_COMHUNKMEGS		512
+#define DEF_COMZONEMEGS		128
 
 #define DEF_COMHUNKMEGS_S	XSTRING(DEF_COMHUNKMEGS)
 #define DEF_COMZONEMEGS_S	XSTRING(DEF_COMZONEMEGS)
@@ -2374,7 +2374,7 @@ void Com_GameRestart_f(void)
         // use "" and not the standard basegame name because this messes
         // up pak file negotiation and lots of other stuff
 
-        Cvar_Set("fs_game", "rpgxEF");
+        Cvar_Set("fs_game", "RPG-X2");
     } else
         Cvar_Set("fs_game", Cmd_Argv(1));
 
@@ -2918,7 +2918,7 @@ void Com_WriteConfiguration(void) {
 
     // not needed for dedicated or standalone
 #if !defined(DEDICATED) && !defined(STANDALONE)
-    fs = Cvar_Get("fs_game", "rpgxEF", CVAR_INIT | CVAR_SYSTEMINFO);
+    fs = Cvar_Get("fs_game", "RPG-X2", CVAR_INIT | CVAR_SYSTEMINFO);
 
     if (!com_standalone->integer)
     {

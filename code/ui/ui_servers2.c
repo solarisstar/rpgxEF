@@ -663,7 +663,7 @@ static void ArenaServers_Remove(void)
         if (i < g_arenaservers.numfavoriteaddresses - 1)
         {
             // shift items up
-            memcpy(&g_arenaservers.favoriteaddresses[i], &g_arenaservers.favoriteaddresses[i + 1], (g_arenaservers.numfavoriteaddresses - i - 1) * sizeof(MAX_ADDRESSLENGTH));
+            memcpy(&g_arenaservers.favoriteaddresses[i], &g_arenaservers.favoriteaddresses[i + 1], (g_arenaservers.numfavoriteaddresses - i - 1) * MAX_ADDRESSLENGTH);
         }
         g_arenaservers.numfavoriteaddresses--;
     }

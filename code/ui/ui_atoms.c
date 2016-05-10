@@ -1909,6 +1909,10 @@ int	UI_PopulateClassSetArray(char *classSets[]) {
      trap_Print( va("%i ranksets parsed\n", j ) );
  }*/
 
+void UI_ModelInit(void) {
+    PlayerModel_DataInit();
+}
+
  /*
  =================
  UI_Init
@@ -1980,6 +1984,7 @@ void UI_Init(void) {
     /* TiM - initiate the client side portion of the security code */
     UI_SecurityCodeSetup();
 
+    UI_ModelInit();
     /* trap_Cvar_Create ("rpg_playIntro", "1", CVAR_ARCHIVE ); *//*RPG-X | Phenix | 25/02/2005 */
 }
 

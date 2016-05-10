@@ -4447,6 +4447,7 @@ qboolean CL_UpdateVisiblePings_f(int source) {
                                 break;
                             }
                         }
+                        // TODO fix out of bounds by indexing into cl_pinglist
                         memcpy(&cl_pinglist[j].adr, &server[i].adr, sizeof(netadr_t));
                         cl_pinglist[j].start = Sys_Milliseconds();
                         cl_pinglist[j].time = 0;

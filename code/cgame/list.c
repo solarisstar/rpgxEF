@@ -67,18 +67,17 @@ static list_iter_p list_iterator(list_p list, char init) {
  *	\return Count of elements in the list
  */
 static int list_add(list_p list, void* data, dataType_t type, size_t size, char end) {
-    lnode_p node = (lnode_p)malloc(sizeof(struct linked_node));
-
-    node->cont = (container_p)malloc(sizeof(container));
-    if (node->cont == NULL) {
-        return 0;
-    }
+    lnode_p node;
+    node = malloc(sizeof(*node));
+    if(node == NULL) goto catch;
+    
+    node->cont = malloc(sizeof(*node->cont));
+    if (node->cont == NULL) goto catch;
 
     node->cont->type = type;
     node->cont->data = malloc(size);
-    if (node->cont->data == NULL) {
-        return 0;
-    }
+    if (node->cont->data == NULL) goto catch;
+    
     memcpy(node->cont->data, data, size);
     node->cont->pointer = 0;
     node->cont->size = size;
@@ -87,11 +86,6 @@ static int list_add(list_p list, void* data, dataType_t type, size_t size, char 
         node->prev = NULL;
         node->next = NULL;
         list->first = node;
-        list->last = node;
-    } else if (end == LIST_BACK) {
-        list->last->next = node;
-        node->prev = list->last;
-        node->next = NULL;
         list->last = node;
     } else if (end == LIST_FRONT) {
         list->first->prev = node;
@@ -107,6 +101,13 @@ static int list_add(list_p list, void* data, dataType_t type, size_t size, char 
     list->length++;
 
     return list->length;
+
+catch:
+    if (node) {
+        if(node->cont) free(node->cont);
+        free(node);
+    }
+    return 0;
 }
 
 /**
@@ -152,12 +153,13 @@ static int list_prepend(list_p list, void* data, dataType_t type, size_t size) {
  *	\return Count of elements in the list
  */
 static int list_add_ptr(list_p list, void* data, dataType_t type, char end) {
-    lnode_p node = (lnode_p)malloc(sizeof(struct linked_node));
-
-    node->cont = (container_p)malloc(sizeof(container));
-    if (node->cont == NULL) {
-        return 0;
-    }
+    
+    lnode_p node;    
+    node = malloc(sizeof(*node));
+    if(node == NULL)  goto catch;
+    
+    node->cont = malloc(sizeof(*node->cont));
+    if (node->cont == NULL)  goto catch;
 
     node->cont->type = type;
     node->cont->data = data;
@@ -168,11 +170,6 @@ static int list_add_ptr(list_p list, void* data, dataType_t type, char end) {
         node->prev = NULL;
         node->next = NULL;
         list->first = node;
-        list->last = node;
-    } else if (end == LIST_BACK) {
-        list->last->next = node;
-        node->prev = list->last;
-        node->next = NULL;
         list->last = node;
     } else if (end == LIST_FRONT) {
         list->first->prev = node;
@@ -188,6 +185,12 @@ static int list_add_ptr(list_p list, void* data, dataType_t type, char end) {
     list->length++;
 
     return list->length;
+
+catch:
+    if (node){
+        free(node);
+    }
+    return 0;
 }
 
 /**
@@ -538,7 +541,7 @@ static container_p list_at(list_p list, int idx) {
     container_p c = NULL;
     int i;
 
-    if (idx < 0 || idx >= list->length || list == NULL) {
+    if (idx < 0 || list == NULL || idx >= list->length) {
         return NULL;
     }
 

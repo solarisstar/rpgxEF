@@ -439,11 +439,11 @@ SrvData_Init
 void SrvData_Init(void) {
     int		i;
 
+    //TODO replace magic number 6 with a constant
     for (i = 0; i < 6; i++) {
         if (!srvList[i][0]) break;
         s_transporter.srvListPtr[i] = srvList[i];
     }
-    s_transporter.srvListPtr[i + 1] = 0;
 }
 
 /*

@@ -429,7 +429,7 @@ void CL_SystemInfoChanged(void) {
     }
     // if game folder should not be set and it is set at the client side
     if (!gameSet && *Cvar_VariableString("fs_game")) {
-        Cvar_Set("fs_game", "rpgxEF");
+        Cvar_Set("fs_game", "RPG-X2");
     }
     cl_connectedToPureServer = Cvar_VariableValue("sv_pure");
 }

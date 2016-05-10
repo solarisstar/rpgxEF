@@ -266,8 +266,6 @@ void CG_DrawInformation(void) {
 
     UI_DrawProportionalString(x, y, gamename, UI_SMALLFONT | UI_DROPSHADOW, colorTable[CT_VLTGOLD1]);
 
-    y += PROP_HEIGHT;
-
     cgs.widescreen.state = WIDESCREEN_NONE;
 }
 

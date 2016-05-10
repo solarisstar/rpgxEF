@@ -1610,7 +1610,7 @@ char* BG_RegisterRace(const char *name) {
     }
     if (len >= sizeof(text) - 1)
     {
-        Com_Printf(S_COLOR_RED "file too large: %s is %i, max allowed is %i", name, len, sizeof(text));
+        Com_Printf(S_COLOR_RED "file too large: %s is %i, max allowed is %lu", name, len, sizeof(text));
         trap_FS_FCloseFile(f);
         return races;
     }

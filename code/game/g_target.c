@@ -417,6 +417,9 @@ void target_teleporter_use(gentity_t *self, gentity_t *other, gentity_t *activat
     vec3_t		tracePoint;
     trace_t		tr;
 
+    if (!activator || !activator->client)
+        return;
+
     if (!Q_stricmp(self->swapname, activator->target)) {
         self->flags ^= FL_LOCKED;
         return;
@@ -425,8 +428,6 @@ void target_teleporter_use(gentity_t *self, gentity_t *other, gentity_t *activat
     if (self->flags & FL_LOCKED)
         return;
 
-    if (!activator || !activator->client)
-        return;
     dest = G_PickTarget(self->target);
     if (!dest) {
         DEVELOPER(G_Printf(S_COLOR_YELLOW "[Entity-Error] Couldn't find teleporter destination\n"););

@@ -880,7 +880,7 @@ void SP_misc_turret(gentity_t *base)
     arm->lastEnemy = head;
     head->r.ownerNum = arm->s.number;
     arm->activator = head->activator = base;
-    
+
     RegisterItem(BG_FindItemForWeapon(WP_DISRUPTOR));   /* precache the weapon */
 }
 

@@ -736,26 +736,26 @@ given a race name, go find all the skins that use it, and randomly select one
 */
 static void randomSkin(const char* race, char* model, int current_team, int clientNum)
 {
-    char	**skinsForRace;
+    char	**skinsForRace = NULL;
     int		howManySkins = 0;
     int		i, x;
     int		temp;
     int		skin_count_check;
-    char	**skinNamesAlreadyUsed;
+    char	**skinNamesAlreadyUsed = NULL;
     int		current_skin_count = 0;
     gentity_t	*ent = NULL;
     char	*userinfo;
     char	temp_model[MAX_QPATH];
 
-    skinsForRace = (char **)malloc(MAX_SKINS_FOR_RACE * 128 * sizeof(char));
+    skinsForRace = malloc(MAX_SKINS_FOR_RACE * 128 * sizeof(char));
     if (!skinsForRace) {
-        G_Error("Was unable to allocate %i bytes.\n", MAX_SKINS_FOR_RACE * 128 * sizeof(char));
-        return;
+        G_Error("Was unable to allocate %lu bytes.\n", MAX_SKINS_FOR_RACE * 128 * sizeof(char));
+        goto end;
     }
-    skinNamesAlreadyUsed = (char **)malloc(16 * 128 * sizeof(char));
+    skinNamesAlreadyUsed = malloc(16 * 128 * sizeof(char));
     if (!skinNamesAlreadyUsed) {
-        G_Error("Was unable to allocate %i bytes.\n", 16 * 128 * sizeof(char));
-        return;
+        G_Error("Was unable to allocate %lu bytes.\n", 16 * 128 * sizeof(char));
+        goto end;
     }
 
     memset(skinsForRace, 0, MAX_SKINS_FOR_RACE * 128 * sizeof(char));
@@ -790,8 +790,8 @@ static void randomSkin(const char* race, char* model, int current_team, int clie
             {
                 userinfo = (char *)malloc(MAX_INFO_STRING * sizeof(char));
                 if (!userinfo) {
-                    G_Error("Was unable to allocate %i bytes.\n", MAX_INFO_STRING * sizeof(char));
-                    return;
+                    G_Error("Was unable to allocate %lu bytes.\n", MAX_INFO_STRING * sizeof(char));
+                    goto end;
                 }
                 // so what's this clients model then?
                 trap_GetUserinfo(i, userinfo, MAX_INFO_STRING * sizeof(char));
@@ -827,9 +827,7 @@ static void randomSkin(const char* race, char* model, int current_team, int clie
             temp = rand() % current_skin_count;
             Q_strncpyz(model, skinNamesAlreadyUsed[temp], MAX_QPATH);
             ForceClientSkin(model, "");
-            free(skinNamesAlreadyUsed);
-            free(skinsForRace);
-            return;
+            goto end;
         }
     }
 
@@ -853,8 +851,15 @@ static void randomSkin(const char* race, char* model, int current_team, int clie
         model[0] = 0;
     }
 
-    free(skinsForRace);
-    free(skinNamesAlreadyUsed);
+
+end:
+    if (skinsForRace) {
+        free(skinsForRace);
+    }
+    if (skinNamesAlreadyUsed) {
+        free(skinNamesAlreadyUsed);
+    }
+    return;
 }
 
 /*
@@ -1687,13 +1692,13 @@ void G_Client_Begin(int clientNum, qboolean careAboutWarmup, qboolean isBot, qbo
         unsigned long	securityID;
 
         trap_GetUserinfo(clientNum, userInfo, sizeof(userInfo));
-        if (!userInfo[0])
+        if (!userInfo[0]) {
             return;
+        }
 
         securityID = (unsigned)atoul(Info_ValueForKey(userInfo, "sv_securityCode"));
 
-        if (securityID <= 0 || securityID >= 0xffffffff)
-        {
+        if (securityID >= 0xffffffff) {
             trap_SendServerCommand(clientNum, va("configID %s", ent->client->pers.ip));
         }
     }
@@ -2596,9 +2601,7 @@ void G_Client_LocationsMessage(gentity_t *ent) {
     char		entry[1024];
     char		string[1400];
     int			stringlength;
-    int			i, j;
     gentity_t	*player;
-    int			cnt;
 
     //don't bother sending during intermission?
     if (level.intermissiontime)
@@ -2607,7 +2610,7 @@ void G_Client_LocationsMessage(gentity_t *ent) {
     // figure out what client should be on the display
     // we are limited to 8, but we want to use the top eight players
     // but in client order (so they don't keep changing position on the overlay)
-    for (i = 0, cnt = 0; i < g_maxclients.integer && cnt < TEAM_MAXOVERLAY; i++) {
+    for (int i = 0; i < g_maxclients.integer; i++) {
         player = g_entities + level.sortedClients[i];
         if (player->inuse && player->client->sess.sessionTeam ==
             ent->client->sess.sessionTeam) {
@@ -2618,14 +2621,20 @@ void G_Client_LocationsMessage(gentity_t *ent) {
     string[0] = 0;
     stringlength = 0;
 
-    for (i = 0, cnt = 0; i < g_maxclients.integer && cnt < TEAM_MAXOVERLAY; i++) {
+    int cnt = 0;
+    for (int i = 0; i < g_maxclients.integer; i++) {
+
+        if (cnt >= TEAM_MAXOVERLAY) {
+            break;
+        }
+
         player = g_entities + i;
         //RPG-X | Phenix | 05/03/2005
         if (player->inuse) {
             //to counter for the fact we could pwn the server doing this, remove all superfluous data
 
             Com_sprintf(entry, sizeof(entry), " %i %i ", i, player->client->pers.teamState.location);
-            j = strlen(entry);
+            int j = strlen(entry);
             if (stringlength + j > sizeof(string))
                 break;
             strcpy(string + stringlength, entry);

@@ -1219,9 +1219,7 @@ static int CG_CalcFov(void) {
             fov_x = cg_zoomFov.value;
         } else {
             f = (cg.time - cg.zoomTime) / (float)ZOOM_OUT_TIME;
-            if (f > 1.0) {
-                fov_x = fov_x;
-            } else {
+            if (f <= 1.0) {
                 fov_x = zoomFov + f * (fov_x - zoomFov);
             }
         }
