@@ -2556,8 +2556,8 @@ static void AdminAudio_Init(void)
         s_adminAudio.songButtons[i].textPtr = NULL;
         s_adminAudio.songButtons[i].textX = 4;
         s_adminAudio.songButtons[i].textY = 1;
-        s_adminAudio.songButtons[i].textcolor = CT_DKPURPLE1;
-        s_adminAudio.songButtons[i].textcolor2 = CT_LTPURPLE1;
+        s_adminAudio.songButtons[i].textcolor = CT_DKGOLD1;
+        s_adminAudio.songButtons[i].textcolor2 = CT_LTGOLD1;
         s_adminAudio.songButtons[i].textStyle = UI_SMALLFONT;
 
         y += 18;
@@ -2651,8 +2651,8 @@ static void AdminAudio_Init(void)
         s_adminAudio.soundButtons[i].textPtr = NULL;
         s_adminAudio.soundButtons[i].textX = 4;
         s_adminAudio.soundButtons[i].textY = 1;
-        s_adminAudio.soundButtons[i].textcolor = CT_DKPURPLE1;
-        s_adminAudio.soundButtons[i].textcolor2 = CT_LTPURPLE1;
+        s_adminAudio.soundButtons[i].textcolor = CT_DKGOLD1;
+        s_adminAudio.soundButtons[i].textcolor2 = CT_LTGOLD1;
         s_adminAudio.soundButtons[i].textStyle = UI_SMALLFONT;
 
         y += 18;
