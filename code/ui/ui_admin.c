@@ -2742,9 +2742,13 @@ UI_AdminAudioMenu
 
 void UI_AdminAudioMenu(void)
 {
-    memset(&s_adminAudio, 0, sizeof(s_adminAudio));
-
-    AdminAudio_Init();
+    static qboolean setup = qfalse;
+    if (!setup)
+    {
+        memset(&s_adminAudio, 0, sizeof(s_adminAudio));
+        AdminAudio_Init();
+        setup = qtrue;
+    }
     Mouse_Show();
 
     UI_PushMenu(&s_adminAudio.menu);
