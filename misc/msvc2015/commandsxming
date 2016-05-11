@@ -1,0 +1,2 @@
+/home/vagrant/debugRPGXEF.sh
+gdb --interpreter=mi

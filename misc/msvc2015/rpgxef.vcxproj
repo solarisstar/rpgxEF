@@ -839,7 +839,18 @@
     <ClCompile Include="..\..\code\zlib\zutil.c" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="GDBConfig.xml" />
+    <Xml Include="GDBVM.xml" />
+    <Xml Include="GDBXming.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="commandsvm" />
+    <None Include="commandsxming" />
+    <None Include="RPGXEFDevPrivateKey.ppk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="howto.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

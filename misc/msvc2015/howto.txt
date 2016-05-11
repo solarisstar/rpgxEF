@@ -1,0 +1,45 @@
+REQUIREMENTS:
+
+-VirtualBox: https://www.virtualbox.org/wiki/Downloads
+-Vagrant: https://www.vagrantup.com/downloads.html
+-Visual Studio 2015 (any version, Community Edition is free): https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx
+-plink (Install PuTTY): http://tartarus.org/~simon/putty-snapshots/x86/putty-installer.msi
+
+Optional:
+-Xming-mesa: https://sourceforge.net/projects/xming/files/Xming-mesa/6.9.0.31/Xming-mesa-6-9-0-31-setup.exe/download
+--Select "Xlaunch" and "Don't install an SSH client" during installation
+
+DEBUGGING:
+
+Preperations:
+-Open a command window in the repository root
+-Type: vagrant up
+-Wait for vagrant to have booted the Virtual Machine
+-Open the rpgxef.sln in Visual Studio
+-Open the Visual Studio Command Window (View -> Other Windows -> Command Window)
+
+Debugging:
+You have two options here, debuggin with RPG-X running inside the Virtual Machine desktop or streaming the RPG-X window via X.
+I personally recommend running it inside the Virtual Machine and using VirtualBox to open the machine's desktop.
+Whichever way you chose, enter one of the following commands into the Visual Studio Command Window and press enter.
+
+1. For debugging with RPG-X EF running inside the Virtual Machine 
+(faster rendering, butter mouse handeling, but you need to go trough the VirutalBox UI and open a "remote desktop" 
+to your VM by double clicking on it and make sure Input -> Mouse Integration is turned OFF and 
+"uncapture" your mouse every time you want to switch mouse focus back to your actual desktop)
+
+Debug.MIDebugLaunch /OptionsFile:GDBVM.xml /Executable:rpgxef
+
+2. For debugging with Xming, launch Xming using the rpgxefXming.launch profile provided in the same folder as this document
+(slower rendering and clumbsier mouse handeling, but you don't need to manually go into the VM)
+
+Debug.MIDebugLaunch /OptionsFile:GDBXming.xml /Executable:rpgxef
+
+HELP, IT DOES NOT WORK:
+
+-Make sure you have all dependencies installed above. plink should be added to your PATH. 
+ The putty-installer does this by default make sure to add the PuTTY installation directory to your PATH (by default installed in C:\Program Files (x86)\PuTTY).
+ I'm not going to tell you how to do this, if you don't know how to add something to your PATH, you really shouln't be reading this file anyway.
+
+-Make sure the ssh IP Adress of your VM is correct. By default, you can ssh to the VM at 127.0.0.1:2222
+ If, for any reason, you changed this, make sure to update the port and/or IP in the PipeArguments in the GDB<Version>.xml files
