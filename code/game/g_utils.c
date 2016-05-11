@@ -266,7 +266,7 @@ void G_UseTargets2(gentity_t *ent, gentity_t *activator, char *target) {
         trap_SetConfigstring(CS_SHADERSTATE, BuildShaderStateConfig());
     }
 
-    if (!target) {
+    if (!target || strlen(target) == 0) {
         return;
     }
 
