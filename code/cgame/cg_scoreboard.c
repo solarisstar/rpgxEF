@@ -338,8 +338,8 @@ static void CG_DrawClientScore_Big(int y, score_t *score, float *color, float fa
         UI_DrawProportionalString(SB_SCORE_X_BIG, y, id_string, UI_TINYFONT | UI_LEFT, colorTable[CT_WHITE]);
 
         //player time
-        int player_tine = Com_Clamp(0, 99999, score->time);
-        Com_sprintf(time_string, sizeof time_string, "%i", player_tine);
+        int player_time = Com_Clamp(0, 99999, score->time);
+        Com_sprintf(time_string, sizeof time_string, "%i", player_time);
         UI_DrawProportionalString(SB_TIME_X_BIG, y, time_string, UI_TINYFONT | UI_LEFT, colorTable[CT_WHITE]);
 
         //player ping
