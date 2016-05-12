@@ -53,13 +53,13 @@ vec4_t colorTable[CT_MAX] =
 {0.733, 0.514, 0.086, 1},/* CT_DKGOLD1 */
 {0.549, 0.384, 0.063, 1},/* CT_VDKGOLD1 */
 
-{0.688, 0.797, 1, 1},	 /* CT_VLTPURPLE1 -- needs values */
-{0.688, 0.797, 1, 1},	 /* CT_LTPURPLE1 */
+{ 0.0 ,0.541176470588 ,0.517647058824 ,1.0 },	 /* CT_VLTPURPLE1 -- needs values */
+{ 0.0 ,0.607843137255 ,0.58431372549 ,1.0 },	 /* CT_LTPURPLE1 */
 {0.313, 0.578, 1, 1},	 /* CT_DKPURPLE1 */
 {0.031, 0.110, 0.341, 1},/* CT_VDKPURPLE1 */
 
-{0.688, 0.797, 1, 1},	 /* CT_VLTPURPLE2 -- needs values */
-{0.688, 0.797, 1, 1},	 /* CT_LTPURPLE2 */
+{ 0.0 ,0.541176470588 ,0.517647058824 ,1.0 }, /* CT_VLTPURPLE2 -- needs values */
+{ 0.0 ,0.607843137255 ,0.58431372549 ,1.0 },	 /* CT_LTPURPLE2 */
 {0.688, 0.797, 1, 1},	 /* CT_DKPURPLE2 */
 {0.031, 0.110, 0.341, 1},/* CT_VDKPURPLE2 */
 
