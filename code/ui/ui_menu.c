@@ -2646,6 +2646,7 @@ void UI_MainMenu(void)
     }
 
     UI_MainMenu_Init();
+    MainArenaServers_StartRefresh();
     //trap_Cvar_Set ("rpg_playIntro", "1"); Didnt work
 
     trap_Key_SetCatcher(KEYCATCH_UI);
