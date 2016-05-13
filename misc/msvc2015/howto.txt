@@ -2,8 +2,13 @@ REQUIREMENTS:
 
 -VirtualBox: https://www.virtualbox.org/wiki/Downloads
 -Vagrant: https://www.vagrantup.com/downloads.html
--Visual Studio 2015 (any version, Community Edition is free): https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx
 -plink (Install PuTTY): http://tartarus.org/~simon/putty-snapshots/x86/putty-installer.msi
+-Visual Studio 2015 (any version, Community Edition is free): https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx
+ During install, make sure you have atleast the following checked:
+ -Programming Languages -> Visual C++ -> Common Tools for Visual C++
+ -Cross Platform Mobile Development -> Visual C++ Mobile Development
+ -Cross Platform Mobile Development -> Microsoft Visual Studio Emulator for Android
+ -Common Tools -> Visual Studio Extensibility Tools
 
 Optional:
 -Xming-mesa: https://sourceforge.net/projects/xming/files/Xming-mesa/6.9.0.31/Xming-mesa-6-9-0-31-setup.exe/download
