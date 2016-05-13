@@ -611,7 +611,9 @@ static void ArenaServers_UpdateMenu(void) {
             pongColor, servernodeptr->hostname, pingColor, servernodeptr->mapname, servernodeptr->numclients,
             servernodeptr->maxclients, servernodeptr->gamename, servernodeptr->pingtime);
         if (!servernodeptr->isPure) {	//prev length is 62, we can safely add 2 more chars.
+            Com_printf("Before strcat");
             strcat(buff, "*");	//mark this unpure server!
+            Com_Printf("After strcat");
         }
         j++;
     }
