@@ -24,7 +24,7 @@ static menubitmap_s			s_create_server;
 #define MAX_LISTBOXITEMS		256
 #define MAX_LOCALSERVERS		256
 #define MAX_STATUSLENGTH		64
-#define MAX_LISTBOXWIDTH		67
+#define MAX_LISTBOXWIDTH		75
 
 #define ART_UNKNOWNMAP			"levelshots/unknownmap"
 
@@ -611,10 +611,7 @@ static void ArenaServers_UpdateMenu(void) {
             pongColor, servernodeptr->hostname, pingColor, servernodeptr->mapname, servernodeptr->numclients,
             servernodeptr->maxclients, servernodeptr->gamename, servernodeptr->pingtime);
         if (!servernodeptr->isPure) {	//prev length is 62, we can safely add 2 more chars.
-            Com_Printf("Before strcat");
-            Com_Printf("String is: %s", buff);
             strcat(buff, "*");	//mark this unpure server!
-            Com_Printf("After strcat");
         }
         j++;
     }
