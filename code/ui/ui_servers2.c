@@ -612,6 +612,7 @@ static void ArenaServers_UpdateMenu(void) {
             servernodeptr->maxclients, servernodeptr->gamename, servernodeptr->pingtime);
         if (!servernodeptr->isPure) {	//prev length is 62, we can safely add 2 more chars.
             Com_Printf("Before strcat");
+            Com_Printf("String is: %s", buff);
             strcat(buff, "*");	//mark this unpure server!
             Com_Printf("After strcat");
         }
