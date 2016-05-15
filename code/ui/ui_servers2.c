@@ -24,7 +24,7 @@ static menubitmap_s			s_create_server;
 #define MAX_LISTBOXITEMS		256
 #define MAX_LOCALSERVERS		256
 #define MAX_STATUSLENGTH		64
-#define MAX_LISTBOXWIDTH		67
+#define MAX_LISTBOXWIDTH		75
 
 #define ART_UNKNOWNMAP			"levelshots/unknownmap"
 
