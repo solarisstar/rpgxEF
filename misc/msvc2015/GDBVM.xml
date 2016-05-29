@@ -1,0 +1,9 @@
+<PipeLaunchOptions xmlns="http://schemas.microsoft.com/vstudio/MDDDebuggerOptions/2014"
+    PipePath="plink" 
+    PipeArguments="-ssh -batch -t -m commandsvm -i RPGXEFDevPrivateKey.ppk -hostkey 5e:27:02:80:38:55:27:aa:88:7c:96:0a:0f:1c:ed:a5 -P 2222 vagrant@127.0.0.1"
+    ExePath="/home/vagrant/RPGXEF/rpgxEF.x86_64"
+    ExeArguments="+set vm_game 0 +set vm_ui 0 +set vm_cgame 0 +set fs_game RPG-X2"
+    TargetArchitecture="X64" 
+    WorkingDirectory="/home/vagrant/RPGXEF/" 
+    AdditionalSOLibSearchPath="">
+</PipeLaunchOptions>

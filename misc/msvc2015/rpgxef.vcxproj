@@ -1,0 +1,755 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6932D988-A0C9-4659-B9D6-260CEA68B60B}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <NMakeBuildCommandLine>make debug</NMakeBuildCommandLine>
+    <NMakeOutput>rpgxEF.x86_64</NMakeOutput>
+    <NMakeCleanCommandLine>make clean-debug</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>make clean-debug &amp;&amp; make debug</NMakeReBuildCommandLine>
+    <NMakePreprocessorDefinitions>DEBUG</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <NMakeBuildCommandLine>make release</NMakeBuildCommandLine>
+    <NMakeOutput>rpgxef</NMakeOutput>
+    <NMakeCleanCommandLine>make clean-release</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>make clean-release &amp;&amp; make release</NMakeReBuildCommandLine>
+    <NMakePreprocessorDefinitions>
+    </NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\code\AL\al.h" />
+    <ClInclude Include="..\..\code\AL\alc.h" />
+    <ClInclude Include="..\..\code\AL\alctypes.h" />
+    <ClInclude Include="..\..\code\AL\altypes.h" />
+    <ClInclude Include="..\..\code\AL\alut.h" />
+    <ClInclude Include="..\..\code\asm\qasm-inline.h" />
+    <ClInclude Include="..\..\code\asm\qasm.h" />
+    <ClInclude Include="..\..\code\botlib\aasfile.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_bsp.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_cluster.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_debug.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_def.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_entity.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_file.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_funcs.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_main.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_move.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_optimize.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_reach.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_route.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_routealt.h" />
+    <ClInclude Include="..\..\code\botlib\be_aas_sample.h" />
+    <ClInclude Include="..\..\code\botlib\be_ai_char.h" />
+    <ClInclude Include="..\..\code\botlib\be_ai_chat.h" />
+    <ClInclude Include="..\..\code\botlib\be_ai_gen.h" />
+    <ClInclude Include="..\..\code\botlib\be_ai_goal.h" />
+    <ClInclude Include="..\..\code\botlib\be_ai_move.h" />
+    <ClInclude Include="..\..\code\botlib\be_ai_weap.h" />
+    <ClInclude Include="..\..\code\botlib\be_ai_weight.h" />
+    <ClInclude Include="..\..\code\botlib\be_ea.h" />
+    <ClInclude Include="..\..\code\botlib\be_interface.h" />
+    <ClInclude Include="..\..\code\botlib\botlib.h" />
+    <ClInclude Include="..\..\code\botlib\l_crc.h" />
+    <ClInclude Include="..\..\code\botlib\l_libvar.h" />
+    <ClInclude Include="..\..\code\botlib\l_log.h" />
+    <ClInclude Include="..\..\code\botlib\l_memory.h" />
+    <ClInclude Include="..\..\code\botlib\l_precomp.h" />
+    <ClInclude Include="..\..\code\botlib\l_script.h" />
+    <ClInclude Include="..\..\code\botlib\l_struct.h" />
+    <ClInclude Include="..\..\code\botlib\l_utils.h" />
+    <ClInclude Include="..\..\code\cgame\cg_anims.h" />
+    <ClInclude Include="..\..\code\cgame\cg_local.h" />
+    <ClInclude Include="..\..\code\cgame\cg_lua.h" />
+    <ClInclude Include="..\..\code\cgame\cg_public.h" />
+    <ClInclude Include="..\..\code\cgame\cg_screenfx.h" />
+    <ClInclude Include="..\..\code\cgame\cg_text.h" />
+    <ClInclude Include="..\..\code\cgame\fx_local.h" />
+    <ClInclude Include="..\..\code\cgame\list.h" />
+    <ClInclude Include="..\..\code\cgame\tr_types.h" />
+    <ClInclude Include="..\..\code\client\client.h" />
+    <ClInclude Include="..\..\code\client\cl_curl.h" />
+    <ClInclude Include="..\..\code\client\keycodes.h" />
+    <ClInclude Include="..\..\code\client\keys.h" />
+    <ClInclude Include="..\..\code\client\libmumblelink.h" />
+    <ClInclude Include="..\..\code\client\qal.h" />
+    <ClInclude Include="..\..\code\client\snd_codec.h" />
+    <ClInclude Include="..\..\code\client\snd_local.h" />
+    <ClInclude Include="..\..\code\client\snd_public.h" />
+    <ClInclude Include="..\..\code\game\ai_chat.h" />
+    <ClInclude Include="..\..\code\game\ai_cmd.h" />
+    <ClInclude Include="..\..\code\game\ai_dmnet.h" />
+    <ClInclude Include="..\..\code\game\ai_dmq3.h" />
+    <ClInclude Include="..\..\code\game\ai_main.h" />
+    <ClInclude Include="..\..\code\game\ai_team.h" />
+    <ClInclude Include="..\..\code\game\be_aas.h" />
+    <ClInclude Include="..\..\code\game\be_ai_char.h" />
+    <ClInclude Include="..\..\code\game\be_ai_chat.h" />
+    <ClInclude Include="..\..\code\game\be_ai_gen.h" />
+    <ClInclude Include="..\..\code\game\be_ai_goal.h" />
+    <ClInclude Include="..\..\code\game\be_ai_move.h" />
+    <ClInclude Include="..\..\code\game\be_ai_weap.h" />
+    <ClInclude Include="..\..\code\game\be_ea.h" />
+    <ClInclude Include="..\..\code\game\bg_lib.h" />
+    <ClInclude Include="..\..\code\game\bg_local.h" />
+    <ClInclude Include="..\..\code\game\bg_oums.h" />
+    <ClInclude Include="..\..\code\game\bg_public.h" />
+    <ClInclude Include="..\..\code\game\botai.h" />
+    <ClInclude Include="..\..\code\game\botlib.h" />
+    <ClInclude Include="..\..\code\game\chars.h" />
+    <ClInclude Include="..\..\code\game\g_breakable.h" />
+    <ClInclude Include="..\..\code\game\g_cinematic.h" />
+    <ClInclude Include="..\..\code\game\g_combat.h" />
+    <ClInclude Include="..\..\code\game\g_groups.h" />
+    <ClInclude Include="..\..\code\game\g_local.h" />
+    <ClInclude Include="..\..\code\game\g_lua.h" />
+    <ClInclude Include="..\..\code\game\g_public.h" />
+    <ClInclude Include="..\..\code\game\g_roff.h" />
+    <ClInclude Include="..\..\code\game\g_spawn.h" />
+    <ClInclude Include="..\..\code\game\g_sql.h" />
+    <ClInclude Include="..\..\code\game\g_team.h" />
+    <ClInclude Include="..\..\code\game\g_usable.h" />
+    <ClInclude Include="..\..\code\game\g_weapon.h" />
+    <ClInclude Include="..\..\code\game\g_xml.h" />
+    <ClInclude Include="..\..\code\game\inv.h" />
+    <ClInclude Include="..\..\code\game\lapi.h" />
+    <ClInclude Include="..\..\code\game\lauxlib.h" />
+    <ClInclude Include="..\..\code\game\lcode.h" />
+    <ClInclude Include="..\..\code\game\lctype.h" />
+    <ClInclude Include="..\..\code\game\ldebug.h" />
+    <ClInclude Include="..\..\code\game\ldo.h" />
+    <ClInclude Include="..\..\code\game\lfunc.h" />
+    <ClInclude Include="..\..\code\game\lgc.h" />
+    <ClInclude Include="..\..\code\game\list.h" />
+    <ClInclude Include="..\..\code\game\llex.h" />
+    <ClInclude Include="..\..\code\game\llimits.h" />
+    <ClInclude Include="..\..\code\game\lmem.h" />
+    <ClInclude Include="..\..\code\game\lobject.h" />
+    <ClInclude Include="..\..\code\game\lopcodes.h" />
+    <ClInclude Include="..\..\code\game\lparser.h" />
+    <ClInclude Include="..\..\code\game\lstate.h" />
+    <ClInclude Include="..\..\code\game\lstring.h" />
+    <ClInclude Include="..\..\code\game\ltable.h" />
+    <ClInclude Include="..\..\code\game\ltm.h" />
+    <ClInclude Include="..\..\code\game\lua.h" />
+    <ClInclude Include="..\..\code\game\lua.hpp" />
+    <ClInclude Include="..\..\code\game\luaconf.h" />
+    <ClInclude Include="..\..\code\game\lualib.h" />
+    <ClInclude Include="..\..\code\game\lundump.h" />
+    <ClInclude Include="..\..\code\game\lvm.h" />
+    <ClInclude Include="..\..\code\game\lzio.h" />
+    <ClInclude Include="..\..\code\game\match.h" />
+    <ClInclude Include="..\..\code\game\md5.h" />
+    <ClInclude Include="..\..\code\game\q_shared.h" />
+    <ClInclude Include="..\..\code\game\sqlite3.h" />
+    <ClInclude Include="..\..\code\game\surfaceflags.h" />
+    <ClInclude Include="..\..\code\game\syn.h" />
+    <ClInclude Include="..\..\code\jpeg-8c\jconfig.h" />
+    <ClInclude Include="..\..\code\jpeg-8c\jdct.h" />
+    <ClInclude Include="..\..\code\jpeg-8c\jerror.h" />
+    <ClInclude Include="..\..\code\jpeg-8c\jinclude.h" />
+    <ClInclude Include="..\..\code\jpeg-8c\jmemsys.h" />
+    <ClInclude Include="..\..\code\jpeg-8c\jmorecfg.h" />
+    <ClInclude Include="..\..\code\jpeg-8c\jpegint.h" />
+    <ClInclude Include="..\..\code\jpeg-8c\jpeglib.h" />
+    <ClInclude Include="..\..\code\jpeg-8c\jversion.h" />
+    <ClInclude Include="..\..\code\libcurl\curl\curl.h" />
+    <ClInclude Include="..\..\code\libcurl\curl\curlver.h" />
+    <ClInclude Include="..\..\code\libcurl\curl\easy.h" />
+    <ClInclude Include="..\..\code\libcurl\curl\mprintf.h" />
+    <ClInclude Include="..\..\code\libcurl\curl\multi.h" />
+    <ClInclude Include="..\..\code\libcurl\curl\stdcheaders.h" />
+    <ClInclude Include="..\..\code\libcurl\curl\types.h" />
+    <ClInclude Include="..\..\code\libmad\mad.h" />
+    <ClInclude Include="..\..\code\libspeex\arch.h" />
+    <ClInclude Include="..\..\code\libspeex\cb_search.h" />
+    <ClInclude Include="..\..\code\libspeex\cb_search_arm4.h" />
+    <ClInclude Include="..\..\code\libspeex\cb_search_bfin.h" />
+    <ClInclude Include="..\..\code\libspeex\cb_search_sse.h" />
+    <ClInclude Include="..\..\code\libspeex\config.h" />
+    <ClInclude Include="..\..\code\libspeex\fftwrap.h" />
+    <ClInclude Include="..\..\code\libspeex\filterbank.h" />
+    <ClInclude Include="..\..\code\libspeex\filters.h" />
+    <ClInclude Include="..\..\code\libspeex\filters_arm4.h" />
+    <ClInclude Include="..\..\code\libspeex\filters_bfin.h" />
+    <ClInclude Include="..\..\code\libspeex\filters_sse.h" />
+    <ClInclude Include="..\..\code\libspeex\fixed_arm4.h" />
+    <ClInclude Include="..\..\code\libspeex\fixed_arm5e.h" />
+    <ClInclude Include="..\..\code\libspeex\fixed_bfin.h" />
+    <ClInclude Include="..\..\code\libspeex\fixed_debug.h" />
+    <ClInclude Include="..\..\code\libspeex\fixed_generic.h" />
+    <ClInclude Include="..\..\code\libspeex\include\speex\speex.h" />
+    <ClInclude Include="..\..\code\libspeex\include\speex\speex_bits.h" />
+    <ClInclude Include="..\..\code\libspeex\include\speex\speex_buffer.h" />
+    <ClInclude Include="..\..\code\libspeex\include\speex\speex_callbacks.h" />
+    <ClInclude Include="..\..\code\libspeex\include\speex\speex_config_types.h" />
+    <ClInclude Include="..\..\code\libspeex\include\speex\speex_echo.h" />
+    <ClInclude Include="..\..\code\libspeex\include\speex\speex_header.h" />
+    <ClInclude Include="..\..\code\libspeex\include\speex\speex_jitter.h" />
+    <ClInclude Include="..\..\code\libspeex\include\speex\speex_preprocess.h" />
+    <ClInclude Include="..\..\code\libspeex\include\speex\speex_resampler.h" />
+    <ClInclude Include="..\..\code\libspeex\include\speex\speex_stereo.h" />
+    <ClInclude Include="..\..\code\libspeex\include\speex\speex_types.h" />
+    <ClInclude Include="..\..\code\libspeex\kiss_fft.h" />
+    <ClInclude Include="..\..\code\libspeex\kiss_fftr.h" />
+    <ClInclude Include="..\..\code\libspeex\lpc.h" />
+    <ClInclude Include="..\..\code\libspeex\lpc_bfin.h" />
+    <ClInclude Include="..\..\code\libspeex\lsp.h" />
+    <ClInclude Include="..\..\code\libspeex\lsp_bfin.h" />
+    <ClInclude Include="..\..\code\libspeex\ltp.h" />
+    <ClInclude Include="..\..\code\libspeex\ltp_arm4.h" />
+    <ClInclude Include="..\..\code\libspeex\ltp_bfin.h" />
+    <ClInclude Include="..\..\code\libspeex\ltp_sse.h" />
+    <ClInclude Include="..\..\code\libspeex\math_approx.h" />
+    <ClInclude Include="..\..\code\libspeex\misc_bfin.h" />
+    <ClInclude Include="..\..\code\libspeex\modes.h" />
+    <ClInclude Include="..\..\code\libspeex\nb_celp.h" />
+    <ClInclude Include="..\..\code\libspeex\os_support.h" />
+    <ClInclude Include="..\..\code\libspeex\pseudofloat.h" />
+    <ClInclude Include="..\..\code\libspeex\quant_lsp.h" />
+    <ClInclude Include="..\..\code\libspeex\quant_lsp_bfin.h" />
+    <ClInclude Include="..\..\code\libspeex\sb_celp.h" />
+    <ClInclude Include="..\..\code\libspeex\smallft.h" />
+    <ClInclude Include="..\..\code\libspeex\stack_alloc.h" />
+    <ClInclude Include="..\..\code\libspeex\vbr.h" />
+    <ClInclude Include="..\..\code\libspeex\vorbis_psy.h" />
+    <ClInclude Include="..\..\code\libspeex\vq.h" />
+    <ClInclude Include="..\..\code\libspeex\vq_arm4.h" />
+    <ClInclude Include="..\..\code\libspeex\vq_bfin.h" />
+    <ClInclude Include="..\..\code\libspeex\vq_sse.h" />
+    <ClInclude Include="..\..\code\libspeex\_kiss_fft_guts.h" />
+    <ClInclude Include="..\..\code\qcommon\cm_local.h" />
+    <ClInclude Include="..\..\code\qcommon\cm_patch.h" />
+    <ClInclude Include="..\..\code\qcommon\cm_polylib.h" />
+    <ClInclude Include="..\..\code\qcommon\cm_public.h" />
+    <ClInclude Include="..\..\code\qcommon\ioapi.h" />
+    <ClInclude Include="..\..\code\qcommon\puff.h" />
+    <ClInclude Include="..\..\code\qcommon\qcommon.h" />
+    <ClInclude Include="..\..\code\qcommon\qfiles.h" />
+    <ClInclude Include="..\..\code\qcommon\q_platform.h" />
+    <ClInclude Include="..\..\code\qcommon\q_shared.h" />
+    <ClInclude Include="..\..\code\qcommon\stv_version.h" />
+    <ClInclude Include="..\..\code\qcommon\surfaceflags.h" />
+    <ClInclude Include="..\..\code\qcommon\unzip.h" />
+    <ClInclude Include="..\..\code\qcommon\vm_local.h" />
+    <ClInclude Include="..\..\code\qcommon\vm_powerpc_asm.h" />
+    <ClInclude Include="..\..\code\qcommon\vm_sparc.h" />
+    <ClInclude Include="..\..\code\renderer\iqm.h" />
+    <ClInclude Include="..\..\code\renderer\qgl.h" />
+    <ClInclude Include="..\..\code\renderer\tr_local.h" />
+    <ClInclude Include="..\..\code\renderer\tr_public.h" />
+    <ClInclude Include="..\..\code\renderer\tr_types.h" />
+    <ClInclude Include="..\..\code\SDL12\include\begin_code.h" />
+    <ClInclude Include="..\..\code\SDL12\include\close_code.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_active.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_audio.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_byteorder.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_cdrom.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_config.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_config_amiga.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_config_dreamcast.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_config_macos.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_config_macosx.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_config_minimal.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_config_nds.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_config_os2.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_config_symbian.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_config_win32.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_copying.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_cpuinfo.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_endian.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_error.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_events.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_getenv.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_joystick.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_keyboard.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_keysym.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_loadso.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_main.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_mouse.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_mutex.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_name.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_opengl.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_platform.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_quit.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_rwops.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_stdinc.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_syswm.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_thread.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_timer.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_types.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_version.h" />
+    <ClInclude Include="..\..\code\SDL12\include\SDL_video.h" />
+    <ClInclude Include="..\..\code\sdl\sdl_icon.h" />
+    <ClInclude Include="..\..\code\server\server.h" />
+    <ClInclude Include="..\..\code\sys\sys_loadlib.h" />
+    <ClInclude Include="..\..\code\sys\sys_local.h" />
+    <ClInclude Include="..\..\code\sys\win_resource.h" />
+    <ClInclude Include="..\..\code\ui\keycodes.h" />
+    <ClInclude Include="..\..\code\ui\ui_local.h" />
+    <ClInclude Include="..\..\code\ui\ui_public.h" />
+    <ClInclude Include="..\..\code\zlib\crc32.h" />
+    <ClInclude Include="..\..\code\zlib\inffast.h" />
+    <ClInclude Include="..\..\code\zlib\inffixed.h" />
+    <ClInclude Include="..\..\code\zlib\inflate.h" />
+    <ClInclude Include="..\..\code\zlib\inftrees.h" />
+    <ClInclude Include="..\..\code\zlib\zconf.h" />
+    <ClInclude Include="..\..\code\zlib\zlib.h" />
+    <ClInclude Include="..\..\code\zlib\zutil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="GDBVM.xml" />
+    <Xml Include="GDBXming.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="commandsvm" />
+    <None Include="commandsxming" />
+    <None Include="RPGXEFDevPrivateKey.ppk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="howto.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\code\asm\ftola.c" />
+    <ClCompile Include="..\..\code\asm\snapvector.c" />
+    <ClCompile Include="..\..\code\botlib\be_aas_bspq3.c" />
+    <ClCompile Include="..\..\code\botlib\be_aas_cluster.c" />
+    <ClCompile Include="..\..\code\botlib\be_aas_debug.c" />
+    <ClCompile Include="..\..\code\botlib\be_aas_entity.c" />
+    <ClCompile Include="..\..\code\botlib\be_aas_file.c" />
+    <ClCompile Include="..\..\code\botlib\be_aas_main.c" />
+    <ClCompile Include="..\..\code\botlib\be_aas_move.c" />
+    <ClCompile Include="..\..\code\botlib\be_aas_optimize.c" />
+    <ClCompile Include="..\..\code\botlib\be_aas_reach.c" />
+    <ClCompile Include="..\..\code\botlib\be_aas_route.c" />
+    <ClCompile Include="..\..\code\botlib\be_aas_routealt.c" />
+    <ClCompile Include="..\..\code\botlib\be_aas_sample.c" />
+    <ClCompile Include="..\..\code\botlib\be_ai_char.c" />
+    <ClCompile Include="..\..\code\botlib\be_ai_chat.c" />
+    <ClCompile Include="..\..\code\botlib\be_ai_gen.c" />
+    <ClCompile Include="..\..\code\botlib\be_ai_goal.c" />
+    <ClCompile Include="..\..\code\botlib\be_ai_move.c" />
+    <ClCompile Include="..\..\code\botlib\be_ai_weap.c" />
+    <ClCompile Include="..\..\code\botlib\be_ai_weight.c" />
+    <ClCompile Include="..\..\code\botlib\be_ea.c" />
+    <ClCompile Include="..\..\code\botlib\be_interface.c" />
+    <ClCompile Include="..\..\code\botlib\l_crc.c" />
+    <ClCompile Include="..\..\code\botlib\l_libvar.c" />
+    <ClCompile Include="..\..\code\botlib\l_log.c" />
+    <ClCompile Include="..\..\code\botlib\l_memory.c" />
+    <ClCompile Include="..\..\code\botlib\l_precomp.c" />
+    <ClCompile Include="..\..\code\botlib\l_script.c" />
+    <ClCompile Include="..\..\code\botlib\l_struct.c" />
+    <ClCompile Include="..\..\code\cgame\cg_consolecmds.c" />
+    <ClCompile Include="..\..\code\cgame\cg_draw.c" />
+    <ClCompile Include="..\..\code\cgame\cg_drawtools.c" />
+    <ClCompile Include="..\..\code\cgame\cg_effects.c" />
+    <ClCompile Include="..\..\code\cgame\cg_ents.c" />
+    <ClCompile Include="..\..\code\cgame\cg_env.c" />
+    <ClCompile Include="..\..\code\cgame\cg_event.c" />
+    <ClCompile Include="..\..\code\cgame\cg_info.c" />
+    <ClCompile Include="..\..\code\cgame\cg_lensflares.c" />
+    <ClCompile Include="..\..\code\cgame\cg_localents.c" />
+    <ClCompile Include="..\..\code\cgame\cg_lua.c" />
+    <ClCompile Include="..\..\code\cgame\cg_main.c" />
+    <ClCompile Include="..\..\code\cgame\cg_marks.c" />
+    <ClCompile Include="..\..\code\cgame\cg_motionblur.c" />
+    <ClCompile Include="..\..\code\cgame\cg_players.c" />
+    <ClCompile Include="..\..\code\cgame\cg_playerstate.c" />
+    <ClCompile Include="..\..\code\cgame\cg_predict.c" />
+    <ClCompile Include="..\..\code\cgame\cg_scoreboard.c" />
+    <ClCompile Include="..\..\code\cgame\cg_screenfx.c" />
+    <ClCompile Include="..\..\code\cgame\cg_servercmds.c" />
+    <ClCompile Include="..\..\code\cgame\cg_snapshot.c" />
+    <ClCompile Include="..\..\code\cgame\cg_syscalls.c" />
+    <ClCompile Include="..\..\code\cgame\cg_view.c" />
+    <ClCompile Include="..\..\code\cgame\cg_weapons.c" />
+    <ClCompile Include="..\..\code\cgame\fx_compression.c" />
+    <ClCompile Include="..\..\code\cgame\fx_disruptor.c" />
+    <ClCompile Include="..\..\code\cgame\fx_grenade.c" />
+    <ClCompile Include="..\..\code\cgame\fx_hypospray.c" />
+    <ClCompile Include="..\..\code\cgame\fx_item.c" />
+    <ClCompile Include="..\..\code\cgame\fx_lib.c" />
+    <ClCompile Include="..\..\code\cgame\fx_misc.c" />
+    <ClCompile Include="..\..\code\cgame\fx_phaser.c" />
+    <ClCompile Include="..\..\code\cgame\fx_quantum.c" />
+    <ClCompile Include="..\..\code\cgame\fx_tetrion.c" />
+    <ClCompile Include="..\..\code\cgame\fx_transporter.c" />
+    <ClCompile Include="..\..\code\cgame\list.c" />
+    <ClCompile Include="..\..\code\cgame\lua_cent.c" />
+    <ClCompile Include="..\..\code\cgame\lua_cfx.c" />
+    <ClCompile Include="..\..\code\cgame\lua_refent.c" />
+    <ClCompile Include="..\..\code\client\cl_avi.c" />
+    <ClCompile Include="..\..\code\client\cl_cgame.c" />
+    <ClCompile Include="..\..\code\client\cl_cin.c" />
+    <ClCompile Include="..\..\code\client\cl_console.c" />
+    <ClCompile Include="..\..\code\client\cl_curl.c" />
+    <ClCompile Include="..\..\code\client\cl_input.c" />
+    <ClCompile Include="..\..\code\client\cl_keys.c" />
+    <ClCompile Include="..\..\code\client\cl_main.c" />
+    <ClCompile Include="..\..\code\client\cl_net_chan.c" />
+    <ClCompile Include="..\..\code\client\cl_parse.c" />
+    <ClCompile Include="..\..\code\client\cl_scrn.c" />
+    <ClCompile Include="..\..\code\client\cl_ui.c" />
+    <ClCompile Include="..\..\code\client\libmumblelink.c" />
+    <ClCompile Include="..\..\code\client\qal.c" />
+    <ClCompile Include="..\..\code\client\snd_adpcm.c" />
+    <ClCompile Include="..\..\code\client\snd_codec.c" />
+    <ClCompile Include="..\..\code\client\snd_codec_mp3.c" />
+    <ClCompile Include="..\..\code\client\snd_codec_ogg.c" />
+    <ClCompile Include="..\..\code\client\snd_codec_wav.c" />
+    <ClCompile Include="..\..\code\client\snd_dma.c" />
+    <ClCompile Include="..\..\code\client\snd_main.c" />
+    <ClCompile Include="..\..\code\client\snd_mem.c" />
+    <ClCompile Include="..\..\code\client\snd_mix.c" />
+    <ClCompile Include="..\..\code\client\snd_openal.c" />
+    <ClCompile Include="..\..\code\client\snd_wavelet.c" />
+    <ClCompile Include="..\..\code\game\ai_chat.c" />
+    <ClCompile Include="..\..\code\game\ai_cmd.c" />
+    <ClCompile Include="..\..\code\game\ai_dmnet.c" />
+    <ClCompile Include="..\..\code\game\ai_dmq3.c" />
+    <ClCompile Include="..\..\code\game\ai_main.c" />
+    <ClCompile Include="..\..\code\game\ai_team.c" />
+    <ClCompile Include="..\..\code\game\bg_lib.c" />
+    <ClCompile Include="..\..\code\game\bg_misc.c" />
+    <ClCompile Include="..\..\code\game\bg_oums.c" />
+    <ClCompile Include="..\..\code\game\bg_panimate.c" />
+    <ClCompile Include="..\..\code\game\bg_pmove.c" />
+    <ClCompile Include="..\..\code\game\bg_slidemove.c" />
+    <ClCompile Include="..\..\code\game\fx_misc.c" />
+    <ClCompile Include="..\..\code\game\g_active.c" />
+    <ClCompile Include="..\..\code\game\g_arenas.c" />
+    <ClCompile Include="..\..\code\game\g_bot.c" />
+    <ClCompile Include="..\..\code\game\g_breakable.c" />
+    <ClCompile Include="..\..\code\game\g_cinematic.c" />
+    <ClCompile Include="..\..\code\game\g_client.c" />
+    <ClCompile Include="..\..\code\game\g_cmds.c" />
+    <ClCompile Include="..\..\code\game\g_combat.c" />
+    <ClCompile Include="..\..\code\game\g_fx.c" />
+    <ClCompile Include="..\..\code\game\g_items.c" />
+    <ClCompile Include="..\..\code\game\g_log.c" />
+    <ClCompile Include="..\..\code\game\g_lua.c" />
+    <ClCompile Include="..\..\code\game\g_main.c" />
+    <ClCompile Include="..\..\code\game\g_mem.c" />
+    <ClCompile Include="..\..\code\game\g_misc.c" />
+    <ClCompile Include="..\..\code\game\g_missile.c" />
+    <ClCompile Include="..\..\code\game\g_mover.c" />
+    <ClCompile Include="..\..\code\game\g_session.c" />
+    <ClCompile Include="..\..\code\game\g_spawn.c" />
+    <ClCompile Include="..\..\code\game\g_sql.c" />
+    <ClCompile Include="..\..\code\game\g_svcmds.c" />
+    <ClCompile Include="..\..\code\game\g_syscalls.c" />
+    <ClCompile Include="..\..\code\game\g_target.c" />
+    <ClCompile Include="..\..\code\game\g_team.c" />
+    <ClCompile Include="..\..\code\game\g_trigger.c" />
+    <ClCompile Include="..\..\code\game\g_turrets.c" />
+    <ClCompile Include="..\..\code\game\g_ui.c" />
+    <ClCompile Include="..\..\code\game\g_usable.c" />
+    <ClCompile Include="..\..\code\game\g_utils.c" />
+    <ClCompile Include="..\..\code\game\g_weapon.c" />
+    <ClCompile Include="..\..\code\game\g_xml.c" />
+    <ClCompile Include="..\..\code\game\lapi.c" />
+    <ClCompile Include="..\..\code\game\lauxlib.c" />
+    <ClCompile Include="..\..\code\game\lbaselib.c" />
+    <ClCompile Include="..\..\code\game\lbitlib.c" />
+    <ClCompile Include="..\..\code\game\lcode.c" />
+    <ClCompile Include="..\..\code\game\lcorolib.c" />
+    <ClCompile Include="..\..\code\game\lctype.c" />
+    <ClCompile Include="..\..\code\game\ldblib.c" />
+    <ClCompile Include="..\..\code\game\ldebug.c" />
+    <ClCompile Include="..\..\code\game\ldo.c" />
+    <ClCompile Include="..\..\code\game\ldump.c" />
+    <ClCompile Include="..\..\code\game\lfunc.c" />
+    <ClCompile Include="..\..\code\game\lgc.c" />
+    <ClCompile Include="..\..\code\game\linit.c" />
+    <ClCompile Include="..\..\code\game\liolib.c" />
+    <ClCompile Include="..\..\code\game\list.c" />
+    <ClCompile Include="..\..\code\game\llex.c" />
+    <ClCompile Include="..\..\code\game\lmathlib.c" />
+    <ClCompile Include="..\..\code\game\lmem.c" />
+    <ClCompile Include="..\..\code\game\loadlib.c" />
+    <ClCompile Include="..\..\code\game\lobject.c" />
+    <ClCompile Include="..\..\code\game\lopcodes.c" />
+    <ClCompile Include="..\..\code\game\loslib.c" />
+    <ClCompile Include="..\..\code\game\lparser.c" />
+    <ClCompile Include="..\..\code\game\lstate.c" />
+    <ClCompile Include="..\..\code\game\lstring.c" />
+    <ClCompile Include="..\..\code\game\lstrlib.c" />
+    <ClCompile Include="..\..\code\game\ltable.c" />
+    <ClCompile Include="..\..\code\game\ltablib.c" />
+    <ClCompile Include="..\..\code\game\ltm.c" />
+    <ClCompile Include="..\..\code\game\lua_cinematic.c" />
+    <ClCompile Include="..\..\code\game\lua_cvar.c" />
+    <ClCompile Include="..\..\code\game\lua_entity.c" />
+    <ClCompile Include="..\..\code\game\lua_game.c" />
+    <ClCompile Include="..\..\code\game\lua_mover.c" />
+    <ClCompile Include="..\..\code\game\lua_qmath.c" />
+    <ClCompile Include="..\..\code\game\lua_sound.c" />
+    <ClCompile Include="..\..\code\game\lua_trace.c" />
+    <ClCompile Include="..\..\code\game\lua_vector.c" />
+    <ClCompile Include="..\..\code\game\lua_weapons.c" />
+    <ClCompile Include="..\..\code\game\lundump.c" />
+    <ClCompile Include="..\..\code\game\lvm.c" />
+    <ClCompile Include="..\..\code\game\lzio.c" />
+    <ClCompile Include="..\..\code\game\md5.c" />
+    <ClCompile Include="..\..\code\game\q_math.c" />
+    <ClCompile Include="..\..\code\game\q_shared.c" />
+    <ClCompile Include="..\..\code\game\reds_bg_misc.c" />
+    <ClCompile Include="..\..\code\game\sqlite3.c" />
+    <ClCompile Include="..\..\code\game\tims_bg_misc.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jaricom.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jcapimin.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jcapistd.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jcarith.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jccoefct.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jccolor.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jcdctmgr.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jchuff.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jcinit.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jcmainct.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jcmarker.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jcmaster.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jcomapi.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jcparam.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jcprepct.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jcsample.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jctrans.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdapimin.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdapistd.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdarith.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdatadst.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdatasrc.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdcoefct.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdcolor.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jddctmgr.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdhuff.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdinput.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdmainct.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdmarker.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdmaster.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdmerge.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdpostct.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdsample.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jdtrans.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jerror.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jfdctflt.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jfdctfst.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jfdctint.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jidctflt.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jidctfst.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jidctint.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jmemmgr.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jmemnobs.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jquant1.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jquant2.c" />
+    <ClCompile Include="..\..\code\jpeg-8c\jutils.c" />
+    <ClCompile Include="..\..\code\null\mac_net.c" />
+    <ClCompile Include="..\..\code\null\null_client.c" />
+    <ClCompile Include="..\..\code\null\null_glimp.c" />
+    <ClCompile Include="..\..\code\null\null_input.c" />
+    <ClCompile Include="..\..\code\null\null_main.c" />
+    <ClCompile Include="..\..\code\null\null_net.c" />
+    <ClCompile Include="..\..\code\null\null_snddma.c" />
+    <ClCompile Include="..\..\code\qcommon\cmd.c" />
+    <ClCompile Include="..\..\code\qcommon\cm_load.c" />
+    <ClCompile Include="..\..\code\qcommon\cm_patch.c" />
+    <ClCompile Include="..\..\code\qcommon\cm_polylib.c" />
+    <ClCompile Include="..\..\code\qcommon\cm_test.c" />
+    <ClCompile Include="..\..\code\qcommon\cm_trace.c" />
+    <ClCompile Include="..\..\code\qcommon\common.c" />
+    <ClCompile Include="..\..\code\qcommon\cvar.c" />
+    <ClCompile Include="..\..\code\qcommon\files.c" />
+    <ClCompile Include="..\..\code\qcommon\huffman.c" />
+    <ClCompile Include="..\..\code\qcommon\ioapi.c" />
+    <ClCompile Include="..\..\code\qcommon\md4.c" />
+    <ClCompile Include="..\..\code\qcommon\md5.c" />
+    <ClCompile Include="..\..\code\qcommon\msg.c" />
+    <ClCompile Include="..\..\code\qcommon\net_chan.c" />
+    <ClCompile Include="..\..\code\qcommon\net_ip.c" />
+    <ClCompile Include="..\..\code\qcommon\puff.c" />
+    <ClCompile Include="..\..\code\qcommon\q_math.c" />
+    <ClCompile Include="..\..\code\qcommon\q_shared.c" />
+    <ClCompile Include="..\..\code\qcommon\unzip.c" />
+    <ClCompile Include="..\..\code\qcommon\vm.c" />
+    <ClCompile Include="..\..\code\qcommon\vm_interpreted.c" />
+    <ClCompile Include="..\..\code\qcommon\vm_none.c" />
+    <ClCompile Include="..\..\code\qcommon\vm_powerpc.c" />
+    <ClCompile Include="..\..\code\qcommon\vm_powerpc_asm.c" />
+    <ClCompile Include="..\..\code\qcommon\vm_sparc.c" />
+    <ClCompile Include="..\..\code\qcommon\vm_x86.c" />
+    <ClCompile Include="..\..\code\qcommon\vm_x86_64.c" />
+    <ClCompile Include="..\..\code\qcommon\vm_x86_64_assembler.c" />
+    <ClCompile Include="..\..\code\renderer\tr_animation.c" />
+    <ClCompile Include="..\..\code\renderer\tr_backend.c" />
+    <ClCompile Include="..\..\code\renderer\tr_bsp.c" />
+    <ClCompile Include="..\..\code\renderer\tr_cmds.c" />
+    <ClCompile Include="..\..\code\renderer\tr_curve.c" />
+    <ClCompile Include="..\..\code\renderer\tr_flares.c" />
+    <ClCompile Include="..\..\code\renderer\tr_font.c" />
+    <ClCompile Include="..\..\code\renderer\tr_image.c" />
+    <ClCompile Include="..\..\code\renderer\tr_image_bmp.c" />
+    <ClCompile Include="..\..\code\renderer\tr_image_jpg.c" />
+    <ClCompile Include="..\..\code\renderer\tr_image_pcx.c" />
+    <ClCompile Include="..\..\code\renderer\tr_image_png.c" />
+    <ClCompile Include="..\..\code\renderer\tr_image_tga.c" />
+    <ClCompile Include="..\..\code\renderer\tr_init.c" />
+    <ClCompile Include="..\..\code\renderer\tr_light.c" />
+    <ClCompile Include="..\..\code\renderer\tr_main.c" />
+    <ClCompile Include="..\..\code\renderer\tr_marks.c" />
+    <ClCompile Include="..\..\code\renderer\tr_mesh.c" />
+    <ClCompile Include="..\..\code\renderer\tr_model.c" />
+    <ClCompile Include="..\..\code\renderer\tr_model_iqm.c" />
+    <ClCompile Include="..\..\code\renderer\tr_noise.c" />
+    <ClCompile Include="..\..\code\renderer\tr_scene.c" />
+    <ClCompile Include="..\..\code\renderer\tr_shade.c" />
+    <ClCompile Include="..\..\code\renderer\tr_shader.c" />
+    <ClCompile Include="..\..\code\renderer\tr_shade_calc.c" />
+    <ClCompile Include="..\..\code\renderer\tr_shadows.c" />
+    <ClCompile Include="..\..\code\renderer\tr_sky.c" />
+    <ClCompile Include="..\..\code\renderer\tr_subs.c" />
+    <ClCompile Include="..\..\code\renderer\tr_surface.c" />
+    <ClCompile Include="..\..\code\renderer\tr_world.c" />
+    <ClCompile Include="..\..\code\sdl\sdl_gamma.c" />
+    <ClCompile Include="..\..\code\sdl\sdl_glimp.c" />
+    <ClCompile Include="..\..\code\sdl\sdl_input.c" />
+    <ClCompile Include="..\..\code\sdl\sdl_snd.c" />
+    <ClCompile Include="..\..\code\server\sv_bot.c" />
+    <ClCompile Include="..\..\code\server\sv_ccmds.c" />
+    <ClCompile Include="..\..\code\server\sv_client.c" />
+    <ClCompile Include="..\..\code\server\sv_game.c" />
+    <ClCompile Include="..\..\code\server\sv_init.c" />
+    <ClCompile Include="..\..\code\server\sv_main.c" />
+    <ClCompile Include="..\..\code\server\sv_net_chan.c" />
+    <ClCompile Include="..\..\code\server\sv_rankings.c" />
+    <ClCompile Include="..\..\code\server\sv_snapshot.c" />
+    <ClCompile Include="..\..\code\server\sv_world.c" />
+    <ClCompile Include="..\..\code\sys\con_log.c" />
+    <ClCompile Include="..\..\code\sys\con_passive.c" />
+    <ClCompile Include="..\..\code\sys\con_tty.c" />
+    <ClCompile Include="..\..\code\sys\con_win32.c" />
+    <ClCompile Include="..\..\code\sys\sys_main.c" />
+    <ClCompile Include="..\..\code\sys\sys_unix.c" />
+    <ClCompile Include="..\..\code\sys\sys_win32.c" />
+    <ClCompile Include="..\..\code\ui\ui_addbots.c" />
+    <ClCompile Include="..\..\code\ui\ui_admin.c" />
+    <ClCompile Include="..\..\code\ui\ui_atoms.c" />
+    <ClCompile Include="..\..\code\ui\ui_cdkey.c" />
+    <ClCompile Include="..\..\code\ui\ui_confirm.c" />
+    <ClCompile Include="..\..\code\ui\ui_connect.c" />
+    <ClCompile Include="..\..\code\ui\ui_controls2.c" />
+    <ClCompile Include="..\..\code\ui\ui_credits.c" />
+    <ClCompile Include="..\..\code\ui\ui_cvars.c" />
+    <ClCompile Include="..\..\code\ui\ui_demo2.c" />
+    <ClCompile Include="..\..\code\ui\ui_emotes.c" />
+    <ClCompile Include="..\..\code\ui\ui_fonts.c" />
+    <ClCompile Include="..\..\code\ui\ui_gameinfo.c" />
+    <ClCompile Include="..\..\code\ui\ui_holodeck.c" />
+    <ClCompile Include="..\..\code\ui\ui_ingame.c" />
+    <ClCompile Include="..\..\code\ui\ui_library.c" />
+    <ClCompile Include="..\..\code\ui\ui_main.c" />
+    <ClCompile Include="..\..\code\ui\ui_menu.c" />
+    <ClCompile Include="..\..\code\ui\ui_mfield.c" />
+    <ClCompile Include="..\..\code\ui\ui_mods.c" />
+    <ClCompile Include="..\..\code\ui\ui_motd.c" />
+    <ClCompile Include="..\..\code\ui\ui_msd.c" />
+    <ClCompile Include="..\..\code\ui\ui_network.c" />
+    <ClCompile Include="..\..\code\ui\ui_playermodel.c" />
+    <ClCompile Include="..\..\code\ui\ui_players.c" />
+    <ClCompile Include="..\..\code\ui\ui_playersettings.c" />
+    <ClCompile Include="..\..\code\ui\ui_preferences.c" />
+    <ClCompile Include="..\..\code\ui\ui_qmenu.c" />
+    <ClCompile Include="..\..\code\ui\ui_removebots.c" />
+    <ClCompile Include="..\..\code\ui\ui_serverinfo.c" />
+    <ClCompile Include="..\..\code\ui\ui_servers2.c" />
+    <ClCompile Include="..\..\code\ui\ui_sound.c" />
+    <ClCompile Include="..\..\code\ui\ui_sparena.c" />
+    <ClCompile Include="..\..\code\ui\ui_specifyserver.c" />
+    <ClCompile Include="..\..\code\ui\ui_splevel.c" />
+    <ClCompile Include="..\..\code\ui\ui_sppostgame.c" />
+    <ClCompile Include="..\..\code\ui\ui_spreset.c" />
+    <ClCompile Include="..\..\code\ui\ui_spskill.c" />
+    <ClCompile Include="..\..\code\ui\ui_sql.c" />
+    <ClCompile Include="..\..\code\ui\ui_startserver.c" />
+    <ClCompile Include="..\..\code\ui\ui_syscalls.c" />
+    <ClCompile Include="..\..\code\ui\ui_tactical.c" />
+    <ClCompile Include="..\..\code\ui\ui_team.c" />
+    <ClCompile Include="..\..\code\ui\ui_teamorders.c" />
+    <ClCompile Include="..\..\code\ui\ui_transporter.c" />
+    <ClCompile Include="..\..\code\ui\ui_turbolift.c" />
+    <ClCompile Include="..\..\code\ui\ui_video.c" />
+    <ClCompile Include="..\..\code\zlib\adler32.c" />
+    <ClCompile Include="..\..\code\zlib\crc32.c" />
+    <ClCompile Include="..\..\code\zlib\inffast.c" />
+    <ClCompile Include="..\..\code\zlib\inflate.c" />
+    <ClCompile Include="..\..\code\zlib\inftrees.c" />
+    <ClCompile Include="..\..\code\zlib\zutil.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
