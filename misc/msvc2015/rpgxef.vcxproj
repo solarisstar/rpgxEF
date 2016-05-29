@@ -196,7 +196,6 @@
     <ClInclude Include="..\..\code\game\lua.h" />
     <ClInclude Include="..\..\code\game\lua.hpp" />
     <ClInclude Include="..\..\code\game\luaconf.h" />
-    <ClInclude Include="..\..\code\game\luaDefParser\export_lyx.h" />
     <ClInclude Include="..\..\code\game\lualib.h" />
     <ClInclude Include="..\..\code\game\lundump.h" />
     <ClInclude Include="..\..\code\game\lvm.h" />
@@ -349,14 +348,6 @@
     <ClInclude Include="..\..\code\sys\sys_loadlib.h" />
     <ClInclude Include="..\..\code\sys\sys_local.h" />
     <ClInclude Include="..\..\code\sys\win_resource.h" />
-    <ClInclude Include="..\..\code\tools\asm\cmdlib.h" />
-    <ClInclude Include="..\..\code\tools\asm\mathlib.h" />
-    <ClInclude Include="..\..\code\tools\asm\opstrings.h" />
-    <ClInclude Include="..\..\code\tools\lcc\cpp\cpp.h" />
-    <ClInclude Include="..\..\code\tools\lcc\lburg\lburg.h" />
-    <ClInclude Include="..\..\code\tools\lcc\src\c.h" />
-    <ClInclude Include="..\..\code\tools\lcc\src\config.h" />
-    <ClInclude Include="..\..\code\tools\lcc\src\token.h" />
     <ClInclude Include="..\..\code\ui\keycodes.h" />
     <ClInclude Include="..\..\code\ui\ui_local.h" />
     <ClInclude Include="..\..\code\ui\ui_public.h" />
@@ -368,6 +359,20 @@
     <ClInclude Include="..\..\code\zlib\zconf.h" />
     <ClInclude Include="..\..\code\zlib\zlib.h" />
     <ClInclude Include="..\..\code\zlib\zutil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="GDBVM.xml" />
+    <Xml Include="GDBXming.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="commandsvm" />
+    <None Include="commandsxming" />
+    <None Include="RPGXEFDevPrivateKey.ppk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="howto.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\code\asm\ftola.c" />
@@ -482,10 +487,8 @@
     <ClCompile Include="..\..\code\game\g_bot.c" />
     <ClCompile Include="..\..\code\game\g_breakable.c" />
     <ClCompile Include="..\..\code\game\g_cinematic.c" />
-    <ClCompile Include="..\..\code\game\g_cinematic.cpp" />
     <ClCompile Include="..\..\code\game\g_client.c" />
     <ClCompile Include="..\..\code\game\g_cmds.c" />
-    <ClCompile Include="..\..\code\game\g_cmds_old.c" />
     <ClCompile Include="..\..\code\game\g_combat.c" />
     <ClCompile Include="..\..\code\game\g_fx.c" />
     <ClCompile Include="..\..\code\game\g_items.c" />
@@ -540,8 +543,6 @@
     <ClCompile Include="..\..\code\game\ltable.c" />
     <ClCompile Include="..\..\code\game\ltablib.c" />
     <ClCompile Include="..\..\code\game\ltm.c" />
-    <ClCompile Include="..\..\code\game\luaDefParser\export_lyx.c" />
-    <ClCompile Include="..\..\code\game\luaDefParser\test.c" />
     <ClCompile Include="..\..\code\game\lua_cinematic.c" />
     <ClCompile Include="..\..\code\game\lua_cvar.c" />
     <ClCompile Include="..\..\code\game\lua_entity.c" />
@@ -607,51 +608,6 @@
     <ClCompile Include="..\..\code\jpeg-8c\jquant1.c" />
     <ClCompile Include="..\..\code\jpeg-8c\jquant2.c" />
     <ClCompile Include="..\..\code\jpeg-8c\jutils.c" />
-    <ClCompile Include="..\..\code\libspeex\bits.c" />
-    <ClCompile Include="..\..\code\libspeex\buffer.c" />
-    <ClCompile Include="..\..\code\libspeex\cb_search.c" />
-    <ClCompile Include="..\..\code\libspeex\exc_10_16_table.c" />
-    <ClCompile Include="..\..\code\libspeex\exc_10_32_table.c" />
-    <ClCompile Include="..\..\code\libspeex\exc_20_32_table.c" />
-    <ClCompile Include="..\..\code\libspeex\exc_5_256_table.c" />
-    <ClCompile Include="..\..\code\libspeex\exc_5_64_table.c" />
-    <ClCompile Include="..\..\code\libspeex\exc_8_128_table.c" />
-    <ClCompile Include="..\..\code\libspeex\fftwrap.c" />
-    <ClCompile Include="..\..\code\libspeex\filterbank.c" />
-    <ClCompile Include="..\..\code\libspeex\filters.c" />
-    <ClCompile Include="..\..\code\libspeex\gain_table.c" />
-    <ClCompile Include="..\..\code\libspeex\gain_table_lbr.c" />
-    <ClCompile Include="..\..\code\libspeex\hexc_10_32_table.c" />
-    <ClCompile Include="..\..\code\libspeex\hexc_table.c" />
-    <ClCompile Include="..\..\code\libspeex\high_lsp_tables.c" />
-    <ClCompile Include="..\..\code\libspeex\jitter.c" />
-    <ClCompile Include="..\..\code\libspeex\kiss_fft.c" />
-    <ClCompile Include="..\..\code\libspeex\kiss_fftr.c" />
-    <ClCompile Include="..\..\code\libspeex\lpc.c" />
-    <ClCompile Include="..\..\code\libspeex\lsp.c" />
-    <ClCompile Include="..\..\code\libspeex\lsp_tables_nb.c" />
-    <ClCompile Include="..\..\code\libspeex\ltp.c" />
-    <ClCompile Include="..\..\code\libspeex\mdf.c" />
-    <ClCompile Include="..\..\code\libspeex\modes.c" />
-    <ClCompile Include="..\..\code\libspeex\modes_wb.c" />
-    <ClCompile Include="..\..\code\libspeex\nb_celp.c" />
-    <ClCompile Include="..\..\code\libspeex\preprocess.c" />
-    <ClCompile Include="..\..\code\libspeex\quant_lsp.c" />
-    <ClCompile Include="..\..\code\libspeex\resample.c" />
-    <ClCompile Include="..\..\code\libspeex\sb_celp.c" />
-    <ClCompile Include="..\..\code\libspeex\smallft.c" />
-    <ClCompile Include="..\..\code\libspeex\speex.c" />
-    <ClCompile Include="..\..\code\libspeex\speex_callbacks.c" />
-    <ClCompile Include="..\..\code\libspeex\speex_header.c" />
-    <ClCompile Include="..\..\code\libspeex\stereo.c" />
-    <ClCompile Include="..\..\code\libspeex\testdenoise.c" />
-    <ClCompile Include="..\..\code\libspeex\testecho.c" />
-    <ClCompile Include="..\..\code\libspeex\testenc.c" />
-    <ClCompile Include="..\..\code\libspeex\testenc_uwb.c" />
-    <ClCompile Include="..\..\code\libspeex\testenc_wb.c" />
-    <ClCompile Include="..\..\code\libspeex\vbr.c" />
-    <ClCompile Include="..\..\code\libspeex\vq.c" />
-    <ClCompile Include="..\..\code\libspeex\window.c" />
     <ClCompile Include="..\..\code\null\mac_net.c" />
     <ClCompile Include="..\..\code\null\null_client.c" />
     <ClCompile Include="..\..\code\null\null_glimp.c" />
@@ -739,50 +695,6 @@
     <ClCompile Include="..\..\code\sys\sys_main.c" />
     <ClCompile Include="..\..\code\sys\sys_unix.c" />
     <ClCompile Include="..\..\code\sys\sys_win32.c" />
-    <ClCompile Include="..\..\code\tools\asm\cmdlib.c" />
-    <ClCompile Include="..\..\code\tools\asm\q3asm.c" />
-    <ClCompile Include="..\..\code\tools\lcc\cpp\cpp.c" />
-    <ClCompile Include="..\..\code\tools\lcc\cpp\eval.c" />
-    <ClCompile Include="..\..\code\tools\lcc\cpp\getopt.c" />
-    <ClCompile Include="..\..\code\tools\lcc\cpp\hideset.c" />
-    <ClCompile Include="..\..\code\tools\lcc\cpp\include.c" />
-    <ClCompile Include="..\..\code\tools\lcc\cpp\lex.c" />
-    <ClCompile Include="..\..\code\tools\lcc\cpp\macro.c" />
-    <ClCompile Include="..\..\code\tools\lcc\cpp\nlist.c" />
-    <ClCompile Include="..\..\code\tools\lcc\cpp\tokens.c" />
-    <ClCompile Include="..\..\code\tools\lcc\cpp\unix.c" />
-    <ClCompile Include="..\..\code\tools\lcc\etc\bytecode.c" />
-    <ClCompile Include="..\..\code\tools\lcc\etc\lcc.c" />
-    <ClCompile Include="..\..\code\tools\lcc\lburg\gram.c" />
-    <ClCompile Include="..\..\code\tools\lcc\lburg\lburg.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\alloc.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\bind.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\bytecode.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\dag.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\decl.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\enode.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\error.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\event.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\expr.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\gen.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\init.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\inits.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\input.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\lex.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\list.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\main.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\null.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\output.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\prof.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\profio.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\simp.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\stmt.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\string.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\sym.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\symbolic.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\trace.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\tree.c" />
-    <ClCompile Include="..\..\code\tools\lcc\src\types.c" />
     <ClCompile Include="..\..\code\ui\ui_addbots.c" />
     <ClCompile Include="..\..\code\ui\ui_admin.c" />
     <ClCompile Include="..\..\code\ui\ui_atoms.c" />
@@ -807,7 +719,6 @@
     <ClCompile Include="..\..\code\ui\ui_msd.c" />
     <ClCompile Include="..\..\code\ui\ui_network.c" />
     <ClCompile Include="..\..\code\ui\ui_playermodel.c" />
-    <ClCompile Include="..\..\code\ui\ui_playermodel_bak.c" />
     <ClCompile Include="..\..\code\ui\ui_players.c" />
     <ClCompile Include="..\..\code\ui\ui_playersettings.c" />
     <ClCompile Include="..\..\code\ui\ui_preferences.c" />
@@ -837,20 +748,6 @@
     <ClCompile Include="..\..\code\zlib\inflate.c" />
     <ClCompile Include="..\..\code\zlib\inftrees.c" />
     <ClCompile Include="..\..\code\zlib\zutil.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="GDBVM.xml" />
-    <Xml Include="GDBXming.xml">
-      <SubType>Designer</SubType>
-    </Xml>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="commandsvm" />
-    <None Include="commandsxming" />
-    <None Include="RPGXEFDevPrivateKey.ppk" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="howto.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

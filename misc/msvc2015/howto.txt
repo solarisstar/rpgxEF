@@ -42,6 +42,9 @@ Debug.MIDebugLaunch /OptionsFile:GDBXming.xml /Executable:rpgxef
 
 HELP, IT DOES NOT WORK:
 
+-BE PATIENT! The first time you run this command, the VM starts building the entire RPG-X EF source code. 
+ This can take a while, 3 to 5 minutes (depending on your pc and VM speed) is not uncommon.
+
 -Make sure you have all dependencies installed above. plink should be added to your PATH. 
  The putty-installer does this by default make sure to add the PuTTY installation directory to your PATH (by default installed in C:\Program Files (x86)\PuTTY).
  I'm not going to tell you how to do this, if you don't know how to add something to your PATH, you really shouln't be reading this file anyway.
