@@ -432,6 +432,9 @@ ifneq (,$(findstring "$(PLATFORM)", "linux" "gnu_kfreebsd" "kfreebsd-gnu"))
     BASE_CFLAGS += -m64
   endif
   endif
+
+  CLIENT_LDFLAGS += -static=libgcc
+
 else # ifeq Linux
 
 #############################################################################
@@ -713,7 +716,6 @@ ifeq ($(PLATFORM),freebsd)
     endif
   endif
 
->>>>>>> .r2058
 else # ifeq freebsd
 
 #############################################################################
