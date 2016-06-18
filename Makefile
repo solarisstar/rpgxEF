@@ -432,9 +432,6 @@ ifneq (,$(findstring "$(PLATFORM)", "linux" "gnu_kfreebsd" "kfreebsd-gnu"))
     BASE_CFLAGS += -m64
   endif
   endif
-
-  CLIENT_LDFLAGS += -static=libgcc
-
 else # ifeq Linux
 
 #############################################################################
@@ -583,7 +580,7 @@ ifeq ($(PLATFORM),mingw32)
   BINEXT=.exe
 
   LIBS= -lws2_32 -lwinmm -lpsapi
-  CLIENT_LDFLAGS += -mwindows -static-libgcc
+  CLIENT_LDFLAGS += -mwindows
   CLIENT_LIBS = -lgdi32 -lole32
   RENDERER_LIBS = -lgdi32 -lole32 -lopengl32
 
@@ -716,6 +713,7 @@ ifeq ($(PLATFORM),freebsd)
     endif
   endif
 
+>>>>>>> .r2058
 else # ifeq freebsd
 
 #############################################################################
