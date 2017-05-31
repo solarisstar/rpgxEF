@@ -1104,7 +1104,7 @@ void CG_UpdateCameraShake( vec3_t origin, vec3_t angles )
 void CG_ZoomDown_f( void )
 { 
 	//if we're not holding a rifle or TR-116, don't draw
-	if ( !( cg.snap->ps.weapon == WP_6 || cg.snap->ps.weapon == WP_7 ) ) {
+	if ( !( cg.snap->ps.weapon == WP_COMPRESSION_RIFLE || cg.snap->ps.weapon == WP_TR116 ) ) {
 		cg.zoomed = qfalse;
 		cg.zoomLocked = qfalse;
 		return;
@@ -1127,7 +1127,7 @@ void CG_ZoomDown_f( void )
 		cg.zoomed = qtrue;
 		cg_zoomFov.value = cg_fov.value;
 		cg.zoomTime = cg.time;
-		if ( cg.snap->ps.weapon == WP_7 ) {
+		if ( cg.snap->ps.weapon == WP_TR116 ) {
 			trap_S_StartSound( cg.refdef.vieworg, ENTITYNUM_WORLD, CHAN_AUTO, cgs.media.zoomStart116 );
 		}
 		else {
@@ -1143,7 +1143,7 @@ void CG_ZoomDown_f( void )
 		cg.zoomed = qfalse;
 		cg.zoomTime = cg.time;
 
-		if ( cg.snap->ps.weapon == WP_7 ) {
+		if ( cg.snap->ps.weapon == WP_TR116 ) {
 			trap_S_StartSound( cg.refdef.vieworg, ENTITYNUM_WORLD, CHAN_AUTO, cgs.media.zoomEnd116 );
 		}
 		else {

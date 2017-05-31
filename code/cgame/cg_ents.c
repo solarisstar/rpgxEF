@@ -611,7 +611,7 @@ static void CG_Missile( centity_t *cent, qboolean altfire ) {
 	VectorCopy( cent->lerpOrigin, ent.origin);
 	VectorCopy( cent->lerpOrigin, ent.oldorigin);
 
-	if ( cent->currentState.weapon == WP_9 ) {
+	if ( cent->currentState.weapon == WP_QUANTUM_BURST ) {
 		ent.reType = RT_SPRITE;
 		ent.data.sprite.radius = 16;
 		ent.data.sprite.rotation = 0;
@@ -636,7 +636,7 @@ static void CG_Missile( centity_t *cent, qboolean altfire ) {
 		}
 
 		// spin as it moves
-		if ( s1->pos.trType != TR_STATIONARY && (cent->currentState.weapon != WP_10) ) { //RPG-X-TiM: Stop from spinning O_o  I got dizzy
+		if ( s1->pos.trType != TR_STATIONARY && (cent->currentState.weapon != WP_DISRUPTOR) ) { //RPG-X-TiM: Stop from spinning O_o  I got dizzy
 			RotateAroundDirection( ent.axis, cg.time * 0.25);
 		} else {
 			RotateAroundDirection( ent.axis, s1->time );

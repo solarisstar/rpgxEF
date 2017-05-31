@@ -865,23 +865,23 @@ static void Controls_UpdateModel( int anim )
 			break;
 
 		case ANIM_WEAPON1:
-			s_controls.playerWeapon = WP_2;
+			s_controls.playerWeapon = WP_TRICORDER;
 			break;
 
 		case ANIM_WEAPON2:
-			s_controls.playerWeapon = WP_5;
+			s_controls.playerWeapon = WP_PHASER;
 			break;
 
 		case ANIM_WEAPON3:
-			s_controls.playerWeapon = WP_8;
+			s_controls.playerWeapon = WP_GRENADE_LAUNCHER;
 			break;
 
 		case ANIM_WEAPON4:
-			s_controls.playerWeapon = WP_12;
+			s_controls.playerWeapon = WP_VOYAGER_HYPO;
 			break;
 
 		case ANIM_WEAPON5:
-			s_controls.playerWeapon = WP_15;
+			s_controls.playerWeapon = WP_HYPERSPANNER;
 			break;
 
 		/*case ANIM_WEAPON6:
@@ -901,7 +901,7 @@ static void Controls_UpdateModel( int anim )
 			break;*/
 
 		case ANIM_WEAPON10:
-			s_controls.playerWeapon = WP_1;
+			s_controls.playerWeapon = WP_NULL_HAND;
 			break;
 
 		case ANIM_ATTACK:
@@ -916,7 +916,7 @@ static void Controls_UpdateModel( int anim )
 		case ANIM_DIE:
 			s_controls.playerLegs = BOTH_DEATH1;
 			s_controls.playerTorso = BOTH_DEATH1;
-			s_controls.playerWeapon = WP_0;
+			s_controls.playerWeapon = WP_NULL;
 			break;
 
 		case ANIM_CHAT:

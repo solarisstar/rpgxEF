@@ -3784,7 +3784,7 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, int powerups, int eFlags, be
 				if ( random() > 0.95f )
 				{
 					// Play a zap sound to go it.
-					trap_S_StartSound (ent->origin, entNum, CHAN_AUTO, cg_weapons[WP_13].altHitSound);
+					trap_S_StartSound (ent->origin, entNum, CHAN_AUTO, cg_weapons[WP_DERMAL_REGEN].altHitSound);
 				}
 			}
 		}
@@ -3948,15 +3948,15 @@ void CG_AttachHolsters ( centity_t *cent, refEntity_t *parent, int weapon )
 	holsterInner.shadowPlane = parent->shadowPlane;
 	holsterInner.renderfx = parent->renderfx;
 
-	holster.hModel = (weapon == WP_5) ? cgs.media.phaserHolster : cgs.media.tricorderHolster;
-	holsterInner.hModel = (weapon == WP_5) ? cgs.media.phaserHolsterInner : cgs.media.tricorderHolsterInner;
+	holster.hModel = (weapon == WP_PHASER) ? cgs.media.phaserHolster : cgs.media.tricorderHolster;
+	holsterInner.hModel = (weapon == WP_PHASER) ? cgs.media.phaserHolsterInner : cgs.media.tricorderHolsterInner;
 
 	if ( !holster.hModel ) {
 		return;
 	}
 
-	CG_PositionEntityOnTag( &holster, parent, parent->hModel, (weapon == WP_5) ? "tag_p_holster" : "tag_t_holster" );
-	CG_PositionEntityOnTag( &holsterInner, &holster, holster.hModel, (weapon == WP_5) ? "tag_phaser" : "tag_tricorder" );
+	CG_PositionEntityOnTag( &holster, parent, parent->hModel, (weapon == WP_PHASER) ? "tag_p_holster" : "tag_t_holster" );
+	CG_PositionEntityOnTag( &holsterInner, &holster, holster.hModel, (weapon == WP_PHASER) ? "tag_phaser" : "tag_tricorder" );
 
 	CG_AddRefEntityWithPowerups( &holster, cent->currentState.powerups, cent->currentState.eFlags, &cent->beamData, cent->cloakTime, cent->decloakTime, qfalse );
 	
@@ -3987,7 +3987,7 @@ void CG_AttachTools ( centity_t *cent, refEntity_t *parent, int weaponNum )
 		return;
 	}
 
-	CG_PositionEntityOnTag( &tool, parent, parent->hModel, (weaponNum == WP_11) ? "tag_torso" : "tag_lhand" );
+	CG_PositionEntityOnTag( &tool, parent, parent->hModel, (weaponNum == WP_MEDKIT) ? "tag_torso" : "tag_lhand" );
 
 	if ( cent->currentState.weapon != weaponNum ) {
 		CG_AddRefEntityWithPowerups( &tool, cent->currentState.powerups, cent->currentState.eFlags, &cent->beamData, cent->cloakTime, cent->decloakTime, qfalse );
@@ -4239,7 +4239,7 @@ void CG_Player( centity_t *cent ) {
 
 	//append this flag if zooming thru the TR-116.
 	//It'll render players over everything else.  Not quite as good as the TV 116, but it'll do the job. :)
-	if ( cg.snap->ps.weapon == WP_7 && cg.zoomed ) {
+	if ( cg.snap->ps.weapon == WP_TR116 && cg.zoomed ) {
 		renderfx |= RF_DEPTHHACK; //This flag makes making haxx for EF SO EASY!!!! O_O!!!!!
 	}
 
@@ -4674,7 +4674,7 @@ void CG_Player( centity_t *cent ) {
 	//=============================================================================
 	//TR-116 EyeScope!! :)
 	//
-	if ( cent->currentState.weapon == WP_7 ) 
+	if ( cent->currentState.weapon == WP_TR116 ) 
 	{
 		refEntity_t		eyeScope;
 
@@ -4721,7 +4721,7 @@ void CG_Player( centity_t *cent ) {
 	}
 
 	//medical scanner
-	if ( cgs.classData[ci->pClass].isMedic && cent->currentState.weapon == WP_2 )
+	if ( cgs.classData[ci->pClass].isMedic && cent->currentState.weapon == WP_TRICORDER )
 	{
 		refEntity_t		scanner;
 
@@ -4792,23 +4792,23 @@ void CG_Player( centity_t *cent ) {
 				//should transmit each player's weapon list here, so we can make it dynamic now
 
 				//if player has the phaser, bolt it
-				if ( cent->currentState.time2 & 1 << WP_5 ) {
-					CG_AttachHolsters( cent, &holsterTags, WP_5 );
+				if ( cent->currentState.time2 & 1 << WP_PHASER ) {
+					CG_AttachHolsters( cent, &holsterTags, WP_PHASER );
 				}
 
 				//if player has tricorder
-				if ( cent->currentState.time2 & 1 << WP_2 ) {
-					CG_AttachHolsters( cent, &holsterTags, WP_2 );
+				if ( cent->currentState.time2 & 1 << WP_TRICORDER ) {
+					CG_AttachHolsters( cent, &holsterTags, WP_TRICORDER );
 				}
 
 				//if player has medkit
-				if ( cent->currentState.time2 & 1 << WP_11 ) {
-					CG_AttachTools( cent, &torso, WP_11 );
+				if ( cent->currentState.time2 & 1 << WP_MEDKIT ) {
+					CG_AttachTools( cent, &torso, WP_MEDKIT );
 				}
 
 				//if player has toolkit
-				if ( cent->currentState.time2 & 1 << WP_14 ) {
-					CG_AttachTools( cent, &torso, WP_14 );
+				if ( cent->currentState.time2 & 1 << WP_TOOLKIT ) {
+					CG_AttachTools( cent, &torso, WP_TOOLKIT );
 				}
 
 				/*switch ( ci->pClass ) {
