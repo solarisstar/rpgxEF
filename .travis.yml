@@ -1,2 +1,16 @@
-language: c
-install: make get-deps
+sudo: enabled
+dist: trusty
+addons:
+  apt:
+    packages:
+    - deadsnakes
+    - mesa-common-dev
+    - libglu1-mesa-dev
+    - libmad0-dev
+    - libsdl1.2-dev 
+    - libsdl-image1.2-dev
+    - libsdl-mixer1.2-dev
+     -libsdl-ttf2.0-de
+    - libogg-dev
+    - mingw-w64 
+script: make
