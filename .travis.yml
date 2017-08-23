@@ -4,7 +4,6 @@ dist: trusty
 addons:
   apt:
     packages:
-    - deadsnakes
     - mesa-common-dev
     - libglu1-mesa-dev
     - libmad0-dev
