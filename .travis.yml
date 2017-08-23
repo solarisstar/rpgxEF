@@ -1,3 +1,4 @@
+language: c
 sudo: enabled
 dist: trusty
 addons:
@@ -13,4 +14,5 @@ addons:
      -libsdl-ttf2.0-de
     - libogg-dev
     - mingw-w64 
+install: true
 script: make
