@@ -17,6 +17,8 @@ addons:
     - libsdl-ttf2.0-de
     - libogg-dev
     - mingw-w64 
+    - mingw-w64-headers
+    - mingw-w64-binutils
     
 install:
   - export CC=gcc
