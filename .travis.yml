@@ -19,6 +19,10 @@ addons:
     - mingw-w64 
     
 install:
-  - export CC="gcc -std=c99"
+  - export CC=gcc
 
-script: make
+script: 
+- ./make-i368.sh # 32-bits Linux Binaries
+- make # 64-bits Linux Binaries
+- ./cross-make-mingw.sh # 32-bits Windows Binaries
+- ./cross-make-mingw64.sh # 64-bits Windows Binaries
