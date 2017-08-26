@@ -7,11 +7,7 @@ sudo: false
 
 addons:
   apt:
-    sources:
-    - ubuntu-toolchain-r-test # Source for gcc-5 and g++5
     packages:  
-    - gcc-5 # Required gcc version
-    - g++-5 # Required g++ version
     - mesa-common-dev
     - libglu1-mesa-dev
     - libmad0-dev
@@ -21,10 +17,6 @@ addons:
     - libsdl-ttf2.0-de
     - libogg-dev
     - mingw-w64
-    
-install:
-  - export CC=gcc-5
-  - export CXX=g++-5
 
 script: 
 - ./make-i386.sh # 32-bits Linux Binaries
