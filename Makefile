@@ -4,6 +4,8 @@
 # GNU Make required
 #
 
+CFLAGS += -std=gnu11
+
 COMPILE_PLATFORM=$(shell uname|sed -e s/_.*//|tr '[:upper:]' '[:lower:]'|sed -e 's/\//_/g')
 
 COMPILE_ARCH=$(shell uname -m | sed -e s/i.86/i386/)
