@@ -20,6 +20,12 @@ if [ "X$WINDRES" = "X" ]; then
     done
 fi
 
+for check in $CMD_PREFIX; do
+    if [[ ! $PATH == *"${check}"* ]]; then
+	export PATH="/usr/${check}:$PATH"
+    fi
+done
+
 if [ "X$WINDRES" = "X" -o "X$CC" = "X" ]; then
     echo "Error: Must define or find WINDRES and CC"
     exit 1
