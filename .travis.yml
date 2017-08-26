@@ -6,9 +6,9 @@ group": stable
 sudo: false
 
 addons:
-  sources:
-    - ubuntu-toolchain-r-test # Source for gcc-5 and g++5
   apt:
+    sources:
+    - ubuntu-toolchain-r-test # Source for gcc-5 and g++5
     packages:  
     - gcc-5 # Required gcc version
     - g++-5 # Required g++ version
