@@ -17,6 +17,7 @@ addons:
     - libsdl-ttf2.0-de
     - libogg-dev
     - mingw-w64
+    - gcc-multilib
 
 script: 
 - ./make-i386.sh # 32-bits Linux Binaries
