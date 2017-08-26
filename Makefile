@@ -4,7 +4,7 @@
 # GNU Make required
 #
 
-CLFAGS += -std=gnu11
+CFLAGS += -std=gnu11
 
 COMPILE_PLATFORM=$(shell uname|sed -e s/_.*//|tr '[:upper:]' '[:lower:]'|sed -e 's/\//_/g')
 
