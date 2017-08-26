@@ -21,8 +21,9 @@ if [ "X$WINDRES" = "X" ]; then
 fi
 
 for check in $CMD_PREFIX; do
-    if [ ! $PATH = *"${check}"* ]; then
-	export PATH="/usr/${check}:$PATH"
+    INCLUDE_DIR="/usr/${check}";
+    if [ ! $PATH = *"$INCLUDE_DIR"* ] && [ -d "$INCLUDE_DIR" ] ; then
+	    export PATH="$INCLUDE_DIR:$PATH"
     fi
 done
 
