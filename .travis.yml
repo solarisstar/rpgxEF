@@ -1,0 +1,26 @@
+language: c
+
+os: linux
+dist: trusty
+group": stable
+sudo: false
+
+addons:
+  apt:
+    packages:  
+    - mesa-common-dev
+    - libglu1-mesa-dev
+    - libmad0-dev
+    - libsdl1.2-dev 
+    - libsdl-image1.2-dev
+    - libsdl-mixer1.2-dev
+    - libsdl-ttf2.0-de
+    - libogg-dev
+    - mingw-w64
+    - gcc-multilib
+
+script: 
+- ./make-i386.sh # 32-bits Linux Binaries
+- make # 64-bits Linux Binaries
+- ./cross-make-mingw.sh # 32-bits Windows Binaries
+- ./cross-make-mingw64.sh # 64-bits Windows Binaries
