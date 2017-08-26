@@ -21,7 +21,7 @@ if [ "X$WINDRES" = "X" ]; then
 fi
 
 for check in $CMD_PREFIX; do
-    if [[ ! $PATH == *"${check}"* ]]; then
+    if [ ! $PATH = *"${check}"* ]; then
 	export PATH="/usr/${check}:$PATH"
     fi
 done
