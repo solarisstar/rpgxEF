@@ -15,7 +15,7 @@ apt-get install -y libglu1-mesa-dev
 apt-get install -y libmad0-dev
 apt-get install -y libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
 apt-get install -y libogg-dev
-apt-get install -y mingw-w64
+apt-get install -y mingw-w64 gcc-multilib
 
 echo "You should now be setup to run the build scripts for RPG-X."
 echo "Post on our gitter: https://gitter.im/solarisstar/rpgxEF or contact solarisstar / Telex Ferra if you need any assistance."

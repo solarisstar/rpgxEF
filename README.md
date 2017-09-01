@@ -1,11 +1,11 @@
-#The Last Outpost RPG-X EF Clean-up Project
+# The Last Outpost RPG-X EF Clean-up Project
 
 [![Join the chat at https://gitter.im/solarisstar/rpgxEF](https://badges.gitter.im/solarisstar/rpgxEF.svg)](https://gitter.im/solarisstar/rpgxEF?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 This repository was forked from the UBerGames rpgxEF repository located here: https://github.com/UberGames/rpgxEF.
 This is an attempt by The Last Outpost (www.last-outpost.net) to clean up the source code in order to get it to 
 build with Visual Studio 2015 and be able to maintain it more easily in the future.
 
-#Installing Instructions
+# Installing Instructions
 
 ## For Beginners
 * Make sure you are running on a computer or Virtual Machine (VM) with Linux Ubuntu 64-bits (or variants such as Xubuntu).
@@ -48,7 +48,7 @@ and then copying the following files from your VM onto your computer:
 * Git Pull this repository onto a Ubuntu flavoured Linux machine or VM
 * Terminal to the repository directory and run: ./install_deps.sh. This will install all development dependencies for running make
 * Run make to build for Linux 64 bits, find the output files in the build directory
-  * Run ./make-i368.sh for building the Linux 32 bits variant
+  * Run ./make-i386.sh for building the Linux 32 bits variant
   * Run ./cross-make-mingw.sh for building the Windows 32 bits variant
   * Run ./cross-make-mingw64.sh for building the Windows 64 bits variant
 * Install a fresh copy of the RPG-X Standard Edition from TLO: http://www.last-outpost.net/rpgx/ and put the build files in the correct directory as described below, then run executable file to launch RPG-X EF
@@ -62,7 +62,7 @@ and then copying the following files from your VM onto your computer:
     * build/release-PLATFORM-ARCH/rpgxEF/qagameARCH
     * build/release-PLATFORM-ARCH/rpgxEF/cgameARCH
 
-* Be sure to run the game with the following cvars: +set vm_game 0 +set vm_ui 0 +set vm_cgame 0 +set fs_game RPG-X2
+* ~~Be sure to run the game with the following cvars: +set vm_game 0 +set vm_ui 0 +set vm_cgame 0 +set fs_game RPG-X2~~ UPDATE: cvars should no longer be required.
 
-#Contact Information
+# Contact Information
 Contact Telex Ferra or Martin Thompson on www.last-outpost.net/forum for more information about this repository.
