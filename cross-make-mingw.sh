@@ -2,6 +2,7 @@
 
 CMD_PREFIX="i586-mingw32msvc i686-w64-mingw32";
 
+# Set CC to correct compiler
 if [ "X$CC" = "X" ]; then
     for check in $CMD_PREFIX; do
         full_check="${check}-gcc"
@@ -11,6 +12,7 @@ if [ "X$CC" = "X" ]; then
     done
 fi
 
+# Set WINDRES to correct compiler
 if [ "X$WINDRES" = "X" ]; then
     for check in $CMD_PREFIX; do
         full_check="${check}-windres"
@@ -20,6 +22,7 @@ if [ "X$WINDRES" = "X" ]; then
     done
 fi
 
+# Add mingw header files to PATH
 for check in $CMD_PREFIX; do
     INCLUDE_DIR="/usr/${check}";
     if [ ! $PATH = *"$INCLUDE_DIR"* ] && [ -d "$INCLUDE_DIR" ] ; then
