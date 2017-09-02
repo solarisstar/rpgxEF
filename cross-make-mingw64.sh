@@ -1,7 +1,9 @@
 #!/bin/sh
 
+# 32 and 64 bits builds of mingw for building 64 bits windows binaries
 CMD_PREFIX="amd64-mingw32msvc x86_64-w64-mingw32";
 
+# Define CC to the correct (32 or 64 bits) version of mingw
 for check in $CMD_PREFIX; do
 	full_check="${check}-gcc"
 	if [ ! $(which "$full_check") = "" ]; then
@@ -10,7 +12,7 @@ for check in $CMD_PREFIX; do
 	fi
 done
 
-
+# Define WINDRES to the correct (32 or 64 bits) version of mingw
 for check in $CMD_PREFIX; do
 	full_check="${check}-windres"
 	if [ ! $(which "$full_check") = "" ]; then
