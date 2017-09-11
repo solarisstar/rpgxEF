@@ -29,6 +29,7 @@ Then chose the xubuntu-xx.yy-desktop-amd64.iso image (where xx.yy is 16.04 at th
 ### Building for Linux
 * In the terminal, type: make
 * The source code will now be build for Linux 64-bits and the output files will be present in the build/release-linux-x86_64 directory.
+* NOTE: Requires GCC 4.8 or newer!
 
 ### Building for Windows
 * To build for windows, run: ./cross-make-mingw.sh (for 32 bits) or ./cross-make-mingw64.sh (for 64-bits) this will produce the required .dll files and .exe files
@@ -61,8 +62,6 @@ and then copying the following files from your VM onto your computer:
     * build/release-PLATFORM-ARCH/rpgxEF/uiARCH, 
     * build/release-PLATFORM-ARCH/rpgxEF/qagameARCH
     * build/release-PLATFORM-ARCH/rpgxEF/cgameARCH
-
-* ~~Be sure to run the game with the following cvars: +set vm_game 0 +set vm_ui 0 +set vm_cgame 0 +set fs_game RPG-X2~~ UPDATE: cvars should no longer be required.
 
 # Contact Information
 Contact Telex Ferra or Martin Thompson on www.last-outpost.net/forum for more information about this repository.
