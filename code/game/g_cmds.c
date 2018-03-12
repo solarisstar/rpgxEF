@@ -4917,7 +4917,7 @@ static void Cmd_Turbolift_f(gentity_t* ent)
         return;
     }
 
-    trap_Argv(2, arg, sizeof(arg));
+    trap_Argv(1, arg, sizeof(arg));
 
     if (!arg[0])
     {
