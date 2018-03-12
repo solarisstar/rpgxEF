@@ -68,13 +68,13 @@ static int list_add_impl(list_p list, void* data, dataType_t type, size_t size, 
     node->cont->size = size;
 
     if (isPtr) {
+        node->cont->data = data;
+    } else {
         node->cont->data = malloc(size);
         if (node->cont->data == NULL) {
             goto on_error;
         }
         memcpy(node->cont->data, data, size);
-    } else {
-        node->cont->data = data;
     }
 
     if (list->first == NULL) {
