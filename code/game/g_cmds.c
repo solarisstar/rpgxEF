@@ -4917,10 +4917,16 @@ static void Cmd_Turbolift_f(gentity_t* ent)
         return;
     }
 
-    trap_Argv(1, arg, sizeof(arg));
+    // Previous versions of RPG-X included a bug that caused the deck command to ignore
+    // the first argument and only consider the second. A user would have to type 
+    // /deck 3 3 in order to go to deck 3. This bug is now fixed but multiple maps 
+    // have been built with the old, buggy behavior. Now both variants must be supported
+    // for all time. 
+    // Prefer the second deck number argument if specified, otherwise use the first.
+    int deckIndex = trap_Argc() > 2 ? 2 : 1;
+    trap_Argv(deckIndex, arg, sizeof(arg));
 
-    if (!arg[0])
-    {
+    if (!arg[0]) {
         trap_SendServerCommand(ent - g_entities, "print \"You must specify a deck\n\" ");
         return;
     }
