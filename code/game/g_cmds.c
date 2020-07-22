@@ -5056,26 +5056,26 @@ Based off of code for Cmd_Me_f
 */
 static void Cmd_MyAction_f(gentity_t* ent)
 {
-	char message[512];
+    char message[512];
+    
+    if (!ent->client) {
+        return;
+    }
 
-	if (!ent->client)
-		return;
+    if (trap_Argc() < 2) {
+        trap_SendServerCommand(ent - g_entities, va("print \"Chat Emote Command for Owned Entities.\nUsage: type a 3rd person sentence.\nExample: '\\my console beeps'.\nExample Output: '%s's console beeps'.\n\"", ent->client->pers.netname));
+        return;
+    }
 
-	if (trap_Argc() < 2)
-	{
-		trap_SendServerCommand(ent - g_entities, "print \"Chat Emote Command for Owned Entities.\nUsage: type a 3rd person sentence.\nExample: 'console beeps'.\nOutput Example: 'RedShirt's console beeps'.\n\"");
-		return;
-	}
+    //n00b check
+    if (g_classData[ent->client->sess.sessionClass].isn00b) {
+        trap_SendServerCommand(ent - g_entities, "print \"[You're too stupid to use this command]\n\"");
+        return;
+    }
 
-	//n00b check
-	if (g_classData[ent->client->sess.sessionClass].isn00b) {
-		trap_SendServerCommand(ent - g_entities, "print \"[You're too stupid to use this command]\n\"");
-		return;
-	}
+    Q_strncpyz(message, ConcatArgs(1), sizeof(message));
 
-	Q_strncpyz(message, ConcatArgs(1), sizeof(message));
-
-	trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE "'s %s\n\"", ent->client->pers.netname, message));
+    trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE "'s %s\n\"", ent->client->pers.netname, message));
 }
 
 
@@ -7607,8 +7607,8 @@ void G_Client_Command(int clientNum)
         Cmd_Turbolift_f(ent);
     else if (Q_stricmp(cmd, "me") == 0)
         Cmd_MeAction_f(ent);
-	else if (Q_stricmp(cmd, "my") == 0)
-		Cmd_MyAction_f(ent);
+    else if (Q_stricmp(cmd, "my") == 0)
+        Cmd_MyAction_f(ent);
     else if (Q_stricmp(cmd, "meLocal") == 0)
         Cmd_MeActionLocal_f(ent);
     else if (Q_stricmp(cmd, "mapsList") == 0)
