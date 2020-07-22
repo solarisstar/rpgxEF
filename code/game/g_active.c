@@ -490,7 +490,7 @@ static char *TimedMessage(void) {
     container_p c;
 
     if (!level.timedMessages->length) {
-        return "^1RPG-X ERROR: No messages to display";
+        return NULL;
     }
 
     if (iterTimedMessages == NULL) {
