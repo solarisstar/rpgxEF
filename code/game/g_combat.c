@@ -1430,42 +1430,12 @@ extern void InitBBrush(gentity_t *ent);
 extern void SP_misc_model_breakable(gentity_t* self);
 
 void G_Repair(gentity_t *ent, gentity_t *tr_ent, float rate) {
-    float		distance;
-    vec3_t		help, forward;
-    int			i;
-    float		max = 0;
-
     // if count isn't 0 the breakable is not damaged and if target is no breakable it does not make sense to go on
     if (tr_ent->count != 0 || strstr(tr_ent->classname, "breakable") == NULL) {
         return;
     }
 
     if (!(tr_ent->spawnflags & 256)) { // no REPAIRABLE flag set
-        return;
-    }
-
-    // check if player is near the breakable
-    if (tr_ent->spawnflags & 512) {
-        VectorSubtract(tr_ent->s.angles2, ent->r.currentOrigin, help);
-        max = tr_ent->n00bCount;
-    } else {
-        VectorSubtract(tr_ent->s.origin, ent->r.currentOrigin, help);
-        for (i = 0; i < 3; i++) {
-            if (tr_ent->r.maxs[i] > max) {
-                max = tr_ent->r.maxs[i];
-            }
-        }
-    }
-    distance = VectorLength(help);
-
-    //G_Printf("goodDst=%f, curDst=%f\n", 80 + max, distance);
-    if (distance > 80 + max) {
-        return;
-    }
-
-    // check if the player is facing it
-    AngleVectors(ent->client->ps.viewangles, forward, NULL, NULL);
-    if (DotProduct(help, forward) < 0.4) {
         return;
     }
 
