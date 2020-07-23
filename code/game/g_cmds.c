@@ -5110,8 +5110,17 @@ static void Cmd_MeActionLocal_f(gentity_t* ent)
     }
 }
 
-// Dice Roll Parameters
+/*
+=================
+Cmd_RollAction_f
 
+Simple die roll command
+
+/roll [dieSize]
+=================
+*/
+
+// Dice Roll Parameters
 #define ROLL_DIE_MINIMUM_SIDES 2
 #define ROLL_DIE_DEFAULT_SIDES 20
 #define ROLL_DIE_MAXIMUM_SIDES 1000
@@ -5149,7 +5158,8 @@ static void Cmd_RollAction_f(gentity_t* ent)
     int dieResult = irandom(1, dieMax);
 
     // Broadcast Result
-    trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE " rolled %u on a d%u\n\"", ent->client->pers.netname, dieResult, dieMax));
+    trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE " rolled %u on a d%u\n\"",
+        ent->client->pers.netname, dieResult, dieMax));
 }
 
 static void Cmd_MapsList_f(gentity_t *ent)
