@@ -5110,6 +5110,48 @@ static void Cmd_MeActionLocal_f(gentity_t* ent)
     }
 }
 
+// Dice Roll Parameters
+
+#define ROLL_DIE_MINIMUM_SIDES 2
+#define ROLL_DIE_DEFAULT_SIDES 20
+#define ROLL_DIE_MAXIMUM_SIDES 1000
+
+static void Cmd_RollAction_f(gentity_t* ent)
+{
+    if (!ent->client) {
+        return;
+    }
+
+    // n00b Check
+    if (g_classData[ent->client->sess.sessionClass].isn00b) {
+        trap_SendServerCommand(ent - g_entities, "print \"[n00bs cannot use this command]\n\"");
+        return;
+    }
+
+    int dieMax = ROLL_DIE_DEFAULT_SIDES;
+
+    // If an argument provided, use that as die size
+    if (trap_Argc() > 1) {
+        char arg[MAX_TOKEN_CHARS];
+        trap_Argv(1, arg, sizeof(arg));
+        dieMax = atoi(arg);
+
+        // Check die size within range
+        if (dieMax < ROLL_DIE_MINIMUM_SIDES || dieMax > ROLL_DIE_MAXIMUM_SIDES) {
+            trap_SendServerCommand(ent - g_entities,
+                va("print \"roll: Choose a die size between %d and %d (inclusive)\n\"",
+                    ROLL_DIE_MINIMUM_SIDES, ROLL_DIE_MAXIMUM_SIDES));
+            return;
+        }
+    }
+
+    // "Roll Die"
+    int dieResult = irandom(1, dieMax);
+
+    // Broadcast Result
+    trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE " rolled %u on a d%u\n\"", ent->client->pers.netname, dieResult, dieMax));
+}
+
 static void Cmd_MapsList_f(gentity_t *ent)
 {
     char	mapList[1024];
@@ -7578,6 +7620,8 @@ void G_Client_Command(int clientNum)
         Cmd_MeAction_f(ent);
     else if (Q_stricmp(cmd, "meLocal") == 0)
         Cmd_MeActionLocal_f(ent);
+    else if (Q_stricmp(cmd, "roll") == 0)
+        Cmd_RollAction_f(ent);
     else if (Q_stricmp(cmd, "mapsList") == 0)
         Cmd_MapsList_f(ent);
     else if (Q_stricmp(cmd, "drop") == 0)  // RPG-X | Marcin | 03/12/2008

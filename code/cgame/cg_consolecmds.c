@@ -824,7 +824,7 @@ void CG_InitConsoleCommands(void) {
 
     trap_AddCommand("me");
     trap_AddCommand("meLocal");
-
+    
     trap_AddCommand("mapsList");
 
     /*
@@ -892,4 +892,6 @@ void CG_InitConsoleCommands(void) {
 
     /* precacheFile */
     trap_AddCommand("generatePrecacheFile");
+
+    trap_AddCommand("roll");
 }
