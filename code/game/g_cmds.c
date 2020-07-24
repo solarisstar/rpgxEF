@@ -4905,22 +4905,25 @@ static void Cmd_Turbolift_f(gentity_t* ent)
     gentity_t *otherLift = NULL;
     playerState_t *ps;
 
-    if (!ent->client)
+    if (!ent->client) {
         return;
+    }
 
     ps = &ent->client->ps;
 
-    if (ent->client->sess.sessionTeam == TEAM_SPECTATOR)
+    if (ent->client->sess.sessionTeam == TEAM_SPECTATOR) {
         return;
+    }
 
     if (ps->stats[STAT_HEALTH] <= 0) {
         return;
     }
 
+    // The deck command takes a second, unused "lift number" parameter.
+    // If we ever implement that functionality, it's available at index 2.
     trap_Argv(1, arg, sizeof(arg));
 
-    if (!arg[0])
-    {
+    if (!arg[0]) {
         trap_SendServerCommand(ent - g_entities, "print \"You must specify a deck\n\" ");
         return;
     }

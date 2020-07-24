@@ -138,7 +138,12 @@ static void M_Turbolift_Event(void* ptr, int notification)
     case ID_ENGAGE:		// Active only if a deck has been chosen
         if (notification == QM_ACTIVATED) {
             UI_ForceMenuOff();
-            trap_Cmd_ExecuteText(EXEC_APPEND, va("deck %i %i", s_turbolift.liftNum, s_turbolift.deckData[s_turbolift.chosenDeck].deckNum));
+            trap_Cmd_ExecuteText(
+                EXEC_APPEND, 
+                va(
+                    "deck %i %i", 
+                    s_turbolift.deckData[s_turbolift.chosenDeck].deckNum,
+                    s_turbolift.liftNum));
         }
         break;
     }
