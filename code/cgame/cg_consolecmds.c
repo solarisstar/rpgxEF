@@ -823,6 +823,7 @@ void CG_InitConsoleCommands(void) {
     trap_AddCommand("removeID");
 
     trap_AddCommand("me");
+    trap_AddCommand("my");
     trap_AddCommand("meLocal");
 
     trap_AddCommand("mapsList");
