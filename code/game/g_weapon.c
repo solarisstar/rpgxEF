@@ -6,6 +6,7 @@
 
 #include "g_local.h"
 #include "g_weapon.h"
+#include <math.h>
 
 extern void G_MissileImpact(gentity_t *ent, trace_t *trace);
 
@@ -104,9 +105,9 @@ static void WP_FireHyperspanner(gentity_t *ent, qboolean alt_fire) {
     gentity_t*	nearest = NULL;
     int			count = 0;
     float		nearestd = 65000;
-    vec3_t		dVec, end;
-    vec3_t		mins = { -40, -40, 0 }, maxs = { 40, 40, 0 };
     struct list	classnames;
+
+    int radius = 96;
 
     /* prepare lists */
     list_init(&classnames, free);
@@ -115,7 +116,7 @@ static void WP_FireHyperspanner(gentity_t *ent, qboolean alt_fire) {
     classnames.append(&classnames, "misc_model_breakable", LT_STRING, strlen("misc_model_breakable") + 1);
 
     /* find all vlaid entities in range */
-    count = G_RadiusListOfTypes(&classnames, ent->r.currentOrigin, 512, NULL, &validEnts);
+    count = G_RadiusListOfTypes(&classnames, ent->r.currentOrigin, radius, NULL, &validEnts);
     classnames.clear(&classnames);
     //G_Printf("Found %d possible candidates\n", count);
 
@@ -123,36 +124,42 @@ static void WP_FireHyperspanner(gentity_t *ent, qboolean alt_fire) {
         return;
     }
 
-    trace_t tr;
-
     iter = validEnts.iterator(&validEnts, LIST_FRONT);
     for (cont = validEnts.next(iter); cont != NULL; cont = validEnts.next(iter)) {
         e = cont->data;
 
-        // TODO: fix problems with small distance
-        if (e->spawnflags & 512) {
-            VectorSubtract(ent->r.currentOrigin, e->s.angles2, dVec);
-            VectorMA(e->s.angles2, 1024, dVec, end);
-            trap_Trace(&tr, e->s.angles2, mins, maxs, end, e->s.number, MASK_SHOT);
-        } else {
-            VectorSubtract(ent->r.currentOrigin, e->s.origin, dVec);
-            VectorMA(e->s.origin, 1024, dVec, end);
-            trap_Trace(&tr, e->s.origin, mins, maxs, end, e->s.number, MASK_SHOT);
-        }
-        //G_Printf("Checking entity: %d\n", i);
-        if (tr.entityNum != ent->s.number) {
+        if (e->health >= e->damage) {
+            // If it ain't broke, don't fix it.
             continue;
         }
-        //G_Printf("Nothing is blocking view ...\n");
+
+        vec3_t distanceVec;
         if (e->spawnflags & 512) {
-            VectorSubtract(ent->r.currentOrigin, e->s.angles2, dVec);
+            VectorSubtract(e->s.angles2, ent->r.currentOrigin, distanceVec);
         } else {
-            VectorSubtract(ent->r.currentOrigin, e->s.origin, dVec);
+            VectorSubtract(e->s.origin, ent->r.currentOrigin, distanceVec);
         }
-        if (VectorLength(dVec) < nearestd) {
+        vec_t distance = VectorLength(distanceVec);
+
+        // A check to ensure no object between the player and the object is deliberately
+        // omitted here. The radius is small enough that the user has to be very close to
+        // the object, and such a check will often accidentally disregard an attempt to
+        // repair an object because the object itself is between the player's head and
+        // the center point of the repair entity.
+
+        // check if the player is facing the entity.
+        AngleVectors(ent->client->ps.viewangles, forward, NULL, NULL);
+        float dotProduct = DotProduct(distanceVec, forward);
+        float magnitudes = VectorLength(forward) * distance;
+        float angle = acos(dotProduct / magnitudes);
+        if (angle >= M_PI_4) {
+            // Must be within a 45 degree angle.
+            return;
+        }
+
+        if (distance < nearestd) {
             nearest = e;
-            nearestd = VectorLength(dVec);
-            //G_Printf("New nearest Entity is %d with a distance of %d\n", nearest, nearestd);
+            nearestd = distance;
         }
     }
 
@@ -168,7 +175,6 @@ static void WP_FireHyperspanner(gentity_t *ent, qboolean alt_fire) {
     /* call G_Repair */
     int repairRate = (alt_fire ? HYPERSPANNER_ALT_RATE : HYPERSPANNER_RATE) * modifier;
     G_Repair(ent, nearest, repairRate);
-
 
     validEnts.clear(&validEnts);
 }
