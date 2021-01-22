@@ -5162,6 +5162,52 @@ static void Cmd_RollAction_f(gentity_t* ent)
         ent->client->pers.netname, dieResult, dieMax));
 }
 
+/*
+================ =
+Cmd_PrivateRollAction_f
+
+Simple die roll command - private version
+
+/proll [dieSize]
+================ =
+*/
+
+// Private Dice Roll Parameters
+#define PRIVATE_ROLL_DIE_MINIMUM_SIDES ROLL_DIE_MINIMUM_SIDES
+#define PRIVATE_ROLL_DIE_DEFAULT_SIDES ROLL_DIE_DEFAULT_SIDES
+#define PRIVATE_ROLL_DIE_MAXIMUM_SIDES ROLL_DIE_MAXIMUM_SIDES
+
+static void Cmd_PrivateRollAction_f(gentity_t * ent)
+{
+    if (!ent->client) {
+        return;
+    }
+
+    int dieMax = PRIVATE_ROLL_DIE_DEFAULT_SIDES;
+
+    // If an argument provided, use that as die size
+    if (trap_Argc() > 1) {
+        char arg[MAX_TOKEN_CHARS];
+        trap_Argv(1, arg, sizeof(arg));
+        dieMax = atoi(arg);
+
+        // Check die size within range
+        if (dieMax < PRIVATE_ROLL_DIE_MINIMUM_SIDES || dieMax > PRIVATE_ROLL_DIE_MAXIMUM_SIDES) {
+            trap_SendServerCommand(ent - g_entities,
+                va("print \"roll: Choose a die size between %d and %d (inclusive)\n\"",
+                    PRIVATE_ROLL_DIE_MINIMUM_SIDES, PRIVATE_ROLL_DIE_MAXIMUM_SIDES));
+            return;
+        }
+    }
+
+    // "Roll Die"
+    int dieResult = irandom(1, dieMax);
+
+    // Send result to calling client only
+    trap_SendServerCommand(ent - g_entities, va("print \"%s" S_COLOR_MAGENTA " rolled %u on a d%u\n\"",
+        ent->client->pers.netname, dieResult, dieMax));
+}
+
 static void Cmd_MapsList_f(gentity_t *ent)
 {
     char	mapList[1024];
@@ -7632,6 +7678,8 @@ void G_Client_Command(int clientNum)
         Cmd_MeActionLocal_f(ent);
     else if (Q_stricmp(cmd, "roll") == 0)
         Cmd_RollAction_f(ent);
+    else if (Q_stricmp(cmd, "proll") == 0)
+        Cmd_PrivateRollAction_f(ent);
     else if (Q_stricmp(cmd, "mapsList") == 0)
         Cmd_MapsList_f(ent);
     else if (Q_stricmp(cmd, "drop") == 0)  // RPG-X | Marcin | 03/12/2008

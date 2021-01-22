@@ -893,4 +893,5 @@ void CG_InitConsoleCommands(void) {
     trap_AddCommand("generatePrecacheFile");
 
     trap_AddCommand("roll");
+    trap_AddCommand("proll");
 }
