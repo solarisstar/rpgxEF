@@ -5144,6 +5144,124 @@ static void Cmd_MeActionLocal_f(gentity_t* ent)
     }
 }
 
+// Common elements of die rolling commands
+// Returns a pair of ints, {die result, die size}
+// Returns NULL if invalid argument provided
+static int* RollAction_Common(gentity_t* ent, int dieMin, int dieMax, int dieDefault)
+{
+    int dieSize = dieDefault;
+
+    // If an argument provided, use that as die size
+    if (trap_Argc() > 1) {
+        char arg[MAX_TOKEN_CHARS];
+        trap_Argv(1, arg, sizeof(arg));
+        dieSize = atoi(arg);
+
+        // Check die size within range
+        if (dieSize < dieMin || dieSize > dieMax) {
+            return NULL;
+        }
+    }
+
+    int* pair = malloc(2 * sizeof(int));
+
+    // "Roll Die"
+    pair[0] = irandom(1, dieSize);
+    pair[1] = dieSize;
+
+    return pair;
+}
+
+/*
+=================
+Cmd_RollAction_f
+
+Simple die roll command
+
+/roll [dieSize]
+=================
+*/
+
+// Dice Roll Parameters
+#define ROLL_DIE_MINIMUM_SIDES 2
+#define ROLL_DIE_DEFAULT_SIDES 20
+#define ROLL_DIE_MAXIMUM_SIDES 1000
+
+static void Cmd_RollAction_f(gentity_t* ent)
+{
+    if (!ent->client) {
+        return;
+    }
+
+    // n00b Check
+    if (g_classData[ent->client->sess.sessionClass].isn00b) {
+        trap_SendServerCommand(ent - g_entities, "print \"[n00bs cannot use this command]\n\"");
+        return;
+    }
+
+    // "Roll Die"
+    int* dieResult = RollAction_Common(ent, ROLL_DIE_MINIMUM_SIDES, ROLL_DIE_MAXIMUM_SIDES, ROLL_DIE_DEFAULT_SIDES);
+
+    if (dieResult) {
+        // Broadcast Result
+        trap_SendServerCommand(-1,
+            va("print \"%s" S_COLOR_WHITE " rolled %u on a d%u\n\"",
+                ent->client->pers.netname, dieResult[0], dieResult[1])
+        );
+        free(dieResult);
+    }
+    else {
+        // Invalid argument, print usage
+        trap_SendServerCommand(ent - g_entities,
+            va("print \"roll: Choose a die size between %d and %d (inclusive)\n\"",
+                ROLL_DIE_MINIMUM_SIDES, ROLL_DIE_MAXIMUM_SIDES)
+        );
+    }
+    
+    
+}
+
+/*
+=================
+Cmd_PrivateRollAction_f
+
+Simple die roll command - private version
+
+/proll [dieSize]
+=================
+*/
+
+// Private Dice Roll Parameters
+#define PRIVATE_ROLL_DIE_MINIMUM_SIDES ROLL_DIE_MINIMUM_SIDES
+#define PRIVATE_ROLL_DIE_DEFAULT_SIDES ROLL_DIE_DEFAULT_SIDES
+#define PRIVATE_ROLL_DIE_MAXIMUM_SIDES ROLL_DIE_MAXIMUM_SIDES
+
+static void Cmd_PrivateRollAction_f(gentity_t * ent)
+{
+    if (!ent->client) {
+        return;
+    }
+
+    // "Roll Die"
+    int* dieResult = RollAction_Common(ent, PRIVATE_ROLL_DIE_MINIMUM_SIDES, PRIVATE_ROLL_DIE_MAXIMUM_SIDES, PRIVATE_ROLL_DIE_DEFAULT_SIDES);
+
+    if (dieResult) {
+        // Send result to calling client
+        trap_SendServerCommand(ent - g_entities,
+            va("print \"%s" S_COLOR_MAGENTA " rolled %u on a d%u\n\"",
+                ent->client->pers.netname, dieResult[0], dieResult[1])
+        );
+        free(dieResult);
+    }
+    else {
+        // Invalid argument, print usage
+        trap_SendServerCommand(ent - g_entities,
+            va("print \"proll: Choose a die size between %d and %d (inclusive)\n\"",
+                PRIVATE_ROLL_DIE_MINIMUM_SIDES, PRIVATE_ROLL_DIE_MAXIMUM_SIDES)
+        );
+    }
+}
+
 static void Cmd_MapsList_f(gentity_t *ent)
 {
     char	mapList[1024];
@@ -7614,6 +7732,10 @@ void G_Client_Command(int clientNum)
         Cmd_MyAction_f(ent);
     else if (Q_stricmp(cmd, "meLocal") == 0)
         Cmd_MeActionLocal_f(ent);
+    else if (Q_stricmp(cmd, "roll") == 0)
+        Cmd_RollAction_f(ent);
+    else if (Q_stricmp(cmd, "proll") == 0)
+        Cmd_PrivateRollAction_f(ent);
     else if (Q_stricmp(cmd, "mapsList") == 0)
         Cmd_MapsList_f(ent);
     else if (Q_stricmp(cmd, "drop") == 0)  // RPG-X | Marcin | 03/12/2008
